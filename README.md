@@ -1,4 +1,4 @@
-# simple-access-orm
+# Simple Access
 Simple Access provides database access helpers as well as repository (CURD).
 
 Simple Access focus on database stored procedures also support other DBCommand types.
