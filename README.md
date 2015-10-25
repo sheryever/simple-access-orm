@@ -36,7 +36,7 @@ The current version os Simple Access is version 1 and now version 2 is under dev
 - `SqlConnection GetNewConnection()`
 -  `void EndTransaction(SqlTransaction sqlTransaction, bool transactionSucced = true, bool closeConnection = true)`
 
-**Simple Access uses Oracle object with Simple Access Oracle**
+*Simple Access uses Oracle objects (ie. OracleTransaction, OralceParameters etc) with Simple Access Oracle*
 
 
 ## Reporsitory
