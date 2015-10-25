@@ -36,6 +36,9 @@ The current version os Simple Access is version 1 and now version 2 is under dev
 - `SqlConnection GetNewConnection()`
 -  `void EndTransaction(SqlTransaction sqlTransaction, bool transactionSucced = true, bool closeConnection = true)`
 
+**Simple Access uses Oracle object with Simple Access Oracle**
+
+
 ## Reporsitory
 All methods as bsed on stored procedures. All procedures are based on stored procedures and will call <IEntity>_<MethodName>.
 - `IEnumerable<TEntity> GetAll<TEntity>(string fieldToSkip = null)`  
