@@ -75,7 +75,7 @@ Delete(1) will call Person_Delete stored procdue.
 
 ## Roadmap
 - Separate SimpleCommand and Repositoy
-- Remove StoredProcedureParameters inheritance from Enity Class to make entity more lighter.
-- Add storedprocedure names mapping for repository methods.
-- Add Sql Generation for Non StoredProcedures call
+- Remove StoredProcedureParameters inheritance from Enity Class to make entity more lighter
+- Add StoredProcedure names with repository method mappings in repository settings
+- Add Sql Generation for Non StoredProcedures command types
 - Rewrite code generation application
