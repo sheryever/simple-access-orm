@@ -65,15 +65,13 @@ namespace SimpleAccess
                 value = SafeSqlLiteral(value.ToString());
             }
             
-
-
             if ((propertyInfo.PropertyType.IsGenericType
                 || propertyInfo.PropertyType.Name == "String") & value == null)
             {
                 sqlParam.IsNullable = true;
                 sqlParam.Value = DBNull.Value;
             }
-            
+
             var attrbutes = propertyInfo.GetCustomAttributes(true);
 
             /*
@@ -87,9 +85,11 @@ namespace SimpleAccess
             if (propertyInfo.PropertyType.IsEnum)
                 sqlParam.Value = value.ToString();
             */
+            if (propertyInfo.GetMethod.IsVirtual)
+                return null;
 
             if (attrbutes.FirstOrDefault(a => a is NotASpParameterAttribute) != null)
-                return null;
+                return null;                
 
             var dbColumnPropertyAttribute =
                 attrbutes.FirstOrDefault(a => a is DbColumnPropertyAttribute) as DbColumnPropertyAttribute;
@@ -106,7 +106,7 @@ namespace SimpleAccess
 
             if (parametesType == ParametersType.Insert)
             {
-                var propertyDataType = propertyInfo.DeclaringType;
+                //var propertyDataType = propertyInfo.DeclaringType;
                 
                 var outParaAttr = attrbutes.FirstOrDefault(a => a is ParameterDirectionAttribute) as ParameterDirectionAttribute;
                 if (outParaAttr != null)

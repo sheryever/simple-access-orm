@@ -741,18 +741,18 @@ namespace SimpleAccess
                                     string fieldsToSkip = null, dynamic paramObject = null);
 
         /// <summary>
-        /// 
+        /// Execute commant text against connection and load the returned data in DataTable
         /// </summary>
         /// <param name="commandText"></param>
         /// <returns></returns>
-        DataTable FillSingle(string commandText);
+        DataTable GenerateDataTable(string commandText);
 
         /// <summary>
-        /// 
+        /// Execute commant text against connection and load the returned data in DataSet
         /// </summary>
         /// <param name="commandText"></param>
         /// <returns></returns>
-        DataSet Fill(string commandText);
+        DataSet GenerateDataSet(string commandText);
 
         /// <summary> Begins a transaction. </summary>
         /// 
