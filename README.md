@@ -77,7 +77,8 @@ Delete(1) will call Person_Delete stored procdue.
 - Oracle 10g and later (in default Simple Access uese Oracle Data Provider for .NET, to use Oracle Data Access Components (ODAC))
 
 ## Roadmap
-- Separate SimpleCommand and Repositoy
+- Separate SimpleCommand and Repositoy (Testing)
+- vitual properties must behave like NotASpParameter marked perperty in Entities drived from StoredProcedureParameters (Testing)
 - Remove StoredProcedureParameters inheritance from Enity Class to make entity more lighter
 - Add StoredProcedure names with repository method mappings in repository settings
 - Add Sql Generation for Non StoredProcedures command types
