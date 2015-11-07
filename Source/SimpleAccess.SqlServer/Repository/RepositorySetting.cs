@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SimpleAccess.Entity;
 
-namespace SimpleAccess
+namespace SimpleAccess.Repository
 {
     public static class RepositorySetting
     {

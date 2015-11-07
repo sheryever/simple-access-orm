@@ -117,7 +117,7 @@ namespace SimpleAccess
             return sqlParam;
         }
 
-        public static SqlParameter ToUnSafeDataParam(this string value, string paramName, int size)
+        public static SqlParameter ToSafeDataParam(this string value, string paramName, int size)
         {
             var sqlParam = new SqlParameter("@" + paramName, SqlDbType.NVarChar, size)
             {

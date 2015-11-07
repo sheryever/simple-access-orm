@@ -7,14 +7,15 @@
     <ProjectGuid>{D97DEB44-C9BD-4813-AE06-3119CE29214A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimpleAccess</RootNamespace>
-    <AssemblyName>SimpleAccess</AssemblyName>
+    <RootNamespace>SimpleAccess.SqlServer</RootNamespace>
+    <AssemblyName>SimpleAccess.SqlServer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,7 +25,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\Builds\New\dev\SimpleAccess.XML</DocumentationFile>
+    <DocumentationFile>..\..\Builds\New\dev\SimpleAccess.SqlServer.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,6 +37,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>
     </DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -43,6 +46,7 @@
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\DbColumnPropertyAttribute.cs" />
@@ -61,9 +65,19 @@
     <Compile Include="Entity\IEntity.cs" />
     <Compile Include="Entity\StoredProcedureParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RepositorySetting.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\RepositorySetting.cs" />
+    <Compile Include="Repository\ISqlRepository.cs" />
+    <Compile Include="Repository\SqlRepository.cs" />
+    <Compile Include="ISimpleAccess.cs" />
+    <Compile Include="SqlSimpleAccess.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleAccess.Core\SimpleAccess.Core.csproj">
+      <Project>{ca67607f-1d89-47fd-b8bf-8deac4d0ac60}</Project>
+      <Name>SimpleAccess.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
