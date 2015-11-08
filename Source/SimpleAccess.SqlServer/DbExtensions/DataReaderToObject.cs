@@ -25,7 +25,8 @@ namespace SimpleAccess.DbExtensions
         /// translation. If not passed automatically created.
         /// </param>
         /// <returns></returns>
-        public static List<TType> DataReaderToObjectList<TType>(this IDataReader reader, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null)
+        public static List<TType> DataReaderToObjectList<TType>(this IDataReader reader, string fieldsToSkip = null
+            , Dictionary<string, PropertyInfo> piList = null, Dictionary<string, PropertyInfo> piListBasedOnDbColumn = null)
             where TType : new()
         {
             if (reader == null)
@@ -42,17 +43,31 @@ namespace SimpleAccess.DbExtensions
                     piList.Add(prop.Name.ToLower(), prop);
             }
 
+            if (piListBasedOnDbColumn == null)
+            {
+                piListBasedOnDbColumn = new Dictionary<string, PropertyInfo>();
+                foreach (var prop in piList.Values)
+                {
+                    var dbColumnAttribute =
+                                prop.GetCustomAttributes(false).FirstOrDefault(a =>
+                                    a is DbColumnAttribute) as DbColumnAttribute;
+                    if (dbColumnAttribute != null)
+                        piListBasedOnDbColumn.Add(dbColumnAttribute.DbColumn.ToLower(), prop);
+                }
+            }
+
             while (reader.Read())
             {
                 var inst = new TType();
-                DataReaderToObject(reader, inst, fieldsToSkip, piList);
+                DataReaderToObject(reader, inst, fieldsToSkip, piList, piListBasedOnDbColumn);
                 items.Add(inst);
             }
 
             return items;
         }
 
-        public static TType DataReaderToObject<TType>(this IDataReader reader, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null)
+        public static TType DataReaderToObject<TType>(this IDataReader reader, string fieldsToSkip = null
+            , Dictionary<string, PropertyInfo> piList = null, Dictionary<string, PropertyInfo> piListBasedOnDbColumn = null)
             where TType : new()
         {
 
@@ -71,10 +86,24 @@ namespace SimpleAccess.DbExtensions
                     piList.Add(prop.Name.ToLower(), prop);
             }
 
+            if (piListBasedOnDbColumn == null)
+            {
+                piListBasedOnDbColumn = new Dictionary<string, PropertyInfo>();
+                foreach (var prop in piList.Values)
+                {
+                    var dbColumnAttribute =
+                                prop.GetCustomAttributes(false).FirstOrDefault(a =>
+                                    a is DbColumnAttribute) as DbColumnAttribute;
+                    if (dbColumnAttribute != null)
+                        piListBasedOnDbColumn.Add(dbColumnAttribute.DbColumn.ToLower(), prop);
+                }
+            }
+
             if (reader.Read())
             {
-                DataReaderToObject(reader, item, fieldsToSkip, piList);
+                DataReaderToObject(reader, item, fieldsToSkip, piList, piListBasedOnDbColumn);
             }
+
 
             return item;
         }
@@ -96,7 +125,8 @@ namespace SimpleAccess.DbExtensions
         /// <param name="instance">Instance of the object to populate properties on</param>
         /// <param name="fieldsToSkip">Optional - A comma delimited list of object properties that should not be updated</param>
         /// <param name="piList">Optional - Cached PropertyInfo dictionary that holds property info data for this object</param>
-        public static void DataReaderToObject(this IDataReader reader, object instance, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null)
+        public static void DataReaderToObject(this IDataReader reader, object instance, string fieldsToSkip = null
+            , Dictionary<string, PropertyInfo> piList = null, Dictionary<string, PropertyInfo> piListBasedOnDbColumn = null)
         {
             if (reader.IsClosed)
                 throw new InvalidOperationException("Connection is closed.");
@@ -141,15 +171,16 @@ namespace SimpleAccess.DbExtensions
                     {
                         try
                         {
-                            var dbColumnPropertyAttribute =
-                                prop.GetCustomAttributes(false).FirstOrDefault(a =>
-                                    a is DbColumnPropertyAttribute) as DbColumnPropertyAttribute;
+                            //var dbColumnPropertyAttribute =
+                            //    prop.GetCustomAttributes(false).FirstOrDefault(a =>
+                            //        a is DbColumnPropertyAttribute) as DbColumnPropertyAttribute;
+
+
+                            //if (dbColumnPropertyAttribute != null)
+                            //    prop = piList[dbColumnPropertyAttribute.DbColumnProperty.ToLower()];
 
                             var val = reader.GetValue(index);
-
-                            if (dbColumnPropertyAttribute != null)
-                                prop = piList[dbColumnPropertyAttribute.DbColumnProperty.ToLower()];
-
+                            
                             if (prop.PropertyType.IsGenericType)
                             {
                                 if (prop.PropertyType.GetGenericArguments()[0].IsEnum)
@@ -182,7 +213,59 @@ namespace SimpleAccess.DbExtensions
                         }
                     }
                 }
+
+
+                // searching for DbColumn attribute
+                if (piListBasedOnDbColumn == null)
+                    return;
+
+                if (piListBasedOnDbColumn.ContainsKey(name))
+                {
+                    var prop = piListBasedOnDbColumn[name];
+
+                    if (fieldsToSkip.Contains("," + name + ","))
+                        continue;
+
+                    //System.Diagnostics.Debug.WriteLine(prop.Name);
+                    if ((prop != null) && prop.CanWrite)
+                    {
+                        try
+                        {
+                            var val = reader.GetValue(index);
+
+                            if (prop.PropertyType.IsGenericType)
+                            {
+                                if (prop.PropertyType.GetGenericArguments()[0].IsEnum)
+                                {
+                                    prop.SetValue(instance, (val == DBNull.Value)
+                                                                ? null
+                                                                : Enum.Parse(prop.PropertyType.GetGenericArguments()[0],
+                                                                             val.ToString())
+                                                  , null);
+                                    continue;
+                                }
+                            }
+                            /*
+                            if (prop.PropertyType.IsEnum)
+                            {
+                                prop.SetValue(instance, (val == DBNull.Value)
+                                                            ? null
+                                                            : Enum.Parse(prop.PropertyType.GetGenericArguments()[0],
+                                                                         val.ToString())
+                                              , null);
+                                continue;
+                            }*/
+                            prop.SetValue(instance, (val == DBNull.Value) ? null : val, null);
+                        }
+                        catch (Exception ex)
+                        {
+
+                            throw new Exception(string.Format("Error in assigning the value of {0}. Exception: {1}", prop.Name, ex.Message), ex);
+                        }
+                    }
+                }
             }
+
 
             return;
         }

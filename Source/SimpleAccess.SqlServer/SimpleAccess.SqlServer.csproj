@@ -49,9 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\DbColumnPropertyAttribute.cs" />
+    <Compile Include="Attributes\DbColumnAttribute.cs" />
     <Compile Include="Attributes\DefaultValueAttribute.cs" />
-    <Compile Include="Attributes\EntityNameAttribute.cs" />
     <Compile Include="Attributes\IdentityAttribute.cs" />
     <Compile Include="Attributes\NotASpParameterAttribute.cs" />
     <Compile Include="Attributes\TableAttribute.cs" />

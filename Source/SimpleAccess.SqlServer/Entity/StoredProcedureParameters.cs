@@ -89,20 +89,29 @@ namespace SimpleAccess
                 return null;
 
             if (attrbutes.FirstOrDefault(a => a is NotASpParameterAttribute) != null)
-                return null;                
+                return null;
 
-            var dbColumnPropertyAttribute =
-                attrbutes.FirstOrDefault(a => a is DbColumnPropertyAttribute) as DbColumnPropertyAttribute;
-            
-            if (dbColumnPropertyAttribute != null)
+            //var dbColumnPropertyAttribute =
+            //    attrbutes.FirstOrDefault(a => a is DbColumnPropertyAttribute) as DbColumnPropertyAttribute;
+
+            //if (dbColumnPropertyAttribute != null)
+            //{
+            //    var dbColumnPropertyPropertyInfo =
+            //        propertyInfos.FirstOrDefault(p => p.Name == dbColumnPropertyAttribute.DbColumnProperty);
+
+            //    value = dbColumnPropertyPropertyInfo.GetValue(this, new object[] { });
+            //    sqlParam.Value = value;
+            //}
+
+            var dbColumnAttribute =
+                attrbutes.FirstOrDefault(a => a is DbColumnAttribute) as DbColumnAttribute;
+
+            if (dbColumnAttribute != null)
             {
-                var dbColumnPropertyPropertyInfo =
-                    propertyInfos.FirstOrDefault(p => p.Name == dbColumnPropertyAttribute.DbColumnProperty);
-
-                value = dbColumnPropertyPropertyInfo.GetValue(this, new object[] { });
-                sqlParam.Value = value;
+                sqlParam.ParameterName = string.Format("@{0}", dbColumnAttribute.DbColumn);
             }
-                
+
+
 
             if (parametesType == ParametersType.Insert)
             {
