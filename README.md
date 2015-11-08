@@ -17,8 +17,8 @@ Sql Server implementaion for SimpleAccess.
 | ExecuteEntities<TEntity> | Sends the CommandText to the Database Connection and builds a IEnumerable&lt; TEntity&gt; from DataReader. |
 | ExecuteDynamic | Sends the CommandText to the Database Connection and builds a dynamic object from DataReader. |
 | ExecuteDynamics | Sends the CommandText to the Database Connection and builds a IEnumerable&lt; dynamic&gt; from DataReader. |
-| ExecuteNonQuery  | Execute CommandText and returna the count of rows affacted.|
-| ExecuteReader    | Executes the commandText and return DataReader.|
+| ExecuteNonQuery  | Execute CommandText and returns the count of rows affected.|
+| ExecuteReader    | Executes the commandText and returns a DataReader.|
 | ExecuteScalar<T> | Executes the command text, and returns the first column of the first row in the result set returned by the query.Additional columns or rows are ignored. |
 | Fill | Execute commant text against connection and add or refresh rows in DataSet or DataTable. |
 | GetNewConnection | Gets the new connection with the SimpleAccess Ojbect ConnectionString.|
