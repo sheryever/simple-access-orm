@@ -7,6 +7,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using SimpleAccess;
+using SimpleAccess.Core;
 using SimpleAccess.SqlServer;
 
 namespace SimpeAccess.SqlServer.ConsoleTest
@@ -15,8 +16,6 @@ namespace SimpeAccess.SqlServer.ConsoleTest
     {
         static void Main(string[] args)
         {
-            ISimpleAccess<SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlDataAdapter>
-                simpleAccess;
 
             ConstructorTests();
             TestTextCommandSimpleAccess(GetTextQuerySimpleAccess());

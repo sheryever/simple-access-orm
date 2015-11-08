@@ -4,7 +4,7 @@ using System.Data;
 using SimpleAccess.Core;
 using SimpleAccess.Core.Logger;
 
-namespace SimpleAccess
+namespace SimpleAccess.Core
 {
     public class SimpleAccessSettings
     {

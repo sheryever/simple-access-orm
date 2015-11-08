@@ -16,7 +16,7 @@ using SimpleAccess.DbExtensions;
 namespace SimpleAccess.SqlServer
 {
     /// <summary>
-    /// Sql Server implementaion for SimpleAccess
+    /// Sql Server implementaion for SimpleAccess.
     /// </summary>
     public class SqlSimpleAccess : ISqlSimpleAccess
     {
@@ -704,14 +704,15 @@ namespace SimpleAccess.SqlServer
                 fieldsToSkip, BuildSqlParameters(paramObject));
         }
 
-        public DataTable GenerateDataTable(string commandText)
+        public int Fill(string commandText, DataTable dataTable)
         {
             try
             {
-                DataTable dataSet = new DataTable();
+                if (dataTable == null)
+                    dataTable = new DataTable();
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(new SqlCommand(commandText));
-                sqlDataAdapter.Fill(dataSet);
-                return dataSet;
+                return sqlDataAdapter.Fill(dataTable);
+
             }
             catch (Exception ex)
             {
@@ -721,14 +722,14 @@ namespace SimpleAccess.SqlServer
             }
         }
 
-        public DataSet GenerateDataSet(string commandText)
+        public int Fill(string commandText, DataSet dataSet)
         {
             try
             {
-                DataSet dataSet = new DataSet();
+                if (dataSet == null)
+                    dataSet = new DataSet();
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(new SqlCommand(commandText));
-                sqlDataAdapter.Fill(dataSet);
-                return dataSet;
+                return sqlDataAdapter.Fill(dataSet);
             }
             catch (Exception ex)
             {

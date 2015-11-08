@@ -1,42 +1,28 @@
 # Simple Access
-Simple Access provides database access helpers as well as repository (CURD).
+SimpleAccess provides a simplle database access as well as simple repository for CURD and other helper methods.
 
-Simple Access focus on database stored procedures also support other DBCommand types.
+SimpleAccess provides excpetion logging.
 
-Simple Access returns data in Entity and dynamic data type.
+SimpleAccess returns data in Entity and dynamic data type but also allow developers to work on direct DataReader or DataSet
 
-The current version os Simple Access is version 1 and now version 2 is under development. Soon the new version code will be published on github.
+## SqlSimpleAccess
+Sql Server implementaion for SimpleAccess.
 
-## SimpleAccess helpers
-- `int ExecuteNonQuery(string sql, CommandType commandType = CommandType.StoredProcedure, params SqlParameter[] sqlParameters)`
-- `int ExecuteNonQuery(string sql, CommandType commandType = CommandType.StoredProcedure, dynamic paramObject = null)`
-- `int ExecuteNonQuery(SqlTransaction sqlTransaction, string sql, CommandType commandType = CommandType.StoredProcedure, params SqlParameter[] sqlParameters)`
-- `int ExecuteNonQuery(SqlTransaction sqlTransaction, string sql, CommandType commandType = CommandType.StoredProcedure, dynamic paramObject = null)`
-- `T ExecuteScalar<T>(string sql, CommandType commandType, params SqlParameter[] sqlParameters)`
-- `T ExecuteScalar<T>(string sql, CommandType commandType, dynamic paramObject = null)`
-- `T ExecuteScalar<T>(SqlTransaction sqlTransaction, string sql, CommandType commandType = CommandType.StoredProcedure, params SqlParameter[] sqlParameters)`
-- `T ExecuteScalar<T>(SqlTransaction sqlTransaction, string sql, CommandType commandType = CommandType.StoredProcedure, dynamic paramObject = null)`
-- `List<TEntity> ExecuteReader<TEntity>(string sql, CommandType commandType = CommandType.StoredProcedure, string, fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params SqlParameter[] sqlParameters)`
-- `List<TEntity> ExecuteReader<TEntity>(string sql, CommandType commandType = CommandType.StoredProcedure, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, dynamic paramObject = null)`
-- `List<TEntity> ExecuteReader<TEntity>(SqlTransaction sqlTransaction, string sql, CommandType commandType = CommandType.StoredProcedure, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params SqlParameter[] sqlParameters)`
-- `List<TEntity> ExecuteReader<TEntity>(SqlTransaction sqlTransaction, string sql, CommandType commandType = CommandType.StoredProcedure, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, dynamic paramObject = null)`
-- `T ExecuteReaderSingle<T>(string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params SqlParameter[] sqlParameters)`
-- `T ExecuteReaderSingle<T>(string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, dynamic paramObject = null)`
-- `TEntity ExecuteReaderSingle<TEntity>(SqlTransaction sqlTransaction, string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params SqlParameter[] sqlParameters)`
-- `TEntity ExecuteReaderSingle<TEntity>(SqlTransaction sqlTransaction, string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, dynamic paramObject = null)` 
-- `IList<dynamic> ExecuteReader(string sql, CommandType commandType = CommandType.StoredProcedure, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params SqlParameter[] sqlParameters)`
-- `IList<dynamic> ExecuteReader(string sql, CommandType commandType = CommandType.StoredProcedure, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, dynamic paramObject = null)`
-- `IList<dynamic> ExecuteReader(SqlTransaction sqlTransaction, string sql, CommandType commandType = CommandType.StoredProcedure, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params SqlParameter[] sqlParameters)`
-- `IList<dynamic> ExecuteReader(SqlTransaction sqlTransaction, string sql, CommandType commandType = CommandType.StoredProcedure, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, dynamic paramObject = null)`
-- `dynamic ExecuteReaderSingle(string sql, CommandType commandType = CommandType.StoredProcedure, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params SqlParameter[] sqlParameters)`
-- `dynamic ExecuteReaderSingle(string sql, CommandType commandType = CommandType.StoredProcedure, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, dynamic paramObject = null)`
-- `dynamic ExecuteReaderSingle(SqlTransaction sqlTransaction, string sql, CommandType commandType = CommandType.StoredProcedure, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params SqlParameter[] sqlParameters)`
-- `dynamic ExecuteReaderSingle(SqlTransaction sqlTransaction, string sql, CommandType commandType = CommandType.StoredProcedure, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, dynamic paramObject = null)`
-- `SqlTransaction BeginTrasaction()`
-- `SqlConnection GetNewConnection()`
--  `void EndTransaction(SqlTransaction sqlTransaction, bool transactionSucced = true, bool closeConnection = true)`
+| Methods | Description |
+|--------------------|--------|
+| BeginTrasaction  | Begins a database transaction.|
+| CloseCurrentDbConnection | Close the current open connection.|
+| EndTransaction   | Close an open database transaction.|
+| ExecuteEntity<TEntity> | Sends the CommandText to the Database Connection and builds a TEntity from DataReader. |
+| ExecuteEntities<TEntity> | Sends the CommandText to the Database Connection and builds a IEnumerable&lt; TEntity&gt; from DataReader. |
+| ExecuteDynamic | Sends the CommandText to the Database Connection and builds a dynamic object from DataReader. |
+| ExecuteDynamics | Sends the CommandText to the Database Connection and builds a IEnumerable&lt; dynamic&gt; from DataReader. |
+| ExecuteNonQuery  | Execute CommandText and returna the count of rows affacted.|
+| ExecuteReader    | Executes the commandText and return DataReader.|
+| ExecuteScalar<T> | Executes the command text, and returns the first column of the first row in the result set returned by the query.Additional columns or rows are ignored. |
+| Fill | Execute commant text against connection and add or refresh rows in DataSet or DataTable. |
+| GetNewConnection | Gets the new connection with the SimpleAccess Ojbect ConnectionString.|
 
-*Simple Access uses Oracle objects (ie. OracleTransaction, OralceParameters etc) with Simple Access Oracle*
 
 
 ## Reporsitory
@@ -83,3 +69,5 @@ Delete(1) will call Person_Delete stored procdue.
 - Add StoredProcedure names with repository method mappings in repository settings
 - Add Sql Generation for Non StoredProcedures command types
 - Rewrite code generation application
+ - Allow developer to add more T4 Templates
+ - Allow developer to edit T4 Templates directly inside the application

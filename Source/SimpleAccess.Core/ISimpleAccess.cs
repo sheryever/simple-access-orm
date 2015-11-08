@@ -8,20 +8,23 @@ using System.Data.Common;
 using System.Reflection;
 using SimpleAccess.Core;
 
-namespace SimpleAccess
+namespace SimpleAccess.Core
 {
     /// <summary>
-    /// ISimpleCommand
+    /// Represent the interface of SimpleAccess methods and it's implemented by SimpleAccess 
     /// </summary>
     public interface ISimpleAccess<TDbConnection, TDbTransaction, TDbCommand, TDbParameter, TDbDataReader, TDataAdapter>
-            where TDbConnection : DbConnection, new()
-            where TDbTransaction : DbTransaction
-            where TDbCommand : DbCommand, new()
-            where TDbParameter : DbParameter, new()
-            where TDbDataReader : DbDataReader
-            where TDataAdapter : DataAdapter, new()    {
+            where TDbConnection : IDbConnection, new()
+            where TDbTransaction : IDbTransaction
+            where TDbCommand : IDbCommand, new()
+            where TDbParameter : IDataParameter, new()
+            where TDbDataReader : IDataReader
+            where TDataAdapter : IDataAdapter, new()    {
 
 
+        /// <summary>
+        /// Represent the default settings SimpleAccess <see cref="SimpleAccessSettings" />
+        /// </summary>
         SimpleAccessSettings DefaultSimpleAccessSettings { get; set; }
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
@@ -236,7 +239,7 @@ namespace SimpleAccess
         TDbDataReader ExecuteReader(string commandText, CommandType commandType,
             params TDbParameter[] parameters);
 
-        /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{TEntity} from DataReader. </summary>
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
@@ -246,13 +249,13 @@ namespace SimpleAccess
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
         /// <param name="parameters"> Parmeters rquired to execute CommandText. </param>
         /// 
-        /// <returns> The {TEntity} value </returns>
+        /// <returns> The TEntity value </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, string fieldsToSkip = null,
                                              Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
                                              params TDbParameter[] parameters)
             where TEntity : new();
 
-        /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{TEntity} from DataReader. </summary>
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         ///     
@@ -269,7 +272,7 @@ namespace SimpleAccess
                                              params TDbParameter[] parameters)
             where TEntity : new();
 
-        /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{TEntity} from DataReader. </summary>
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
@@ -285,7 +288,7 @@ namespace SimpleAccess
                                      dynamic paramObject = null)
             where TEntity : new();
 
-        /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{TEntity} from DataReader. </summary>
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
@@ -338,7 +341,7 @@ namespace SimpleAccess
                                              params TDbParameter[] parameters)
             where TEntity : new();
 
-        /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{TEntity} from DataReader. </summary>
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
@@ -349,7 +352,7 @@ namespace SimpleAccess
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         ///  <param name="paramObject"> The dynamic object as parameters. </param>
         /// 
-        /// <returns> The {TEntity} value </returns>
+        /// <returns> The <see cref="IEnumerable{TEntity}" /> value </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(TDbTransaction transaction, string commandText,
                                      string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
                                      dynamic paramObject = null)
@@ -357,7 +360,7 @@ namespace SimpleAccess
 
 
 
-        /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{TEntity} from DataReader. </summary>
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
@@ -369,7 +372,7 @@ namespace SimpleAccess
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         ///  <param name="paramObject"> The dynamic object as parameters. </param>
         /// 
-        /// <returns> The {TEntity} value </returns>
+        /// <returns> The <see cref="IEnumerable{TEntity}" /> value </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(TDbTransaction transaction, string commandText, CommandType commandType,
                                      string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
                                      dynamic paramObject = null)
@@ -716,7 +719,7 @@ namespace SimpleAccess
         /// 
         /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// -<param name="fieldsToSkip">   (optional) the fields to skip. </param>
         /// <param name="paramObject"> The dynamic object as parameters. </param>
         /// 
         /// <returns> Result in a dynamic object. </returns>
@@ -741,20 +744,22 @@ namespace SimpleAccess
                                     string fieldsToSkip = null, dynamic paramObject = null);
 
         /// <summary>
-        /// Execute commant text against connection and load the returned data in DataTable
+        /// Execute commant text against connection and add or refresh rows in <see cref="DataTable"/>
         /// </summary>
         /// <param name="commandText"></param>
+        /// <param name="dataTable">A <see cref="DataTable"/> to fill with records and, if necessary, schema  </param>
         /// <returns></returns>
-        DataTable GenerateDataTable(string commandText);
+        int Fill(string commandText, DataTable dataTable);
 
         /// <summary>
-        /// Execute commant text against connection and load the returned data in DataSet
+        /// Execute commant text against connection and add or refresh rows in <see cref="DataSet"/>
         /// </summary>
-        /// <param name="commandText"></param>
+        /// <param name="commandText">	The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="dataSet"> A <see cref="DataSet"/> to fill with records and, if necessary, schema  </param>
         /// <returns></returns>
-        DataSet GenerateDataSet(string commandText);
+        int Fill(string commandText, DataSet dataSet);
 
-        /// <summary> Begins a transaction. </summary>
+        /// <summary> Begins a database transaction. </summary>
         /// 
         /// <returns> . </returns>
         TDbTransaction BeginTrasaction();
@@ -762,7 +767,7 @@ namespace SimpleAccess
 
         /// <summary> Gets the new connection. </summary>
         /// 
-        /// <returns> The new connection. </returns>
+        /// <returns>  </returns>
         
         TDbConnection GetNewConnection();
 
@@ -770,7 +775,7 @@ namespace SimpleAccess
         void CloseCurrentDbConnection();
 
 
-        /// <summary> Ends a transaction. </summary>
+        /// <summary> Close an open database transaction. </summary>
         /// 
         /// <param name="transaction">	  The SQL transaction. </param>
         /// <param name="transactionSucceed"> (optional) the transaction succeed. </param>
