@@ -608,7 +608,7 @@
             
             <param name="transaction"> The SQL transaction. </param>
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            -<param name="fieldsToSkip">   (optional) the fields to skip. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
             <returns> Result in a dynamic object. </returns>
@@ -626,19 +626,20 @@
             
             <returns> Result in a dynamic object. </returns>
         </member>
-        <member name="M:SimpleAccess.Core.ISimpleAccess`6.GenerateDataTable(System.String)">
+        <member name="M:SimpleAccess.Core.ISimpleAccess`6.Fill(System.String,System.Data.DataTable)">
             <summary>
-            Execute commant text against connection and load the returned data in a DataTable.
+            Execute commant text against connection and add or refresh rows in <see cref="T:System.Data.DataTable"/>
             </summary>
             <param name="commandText"></param>
+            <param name="dataTable">A <see cref="T:System.Data.DataTable"/> to fill with records and, if necessary, schema  </param>
             <returns></returns>
         </member>
-        <member name="M:SimpleAccess.Core.ISimpleAccess`6.FillDataSet(System.String,System.Data.DataSet)">
+        <member name="M:SimpleAccess.Core.ISimpleAccess`6.Fill(System.String,System.Data.DataSet)">
             <summary>
-            Execute commant text against connection and fill the data into passed DataSet
+            Execute commant text against connection and add or refresh rows in <see cref="T:System.Data.DataSet"/>
             </summary>
             <param name="commandText">	The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="dataSet"> The DataSet to fill </param>
+            <param name="dataSet"> A <see cref="T:System.Data.DataSet"/> to fill with records and, if necessary, schema  </param>
             <returns></returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.BeginTrasaction">

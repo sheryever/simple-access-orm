@@ -709,7 +709,7 @@ namespace SimpleAccess.SqlServer
             try
             {
                 if (dataTable == null)
-                    dataTable = new DataTable();
+                    dataTable = new DataTable(); 
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(new SqlCommand(commandText));
                 return sqlDataAdapter.Fill(dataTable);
 
