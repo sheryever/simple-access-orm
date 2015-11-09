@@ -262,7 +262,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the non query operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <param name="sql">			  The SQL. </param>
         <param name="commandType">    Type of the command. </param>
@@ -275,7 +275,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the non query operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <param name="sql">			  The SQL. </param>
         <param name="commandType">    Type of the command. </param>
@@ -287,7 +287,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the non query operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         <param name="sqlTransaction"> The SQL transaction. </param>
         <param name="sql">			 The SQL. </param>
         <param name="commandType">   Type of the command. </param>
@@ -302,7 +302,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the non query operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         <param name="sqlTransaction"> The SQL transaction. </param>
         <param name="sql">			 The SQL. </param>
         <param name="commandType">   Type of the command. </param>
@@ -315,7 +315,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the scalar operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <typeparam name="T"> Generic type parameter. </typeparam>
         <param name="sql">			  The SQL. </param>
@@ -328,7 +328,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the scalar operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <typeparam name="T"> Generic type parameter. </typeparam>
         <param name="sql">			  The SQL. </param>
@@ -342,7 +342,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the scalar operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <typeparam name="T"> Generic type parameter. </typeparam>
         <param name="sqlTransaction"> The SQL transaction. </param>
@@ -359,7 +359,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the scalar operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <typeparam name="T"> Generic type parameter. </typeparam>
         <param name="sqlTransaction"> The SQL transaction. </param>
@@ -374,7 +374,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <typeparam name="TEntity"> Type of the entity. </typeparam>
         <param name="sql">			 The SQL. </param>
@@ -393,7 +393,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <typeparam name="TEntity"> Type of the entity. </typeparam>
         <param name="sql">			 The SQL. </param>
@@ -413,7 +413,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the scalar operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <typeparam name="T"> Generic type parameter. </typeparam>
         <param name="sqlTransaction"> The SQL transaction. </param>
@@ -432,7 +432,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <typeparam name="TEntity"> Type of the entity. </typeparam>
         <param name="sqlTransaction"> The SQL transaction. </param>
@@ -453,7 +453,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <typeparam name="TEntity"> Type of the entity. </typeparam>
         <param name="sql">			 The SQL. </param>
@@ -472,7 +472,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <typeparam name="TEntity"> Type of the entity. </typeparam>
         <param name="sql">			 The SQL. </param>
@@ -491,7 +491,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <typeparam name="TEntity"> Type of the entity. </typeparam>
         <param name="sqlTransaction"> The SQL transaction. </param>
@@ -511,7 +511,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <typeparam name="TEntity"> Type of the entity. </typeparam>
         <param name="sqlTransaction"> The SQL transaction. </param>
@@ -531,7 +531,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <param name="sql">			 The SQL. </param>
         <param name="commandType">   Type of the command. </param>
@@ -549,7 +549,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
        <summary> Executes the reader operation. </summary>
         
-       <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+       <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
        <param name="sql">			 The SQL. </param>
        <param name="commandType">   Type of the command. </param>
@@ -565,7 +565,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <param name="sqlTransaction"> The SQL transaction. </param>
         <param name="sql">			  The SQL. </param>
@@ -582,7 +582,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <param name="sqlTransaction"> The SQL transaction. </param>
         <param name="sql">			  The SQL. </param>
@@ -601,7 +601,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <param name="sql">			 The SQL. </param>
         <param name="commandType">   Type of the command. </param>
@@ -618,7 +618,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <param name="sql">			 The SQL. </param>
         <param name="commandType">   Type of the command. </param>
@@ -635,7 +635,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <param name="sqlTransaction"> The SQL transaction. </param>
         <param name="sql">			  The SQL. </param>
@@ -652,7 +652,7 @@ namespace SimpleAccess.Repository
         /**--------------------------------------------------------------------------------------------------
         <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         
         <param name="sqlTransaction"> The SQL transaction. </param>
         <param name="sql">			  The SQL. </param>
@@ -686,6 +686,6 @@ namespace SimpleAccess.Repository
         <param name="transactionSucceed"> (optional) the transaction succeed. </param>
         <param name="closeConnection">    (optional) the close connection. </param>
         **/
-        void EndTransaction(SqlTransaction sqlTransaction, bool transactionSucced = true, bool closeConnection = true);
+        void EndTransaction(SqlTransaction sqlTransaction, bool transactionSucceed = true, bool closeConnection = true);
     }
 }

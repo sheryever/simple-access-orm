@@ -44,18 +44,17 @@ namespace SimpleAccess.Repository
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="fieldToSkip"> (optional) the field to skip. </param>
-        /// <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> An enumerator that allows for each to be used to process get all {TEntity} in this
         /// collection. </returns>
 
-        public virtual IEnumerable<TEntity> GetAll<TEntity>(string fieldToSkip = null, Dictionary<string, PropertyInfo> piList = null)
+        public virtual IEnumerable<TEntity> GetAll<TEntity>(string fieldToSkip = null)
             where TEntity : new()
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof (TEntity));
             string commandText = string.Format("{0}_GetAll", entityInfo.Name);
-            return SimpleAccess.ExecuteEntities<TEntity>(commandText, CommandType.StoredProcedure, fieldToSkip, piList);
+            return SimpleAccess.ExecuteEntities<TEntity>(commandText, CommandType.StoredProcedure, fieldToSkip);
         }
 
         //public TEntity Get<TEntity>(long id, string fieldToSkip = null, Dictionary<string, PropertyInfo> piList = null)
@@ -70,14 +69,12 @@ namespace SimpleAccess.Repository
         /// <param name="id">		   The identifier. </param>
         /// <param name="transaction"> (optional) the transaction. </param>
         /// <param name="fieldToSkip"> (optional) the field to skip. </param>
-        /// <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> . </returns>
-        public TEntity Get<TEntity>(long id, SqlTransaction transaction = null, string fieldToSkip = null,
-                                    Dictionary<string, PropertyInfo> piList = null)
+        public TEntity Get<TEntity>(long id, SqlTransaction transaction = null, string fieldToSkip = null)
             where TEntity : class, new()
         {
-            return Get<TEntity>(new SqlParameter("@id", id), transaction, fieldToSkip, piList);
+            return Get<TEntity>(new SqlParameter("@id", id), transaction, fieldToSkip);
         }
 
 
@@ -86,18 +83,16 @@ namespace SimpleAccess.Repository
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sqlParameter"> The SQL parameter. </param>
         /// <param name="fieldToSkip">  (optional) the field to skip. </param>
-        /// <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> . </returns>
-        public TEntity Get<TEntity>(SqlParameter sqlParameter, string fieldToSkip = null, Dictionary<string, PropertyInfo> piList = null)
+        public TEntity Get<TEntity>(SqlParameter sqlParameter, string fieldToSkip = null)
             where TEntity : class, new()
         {
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
 
             var commandText = string.Format("{0}_GetById", entityInfo.Name);
 
-            return SimpleAccess.ExecuteEntity<TEntity>(commandText, CommandType.StoredProcedure, fieldToSkip, piList,
-                new[] {sqlParameter});
+            return SimpleAccess.ExecuteEntity<TEntity>(commandText, CommandType.StoredProcedure, fieldToSkip,  null, new [] {sqlParameter});
         }
 
         /// <summary> Gets. </summary>
@@ -106,17 +101,16 @@ namespace SimpleAccess.Repository
         /// <param name="transaction">  (optional) the transaction. </param>
         /// <param name="sqlParameter"> The SQL parameter. </param>
         /// <param name="fieldToSkip">  (optional) the field to skip. </param>
-        /// <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> . </returns>
-        public TEntity Get<TEntity>(SqlTransaction transaction, SqlParameter sqlParameter, string fieldToSkip = null, Dictionary<string, PropertyInfo> piList = null)
+        public TEntity Get<TEntity>(SqlTransaction transaction, SqlParameter sqlParameter, string fieldToSkip = null)
             where TEntity : class, new()
         {
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
 
             var commandText = string.Format("{0}_GetById", entityInfo.Name);
 
-            return SimpleAccess.ExecuteEntity<TEntity>(transaction, commandText, CommandType.StoredProcedure, fieldToSkip, piList, new[] { sqlParameter });
+            return SimpleAccess.ExecuteEntity<TEntity>(transaction, commandText, CommandType.StoredProcedure, fieldToSkip, null, new[] { sqlParameter });
         }
 
         /// <summary> Gets. </summary>
@@ -125,11 +119,9 @@ namespace SimpleAccess.Repository
         /// <param name="paramObject"> The dynamic object as parameters. </param>
         /// <param name="transaction">  (optional) the transaction. </param>
         /// <param name="fieldToSkip">  (optional) the field to skip. </param>
-        /// <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> . </returns>
-        public TEntity Get<TEntity>(dynamic paramObject, SqlTransaction transaction = null, string fieldToSkip = null
-            , Dictionary<string, PropertyInfo> piList = null)
+        public TEntity Get<TEntity>(dynamic paramObject, SqlTransaction transaction = null, string fieldToSkip = null)
             where TEntity : class, new()
         {
             //var name = typeof(TEntity).Name;
@@ -138,9 +130,9 @@ namespace SimpleAccess.Repository
             var commandText = string.Format("{0}_GetById", entityInfo.Name);
 
             if (transaction == null)
-                return SimpleAccess.ExecuteEntity<TEntity>(commandText, CommandType.StoredProcedure, fieldToSkip, piList, paramObject);
+                return SimpleAccess.ExecuteEntity<TEntity>(commandText, CommandType.StoredProcedure, fieldToSkip, null, paramObject);
             else
-                return SimpleAccess.ExecuteEntity<TEntity>(transaction, commandText, CommandType.StoredProcedure, fieldToSkip, piList, paramObject);
+                return SimpleAccess.ExecuteEntity<TEntity>(transaction, commandText, CommandType.StoredProcedure, fieldToSkip, null, paramObject);
         }
 
 
@@ -439,7 +431,7 @@ namespace SimpleAccess.Repository
 		{
 			//var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
-			var commandText = string.Format("{0}_SoftDelete", entityInfo.Name);
+			var commandText = string.Format("{0}_MarkDelete", entityInfo.Name);
 
 			return SimpleAccess.ExecuteNonQuery(commandText, CommandType.StoredProcedure, new []{ id.ToDataParam("id")});
 		}

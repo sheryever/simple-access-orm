@@ -1310,79 +1310,55 @@
                     *
         </member>
         <member name="T:SimpleAccess.Repository.ISqlRepository">
-            --------------------------------------------------------------------------------------------------
-                <summary> IRepository. </summary>
-                *
+            <summary>
+            Represent the interface of SimpleAccess Repository methods and it's implemented by SqlRepository
+            </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SimpleAccess.Repository.ISqlRepository.GetAll``1(System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})" -->
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Get``1(System.Data.SqlClient.SqlParameter,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
-            <summary> Gets. </summary>
+        <member name="M:SimpleAccess.Repository.ISqlRepository.GetAll``1(System.String)">
+            <summary> Get all TEntity object in a <see cref="T:System.Collections.Generic.IEnumerable`1"/>. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            
+            <returns> An enumerator that allows for each to be used to process get all TEntity in this
+            collection. </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.ISqlRepository.Get``1(System.Data.SqlClient.SqlParameter,System.String)">
+            <summary> Get TEntity by Id or anyother parameter. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlParameter"> The SQL parameter. </param>
-            <param name="transaction">  (optional) the transaction. </param>
             <param name="fieldToSkip">  (optional) the field to skip. </param>
-            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Get``1(System.Data.SqlClient.SqlTransaction,System.Data.SqlClient.SqlParameter,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+        <member name="M:SimpleAccess.Repository.ISqlRepository.Get``1(System.Data.SqlClient.SqlTransaction,System.Data.SqlClient.SqlParameter,System.String)">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="transaction">  (optional) the transaction. </param>
             <param name="sqlParameter"> The SQL parameter. </param>
             <param name="fieldToSkip">  (optional) the field to skip. </param>
-            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Get``1(System.Object,System.Data.SqlClient.SqlTransaction,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+        <member name="M:SimpleAccess.Repository.ISqlRepository.Get``1(System.Object,System.Data.SqlClient.SqlTransaction,System.String)">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="paramObject"> The dynamic object as parameters. </param>
             <param name="transaction">  (optional) the transaction. </param>
             <param name="fieldToSkip">  (optional) the field to skip. </param>
-            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Get``1(System.Int64,System.Data.SqlClient.SqlTransaction,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+        <member name="M:SimpleAccess.Repository.ISqlRepository.Get``1(System.Int64,System.Data.SqlClient.SqlTransaction,System.String)">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="id">		   The identifier. </param>
             <param name="transaction"> (optional) the transaction. </param>
             <param name="fieldToSkip"> (optional) the field to skip. </param>
-            <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
-            
-            <returns> . </returns>
-        </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Get(System.String,System.Int64,System.String)">
-            <summary> Gets. </summary>
-            
-            <param name="sql">		   The SQL. </param>
-            <param name="id">		   The identifier. </param>
-            <param name="fieldToSkip"> (optional) the field to skip. </param>
-            
-            <returns> . </returns>
-        </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Get(System.String,System.Data.SqlClient.SqlParameter,System.String)">
-            <summary> Gets. </summary>
-            
-            <param name="sql">		    The SQL. </param>
-            <param name="sqlParameter"> The SQL parameter. </param>
-            <param name="fieldToSkip">  (optional) the field to skip. </param>
-            
-            <returns> . </returns>
-        </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Get(System.String,System.Object,System.String)">
-            <summary> Gets. </summary>
-            
-            <param name="sql">		    The SQL. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
-            <param name="fieldToSkip">  (optional) the field to skip. </param>
             
             <returns> . </returns>
         </member>
@@ -1402,7 +1378,14 @@
             
             <returns> . </returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SimpleAccess.Repository.ISqlRepository.Insert``1(SimpleAccess.StoredProcedureParameters)" -->
+        <member name="M:SimpleAccess.Repository.ISqlRepository.Insert``1(SimpleAccess.StoredProcedureParameters)">
+            <summary> Inserts the given TEntity. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            
+            <returns> . </returns>
+        </member>
         <member name="M:SimpleAccess.Repository.ISqlRepository.Insert``1(System.Data.SqlClient.SqlTransaction,SimpleAccess.StoredProcedureParameters)">
             <summary> Inserts the given SQL parameters. </summary>
             
@@ -1461,7 +1444,7 @@
             <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.ISqlRepository.Delete``1(System.Int64)">
-            <summary> Deletes the given ID. </summary>
+            <summary> Deletes TEntity the given ID. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="id"> The identifier. </param>
@@ -1513,56 +1496,51 @@
         <member name="M:SimpleAccess.Repository.SqlRepository.#ctor">
             <summary> Default constructor. </summary>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.GetAll``1(System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+        <member name="M:SimpleAccess.Repository.SqlRepository.GetAll``1(System.String)">
             <summary> Enumerates get all in this collection. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="fieldToSkip"> (optional) the field to skip. </param>
-            <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> An enumerator that allows for each to be used to process get all {TEntity} in this
             collection. </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Get``1(System.Int64,System.Data.SqlClient.SqlTransaction,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+        <member name="M:SimpleAccess.Repository.SqlRepository.Get``1(System.Int64,System.Data.SqlClient.SqlTransaction,System.String)">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="id">		   The identifier. </param>
             <param name="transaction"> (optional) the transaction. </param>
             <param name="fieldToSkip"> (optional) the field to skip. </param>
-            <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Get``1(System.Data.SqlClient.SqlParameter,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+        <member name="M:SimpleAccess.Repository.SqlRepository.Get``1(System.Data.SqlClient.SqlParameter,System.String)">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlParameter"> The SQL parameter. </param>
             <param name="fieldToSkip">  (optional) the field to skip. </param>
-            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Get``1(System.Data.SqlClient.SqlTransaction,System.Data.SqlClient.SqlParameter,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+        <member name="M:SimpleAccess.Repository.SqlRepository.Get``1(System.Data.SqlClient.SqlTransaction,System.Data.SqlClient.SqlParameter,System.String)">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="transaction">  (optional) the transaction. </param>
             <param name="sqlParameter"> The SQL parameter. </param>
             <param name="fieldToSkip">  (optional) the field to skip. </param>
-            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Get``1(System.Object,System.Data.SqlClient.SqlTransaction,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+        <member name="M:SimpleAccess.Repository.SqlRepository.Get``1(System.Object,System.Data.SqlClient.SqlTransaction,System.String)">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="paramObject"> The dynamic object as parameters. </param>
             <param name="transaction">  (optional) the transaction. </param>
             <param name="fieldToSkip">  (optional) the field to skip. </param>
-            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
