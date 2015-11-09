@@ -25,7 +25,7 @@ Sql Server implementaion for SimpleAccess.
 
 
 
-## Reporsitory
+## Repository
 All methods as bsed on stored procedures. All procedures are based on stored procedures and will call <IEntity>_<MethodName>.
 - `IEnumerable<TEntity> GetAll<TEntity>(string fieldToSkip = null)`  
 - `TEntity Get<TEntity>(long id, SqlTransaction transaction = null, string fieldToSkip = null)`
