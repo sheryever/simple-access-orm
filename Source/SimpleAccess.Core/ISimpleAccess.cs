@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.Common;
 using System.Reflection;
-using SimpleAccess.Core;
 
 namespace SimpleAccess.Core
 {

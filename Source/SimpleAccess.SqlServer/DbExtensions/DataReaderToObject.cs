@@ -7,6 +7,9 @@ using SimpleAccess.Entity;
 
 namespace SimpleAccess.DbExtensions
 {
+    /// <summary>
+    /// Extension to load objects from DataReaders
+    /// </summary>
     public static class DataReaderToObjectExtensions
     {
         /// <summary>
@@ -24,6 +27,7 @@ namespace SimpleAccess.DbExtensions
         /// Can be used for caching hte PropertyInfo structure for multiple operations to speed up
         /// translation. If not passed automatically created.
         /// </param>
+        /// <param name="piListBasedOnDbColumn"> List of <see cref="PropertyInfo"/> object having <see cref="DbColumnAttribute"/> in it's custom attributes</param>
         /// <returns></returns>
         public static List<TType> DataReaderToObjectList<TType>(this IDataReader reader, string fieldsToSkip = null
             , Dictionary<string, PropertyInfo> piList = null, Dictionary<string, PropertyInfo> piListBasedOnDbColumn = null)
@@ -65,6 +69,21 @@ namespace SimpleAccess.DbExtensions
 
             return items;
         }
+
+
+        /// <summary>
+        /// Created the object of TType and populates the properties of that object from a single DataReader row using
+        /// Reflection by matching the DataReader fields to a public property 
+        /// of the object. Unmatched properties are left unchanged.
+        /// 
+        /// You need to pass in a data reader located on the active row you want
+        /// to serialize.
+        /// 
+        /// </summary>
+        /// <param name="reader">Instance of the DataReader to read data from. Should be located on the correct record (Read() should have been called on it before calling this method)</param>
+        /// <param name="fieldsToSkip">Optional - A comma delimited list of object properties that should not be updated</param>
+        /// <param name="piList">Optional - Cached PropertyInfo dictionary that holds property info data for this object</param>
+        /// <param name="piListBasedOnDbColumn"> List of <see cref="PropertyInfo"/> object having <see cref="DbColumnAttribute"/> in it's custom attributes</param>
 
         public static TType DataReaderToObject<TType>(this IDataReader reader, string fieldsToSkip = null
             , Dictionary<string, PropertyInfo> piList = null, Dictionary<string, PropertyInfo> piListBasedOnDbColumn = null)
@@ -125,6 +144,7 @@ namespace SimpleAccess.DbExtensions
         /// <param name="instance">Instance of the object to populate properties on</param>
         /// <param name="fieldsToSkip">Optional - A comma delimited list of object properties that should not be updated</param>
         /// <param name="piList">Optional - Cached PropertyInfo dictionary that holds property info data for this object</param>
+        /// <param name="piListBasedOnDbColumn"> List of <see cref="PropertyInfo"/> object having <see cref="DbColumnAttribute"/> in it's custom attributes</param>
         public static void DataReaderToObject(this IDataReader reader, object instance, string fieldsToSkip = null
             , Dictionary<string, PropertyInfo> piList = null, Dictionary<string, PropertyInfo> piListBasedOnDbColumn = null)
         {
@@ -265,9 +285,6 @@ namespace SimpleAccess.DbExtensions
                     }
                 }
             }
-
-
-            return;
         }
  
     }

@@ -5,6 +5,9 @@ using System.Reflection;
 
 namespace SimpleAccess
 {
+    /// <summary>
+    /// Class only exsist for idea
+    /// </summary>
     public static class DatabaseExtensions
     {
         //public static IEnumerable<TResult> ExecuteStoredProcedure<TResult>(this Database database, IStoredProcedure<TResult> procedure)
@@ -39,6 +42,10 @@ namespace SimpleAccess
             return queryString.TrimEnd(',');
         }
 
+        /// <summary>
+        /// Only Exist for idea
+        /// </summary>
+        /// <typeparam name="TResult"></typeparam>
         public interface IStoredProcedure<TResult>
         {
         }

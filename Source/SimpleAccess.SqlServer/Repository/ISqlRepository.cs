@@ -148,7 +148,7 @@ namespace SimpleAccess.Repository
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         int Delete<TEntity>(params SqlParameter[] sqlParameters)
-            where TEntity : IEntity;
+            where TEntity : class;
 
         /// <summary> Deletes the given dynamic object as SqlParameter names and values. </summary>
         /// 
@@ -157,7 +157,7 @@ namespace SimpleAccess.Repository
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         int Delete<TEntity>(dynamic paramObject)
-            where TEntity : IEntity;
+            where TEntity : class;
 
         /// <summary> Deletes TEntity the given ID. </summary>
         /// 
@@ -166,7 +166,7 @@ namespace SimpleAccess.Repository
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         int Delete<TEntity>(long id)
-            where TEntity : IEntity;
+            where TEntity : class;
 
         /// <summary> Deletes the given ID. </summary>
         /// 
@@ -176,7 +176,7 @@ namespace SimpleAccess.Repository
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         int Delete<TEntity>(SqlTransaction sqlTransaction, long id)
-            where TEntity : IEntity;
+            where TEntity : class;
 
         /// <summary> Deletes the given ID. </summary>
         /// 
@@ -186,7 +186,7 @@ namespace SimpleAccess.Repository
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         int Delete<TEntity>(SqlTransaction sqlTransaction, params SqlParameter[] sqlParameters)
-            where TEntity : IEntity;
+            where TEntity : class;
 
         /// <summary> Soft delete. </summary>
 		/// 
@@ -195,7 +195,7 @@ namespace SimpleAccess.Repository
 		/// 
         /// <returns> Number of rows affected (integer) </returns>
         int SoftDelete<TEntity>(long id)
-			where TEntity : IEntity;
+			where TEntity : class;
 
     }
 }

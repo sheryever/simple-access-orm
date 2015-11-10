@@ -339,7 +339,7 @@ namespace SimpleAccess.Repository
         /// 
         /// <returns> . </returns>
         public int Delete<TEntity>(long id)
-            where TEntity : IEntity
+            where TEntity : class
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
@@ -358,7 +358,7 @@ namespace SimpleAccess.Repository
         /// 
         /// <returns> . </returns>
         public int Delete<TEntity>(SqlTransaction sqlTransaction, long id)
-            where TEntity : IEntity
+            where TEntity : class
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
@@ -376,7 +376,7 @@ namespace SimpleAccess.Repository
         /// 
         /// <returns> . </returns>
         public virtual int Delete<TEntity>(params SqlParameter[] sqlParameters)
-            where TEntity : IEntity
+            where TEntity : class
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
@@ -394,7 +394,7 @@ namespace SimpleAccess.Repository
         /// 
         /// <returns> . </returns>
         public virtual int Delete<TEntity>(dynamic paramObject)
-            where TEntity : IEntity
+            where TEntity : class
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
@@ -411,7 +411,7 @@ namespace SimpleAccess.Repository
         /// 
         /// <returns> . </returns>
         public virtual int Delete<TEntity>(SqlTransaction sqlTransaction, params SqlParameter[] sqlParameters)
-            where TEntity : IEntity
+            where TEntity : class
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
@@ -427,7 +427,7 @@ namespace SimpleAccess.Repository
         /// 
         /// <returns> . </returns>
         public int SoftDelete<TEntity>(long id)
-			where TEntity : IEntity
+			where TEntity : class
 		{
 			//var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
