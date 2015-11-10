@@ -8,6 +8,9 @@ using System.Runtime.InteropServices;
 
 namespace SimpleAccess
 {
+    /// <summary>
+    /// Defines the extra extensions method for <see cref="SqlParameter"/>.
+    /// </summary>
     public static class SqlParametersExtensions
     {
         /// <summary>
@@ -61,6 +64,13 @@ namespace SimpleAccess
             return sqlParameterList.ToArray();
         }
 
+        /// <summary>
+        /// Create and returns a SqlParameter of attached struct type.
+        /// </summary>
+        /// <typeparam name="T"> Attached by variable type.</typeparam>
+        /// <param name="value"> The value of attached variable.</param>
+        /// <param name="paramName"> DbParameter Name </param>
+        /// <returns></returns>
         public static SqlParameter ToDataParam<T>(this T value, string paramName)
             where T : struct
         {
@@ -68,6 +78,14 @@ namespace SimpleAccess
             return new SqlParameter("@" + paramName, value);
         }
 
+        /// <summary>
+        /// Create and returns a SqlParameter of attached struct type.
+        /// </summary>
+        /// <typeparam name="T"> Attached by variable type.</typeparam>
+        /// <param name="value"> The value of attached variable.</param>
+        /// <param name="paramName"> SqlParameter Name </param>
+        /// <param name="sqlDbType"> The <see cref="SqlDbType"/> of the SqlParameter </param>
+        /// <returns></returns>
         public static SqlParameter ToDataParam<T>(this T value, string paramName, SqlDbType sqlDbType)
             where T : struct
         {
@@ -80,12 +98,27 @@ namespace SimpleAccess
             return sqlParam;
         }
 
+        /// <summary>
+        /// Create and returns a SqlParameter of attached nullable struct type.
+        /// </summary>
+        /// <typeparam name="T"> Attached by variable type.</typeparam>
+        /// <param name="value"> The value of attached variable.</param>
+        /// <param name="paramName"> SqlParameter Name </param>
+        /// <returns></returns>
         public static SqlParameter ToDataParam<T>(this T? value, string paramName)
             where T : struct
         {
             return new SqlParameter("@" + paramName, value.HasValue? (object)value : DBNull.Value);
         }
 
+        /// <summary>
+        /// Create and returns a SqlParameter of attached nullable struct type.
+        /// </summary>
+        /// <typeparam name="T"> Attached by variable type.</typeparam>
+        /// <param name="value"> The value of attached variable.</param>
+        /// <param name="paramName"> SqlParameter Name </param>
+        /// <param name="sqlDbType"> The <see cref="SqlDbType"/> of the SqlParameter </param>
+        /// <returns></returns>
         public static SqlParameter ToDataParam<T>(this T? value, string paramName, SqlDbType sqlDbType)
             where T : struct
         {
@@ -99,6 +132,13 @@ namespace SimpleAccess
             return sqlParam;
         }
 
+        /// <summary>
+        /// Create and returns a SqlParameter of attached string.
+        /// The method also avoid the Sql Injection by replacing single qoute "'" character with tow single qoutes "''" characters
+        /// </summary>
+        /// <param name="value"> The value of attached variable.</param>
+        /// <param name="paramName"> SqlParameter Name </param>
+        /// <returns></returns>
         public static SqlParameter ToDataParam(this string value, string paramName)
         {
             var sqlParam = new SqlParameter("@" + paramName, SqlDbType.NVarChar, 4000)
@@ -107,6 +147,15 @@ namespace SimpleAccess
             };
             return sqlParam;
         }
+
+        /// <summary>
+        /// Create and returns a SqlParameter of attached struct type.
+        /// The method also avoid the Sql Injection by replacing single qoute "'" character with tow single qoutes "''" characters
+        /// </summary>
+        /// <param name="value"> The value of attached variable.</param>
+        /// <param name="paramName"> SqlParameter Name </param>
+        /// <param name="size"> The length of the string value in the SqlParameters</param>
+        /// <returns></returns>
 
         public static SqlParameter ToDataParam(this string value, string paramName, int size)
         {
@@ -117,6 +166,14 @@ namespace SimpleAccess
             return sqlParam;
         }
 
+        /// <summary>
+        /// Create and returns a SqlParameter of attached struct type.
+        /// The method allow to pass "'" character to database
+        /// </summary>
+        /// <param name="value"> The value of attached variable.</param>
+        /// <param name="paramName"> SqlParameter Name </param>
+        /// <param name="size"> The length of the string value in the SqlParameters</param>
+        /// <returns></returns>
         public static SqlParameter ToSafeDataParam(this string value, string paramName, int size)
         {
             var sqlParam = new SqlParameter("@" + paramName, SqlDbType.NVarChar, size)

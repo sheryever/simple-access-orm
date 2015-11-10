@@ -21,21 +21,21 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Builds\New\dev\</OutputPath>
+    <OutputPath>..\..\Builds\nightly-build\dev\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\Builds\New\dev\SimpleAccess.SqlServer.xml</DocumentationFile>
+    <DocumentationFile>..\..\Builds\nightly-build\dev\SimpleAccess.SqlServer.XML</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Builds\New\deploy\</OutputPath>
+    <OutputPath>..\..\Builds\nightly-build\deploy\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\Builds\New\deploy\SimpleAccess.SqlServer.XML</DocumentationFile>
+    <DocumentationFile>..\..\Builds\nightly-build\deploy\SimpleAccess.SqlServer.XML</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>

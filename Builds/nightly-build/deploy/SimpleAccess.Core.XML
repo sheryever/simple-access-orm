@@ -281,7 +281,7 @@
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteEntities``1(`1,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},`3[])">
             <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
             
-            <exception cref="T:System.Data.Common.DbException"> Thrown when an exception error condition occurs. </exception>
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <typeparam name="TEntity"> Generic type parameter. </typeparam>
             <param name="transaction"> The SQL transaction. </param>
@@ -672,6 +672,67 @@
             Log the exception when the any exception occur in SimpleAccess
             </summary>
             <param name="exception"></param>
+        </member>
+        <member name="T:SimpleAccess.Core.Logger.SimpleLogger">
+            <summary>
+            Default implementaion of ISimpleLoger, It uses the <see cref="T:System.Diagnostics.Trace"/> to log the <see cref="T:System.Exception"/>.
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.Core.Logger.SimpleLogger.LogException(System.Exception)">
+            <summary>
+            Log the <see cref="T:System.Exception"/> using <see cref="T:System.Diagnostics.Trace"/>.
+            </summary>
+            <param name="exception"> <see cref="T:System.Exception"/> thrown from the methods</param>
+        </member>
+        <member name="T:SimpleAccess.Core.SimpleAccessSettings">
+            <summary>
+            Used for setting up the default setting of SimpleAccess.
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.Core.SimpleAccessSettings.GetProperConnectionString(System.String)">
+            <summary>
+            Check for the connection is a connectionString name from the config or 
+            a complete database connetion string and return the connnection string.
+            </summary>
+            <param name="connection"> The connectionString Name from the config or a complete ConnectionString.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleAccess.Core.SimpleAccessSettings.LoadConnectionStringSettingsFromConfigurationFile(System.String,System.Boolean)">
+            <summary>
+            Load and returns the <see cref="T:System.Configuration.ConnectionStringSettings"/> from the default config file
+            based on provided contection string name.
+            </summary>
+            <param name="connectionStringName"> The connection string name </param>
+            <param name="force"> The <see cref="T:System.Configuration.ConnectionStringSettings"/> required other wise thorw Exception </param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleAccess.Core.SimpleAccessSettings.#ctor">
+            <summary>
+            Initialize the new object of SimpleAccessSettings with default properties.
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.Core.SimpleAccessSettings.#ctor(System.Data.CommandType)">
+            <summary>
+            Initialize the new object of SimpleAccessSettings with default properties.
+            </summary>
+            <param name="defaultCommandType"> The default <see cref="T:System.Data.CommandType"/> of this new Object</param>
+        </member>
+        <member name="M:SimpleAccess.Core.SimpleAccessSettings.#ctor(System.Data.CommandType,SimpleAccess.Core.Logger.ISimpleLogger)">
+            <summary>
+            Initialize the new object of SimpleAccessSettings with default properties.
+            </summary>
+            <param name="defaultCommandType"> The default <see cref="T:System.Data.CommandType"/> of this new object</param>
+            <param name="defaultLogger"> The default <see cref="T:SimpleAccess.Core.Logger.ISimpleLogger"/> implementaion for parent SimpleAccess object</param>
+        </member>
+        <member name="P:SimpleAccess.Core.SimpleAccessSettings.DefaultCommandType">
+            <summary>
+            Default property of <see cref="T:System.Data.CommandType"/>.
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.Core.SimpleAccessSettings.DefaultLogger">
+            <summary>
+            Default <see cref="T:SimpleAccess.Core.Logger.ISimpleLogger"/>.
+            </summary>
         </member>
     </members>
 </doc>

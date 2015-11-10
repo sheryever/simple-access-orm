@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.Common;
 using System.Reflection;
-using SimpleAccess.Core;
 
 namespace SimpleAccess.Core
 {
@@ -325,7 +324,7 @@ namespace SimpleAccess.Core
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
         /// 
-        /// <exception cref="DbException"> Thrown when an exception error condition occurs. </exception>
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Generic type parameter. </typeparam>
         /// <param name="transaction"> The SQL transaction. </param>
@@ -723,7 +722,6 @@ namespace SimpleAccess.Core
         /// <param name="paramObject"> The dynamic object as parameters. </param>
         /// 
         /// <returns> Result in a dynamic object. </returns>
-
         dynamic ExecuteDynamic(TDbTransaction transaction, string commandText,
                                     string fieldsToSkip = null, dynamic paramObject = null);
 
@@ -739,7 +737,6 @@ namespace SimpleAccess.Core
         /// <param name="paramObject"> The dynamic object as parameters. </param>
         /// 
         /// <returns> Result in a dynamic object. </returns>
-
         dynamic ExecuteDynamic(TDbTransaction transaction, string commandText, CommandType commandType,
                                     string fieldsToSkip = null, dynamic paramObject = null);
 

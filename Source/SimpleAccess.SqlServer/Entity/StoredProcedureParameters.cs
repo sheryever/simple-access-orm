@@ -10,6 +10,9 @@ using SimpleAccess.DbExtensions;
 
 namespace SimpleAccess
 {
+    /// <summary>
+    /// Base class of all TEntity Classes
+    /// </summary>
     public class StoredProcedureParameters
     {
         private string _entityName;
@@ -20,12 +23,20 @@ namespace SimpleAccess
         private ParametersType? _storedParametersType = null;
         private SqlParameter IdentityKeySqlParameter { get; set; }
 
-
+        /// <summary>
+        /// Add more parameters in underline DbParameters
+        /// </summary>
+        /// <param name="paramsObject"></param>
         public void AddSqlParameters(dynamic paramsObject)
         {
             _sqlParameters.CreateSqlParametersFromDynamic(paramsObject as Object);
         }
 
+        /// <summary>
+        /// Create paramters from object properties
+        /// </summary>
+        /// <param name="parametersType"></param>
+        /// <returns></returns>
         public SqlParameter[] CreateSqlParametersFromProperties(ParametersType parametersType)
         {
 
@@ -43,6 +54,11 @@ namespace SimpleAccess
             return _sqlParameters.ToArray();
         }
 
+        /// <summary>
+        /// Get underline DbParametes
+        /// </summary>
+        /// <param name="parametersType"></param>
+        /// <returns></returns>
         public SqlParameter[] GetSpParameters(ParametersType parametersType) 
         {
             if (_storedParametersType != parametersType)
@@ -122,7 +138,7 @@ namespace SimpleAccess
                 {
                     sqlParam.Direction = outParaAttr.SpParameterDirection;
                     _outParameterPropertyInfoCollection.Add(propertyInfo);
-                    this._spOutParameters.Add(sqlParam);
+                    _spOutParameters.Add(sqlParam);
                 }
 
                 //if (propertyInfo.PropertyType.GetType() is DateTime
@@ -136,6 +152,9 @@ namespace SimpleAccess
             return sqlParam;
         }
 
+        /// <summary>
+        /// Load all the properties from DbParameters which were marked as ParameterDirection.Out
+        /// </summary>
         public void LoadOutParametersProperties() 
         {
             _outParameterPropertyInfoCollection.ForEach(p => {
@@ -153,6 +172,9 @@ namespace SimpleAccess
             ClearSpParameters();
         }
 
+        /// <summary>
+        /// Clear all DbParamters
+        /// </summary>
         public void ClearSpParameters()
         {
             _spOutParameters.Clear();
@@ -160,7 +182,11 @@ namespace SimpleAccess
             _outParameterPropertyInfoCollection.Clear();
         }
 
-        public IList<ValidationResult> Validate()
+        /// <summary>
+        /// Validate the object and get the result if any.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ValidationResult> Validate()
         {
             IList<ValidationResult> result = new List<ValidationResult>();
             Validator.TryValidateObject(this, new ValidationContext(this, null, null), result, true);
@@ -168,9 +194,9 @@ namespace SimpleAccess
             return result;
         }
 
-        private string SafeSqlLiteral(string inputSQL)
+        private string SafeSqlLiteral(string inputSql)
         {
-            return inputSQL.Replace("'", "''");
+            return inputSql.Replace("'", "''");
         }
 
     }

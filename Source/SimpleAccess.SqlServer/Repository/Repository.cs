@@ -1,9 +1,4 @@
-﻿/**--------------------------------------------------------------------------------------------------
-// file:	Repository\Repository.cs
-//
-// summary:	Implements the repository class
-**/
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -13,13 +8,9 @@ using System.Reflection;
 using SimpleAccess.DbExtensions;
 using SimpleAccess.Entity;
 
-//using SimpleAccess.Infrastructure.DbExtensions;
-
 namespace SimpleAccess.Repository
 {
-    /**--------------------------------------------------------------------------------------------------
-    <summary> Repository. </summary>
-    **/
+    /// <summary> Repository. </summary>
     public class Repository : IRepository, IDisposable
     {
         private const string DefaultConnectionStringKey = "simpleAccess:connectionStringName";
@@ -28,41 +19,41 @@ namespace SimpleAccess.Repository
         /// </summary>
         public static string DefaultConnectionString { get; set; }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> The SQL connection. </summary>
-        **/
+        
+        /// <summary> The SQL connection. </summary>
+        
         private SqlConnection _sqlConnection;
 
-		/**--------------------------------------------------------------------------------------------------
-		<summary> The SQL transaction. </summary>
-		**/
-		private SqlTransaction _sqlTransaction;
+        
+		/// <summary> The SQL transaction. </summary>
+		
+        private SqlTransaction _sqlTransaction;
 
         #region Constructor
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Constructor. </summary>
         
-        <param name="sqlConnection"> The SQL connection. </param>
-        **/
+        /// <summary> Constructor. </summary>
+        /// 
+        /// <param name="sqlConnection"> The SQL connection. </param>
+        
         public Repository(SqlConnection sqlConnection)
         {
             _sqlConnection = sqlConnection;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Constructor. </summary>
         
-        <param name="connectionString"> The connection string. </param>
-        **/
+        /// <summary> Constructor. </summary>
+        /// 
+        /// <param name="connectionString"> The connection string. </param>
+        
         public Repository(string connectionString)
             : this(new SqlConnection(connectionString))
         {
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Default constructor. </summary>
-        **/
+        
+        /// <summary> Default constructor. </summary>
+        
         public Repository()
             : this(new SqlConnection(DefaultConnectionString))
         {
@@ -76,11 +67,11 @@ namespace SimpleAccess.Repository
         }
         #endregion
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Begins a transaction. </summary>
         
-        <returns> . </returns>
-        **/
+        /// <summary> Begins a transaction. </summary>
+        /// 
+        /// <returns> . </returns>
+        
         public SqlTransaction BeginTrasaction()
         {
             if (_sqlConnection.State != ConnectionState.Open)
@@ -90,26 +81,26 @@ namespace SimpleAccess.Repository
 			return _sqlTransaction;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Gets the new connection. </summary>
-        
-        <returns> The new connection. </returns>
-        **/
+
+        /// <summary> Gets the new connection. </summary>
+        /// 
+        /// <returns> The new connection. </returns>
+
         public SqlConnection GetNewConnection()
         {
             return new SqlConnection(DefaultConnectionString);
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Enumerates get all in this collection. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="fieldToSkip"> (optional) the field to skip. </param>
-        <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <summary> Enumerates get all in this collection. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="fieldToSkip"> (optional) the field to skip. </param>
+        /// <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> An enumerator that allows for each to be used to process get all TEntity in this
+        /// collection.</returns>
         
-        <returns> An enumerator that allows for each to be used to process get all <TEntity> in this
-        collection. </returns>
-        **/
         public virtual IEnumerable<TEntity> GetAll<TEntity>(string fieldToSkip = null, Dictionary<string, PropertyInfo> piList = null)
             where TEntity : new()
         {
@@ -119,23 +110,17 @@ namespace SimpleAccess.Repository
             return ExecuteReader<TEntity>(queryString, CommandType.StoredProcedure, fieldToSkip, piList);
         }
 
-        //public TEntity Get<TEntity>(long id, string fieldToSkip = null, Dictionary<string, PropertyInfo> piList = null)
-        //    where TEntity : new()
-        //{
-        //    return Get<TEntity>(new SqlParameter("@id", id), fieldToSkip, piList);
-        //}
-
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Gets. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="id">		   The identifier. </param>
-        <param name="transaction"> (optional) the transaction. </param>
-        <param name="fieldToSkip"> (optional) the field to skip. </param>
-        <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <summary> Gets. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="id">		   The identifier. </param>
+        /// <param name="transaction"> (optional) the transaction. </param>
+        /// <param name="fieldToSkip"> (optional) the field to skip. </param>
+        /// <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public TEntity Get<TEntity>(long id, SqlTransaction transaction = null, string fieldToSkip = null,
                                     Dictionary<string, PropertyInfo> piList = null)
             where TEntity : class, new()
@@ -143,17 +128,17 @@ namespace SimpleAccess.Repository
             return Get<TEntity>(new SqlParameter("@id", id), transaction, fieldToSkip, piList);
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Gets. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlParameter"> The SQL parameter. </param>
-        <param name="transaction">  (optional) the transaction. </param>
-        <param name="fieldToSkip">  (optional) the field to skip. </param>
-        <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <summary> Gets. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlParameter"> The SQL parameter. </param>
+        /// <param name="transaction">  (optional) the transaction. </param>
+        /// <param name="fieldToSkip">  (optional) the field to skip. </param>
+        /// <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public TEntity Get<TEntity>(SqlParameter sqlParameter, SqlTransaction transaction = null, string fieldToSkip = null, Dictionary<string, PropertyInfo> piList = null)
             where TEntity : class, new()
         {
@@ -168,17 +153,17 @@ namespace SimpleAccess.Repository
                 return ExecuteReaderSingle<TEntity>(transaction, queryString, CommandType.StoredProcedure, fieldToSkip, piList, sqlParameter);
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Gets. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="paramObject"> The dynamic object as parameters. </param>
-        <param name="transaction">  (optional) the transaction. </param>
-        <param name="fieldToSkip">  (optional) the field to skip. </param>
-        <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <summary> Gets. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// <param name="transaction">  (optional) the transaction. </param>
+        /// <param name="fieldToSkip">  (optional) the field to skip. </param>
+        /// <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public TEntity Get<TEntity>(dynamic paramObject, SqlTransaction transaction = null, string fieldToSkip = null, Dictionary<string, PropertyInfo> piList = null)
             where TEntity : class, new()
         {
@@ -194,47 +179,47 @@ namespace SimpleAccess.Repository
         }
 
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Gets. </summary>
         
-        <param name="sql">		   The SQL. </param>
-        <param name="id">		   The identifier. </param>
-        <param name="fieldToSkip"> (optional) the field to skip. </param>
-        <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <summary> Gets. </summary>
+        /// 
+        /// <param name="sql">		   The SQL. </param>
+        /// <param name="id">		   The identifier. </param>
+        /// <param name="fieldToSkip"> (optional) the field to skip. </param>
+        /// <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public dynamic Get(string sql, long id, string fieldToSkip = null, Dictionary<string, PropertyInfo> piList = null)
         {
             return Get(sql, new SqlParameter("@id", id), fieldToSkip, piList);
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Gets. </summary>
         
-        <param name="sql">		    The SQL. </param>
-        <param name="sqlParameter"> The SQL parameter. </param>
-        <param name="fieldToSkip">  (optional) the field to skip. </param>
-        <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <summary> Gets. </summary>
+        /// 
+        /// <param name="sql">		    The SQL. </param>
+        /// <param name="sqlParameter"> The SQL parameter. </param>
+        /// <param name="fieldToSkip">  (optional) the field to skip. </param>
+        /// <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public dynamic Get(string sql, SqlParameter sqlParameter, string fieldToSkip = null, Dictionary<string, PropertyInfo> piList = null)
         {
             return ExecuteReaderSingle(sql, CommandType.StoredProcedure, fieldToSkip, piList, sqlParameter);
             
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Gets. </summary>
-        
-        <param name="sql">		    The SQL. </param>
-        <param name="paramObject"> The dynamic object as parameters. </param>
-        <param name="fieldToSkip">  (optional) the field to skip. </param>
-        <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
-        
-        <returns> . </returns>
-        **/
+
+        /// <summary> Gets. </summary>
+        /// 
+        /// <param name="sql">		    The SQL. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// <param name="fieldToSkip">  (optional) the field to skip. </param>
+        /// <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> . </returns>
+
         public dynamic Get(string sql, dynamic paramObject, string fieldToSkip = null, Dictionary<string, PropertyInfo> piList = null)
         {
 
@@ -242,14 +227,14 @@ namespace SimpleAccess.Repository
 
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Inserts the given SQL parameters. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// <summary> Inserts the given SQL parameters. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public int Insert<TEntity>(params SqlParameter[] sqlParameters)
         {
             //var name = typeof(TEntity).Name;
@@ -260,14 +245,14 @@ namespace SimpleAccess.Repository
             return ExecuteNonQuery(queryString, CommandType.StoredProcedure, sqlParameters);
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Inserts the given dynamic object as SqlParameter names and values. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="paramObject"> The dynamic object as parameters. </param>
+        /// <summary> Inserts the given dynamic object as SqlParameter names and values. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public int Insert<TEntity>(dynamic paramObject)
         {
             //var name = typeof(TEntity).Name;
@@ -278,14 +263,14 @@ namespace SimpleAccess.Repository
             return ExecuteNonQuery(queryString, CommandType.StoredProcedure, BuildSqlParameters(paramObject));
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Inserts the given SQL parameters. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <summary> Inserts the given SQL parameters. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public int Insert<TEntity>(StoredProcedureParameters storedProcedureParameters)
             where TEntity: class
         {
@@ -303,15 +288,15 @@ namespace SimpleAccess.Repository
             return result;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Inserts the given SQL parameters. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
-        <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <summary> Inserts the given SQL parameters. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public int Insert<TEntity>(StoredProcedureParameters storedProcedureParameters, SqlTransaction sqlTransaction = null)
             where TEntity : class
         {
@@ -329,15 +314,15 @@ namespace SimpleAccess.Repository
             return result;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Inserts the given SQL parameters. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlTransaction">			 The SQL transaction. </param>
-        <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <summary> Inserts the given SQL parameters. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public int Insert<TEntity>(SqlTransaction sqlTransaction, StoredProcedureParameters storedProcedureParameters)
             where TEntity : class
         {
@@ -355,14 +340,14 @@ namespace SimpleAccess.Repository
             return result;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Updates the given sqlParameters. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// <summary> Updates the given sqlParameters. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public int Update<TEntity>(params SqlParameter[] sqlParameters)
             where TEntity : class
         {
@@ -373,13 +358,13 @@ namespace SimpleAccess.Repository
             return ExecuteNonQuery(queryString, CommandType.StoredProcedure, sqlParameters);
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Updates the given dynamic object as SqlParameter names and values. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="paramObject"> The dynamic object as parameters. </param>        
-        <returns> . </returns>
-        **/
+        /// <summary> Updates the given dynamic object as SqlParameter names and values. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>        
+        /// <returns> . </returns>
+        
         public int Update<TEntity>(dynamic paramObject)
             where TEntity : class
         {
@@ -390,14 +375,14 @@ namespace SimpleAccess.Repository
             return ExecuteNonQuery(queryString, CommandType.StoredProcedure, BuildSqlParameters(paramObject));
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Updates the given sqlParameters. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <summary> Updates the given sqlParameters. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public int Update<TEntity>(StoredProcedureParameters storedProcedureParameters)
             where TEntity : class 
         {
@@ -414,15 +399,15 @@ namespace SimpleAccess.Repository
             return result;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Updates the given sqlParameters. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlTransaction">			 The SQL transaction. </param>
-        <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <summary> Updates the given sqlParameters. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public int Update<TEntity>(SqlTransaction sqlTransaction, StoredProcedureParameters storedProcedureParameters)
             where TEntity : class
         {
@@ -439,17 +424,17 @@ namespace SimpleAccess.Repository
             return result;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Deletes the given ID. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="id"> The identifier. </param>
-        <param name="sqlTransaction">			 The SQL transaction. </param>
-
-        <returns> . </returns>
-        **/
+        /// <summary> Deletes the given ID. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="id"> The identifier. </param>
+        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// 
+        /// <returns> . </returns>
+        
         public int Delete<TEntity>(long id, SqlTransaction sqlTransaction = null)
-            where TEntity : IEntity
+            where TEntity : class
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
@@ -462,16 +447,16 @@ namespace SimpleAccess.Repository
 			return result;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Deletes the given ID. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// <summary> Deletes the given ID. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public virtual int Delete<TEntity>(params SqlParameter[] sqlParameters)
-            where TEntity : IEntity
+            where TEntity : class
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
@@ -481,16 +466,16 @@ namespace SimpleAccess.Repository
             return ExecuteNonQuery(queryString, CommandType.StoredProcedure, sqlParameters);
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Deletes the given dynamic object as SqlParameter names and values. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="paramObject"> The dynamic object as parameters. </param>
+        /// <summary> Deletes the given dynamic object as SqlParameter names and values. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public virtual int Delete<TEntity>(dynamic paramObject)
-            where TEntity : IEntity
+            where TEntity : class
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
@@ -499,17 +484,17 @@ namespace SimpleAccess.Repository
             return ExecuteNonQuery(queryString, CommandType.StoredProcedure, BuildSqlParameters(paramObject));
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Deletes the given ID. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sqlParameters">  Options for controlling the SQL. </param>
+        /// <summary> Deletes the given ID. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sqlParameters">  Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public virtual int Delete<TEntity>(SqlTransaction sqlTransaction, params SqlParameter[] sqlParameters)
-            where TEntity : IEntity
+            where TEntity : class
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
@@ -518,16 +503,16 @@ namespace SimpleAccess.Repository
             return ExecuteNonQuery(sqlTransaction, queryString, CommandType.StoredProcedure, sqlParameters);
         }
 
-		/**--------------------------------------------------------------------------------------------------
-		<summary> Soft delete. </summary>
+        
+		/// <summary> Soft delete. </summary>
+		/// 
+		/// <typeparam name="TEntity"> Type of the entity. </typeparam>
+		/// <param name="id"> The identifier. </param>
+		/// 
+		/// <returns> . </returns>
 		
-		<typeparam name="TEntity"> Type of the entity. </typeparam>
-		<param name="id"> The identifier. </param>
-		
-		<returns> . </returns>
-		**/
-		public int SoftDelete<TEntity>(long id)
-			where TEntity : IEntity
+        public int SoftDelete<TEntity>(long id)
+			where TEntity : class
 		{
 			//var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
@@ -536,36 +521,36 @@ namespace SimpleAccess.Repository
 			return ExecuteNonQuery(queryString, CommandType.StoredProcedure, new SqlParameter("@id", id));
 		}
 
-        /**--------------------------------------------------------------------------------------------------
-       <summary> Executes the non query operation. </summary>
         
-       <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-        
-       <param name="sqlTransaction"> The SQL transaction. </param>
-       <param name="sql">			  The SQL. </param>
-       <param name="commandType">    Type of the command. </param>
-        <param name="paramObject"> The dynamic object as parameters. </param>
-        
-       <returns> . </returns>
-       **/
+       /// <summary> Executes the non query operation. </summary>
+       ///  
+       /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+       ///  
+       /// <param name="sqlTransaction"> The SQL transaction. </param>
+       /// <param name="sql">			  The SQL. </param>
+       /// <param name="commandType">    Type of the command. </param>
+       /// <param name="paramObject"> The dynamic object as parameters. </param>
+       ///  
+       /// <returns> . </returns>
+       
         public int ExecuteNonQuery(SqlTransaction sqlTransaction, string sql, CommandType commandType, dynamic paramObject)
         {
             return ExecuteNonQuery(sqlTransaction, sql, commandType, BuildSqlParameters(paramObject));
 
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the non query operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the non query operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="sqlParameters">  Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="sqlParameters">  Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
         public int ExecuteNonQuery(SqlTransaction sqlTransaction, string sql, CommandType commandType, params SqlParameter[] sqlParameters)
         {
             int result;
@@ -583,33 +568,33 @@ namespace SimpleAccess.Repository
         }
 
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the non query operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the non query operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>        
+        /// <returns> . </returns>
         
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="paramObject"> The dynamic object as parameters. </param>        
-        <returns> . </returns>
-        **/
         public int ExecuteNonQuery(string sql, CommandType commandType, dynamic paramObject)
         {
             return ExecuteNonQuery(sql, commandType, BuildSqlParameters(paramObject));
         }
 
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the non query operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the non query operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
         public int ExecuteNonQuery(string sql, CommandType commandType, params SqlParameter[] sqlParameters)
         {
             int result;
@@ -631,38 +616,38 @@ namespace SimpleAccess.Repository
             return result;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the scalar operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the scalar operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="T"> Generic type parameter. </typeparam>
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-        <returns> . </returns>
-        **/
         public T ExecuteScalar<T>(SqlTransaction sqlTransaction, string sql, CommandType commandType, dynamic paramObject)
         {
             return ExecuteScalar<T>(sqlTransaction, sql, commandType, BuildSqlParameters(paramObject));
         }
 
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the scalar operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the scalar operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="sqlParameters">  Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="T"> Generic type parameter. </typeparam>
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="sqlParameters">  Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
         public T ExecuteScalar<T>(SqlTransaction sqlTransaction, string sql, CommandType commandType, params SqlParameter[] sqlParameters)
         {
             try
@@ -680,36 +665,36 @@ namespace SimpleAccess.Repository
         }
 
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the scalar operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the scalar operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="T"> Generic type parameter. </typeparam>
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-        <returns> . </returns>
-        **/
         public T ExecuteScalar<T>(string sql, CommandType commandType, dynamic paramObject)
         {
             return ExecuteScalar<T>(sql, commandType, BuildSqlParameters(paramObject));
 
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the scalar operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the scalar operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="T"> Generic type parameter. </typeparam>
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
         public T ExecuteScalar<T>(string sql, CommandType commandType, params SqlParameter[] sqlParameters)
         {
             try
@@ -731,20 +716,20 @@ namespace SimpleAccess.Repository
             }
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-        <returns> . </returns>
-        **/
         public List<TEntity> ExecuteReader<TEntity>(string sql, CommandType commandType
             , string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null
             , dynamic paramObject = null)
@@ -755,20 +740,20 @@ namespace SimpleAccess.Repository
                 , BuildSqlParameters(paramObject));
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
         public List<TEntity> ExecuteReader<TEntity>(string sql, CommandType commandType
             , string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null
             , params SqlParameter[] sqlParameters)
@@ -796,21 +781,21 @@ namespace SimpleAccess.Repository
         }
 
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-        <returns> . </returns>
-        **/
         public List<TEntity> ExecuteReader<TEntity>(SqlTransaction sqlTransaction, string sql
             , CommandType commandType, string fieldsToSkip = null
             , Dictionary<string, PropertyInfo> piList = null, dynamic paramObject = null)
@@ -820,21 +805,21 @@ namespace SimpleAccess.Repository
                 , fieldsToSkip, piList
                 , BuildSqlParameters(paramObject));
         }
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="sqlParameters">  Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        <param name="sqlParameters">  Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
         public List<TEntity> ExecuteReader<TEntity>(SqlTransaction sqlTransaction, string sql
             , CommandType commandType, string fieldsToSkip = null
             , Dictionary<string, PropertyInfo> piList = null, params SqlParameter[] sqlParameters)
@@ -856,20 +841,20 @@ namespace SimpleAccess.Repository
             }
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader single operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-        <returns> . </returns>
-        **/
         public TEntity ExecuteReaderSingle<TEntity>(string sql, CommandType commandType
             , string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null
             , dynamic paramObject = null)
@@ -878,20 +863,20 @@ namespace SimpleAccess.Repository
             return ExecuteReaderSingle(sql, commandType, fieldsToSkip, piList, BuildSqlParameters(paramObject));
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader single operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
         public TEntity ExecuteReaderSingle<TEntity>(string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params SqlParameter[] sqlParameters)
             where TEntity : class , new()
         {
@@ -916,21 +901,21 @@ namespace SimpleAccess.Repository
             }
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader single operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-        <returns> . </returns>
-        **/
         public TEntity ExecuteReaderSingle<TEntity>(SqlTransaction sqlTransaction, string sql
             , CommandType commandType, string fieldsToSkip = null
             , Dictionary<string, PropertyInfo> piList = null, dynamic paramObject = null)
@@ -939,21 +924,21 @@ namespace SimpleAccess.Repository
             return ExecuteReaderSingle<TEntity>(sqlTransaction, sql, commandType, fieldsToSkip, piList, BuildSqlParameters(paramObject));
 
         }
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader single operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="sqlParameters">  Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        <param name="sqlParameters">  Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
         public TEntity ExecuteReaderSingle<TEntity>(SqlTransaction sqlTransaction, string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params SqlParameter[] sqlParameters)
             where TEntity : class, new()
         {
@@ -973,20 +958,20 @@ namespace SimpleAccess.Repository
             }
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> A list of. </returns>
         
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-        <returns> A list of. </returns>
-        **/
         public IList<dynamic> ExecuteReader(SqlTransaction sqlTransaction, string sql
             , CommandType commandType, string fieldsToSkip = null
             , Dictionary<string, PropertyInfo> piList = null, dynamic paramObject = null)
@@ -995,20 +980,20 @@ namespace SimpleAccess.Repository
                 , BuildSqlParameters(paramObject));
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="sqlParameters">  Options for controlling the SQL. </param>
+        /// 
+        /// <returns> A list of. </returns>
         
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        <param name="sqlParameters">  Options for controlling the SQL. </param>
-        
-        <returns> A list of. </returns>
-        **/
         public IList<dynamic> ExecuteReader(SqlTransaction sqlTransaction, string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params SqlParameter[] sqlParameters)
         {
             try
@@ -1023,19 +1008,19 @@ namespace SimpleAccess.Repository
             }
         }
 
-        /**--------------------------------------------------------------------------------------------------
-       <summary> Executes the reader operation. </summary>
         
-       <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-        
-       <param name="sql">			 The SQL. </param>
-       <param name="commandType">   Type of the command. </param>
-       <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-       <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-       <returns> A list of. </returns>
-       **/
+       /// <summary> Executes the reader operation. </summary>
+       ///  
+       /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+       ///  
+       /// <param name="sql">			 The SQL. </param>
+       /// <param name="commandType">   Type of the command. </param>
+       /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+       /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+       ///   <param name="paramObject"> The dynamic object as parameters. </param>
+       ///  
+       /// <returns> A list of. </returns>
+       
         public IList<dynamic> ExecuteReader(string sql, CommandType commandType
             , string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null
             , dynamic paramObject = null)
@@ -1044,19 +1029,19 @@ namespace SimpleAccess.Repository
                 , BuildSqlParameters(paramObject));
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> A list of. </returns>
         
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
-        
-        <returns> A list of. </returns>
-        **/
         public IList<dynamic> ExecuteReader(string sql, CommandType commandType
             , string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null
             , params SqlParameter[] sqlParameters)
@@ -1078,19 +1063,19 @@ namespace SimpleAccess.Repository
             }
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader single operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-        <returns> . </returns>
-        **/
         public dynamic ExecuteReaderSingle(string sql, CommandType commandType
             , string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null
             , dynamic paramObject = null)
@@ -1102,19 +1087,19 @@ namespace SimpleAccess.Repository
  
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader single operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
         public dynamic ExecuteReaderSingle(string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params SqlParameter[] sqlParameters)
         {
             try
@@ -1143,20 +1128,20 @@ namespace SimpleAccess.Repository
         }
 
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader single operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-        <returns> . </returns>
-        **/
         public dynamic ExecuteReaderSingle(SqlTransaction sqlTransaction, string sql
             , CommandType commandType, string fieldsToSkip = null
             , Dictionary<string, PropertyInfo> piList = null, dynamic paramObject = null)
@@ -1165,20 +1150,20 @@ namespace SimpleAccess.Repository
                 , BuildSqlParameters(paramObject));
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader single operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="sqlParameters">  Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        <param name="sqlParameters">  Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
         public dynamic ExecuteReaderSingle(SqlTransaction sqlTransaction, string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params SqlParameter[] sqlParameters)
         {
             try
@@ -1197,13 +1182,13 @@ namespace SimpleAccess.Repository
             }
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Ends a transaction. </summary>
         
-        <param name="sqlTransaction">	  The SQL transaction. </param>
-        <param name="transactionSucceed"> (optional) the transaction succeed. </param>
-        <param name="closeConnection">    (optional) the close connection. </param>
-        **/
+        /// <summary> Ends a transaction. </summary>
+        /// 
+        /// <param name="sqlTransaction">	  The SQL transaction. </param>
+        /// <param name="transactionSucceed"> (optional) the transaction succeed. </param>
+        /// <param name="closeConnection">    (optional) the close connection. </param>
+        
         public void EndTransaction(SqlTransaction sqlTransaction, bool transactionSucceed = true, bool closeConnection = true)
         {
             if (transactionSucceed)
@@ -1221,15 +1206,15 @@ namespace SimpleAccess.Repository
             }
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Creates a command. </summary>
         
-        <param name="queryString">   The query string. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// <summary> Creates a command. </summary>
+        /// 
+        /// <param name="queryString">   The query string. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> The new command. </returns>
         
-        <returns> The new command. </returns>
-        **/
         private SqlCommand CreateCommand(string queryString, CommandType commandType, params SqlParameter[] sqlParameters)
         {
             var dbCommand = _sqlConnection.CreateCommand();
@@ -1244,16 +1229,16 @@ namespace SimpleAccess.Repository
 			return dbCommand;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Creates a command. </summary>
         
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="queryString">    The query string. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="sqlParameters">  Options for controlling the SQL. </param>
+        /// <summary> Creates a command. </summary>
+        /// 
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="queryString">    The query string. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="sqlParameters">  Options for controlling the SQL. </param>
+        /// 
+        /// <returns> The new command. </returns>
         
-        <returns> The new command. </returns>
-        **/
         private SqlCommand CreateCommand(SqlTransaction sqlTransaction, string queryString, CommandType commandType, params SqlParameter[] sqlParameters)
         {
             var dbCommand = _sqlConnection.CreateCommand();
@@ -1268,13 +1253,13 @@ namespace SimpleAccess.Repository
             return dbCommand;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> SQL data reader to expando. </summary>
         
-        <param name="reader"> The reader. </param>
+        /// <summary> SQL data reader to expando. </summary>
+        /// 
+        /// <param name="reader"> The reader. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         private dynamic SqlDataReaderToExpando(SqlDataReader reader)
         {
             var expandoObject = new ExpandoObject() as IDictionary<string, object>;
@@ -1289,13 +1274,13 @@ namespace SimpleAccess.Repository
             return expandoObject;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Gets a dynamic SQL data. </summary>
         
-        <param name="reader"> The reader. </param>
+        /// <summary> Gets a dynamic SQL data. </summary>
+        /// 
+        /// <param name="reader"> The reader. </param>
+        /// 
+        /// <returns> The dynamic SQL data. </returns>
         
-        <returns> The dynamic SQL data. </returns>
-        **/
         private IList<dynamic> GetDynamicSqlData(SqlDataReader reader)
         {
             var result = new List<dynamic>();
@@ -1307,11 +1292,11 @@ namespace SimpleAccess.Repository
             return result;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Build SqlParameter Array from dynamic object. </summary>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        <returns> SqlParameter[] object and if paramObject is null then return null </returns>
-        **/
+        
+        /// <summary> Build SqlParameter Array from dynamic object. </summary>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// <returns> SqlParameter[] object and if paramObject is null then return null </returns>
+        
         private static SqlParameter[] BuildSqlParameters(dynamic paramObject)
         {
             if (paramObject == null)
@@ -1322,10 +1307,10 @@ namespace SimpleAccess.Repository
             return sqlParameters.ToArray();
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Performs application-defined tasks associated with freeing, releasing, or resetting
-        unmanaged resources. </summary>
-        **/
+        
+        /// <summary> Performs application-defined tasks associated with freeing, releasing, or resetting
+        /// unmanaged resources. </summary>
+        
         public void Dispose()
         {
 			if (_sqlTransaction != null)

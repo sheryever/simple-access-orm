@@ -14,6 +14,9 @@ namespace SimpleAccess
     [AttributeUsage(AttributeTargets.Property)]
     public class ParameterDirectionAttribute : Attribute
     {
+        /// <summary>
+        /// Direction of the Marked property in DbParameter
+        /// </summary>
         public ParameterDirection SpParameterDirection { get; private set; }
 
         /// <summary>
