@@ -7,3 +7,4 @@
 - Rewrite code generation application
  - Allow developer to add more T4 Templates
  - Allow developer to edit T4 Templates directly inside the application
+- Code Generation for CURD if your is not passing sql in repository Insert,Update,Delete,GetAll and Get

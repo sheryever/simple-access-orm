@@ -4,6 +4,49 @@
         <name>SimpleAccess.SqlServer</name>
     </assembly>
     <members>
+        <member name="T:SimpleAccess.DbColumnAttribute">
+            <summary>
+            Use for mappint the property with database table column.
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.DbColumnAttribute.DbColumn">
+            <summary>
+            Database table column name.
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.DbColumnAttribute.#ctor(System.String)">
+            <summary>
+            Initialize the attribute.
+            </summary>
+            <param name="dbColumn">Database table column name of the marked property.</param>
+        </member>
+        <member name="T:SimpleAccess.DefaultValueAttribute">
+            <summary>
+            Used to set the default value on Entity Property
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.DefaultValueAttribute.DefaultValue">
+            <summary>
+            Default value on the marked property
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.DefaultValueAttribute.#ctor(System.Object)">
+            <summary>
+            Initialize the DefaultValueAttribute
+            </summary>
+            <param name="value"> All type of value except DataTime </param>
+        </member>
+        <member name="M:SimpleAccess.DefaultValueAttribute.#ctor(System.DateTime)">
+            <summary>
+            Initialize the DefaultValueAttribute
+            </summary>
+            <param name="value"> The DataTime value </param>
+        </member>
+        <member name="T:SimpleAccess.IdentityAttribute">
+            <summary>
+            Mark a Entity property as Identity columns
+            </summary>
+        </member>
         <member name="T:SimpleAccess.NotASpParameterAttribute">
             <summary>
             Specifies that the property is not an SqlParameter.
@@ -30,11 +73,31 @@
             Specifies that the ParameterDirection for a SqlParameter Property.
             </summary>
         </member>
+        <member name="P:SimpleAccess.ParameterDirectionAttribute.SpParameterDirection">
+            <summary>
+            Direction of the Marked property in DbParameter
+            </summary>
+        </member>
         <member name="M:SimpleAccess.ParameterDirectionAttribute.#ctor(System.Data.ParameterDirection)">
             <summary>
             Specifies that the ParameterDirection for a SqlParameter Property.
             </summary>
             <param name="spParameterDirection"> Direction for the SqlParameter.</param>
+        </member>
+        <member name="T:SimpleAccess.ParametersType">
+            <summary>
+            Defines the DbParameters type to be generated
+            </summary>
+        </member>
+        <member name="F:SimpleAccess.ParametersType.Insert">
+            <summary>
+            Uses for Insert parameters type, Specially for out parameters
+            </summary>
+        </member>
+        <member name="F:SimpleAccess.ParametersType.Update">
+            <summary>
+            Uses for Update parameters type. Just normal parameters
+            </summary>
         </member>
         <member name="T:SimpleAccess.DbExtensions.ConnectionExtension">
             --------------------------------------------------------------------------------------------------
@@ -59,6 +122,11 @@
                     <returns> . </returns>
                     *
         </member>
+        <member name="T:SimpleAccess.DbExtensions.DataReaderToObjectExtensions">
+            <summary>
+            Extension to load objects from DataReaders
+            </summary>
+        </member>
         <member name="M:SimpleAccess.DbExtensions.DataReaderToObjectExtensions.DataReaderToObjectList``1(System.Data.IDataReader,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
             <summary>
             Creates a list of a given type from all the rows in a DataReader.
@@ -75,7 +143,23 @@
             Can be used for caching hte PropertyInfo structure for multiple operations to speed up
             translation. If not passed automatically created.
             </param>
+            <param name="piListBasedOnDbColumn"> List of <see cref="T:System.Reflection.PropertyInfo"/> object having <see cref="T:SimpleAccess.DbColumnAttribute"/> in it's custom attributes</param>
             <returns></returns>
+        </member>
+        <member name="M:SimpleAccess.DbExtensions.DataReaderToObjectExtensions.DataReaderToObject``1(System.Data.IDataReader,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+            <summary>
+            Created the object of TType and populates the properties of that object from a single DataReader row using
+            Reflection by matching the DataReader fields to a public property 
+            of the object. Unmatched properties are left unchanged.
+            
+            You need to pass in a data reader located on the active row you want
+            to serialize.
+            
+            </summary>
+            <param name="reader">Instance of the DataReader to read data from. Should be located on the correct record (Read() should have been called on it before calling this method)</param>
+            <param name="fieldsToSkip">Optional - A comma delimited list of object properties that should not be updated</param>
+            <param name="piList">Optional - Cached PropertyInfo dictionary that holds property info data for this object</param>
+            <param name="piListBasedOnDbColumn"> List of <see cref="T:System.Reflection.PropertyInfo"/> object having <see cref="T:SimpleAccess.DbColumnAttribute"/> in it's custom attributes</param>
         </member>
         <member name="M:SimpleAccess.DbExtensions.DataReaderToObjectExtensions.DataReaderToObject(System.Data.IDataReader,System.Object,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
             <summary>
@@ -94,6 +178,12 @@
             <param name="instance">Instance of the object to populate properties on</param>
             <param name="fieldsToSkip">Optional - A comma delimited list of object properties that should not be updated</param>
             <param name="piList">Optional - Cached PropertyInfo dictionary that holds property info data for this object</param>
+            <param name="piListBasedOnDbColumn"> List of <see cref="T:System.Reflection.PropertyInfo"/> object having <see cref="T:SimpleAccess.DbColumnAttribute"/> in it's custom attributes</param>
+        </member>
+        <member name="T:SimpleAccess.SqlParametersExtensions">
+            <summary>
+            Defines the extra extensions method for <see cref="T:System.Data.SqlClient.SqlParameter"/>.
+            </summary>
         </member>
         <member name="M:SimpleAccess.SqlParametersExtensions.CreateSqlParametersFromDynamic(System.Collections.Generic.List{System.Data.SqlClient.SqlParameter},System.Object)">
             <summary>
@@ -109,507 +199,680 @@
             <param name="sqlParameters"></param>
             <param name="otherParameters"></param>
         </member>
-        <member name="T:SimpleAccess.Repository.IRepository">
-            --------------------------------------------------------------------------------------------------
-                <summary> IRepository. </summary>
-                *
+        <member name="M:SimpleAccess.SqlParametersExtensions.ToDataParam``1(``0,System.String)">
+            <summary>
+            Create and returns a SqlParameter of attached struct type.
+            </summary>
+            <typeparam name="T"> Attached by variable type.</typeparam>
+            <param name="value"> The value of attached variable.</param>
+            <param name="paramName"> DbParameter Name </param>
+            <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SimpleAccess.Repository.IRepository.GetAll``1(System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})" -->
+        <member name="M:SimpleAccess.SqlParametersExtensions.ToDataParam``1(``0,System.String,System.Data.SqlDbType)">
+            <summary>
+            Create and returns a SqlParameter of attached struct type.
+            </summary>
+            <typeparam name="T"> Attached by variable type.</typeparam>
+            <param name="value"> The value of attached variable.</param>
+            <param name="paramName"> SqlParameter Name </param>
+            <param name="sqlDbType"> The <see cref="T:System.Data.SqlDbType"/> of the SqlParameter </param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleAccess.SqlParametersExtensions.ToDataParam``1(System.Nullable{``0},System.String)">
+            <summary>
+            Create and returns a SqlParameter of attached nullable struct type.
+            </summary>
+            <typeparam name="T"> Attached by variable type.</typeparam>
+            <param name="value"> The value of attached variable.</param>
+            <param name="paramName"> SqlParameter Name </param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleAccess.SqlParametersExtensions.ToDataParam``1(System.Nullable{``0},System.String,System.Data.SqlDbType)">
+            <summary>
+            Create and returns a SqlParameter of attached nullable struct type.
+            </summary>
+            <typeparam name="T"> Attached by variable type.</typeparam>
+            <param name="value"> The value of attached variable.</param>
+            <param name="paramName"> SqlParameter Name </param>
+            <param name="sqlDbType"> The <see cref="T:System.Data.SqlDbType"/> of the SqlParameter </param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleAccess.SqlParametersExtensions.ToDataParam(System.String,System.String)">
+            <summary>
+            Create and returns a SqlParameter of attached string.
+            The method also avoid the Sql Injection by replacing single qoute "'" character with tow single qoutes "''" characters
+            </summary>
+            <param name="value"> The value of attached variable.</param>
+            <param name="paramName"> SqlParameter Name </param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleAccess.SqlParametersExtensions.ToDataParam(System.String,System.String,System.Int32)">
+            <summary>
+            Create and returns a SqlParameter of attached struct type.
+            The method also avoid the Sql Injection by replacing single qoute "'" character with tow single qoutes "''" characters
+            </summary>
+            <param name="value"> The value of attached variable.</param>
+            <param name="paramName"> SqlParameter Name </param>
+            <param name="size"> The length of the string value in the SqlParameters</param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleAccess.SqlParametersExtensions.ToSafeDataParam(System.String,System.String,System.Int32)">
+            <summary>
+            Create and returns a SqlParameter of attached struct type.
+            The method allow to pass "'" character to database
+            </summary>
+            <param name="value"> The value of attached variable.</param>
+            <param name="paramName"> SqlParameter Name </param>
+            <param name="size"> The length of the string value in the SqlParameters</param>
+            <returns></returns>
+        </member>
+        <member name="T:SimpleAccess.DatabaseExtensions">
+            <summary>
+            Class only exsist for idea
+            </summary>
+        </member>
+        <member name="T:SimpleAccess.DatabaseExtensions.IStoredProcedure`1">
+            <summary>
+            Only Exist for idea
+            </summary>
+            <typeparam name="TResult"></typeparam>
+        </member>
+        <member name="T:SimpleAccess.Entity.EntityInfo">
+            <summary>
+            Represents the SimpleAccess Entity information.
+            The <see cref="T:SimpleAccess.Entity.EntityInfo"/> is only used for caching the stored procedure name
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.Entity.EntityInfo.#ctor(System.Type)">
+            <summary>
+            Initialize the new object
+            </summary>
+            <param name="type"> The Entity </param>
+        </member>
+        <member name="P:SimpleAccess.Entity.EntityInfo.Name">
+            <summary>
+            Simple Name of the Entity.
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.Entity.EntityInfo.Type">
+            <summary>
+            The Type of the Entity.
+            </summary>
+        </member>
+        <member name="T:SimpleAccess.IEntity">
+            <summary>
+            Not in use.
+            </summary>
+        </member>
+        <member name="T:SimpleAccess.StoredProcedureParameters">
+            <summary>
+            Base class of all TEntity Classes
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.StoredProcedureParameters.AddSqlParameters(System.Object)">
+            <summary>
+            Add more parameters in underline DbParameters
+            </summary>
+            <param name="paramsObject"></param>
+        </member>
+        <member name="M:SimpleAccess.StoredProcedureParameters.CreateSqlParametersFromProperties(SimpleAccess.ParametersType)">
+            <summary>
+            Create paramters from object properties
+            </summary>
+            <param name="parametersType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleAccess.StoredProcedureParameters.GetSpParameters(SimpleAccess.ParametersType)">
+            <summary>
+            Get underline DbParametes
+            </summary>
+            <param name="parametersType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleAccess.StoredProcedureParameters.LoadOutParametersProperties">
+            <summary>
+            Load all the properties from DbParameters which were marked as ParameterDirection.Out
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.StoredProcedureParameters.ClearSpParameters">
+            <summary>
+            Clear all DbParamters
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.StoredProcedureParameters.Validate">
+            <summary>
+            Validate the object and get the result if any.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SimpleAccess.Repository.IRepository">
+            <summary> IRepository. </summary>
+        </member>
+        <member name="M:SimpleAccess.Repository.IRepository.GetAll``1(System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+            <summary> Enumerates get all in this collection. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+            
+            <returns> An enumerator that allows for each to be used to process get all TEntity in this
+            collection.</returns>
+        </member>
         <member name="M:SimpleAccess.Repository.IRepository.Get``1(System.Data.SqlClient.SqlParameter,System.Data.SqlClient.SqlTransaction,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Gets. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlParameter"> The SQL parameter. </param>
-                    <param name="transaction">  (optional) the transaction. </param>
-                    <param name="fieldToSkip">  (optional) the field to skip. </param>
-                    <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Gets. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlParameter"> The SQL parameter. </param>
+            <param name="transaction">  (optional) the transaction. </param>
+            <param name="fieldToSkip">  (optional) the field to skip. </param>
+            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.Get``1(System.Object,System.Data.SqlClient.SqlTransaction,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Gets. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="paramObject"> The dynamic object as parameters. </param>
-                    <param name="transaction">  (optional) the transaction. </param>
-                    <param name="fieldToSkip">  (optional) the field to skip. </param>
-                    <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Gets. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="transaction">  (optional) the transaction. </param>
+            <param name="fieldToSkip">  (optional) the field to skip. </param>
+            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.Get``1(System.Int64,System.Data.SqlClient.SqlTransaction,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Gets. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="id">		   The identifier. </param>
-                    <param name="transaction"> (optional) the transaction. </param>
-                    <param name="fieldToSkip"> (optional) the field to skip. </param>
-                    <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Gets. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="id">		   The identifier. </param>
+            <param name="transaction"> (optional) the transaction. </param>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.Get(System.String,System.Int64,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Gets. </summary>
-                    
-                    <param name="sql">		   The SQL. </param>
-                    <param name="id">		   The identifier. </param>
-                    <param name="fieldToSkip"> (optional) the field to skip. </param>
-                    <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Gets. </summary>
+            
+            <param name="sql">		   The SQL. </param>
+            <param name="id">		   The identifier. </param>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.Get(System.String,System.Data.SqlClient.SqlParameter,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Gets. </summary>
-                    
-                    <param name="sql">		    The SQL. </param>
-                    <param name="sqlParameter"> The SQL parameter. </param>
-                    <param name="fieldToSkip">  (optional) the field to skip. </param>
-                    <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Gets. </summary>
+            
+            <param name="sql">		    The SQL. </param>
+            <param name="sqlParameter"> The SQL parameter. </param>
+            <param name="fieldToSkip">  (optional) the field to skip. </param>
+            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.Get(System.String,System.Object,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Gets. </summary>
-                    
-                    <param name="sql">		    The SQL. </param>
-                    <param name="paramObject"> The dynamic object as parameters. </param>
-                    <param name="fieldToSkip">  (optional) the field to skip. </param>
-                    <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Gets. </summary>
+            
+            <param name="sql">		    The SQL. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="fieldToSkip">  (optional) the field to skip. </param>
+            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.Insert``1(System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Inserts the given SQL parameters. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlParameters"> Options for controlling the SQL. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Inserts the given SQL parameters. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.Insert``1(System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Inserts the given dynamic object as SqlParameter names and values. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Inserts the given dynamic object as SqlParameter names and values. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.Insert``1(SimpleAccess.StoredProcedureParameters)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Inserts the given SQL parameters. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Inserts the given SQL parameters. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.Insert``1(System.Data.SqlClient.SqlTransaction,SimpleAccess.StoredProcedureParameters)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Inserts the given SQL parameters. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
-                    <param name="sqlTransaction">			 The SQL transaction. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Inserts the given SQL parameters. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            <param name="sqlTransaction">			 The SQL transaction. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.Insert``1(SimpleAccess.StoredProcedureParameters,System.Data.SqlClient.SqlTransaction)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Inserts the given SQL parameters. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlTransaction">			 The SQL transaction. </param>
-                    <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Inserts the given SQL parameters. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlTransaction">			 The SQL transaction. </param>
+            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.Update``1(System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Updates the given sqlParameters. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlParameters"> Options for controlling the SQL. </param>
-                    
-                    <returns> Number of rows affected (integer) </returns>
-                    *
+            <summary> Updates the given sqlParameters. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.Update``1(System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Updates the given dynamic object as SqlParameter names and values. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="paramObject"> The dynamic object as parameters. </param>        
-                    <returns> Number of rows affected (integer) </returns>
-                    *
+            <summary> Updates the given dynamic object as SqlParameter names and values. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="paramObject"> The dynamic object as parameters. </param>        
+            <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.Update``1(SimpleAccess.StoredProcedureParameters)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Updates the given sqlParameters. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
-                    
-                    <returns> Number of rows affected (integer) </returns>
-                    *
+            <summary> Updates the given sqlParameters. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.Update``1(System.Data.SqlClient.SqlTransaction,SimpleAccess.StoredProcedureParameters)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Updates the given sqlParameters. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlTransaction">			 The SQL transaction. </param>
-                    <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
-                    
-                    <returns> Number of rows affected (integer) </returns>
-                    *
+            <summary> Updates the given sqlParameters. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlTransaction">			 The SQL transaction. </param>
+            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.Delete``1(System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Deletes the given ID. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlParameters"> Options for controlling the SQL. </param>
-                    
-                    <returns> Number of rows affected (integer) </returns>
-                    *
+            <summary> Deletes the given ID. </summary>
+             
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.Delete``1(System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Deletes the given dynamic object as SqlParameter names and values. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> Number of rows affected (integer) </returns>
-                    *
+            <summary> Deletes the given dynamic object as SqlParameter names and values. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.Delete``1(System.Int64,System.Data.SqlClient.SqlTransaction)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Deletes the given ID. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="id"> The identifier. </param>
-                     <param name="sqlTransaction">			 The SQL transaction. </param>
-                   
-                    <returns> Number of rows affected (integer) </returns>
-                    *
+            <summary> Deletes the given ID. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="id"> The identifier. </param>
+            <param name="sqlTransaction">			 The SQL transaction. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.Delete``1(System.Data.SqlClient.SqlTransaction,System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Deletes the given ID. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sqlParameters">  Options for controlling the SQL. </param>
-                    
-                    <returns> Number of rows affected (integer) </returns>
-                    *
+            <summary> Deletes the given ID. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.SoftDelete``1(System.Int64)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Soft delete. </summary>
-            		
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="id"> The identifier. </param>
-            		
-                    <returns> Number of rows affected (integer) </returns>
-                    *
+            <summary> Soft delete. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="id"> The identifier. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.ExecuteNonQuery(System.String,System.Data.CommandType,System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the non query operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="sqlParameters">  Options for controlling the SQL. </param>
-                    
-                    <returns> Number of rows affected (integer) </returns>
-                    *
+            <summary> Executes the non query operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.ExecuteNonQuery(System.String,System.Data.CommandType,System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the non query operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> Number of rows affected (integer) </returns>
-                    *
+            <summary> Executes the non query operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.ExecuteNonQuery(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the non query operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			 The SQL. </param>
-                    <param name="commandType">   Type of the command. </param>
-                    <param name="sqlParameters"> Options for controlling the SQL. </param>
-                    
-                    <returns> Number of rows affected (integer) </returns>
-                    *
+            <summary> Executes the non query operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.ExecuteNonQuery(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the non query operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			 The SQL. </param>
-                    <param name="commandType">   Type of the command. </param>
-                    <param name="paramObject"> The dynamic object as parameters. </param>        
-                    <returns> Number of rows affected (integer) </returns>
-                    *
+            <summary> Executes the non query operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>        
+            <returns> Number of rows affected (integer) </returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SimpleAccess.Repository.IRepository.ExecuteScalar``1(System.String,System.Data.CommandType,System.Data.SqlClient.SqlParameter[])" -->
-        <!-- Badly formed XML comment ignored for member "M:SimpleAccess.Repository.IRepository.ExecuteScalar``1(System.String,System.Data.CommandType,System.Object)" -->
-        <!-- Badly formed XML comment ignored for member "M:SimpleAccess.Repository.IRepository.ExecuteScalar``1(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.Data.SqlClient.SqlParameter[])" -->
-        <!-- Badly formed XML comment ignored for member "M:SimpleAccess.Repository.IRepository.ExecuteScalar``1(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.Object)" -->
-        <!-- Badly formed XML comment ignored for member "M:SimpleAccess.Repository.IRepository.ExecuteReader``1(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Data.SqlClient.SqlParameter[])" -->
-        <!-- Badly formed XML comment ignored for member "M:SimpleAccess.Repository.IRepository.ExecuteReader``1(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Object)" -->
-        <!-- Badly formed XML comment ignored for member "M:SimpleAccess.Repository.IRepository.ExecuteReader``1(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Data.SqlClient.SqlParameter[])" -->
-        <!-- Badly formed XML comment ignored for member "M:SimpleAccess.Repository.IRepository.ExecuteReader``1(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Object)" -->
+        <member name="M:SimpleAccess.Repository.IRepository.ExecuteScalar``1(System.String,System.Data.CommandType,System.Data.SqlClient.SqlParameter[])">
+            <summary> Executes the scalar operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="T"> Generic type parameter. </typeparam>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            
+            <returns> The T value </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.IRepository.ExecuteScalar``1(System.String,System.Data.CommandType,System.Object)">
+            <summary> Executes the scalar operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="T"> Generic type parameter. </typeparam>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> The T value </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.IRepository.ExecuteScalar``1(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.Data.SqlClient.SqlParameter[])">
+            <summary> Executes the scalar operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="T"> Generic type parameter. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            
+            <returns> The T value </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.IRepository.ExecuteScalar``1(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.Object)">
+            <summary> Executes the scalar operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="T"> Generic type parameter. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> The T value </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.IRepository.ExecuteReader``1(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Data.SqlClient.SqlParameter[])">
+            <summary> Executes the reader operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            
+            <returns> </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.IRepository.ExecuteReader``1(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Object)">
+            <summary> Executes the reader operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.IRepository.ExecuteReader``1(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Data.SqlClient.SqlParameter[])">
+            <summary> Executes the scalar operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="TEntity"> Generic type parameter. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            
+            <returns> </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.IRepository.ExecuteReader``1(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Object)">
+            <summary> Executes the reader operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> </returns>
+        </member>
         <member name="M:SimpleAccess.Repository.IRepository.ExecuteReaderSingle``1(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader single operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sql">			 The SQL. </param>
-                    <param name="commandType">   Type of the command. </param>
-                    <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-                    <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                    <param name="sqlParameters"> Options for controlling the SQL. </param>
-                    
-                    <returns> The value of the entity. </returns>
-                    *
+            <summary> Executes the reader single operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            
+            <returns> The value of the entity. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.ExecuteReaderSingle``1(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader single operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sql">			 The SQL. </param>
-                    <param name="commandType">   Type of the command. </param>
-                    <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-                    <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                     <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> The value of the entity. </returns>
-                    *
+            <summary> Executes the reader single operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> The value of the entity. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.ExecuteReaderSingle``1(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader single operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-                    <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                    <param name="sqlParameters">  Options for controlling the SQL. </param>
-                    
-                    <returns> The value of the entity. </returns>
-                    *
+            <summary> Executes the reader single operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            
+            <returns> The value of the entity. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.ExecuteReaderSingle``1(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader single operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-                    <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                     <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> The value of the entity. </returns>
-                    *
+            <summary> Executes the reader single operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> The value of the entity. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.ExecuteReader(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sql">			 The SQL. </param>
-                    <param name="commandType">   Type of the command. </param>
-                    <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-                    <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                    <param name="sqlParameters"> Options for controlling the SQL. </param>
-                    
-                    <returns> A list of dynamic. </returns>
-                    *
+            <summary> Executes the reader operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            
+            <returns> A list of dynamic. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.ExecuteReader(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Object)">
-            --------------------------------------------------------------------------------------------------
-                   <summary> Executes the reader operation. </summary>
-                    
-                   <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                   <param name="sql">			 The SQL. </param>
-                   <param name="commandType">   Type of the command. </param>
-                   <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-                   <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                     <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> A list of dynamic. </returns>
-                   *
+            <summary> Executes the reader operation. </summary>
+             
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+             
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+             
+            <returns> A list of dynamic. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.ExecuteReader(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-                    <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                    <param name="sqlParameters">  Options for controlling the SQL. </param>
-                    
-                    <returns> A list of dynamic. </returns>
-                    *
+            <summary> Executes the reader operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            
+            <returns> A list of dynamic. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.ExecuteReader(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-                    <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                     <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> A list of dynamic. </returns>
-                    *
+            <summary> Executes the reader operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> A list of dynamic. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.ExecuteReaderSingle(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader single operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sql">			 The SQL. </param>
-                    <param name="commandType">   Type of the command. </param>
-                    <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-                    <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                    <param name="sqlParameters"> Options for controlling the SQL. </param>
-                    
-                    <returns> Result in a dynamic object. </returns>
-                    *
+            <summary> Executes the reader single operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            
+            <returns> Result in a dynamic object. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.ExecuteReaderSingle(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader single operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sql">			 The SQL. </param>
-                    <param name="commandType">   Type of the command. </param>
-                    <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-                    <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                     <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> Result in a dynamic object. </returns>
-                    *
+            <summary> Executes the reader single operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> Result in a dynamic object. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.ExecuteReaderSingle(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader single operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-                    <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                    <param name="sqlParameters">  Options for controlling the SQL. </param>
-                    
-                    <returns> Result in a dynamic object. </returns>
-                    *
+            <summary> Executes the reader single operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            
+            <returns> Result in a dynamic object. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.ExecuteReaderSingle(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader single operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-                    <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                     <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> Result in a dynamic object. </returns>
-                    *
+            <summary> Executes the reader single operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> Result in a dynamic object. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.BeginTrasaction">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Begins a transaction. </summary>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Begins a transaction. </summary>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.GetNewConnection">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Gets the new connection. </summary>
-                    
-                    <returns> The new connection. </returns>
-                    *
+            <summary> Gets the new connection. </summary>
+            
+            <returns> The new connection. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.IRepository.EndTransaction(System.Data.SqlClient.SqlTransaction,System.Boolean,System.Boolean)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Ends a transaction. </summary>
-                    
-                    <param name="sqlTransaction">	  The SQL transaction. </param>
-                    <param name="transactionSucceed"> (optional) the transaction succeed. </param>
-                    <param name="closeConnection">    (optional) the close connection. </param>
-                    *
+            <summary> Ends a transaction. </summary>
+            
+            <param name="sqlTransaction">	  The SQL transaction. </param>
+            <param name="transactionSucceed"> (optional) the transaction succeed. </param>
+            <param name="closeConnection">    (optional) the close connection. </param>
         </member>
         <member name="T:SimpleAccess.Repository.Repository">
-            --------------------------------------------------------------------------------------------------
-                <summary> Repository. </summary>
-                *
+            <summary> Repository. </summary>
         </member>
         <member name="P:SimpleAccess.Repository.Repository.DefaultConnectionString">
             <summary>
@@ -617,697 +880,608 @@
             </summary>
         </member>
         <member name="F:SimpleAccess.Repository.Repository._sqlConnection">
-            --------------------------------------------------------------------------------------------------
-                    <summary> The SQL connection. </summary>
-                    *
+            <summary> The SQL connection. </summary>
         </member>
         <member name="F:SimpleAccess.Repository.Repository._sqlTransaction">
-            --------------------------------------------------------------------------------------------------
-            		<summary> The SQL transaction. </summary>
-            		*
+            <summary> The SQL transaction. </summary>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.#ctor(System.Data.SqlClient.SqlConnection)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Constructor. </summary>
-                    
-                    <param name="sqlConnection"> The SQL connection. </param>
-                    *
+            <summary> Constructor. </summary>
+            
+            <param name="sqlConnection"> The SQL connection. </param>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.#ctor(System.String)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Constructor. </summary>
-                    
-                    <param name="connectionString"> The connection string. </param>
-                    *
+            <summary> Constructor. </summary>
+            
+            <param name="connectionString"> The connection string. </param>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.#ctor">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Default constructor. </summary>
-                    *
+            <summary> Default constructor. </summary>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.BeginTrasaction">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Begins a transaction. </summary>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Begins a transaction. </summary>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.GetNewConnection">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Gets the new connection. </summary>
-                    
-                    <returns> The new connection. </returns>
-                    *
+            <summary> Gets the new connection. </summary>
+            
+            <returns> The new connection. </returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SimpleAccess.Repository.Repository.GetAll``1(System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})" -->
+        <member name="M:SimpleAccess.Repository.Repository.GetAll``1(System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+            <summary> Enumerates get all in this collection. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+            
+            <returns> An enumerator that allows for each to be used to process get all TEntity in this
+            collection.</returns>
+        </member>
         <member name="M:SimpleAccess.Repository.Repository.Get``1(System.Int64,System.Data.SqlClient.SqlTransaction,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Gets. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="id">		   The identifier. </param>
-                    <param name="transaction"> (optional) the transaction. </param>
-                    <param name="fieldToSkip"> (optional) the field to skip. </param>
-                    <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Gets. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="id">		   The identifier. </param>
+            <param name="transaction"> (optional) the transaction. </param>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Get``1(System.Data.SqlClient.SqlParameter,System.Data.SqlClient.SqlTransaction,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Gets. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlParameter"> The SQL parameter. </param>
-                    <param name="transaction">  (optional) the transaction. </param>
-                    <param name="fieldToSkip">  (optional) the field to skip. </param>
-                    <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Gets. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlParameter"> The SQL parameter. </param>
+            <param name="transaction">  (optional) the transaction. </param>
+            <param name="fieldToSkip">  (optional) the field to skip. </param>
+            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Get``1(System.Object,System.Data.SqlClient.SqlTransaction,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Gets. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="paramObject"> The dynamic object as parameters. </param>
-                    <param name="transaction">  (optional) the transaction. </param>
-                    <param name="fieldToSkip">  (optional) the field to skip. </param>
-                    <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Gets. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="transaction">  (optional) the transaction. </param>
+            <param name="fieldToSkip">  (optional) the field to skip. </param>
+            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Get(System.String,System.Int64,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Gets. </summary>
-                    
-                    <param name="sql">		   The SQL. </param>
-                    <param name="id">		   The identifier. </param>
-                    <param name="fieldToSkip"> (optional) the field to skip. </param>
-                    <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Gets. </summary>
+            
+            <param name="sql">		   The SQL. </param>
+            <param name="id">		   The identifier. </param>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Get(System.String,System.Data.SqlClient.SqlParameter,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Gets. </summary>
-                    
-                    <param name="sql">		    The SQL. </param>
-                    <param name="sqlParameter"> The SQL parameter. </param>
-                    <param name="fieldToSkip">  (optional) the field to skip. </param>
-                    <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Gets. </summary>
+            
+            <param name="sql">		    The SQL. </param>
+            <param name="sqlParameter"> The SQL parameter. </param>
+            <param name="fieldToSkip">  (optional) the field to skip. </param>
+            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Get(System.String,System.Object,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Gets. </summary>
-                    
-                    <param name="sql">		    The SQL. </param>
-                    <param name="paramObject"> The dynamic object as parameters. </param>
-                    <param name="fieldToSkip">  (optional) the field to skip. </param>
-                    <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Gets. </summary>
+            
+            <param name="sql">		    The SQL. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="fieldToSkip">  (optional) the field to skip. </param>
+            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Insert``1(System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Inserts the given SQL parameters. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlParameters"> Options for controlling the SQL. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Inserts the given SQL parameters. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Insert``1(System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Inserts the given dynamic object as SqlParameter names and values. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Inserts the given dynamic object as SqlParameter names and values. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Insert``1(SimpleAccess.StoredProcedureParameters)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Inserts the given SQL parameters. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Inserts the given SQL parameters. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Insert``1(SimpleAccess.StoredProcedureParameters,System.Data.SqlClient.SqlTransaction)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Inserts the given SQL parameters. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
-                    <param name="sqlTransaction">			 The SQL transaction. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Inserts the given SQL parameters. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            <param name="sqlTransaction">			 The SQL transaction. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Insert``1(System.Data.SqlClient.SqlTransaction,SimpleAccess.StoredProcedureParameters)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Inserts the given SQL parameters. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlTransaction">			 The SQL transaction. </param>
-                    <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Inserts the given SQL parameters. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlTransaction">			 The SQL transaction. </param>
+            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Update``1(System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Updates the given sqlParameters. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlParameters"> Options for controlling the SQL. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Updates the given sqlParameters. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Update``1(System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Updates the given dynamic object as SqlParameter names and values. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="paramObject"> The dynamic object as parameters. </param>        
-                    <returns> . </returns>
-                    *
+            <summary> Updates the given dynamic object as SqlParameter names and values. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="paramObject"> The dynamic object as parameters. </param>        
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Update``1(SimpleAccess.StoredProcedureParameters)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Updates the given sqlParameters. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Updates the given sqlParameters. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Update``1(System.Data.SqlClient.SqlTransaction,SimpleAccess.StoredProcedureParameters)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Updates the given sqlParameters. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlTransaction">			 The SQL transaction. </param>
-                    <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Updates the given sqlParameters. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlTransaction">			 The SQL transaction. </param>
+            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Delete``1(System.Int64,System.Data.SqlClient.SqlTransaction)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Deletes the given ID. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="id"> The identifier. </param>
-                    <param name="sqlTransaction">			 The SQL transaction. </param>
+            <summary> Deletes the given ID. </summary>
             
-                    <returns> . </returns>
-                    *
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="id"> The identifier. </param>
+            <param name="sqlTransaction">			 The SQL transaction. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Delete``1(System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Deletes the given ID. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlParameters"> Options for controlling the SQL. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Deletes the given ID. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Delete``1(System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Deletes the given dynamic object as SqlParameter names and values. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Deletes the given dynamic object as SqlParameter names and values. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Delete``1(System.Data.SqlClient.SqlTransaction,System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Deletes the given ID. </summary>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sqlParameters">  Options for controlling the SQL. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Deletes the given ID. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.SoftDelete``1(System.Int64)">
-            --------------------------------------------------------------------------------------------------
-            		<summary> Soft delete. </summary>
-            		
-            		<typeparam name="TEntity"> Type of the entity. </typeparam>
-            		<param name="id"> The identifier. </param>
-            		
-            		<returns> . </returns>
-            		*
+            <summary> Soft delete. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="id"> The identifier. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteNonQuery(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.Object)">
-            --------------------------------------------------------------------------------------------------
-                   <summary> Executes the non query operation. </summary>
-                    
-                   <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                   <param name="sqlTransaction"> The SQL transaction. </param>
-                   <param name="sql">			  The SQL. </param>
-                   <param name="commandType">    Type of the command. </param>
-                    <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                   <returns> . </returns>
-                   *
+            <summary> Executes the non query operation. </summary>
+             
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+             
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+             
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteNonQuery(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the non query operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="sqlParameters">  Options for controlling the SQL. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Executes the non query operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteNonQuery(System.String,System.Data.CommandType,System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the non query operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sql">			 The SQL. </param>
-                    <param name="commandType">   Type of the command. </param>
-                    <param name="paramObject"> The dynamic object as parameters. </param>        
-                    <returns> . </returns>
-                    *
+            <summary> Executes the non query operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>        
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteNonQuery(System.String,System.Data.CommandType,System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the non query operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sql">			 The SQL. </param>
-                    <param name="commandType">   Type of the command. </param>
-                    <param name="sqlParameters"> Options for controlling the SQL. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Executes the non query operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteScalar``1(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the scalar operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <typeparam name="T"> Generic type parameter. </typeparam>
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                     <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Executes the scalar operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="T"> Generic type parameter. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteScalar``1(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the scalar operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <typeparam name="T"> Generic type parameter. </typeparam>
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="sqlParameters">  Options for controlling the SQL. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Executes the scalar operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="T"> Generic type parameter. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteScalar``1(System.String,System.Data.CommandType,System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the scalar operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <typeparam name="T"> Generic type parameter. </typeparam>
-                    <param name="sql">			 The SQL. </param>
-                    <param name="commandType">   Type of the command. </param>
-                     <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Executes the scalar operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="T"> Generic type parameter. </typeparam>
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteScalar``1(System.String,System.Data.CommandType,System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the scalar operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <typeparam name="T"> Generic type parameter. </typeparam>
-                    <param name="sql">			 The SQL. </param>
-                    <param name="commandType">   Type of the command. </param>
-                    <param name="sqlParameters"> Options for controlling the SQL. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Executes the scalar operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="T"> Generic type parameter. </typeparam>
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteReader``1(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sql">			 The SQL. </param>
-                    <param name="commandType">   Type of the command. </param>
-                    <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-                    <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                     <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Executes the reader operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteReader``1(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sql">			 The SQL. </param>
-                    <param name="commandType">   Type of the command. </param>
-                    <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-                    <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                    <param name="sqlParameters"> Options for controlling the SQL. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Executes the reader operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteReader``1(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-                    <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                     <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Executes the reader operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteReader``1(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-                    <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                    <param name="sqlParameters">  Options for controlling the SQL. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Executes the reader operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteReaderSingle``1(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader single operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sql">			 The SQL. </param>
-                    <param name="commandType">   Type of the command. </param>
-                    <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-                    <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                     <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Executes the reader single operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteReaderSingle``1(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader single operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sql">			 The SQL. </param>
-                    <param name="commandType">   Type of the command. </param>
-                    <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-                    <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                    <param name="sqlParameters"> Options for controlling the SQL. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Executes the reader single operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteReaderSingle``1(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader single operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-                    <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                     <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Executes the reader single operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteReaderSingle``1(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader single operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <typeparam name="TEntity"> Type of the entity. </typeparam>
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-                    <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                    <param name="sqlParameters">  Options for controlling the SQL. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Executes the reader single operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteReader(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-                    <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                     <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> A list of. </returns>
-                    *
+            <summary> Executes the reader operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> A list of. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteReader(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-                    <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                    <param name="sqlParameters">  Options for controlling the SQL. </param>
-                    
-                    <returns> A list of. </returns>
-                    *
+            <summary> Executes the reader operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            
+            <returns> A list of. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteReader(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Object)">
-            --------------------------------------------------------------------------------------------------
-                   <summary> Executes the reader operation. </summary>
-                    
-                   <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                   <param name="sql">			 The SQL. </param>
-                   <param name="commandType">   Type of the command. </param>
-                   <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-                   <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                     <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                   <returns> A list of. </returns>
-                   *
+            <summary> Executes the reader operation. </summary>
+             
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+             
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+              <param name="paramObject"> The dynamic object as parameters. </param>
+             
+            <returns> A list of. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteReader(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sql">			 The SQL. </param>
-                    <param name="commandType">   Type of the command. </param>
-                    <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-                    <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                    <param name="sqlParameters"> Options for controlling the SQL. </param>
-                    
-                    <returns> A list of. </returns>
-                    *
+            <summary> Executes the reader operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            
+            <returns> A list of. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteReaderSingle(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader single operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sql">			 The SQL. </param>
-                    <param name="commandType">   Type of the command. </param>
-                    <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-                    <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                     <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Executes the reader single operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteReaderSingle(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader single operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sql">			 The SQL. </param>
-                    <param name="commandType">   Type of the command. </param>
-                    <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-                    <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                    <param name="sqlParameters"> Options for controlling the SQL. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Executes the reader single operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sql">			 The SQL. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteReaderSingle(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader single operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-                    <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                     <param name="paramObject"> The dynamic object as parameters. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Executes the reader single operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.ExecuteReaderSingle(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Executes the reader single operation. </summary>
-                    
-                    <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-                    
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="sql">			  The SQL. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-                    <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                    <param name="sqlParameters">  Options for controlling the SQL. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> Executes the reader single operation. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="sql">			  The SQL. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.EndTransaction(System.Data.SqlClient.SqlTransaction,System.Boolean,System.Boolean)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Ends a transaction. </summary>
-                    
-                    <param name="sqlTransaction">	  The SQL transaction. </param>
-                    <param name="transactionSucceed"> (optional) the transaction succeed. </param>
-                    <param name="closeConnection">    (optional) the close connection. </param>
-                    *
+            <summary> Ends a transaction. </summary>
+            
+            <param name="sqlTransaction">	  The SQL transaction. </param>
+            <param name="transactionSucceed"> (optional) the transaction succeed. </param>
+            <param name="closeConnection">    (optional) the close connection. </param>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.CreateCommand(System.String,System.Data.CommandType,System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Creates a command. </summary>
-                    
-                    <param name="queryString">   The query string. </param>
-                    <param name="commandType">   Type of the command. </param>
-                    <param name="sqlParameters"> Options for controlling the SQL. </param>
-                    
-                    <returns> The new command. </returns>
-                    *
+            <summary> Creates a command. </summary>
+            
+            <param name="queryString">   The query string. </param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            
+            <returns> The new command. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.CreateCommand(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.Data.SqlClient.SqlParameter[])">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Creates a command. </summary>
-                    
-                    <param name="sqlTransaction"> The SQL transaction. </param>
-                    <param name="queryString">    The query string. </param>
-                    <param name="commandType">    Type of the command. </param>
-                    <param name="sqlParameters">  Options for controlling the SQL. </param>
-                    
-                    <returns> The new command. </returns>
-                    *
+            <summary> Creates a command. </summary>
+            
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="queryString">    The query string. </param>
+            <param name="commandType">    Type of the command. </param>
+            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            
+            <returns> The new command. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.SqlDataReaderToExpando(System.Data.SqlClient.SqlDataReader)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> SQL data reader to expando. </summary>
-                    
-                    <param name="reader"> The reader. </param>
-                    
-                    <returns> . </returns>
-                    *
+            <summary> SQL data reader to expando. </summary>
+            
+            <param name="reader"> The reader. </param>
+            
+            <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.GetDynamicSqlData(System.Data.SqlClient.SqlDataReader)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Gets a dynamic SQL data. </summary>
-                    
-                    <param name="reader"> The reader. </param>
-                    
-                    <returns> The dynamic SQL data. </returns>
-                    *
+            <summary> Gets a dynamic SQL data. </summary>
+            
+            <param name="reader"> The reader. </param>
+            
+            <returns> The dynamic SQL data. </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.BuildSqlParameters(System.Object)">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Build SqlParameter Array from dynamic object. </summary>
-                     <param name="paramObject"> The dynamic object as parameters. </param>
-                    <returns> SqlParameter[] object and if paramObject is null then return null </returns>
-                    *
+            <summary> Build SqlParameter Array from dynamic object. </summary>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            <returns> SqlParameter[] object and if paramObject is null then return null </returns>
         </member>
         <member name="M:SimpleAccess.Repository.Repository.Dispose">
-            --------------------------------------------------------------------------------------------------
-                    <summary> Performs application-defined tasks associated with freeing, releasing, or resetting
-                    unmanaged resources. </summary>
-                    *
+            <summary> Performs application-defined tasks associated with freeing, releasing, or resetting
+            unmanaged resources. </summary>
+        </member>
+        <member name="T:SimpleAccess.Repository.RepositorySetting">
+            <summary>
+            Hold the default settings of SimpleAccess Repositories
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.Repository.RepositorySetting.EntityInfos">
+            <summary>
+            The Dictionary of <see cref="P:SimpleAccess.Repository.RepositorySetting.EntityInfos"/> for cache.
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.Repository.RepositorySetting.GetEntityInfo(System.Type)">
+            <summary>
+            Get the <see cref="T:SimpleAccess.Entity.EntityInfo"/> object from the cache.
+            </summary>
+            If the <paramref name="type"/> has no <see cref="T:SimpleAccess.Entity.EntityInfo"/> then it will add the and return the <see cref="T:SimpleAccess.Entity.EntityInfo"/>.
+            <param name="type"></param>
+            <returns></returns>
         </member>
         <member name="T:SimpleAccess.Repository.ISqlRepository">
             <summary>
