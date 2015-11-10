@@ -281,7 +281,7 @@
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteEntities``1(`1,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},`3[])">
             <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
             
-            <exception cref="T:System.Data.Common.DbException"> Thrown when an exception error condition occurs. </exception>
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <typeparam name="TEntity"> Generic type parameter. </typeparam>
             <param name="transaction"> The SQL transaction. </param>

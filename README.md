@@ -25,7 +25,7 @@ Sql Server implementaion for SimpleAccess.
 
 ** *All Execute and Fill methods have different overloads.* **
 
-## SqlReporsitory
+## SqlRepository
 
 All methods as bsed on stored procedures with a specific sotred procedure naming convention.
 
