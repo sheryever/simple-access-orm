@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using SimpleAccess.Entity;
 
-namespace SimpleAccess.Repository
+namespace SimpleAccess.SqlServer.Repository
 {    
     /**--------------------------------------------------------------------------------------------------
     <summary> IRepository. </summary>

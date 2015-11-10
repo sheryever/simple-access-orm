@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
+using SimpleAccess.Repository;
 using SimpleAccess.SqlServer;
 
-namespace SimpleAccess.Repository
+namespace SimpleAccess.SqlServer.Repository
 {
     /// <summary> Implements SqlRepository base SqlSimpleAccess with command type stored procedures. </summary>
     public class SqlRepository : ISqlRepository, IDisposable

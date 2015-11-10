@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 
-namespace SimpleAccess
+namespace SimpleAccess.DbExtensions
 {
     public static class DatabaseExtensions
     {

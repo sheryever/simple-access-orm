@@ -1309,13 +1309,13 @@
                     unmanaged resources. </summary>
                     *
         </member>
-        <member name="T:SimpleAccess.Repository.ISqlRepository">
+        <member name="T:SimpleAccess.SqlServer.Repository.ISqlRepository">
             --------------------------------------------------------------------------------------------------
                 <summary> IRepository. </summary>
                 *
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SimpleAccess.Repository.ISqlRepository.GetAll``1(System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})" -->
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Get``1(System.Data.SqlClient.SqlParameter,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+        <!-- Badly formed XML comment ignored for member "M:SimpleAccess.SqlServer.Repository.ISqlRepository.GetAll``1(System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})" -->
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Get``1(System.Data.SqlClient.SqlParameter,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1326,7 +1326,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Get``1(System.Data.SqlClient.SqlTransaction,System.Data.SqlClient.SqlParameter,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Get``1(System.Data.SqlClient.SqlTransaction,System.Data.SqlClient.SqlParameter,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1337,7 +1337,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Get``1(System.Object,System.Data.SqlClient.SqlTransaction,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Get``1(System.Object,System.Data.SqlClient.SqlTransaction,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1348,7 +1348,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Get``1(System.Int64,System.Data.SqlClient.SqlTransaction,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Get``1(System.Int64,System.Data.SqlClient.SqlTransaction,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1359,7 +1359,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Get(System.String,System.Int64,System.String)">
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Get(System.String,System.Int64,System.String)">
             <summary> Gets. </summary>
             
             <param name="sql">		   The SQL. </param>
@@ -1368,7 +1368,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Get(System.String,System.Data.SqlClient.SqlParameter,System.String)">
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Get(System.String,System.Data.SqlClient.SqlParameter,System.String)">
             <summary> Gets. </summary>
             
             <param name="sql">		    The SQL. </param>
@@ -1377,7 +1377,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Get(System.String,System.Object,System.String)">
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Get(System.String,System.Object,System.String)">
             <summary> Gets. </summary>
             
             <param name="sql">		    The SQL. </param>
@@ -1386,7 +1386,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Insert``1(System.Data.SqlClient.SqlParameter[])">
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Insert``1(System.Data.SqlClient.SqlParameter[])">
             <summary> Inserts the given SQL parameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1394,7 +1394,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Insert``1(System.Object)">
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Insert``1(System.Object)">
             <summary> Inserts the given dynamic object as SqlParameter names and values. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1402,8 +1402,8 @@
             
             <returns> . </returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SimpleAccess.Repository.ISqlRepository.Insert``1(SimpleAccess.StoredProcedureParameters)" -->
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Insert``1(System.Data.SqlClient.SqlTransaction,SimpleAccess.StoredProcedureParameters)">
+        <!-- Badly formed XML comment ignored for member "M:SimpleAccess.SqlServer.Repository.ISqlRepository.Insert``1(SimpleAccess.StoredProcedureParameters)" -->
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Insert``1(System.Data.SqlClient.SqlTransaction,SimpleAccess.StoredProcedureParameters)">
             <summary> Inserts the given SQL parameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1412,7 +1412,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Update``1(System.Data.SqlClient.SqlParameter[])">
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Update``1(System.Data.SqlClient.SqlParameter[])">
             <summary> Updates the given sqlParameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1420,14 +1420,14 @@
             
             <returns> Number of rows affected (integer) </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Update``1(System.Object)">
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Update``1(System.Object)">
             <summary> Updates the given dynamic object as SqlParameter names and values. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="paramObject"> The dynamic object as parameters. </param>        
             <returns> Number of rows affected (integer) </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Update``1(SimpleAccess.StoredProcedureParameters)">
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Update``1(SimpleAccess.StoredProcedureParameters)">
             <summary> Updates the given sqlParameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1435,7 +1435,7 @@
             
             <returns> Number of rows affected (integer) </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Update``1(System.Data.SqlClient.SqlTransaction,SimpleAccess.StoredProcedureParameters)">
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Update``1(System.Data.SqlClient.SqlTransaction,SimpleAccess.StoredProcedureParameters)">
             <summary> Updates the given sqlParameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1444,7 +1444,7 @@
             
             <returns> Number of rows affected (integer) </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Delete``1(System.Data.SqlClient.SqlParameter[])">
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Delete``1(System.Data.SqlClient.SqlParameter[])">
             <summary> Deletes the given ID. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1452,7 +1452,7 @@
             
             <returns> Number of rows affected (integer) </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Delete``1(System.Object)">
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Delete``1(System.Object)">
             <summary> Deletes the given dynamic object as SqlParameter names and values. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1460,7 +1460,7 @@
             
             <returns> Number of rows affected (integer) </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Delete``1(System.Int64)">
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Delete``1(System.Int64)">
             <summary> Deletes the given ID. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1468,7 +1468,7 @@
             
             <returns> Number of rows affected (integer) </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Delete``1(System.Data.SqlClient.SqlTransaction,System.Int64)">
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Delete``1(System.Data.SqlClient.SqlTransaction,System.Int64)">
             <summary> Deletes the given ID. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1477,7 +1477,7 @@
             
             <returns> Number of rows affected (integer) </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Delete``1(System.Data.SqlClient.SqlTransaction,System.Data.SqlClient.SqlParameter[])">
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.Delete``1(System.Data.SqlClient.SqlTransaction,System.Data.SqlClient.SqlParameter[])">
             <summary> Deletes the given ID. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1486,7 +1486,7 @@
             
             <returns> Number of rows affected (integer) </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.SoftDelete``1(System.Int64)">
+        <member name="M:SimpleAccess.SqlServer.Repository.ISqlRepository.SoftDelete``1(System.Int64)">
             <summary> Soft delete. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1494,26 +1494,26 @@
             
             <returns> Number of rows affected (integer) </returns>
         </member>
-        <member name="T:SimpleAccess.Repository.SqlRepository">
+        <member name="T:SimpleAccess.SqlServer.Repository.SqlRepository">
             <summary> Implements SqlRepository base SqlSimpleAccess with command type stored procedures. </summary>
         </member>
-        <member name="P:SimpleAccess.Repository.SqlRepository.SimpleAccess">
+        <member name="P:SimpleAccess.SqlServer.Repository.SqlRepository.SimpleAccess">
             <summary> The SQL connection. </summary>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.#ctor(SimpleAccess.SqlServer.ISqlSimpleAccess)">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.#ctor(SimpleAccess.SqlServer.ISqlSimpleAccess)">
             <summary> Constructor. </summary>
             
             <param name="sqlSimpleAccess"> The SQL connection. </param>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.#ctor(System.String)">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.#ctor(System.String)">
             <summary> Constructor. </summary>
             
             <param name="connection"> The connection string. </param>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.#ctor">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.#ctor">
             <summary> Default constructor. </summary>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.GetAll``1(System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.GetAll``1(System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
             <summary> Enumerates get all in this collection. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1523,7 +1523,7 @@
             <returns> An enumerator that allows for each to be used to process get all {TEntity} in this
             collection. </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Get``1(System.Int64,System.Data.SqlClient.SqlTransaction,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Get``1(System.Int64,System.Data.SqlClient.SqlTransaction,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1534,7 +1534,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Get``1(System.Data.SqlClient.SqlParameter,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Get``1(System.Data.SqlClient.SqlParameter,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1544,7 +1544,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Get``1(System.Data.SqlClient.SqlTransaction,System.Data.SqlClient.SqlParameter,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Get``1(System.Data.SqlClient.SqlTransaction,System.Data.SqlClient.SqlParameter,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1555,7 +1555,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Get``1(System.Object,System.Data.SqlClient.SqlTransaction,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Get``1(System.Object,System.Data.SqlClient.SqlTransaction,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1566,7 +1566,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Get(System.String,System.Int64,System.String)">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Get(System.String,System.Int64,System.String)">
             <summary> Gets. </summary>
             
             <param name="sql">		   The SQL. </param>
@@ -1575,7 +1575,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Get(System.String,System.Data.SqlClient.SqlParameter,System.String)">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Get(System.String,System.Data.SqlClient.SqlParameter,System.String)">
             <summary> Gets. </summary>
             
             <param name="sql">		    The SQL. </param>
@@ -1584,7 +1584,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Get(System.String,System.Object,System.String)">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Get(System.String,System.Object,System.String)">
             <summary> Gets. </summary>
             
             <param name="sql">		    The SQL. </param>
@@ -1593,7 +1593,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Insert``1(System.Data.SqlClient.SqlParameter[])">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Insert``1(System.Data.SqlClient.SqlParameter[])">
             <summary> Inserts the given SQL parameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1601,7 +1601,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Insert``1(System.Object)">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Insert``1(System.Object)">
             <summary> Inserts the given dynamic object as SqlParameter names and values. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1609,7 +1609,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Insert``1(SimpleAccess.StoredProcedureParameters)">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Insert``1(SimpleAccess.StoredProcedureParameters)">
             <summary> Inserts the given SQL parameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1617,7 +1617,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Insert``1(System.Data.SqlClient.SqlTransaction,SimpleAccess.StoredProcedureParameters)">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Insert``1(System.Data.SqlClient.SqlTransaction,SimpleAccess.StoredProcedureParameters)">
             <summary> Inserts the given SQL parameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1626,7 +1626,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Update``1(System.Data.SqlClient.SqlParameter[])">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Update``1(System.Data.SqlClient.SqlParameter[])">
             <summary> Updates the given sqlParameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1634,14 +1634,14 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Update``1(System.Object)">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Update``1(System.Object)">
             <summary> Updates the given dynamic object as SqlParameter names and values. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="paramObject"> The dynamic object as parameters. </param>        
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Update``1(SimpleAccess.StoredProcedureParameters)">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Update``1(SimpleAccess.StoredProcedureParameters)">
             <summary> Updates the given sqlParameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1649,7 +1649,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Update``1(System.Data.SqlClient.SqlTransaction,SimpleAccess.StoredProcedureParameters)">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Update``1(System.Data.SqlClient.SqlTransaction,SimpleAccess.StoredProcedureParameters)">
             <summary> Updates the given sqlParameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1658,7 +1658,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Delete``1(System.Int64)">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Delete``1(System.Int64)">
             <summary> Deletes the given ID. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1666,7 +1666,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Delete``1(System.Data.SqlClient.SqlTransaction,System.Int64)">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Delete``1(System.Data.SqlClient.SqlTransaction,System.Int64)">
             <summary> Deletes the given ID. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1675,7 +1675,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Delete``1(System.Data.SqlClient.SqlParameter[])">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Delete``1(System.Data.SqlClient.SqlParameter[])">
             <summary> Deletes the given ID. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1683,7 +1683,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Delete``1(System.Object)">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Delete``1(System.Object)">
             <summary> Deletes the given dynamic object as SqlParameter names and values. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1691,7 +1691,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Delete``1(System.Data.SqlClient.SqlTransaction,System.Data.SqlClient.SqlParameter[])">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Delete``1(System.Data.SqlClient.SqlTransaction,System.Data.SqlClient.SqlParameter[])">
             <summary> Deletes the given ID. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1700,7 +1700,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.SoftDelete``1(System.Int64)">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.SoftDelete``1(System.Int64)">
             <summary> Soft delete. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -1708,7 +1708,7 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Dispose">
+        <member name="M:SimpleAccess.SqlServer.Repository.SqlRepository.Dispose">
             <summary> Performs application-defined tasks associated with freeing, releasing, or resetting
             unmanaged resources. </summary>
         </member>
@@ -1723,13 +1723,13 @@
             </summary>
         </member>
         <member name="M:SimpleAccess.SqlServer.ISqlSimpleAccess.CreateCommand(System.String,System.Data.CommandType,System.Data.SqlClient.SqlParameter[])">
-            <summary> Creates a command. </summary>
+             <summary> Creates a command. </summary>
+             
+             <param name="commandText">   The query string. </param>
+             <param name="commandType">   Type of the command. </param>
+             <param name="sqlParameters"> Options for controlling the SQL. </param>
             
-            <param name="commandText">   The query string. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
-            
-            <returns> The new command. </returns>
+             <returns> The new command. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.ISqlSimpleAccess.CreateCommand(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.Data.SqlClient.SqlParameter[])">
             <summary> Creates a command. </summary>
