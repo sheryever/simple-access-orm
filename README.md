@@ -47,4 +47,4 @@ All methods as bsed on stored procedures with a specific sotred procedure naming
 ## Roadmap
 - Separate SimpleCommand and Repositoy (Testing)
 - vitual properties must behave like NotASpParameter marked perperty in Entities drived from StoredProcedureParameters (Testing)
-[Read more...](./docs/roadmap.md)
+[Read more...](docs/roadmap.md)
