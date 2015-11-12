@@ -12,13 +12,14 @@ namespace SimpleAccess.Core
     /// <summary>
     /// Represent the interface of SimpleAccess methods and it's implemented by SimpleAccess 
     /// </summary>
-    public interface ISimpleAccess<TDbConnection, TDbTransaction, TDbCommand, TDbParameter, TDbDataReader, TDataAdapter>
+    public interface ISimpleAccess<TDbConnection, TDbTransaction, TDbCommand, TDataParameter, TDbDataReader, TParameterBuilder>
             where TDbConnection : IDbConnection, new()
             where TDbTransaction : IDbTransaction
             where TDbCommand : IDbCommand, new()
-            where TDbParameter : IDataParameter, new()
+            where TDataParameter : IDataParameter, new()
             where TDbDataReader : IDataReader
-            where TDataAdapter : IDataAdapter, new()    {
+            where TParameterBuilder : IParameterBuilder, new()
+    {
 
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parmeters rquired to execute CommandText. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int ExecuteNonQuery(string commandText, params TDbParameter[] parameters);
+        int ExecuteNonQuery(string commandText, params TDataParameter[] parameters);
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
@@ -45,7 +46,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parmeters rquired to execute CommandText. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int ExecuteNonQuery(string commandText, CommandType commandType, params TDbParameter[] parameters);
+        int ExecuteNonQuery(string commandText, CommandType commandType, params TDataParameter[] parameters);
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
@@ -78,7 +79,7 @@ namespace SimpleAccess.Core
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         int ExecuteNonQuery(TDbTransaction transaction, string commandText
-            , params TDbParameter[] parameters);
+            , params TDataParameter[] parameters);
 
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
@@ -92,7 +93,7 @@ namespace SimpleAccess.Core
         /// <returns> Number of rows affected (integer) </returns>
         int ExecuteNonQuery(TDbTransaction transaction, string commandText
             , CommandType commandType
-            , params TDbParameter[] parameters);
+            , params TDataParameter[] parameters);
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
@@ -124,7 +125,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parmeters rquired to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
-        T ExecuteScalar<T>(string commandText, params TDbParameter[] parameters);
+        T ExecuteScalar<T>(string commandText, params TDataParameter[] parameters);
 
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -137,7 +138,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parmeters rquired to execute CommandText. </param>
         /// 
         /// <returns> The {T} value </returns>
-        T ExecuteScalar<T>(string commandText, CommandType commandType, params TDbParameter[] parameters);
+        T ExecuteScalar<T>(string commandText, CommandType commandType, params TDataParameter[] parameters);
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
         /// 
@@ -173,7 +174,7 @@ namespace SimpleAccess.Core
         /// 
         /// <returns> The {T} value </returns>
         T ExecuteScalar<T>(TDbTransaction transaction, string commandText
-            , params TDbParameter[] parameters);
+            , params TDataParameter[] parameters);
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
         /// 
@@ -188,7 +189,7 @@ namespace SimpleAccess.Core
         /// <returns> The {TEntity} value </returns>
         T ExecuteScalar<T>(TDbTransaction transaction, string commandText
             , CommandType commandType
-            , params TDbParameter[] parameters);
+            , params TDataParameter[] parameters);
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
         /// 
@@ -224,7 +225,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters"> Parmeters rquired to execute CommandText. </param>
         /// <returns> The TDbDataReader </returns>
         TDbDataReader ExecuteReader(string commandText,
-            params TDbParameter[] parameters);
+            params TDataParameter[] parameters);
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
         /// 
@@ -236,7 +237,33 @@ namespace SimpleAccess.Core
         /// 
         /// <returns> The TDbDataReader </returns>
         TDbDataReader ExecuteReader(string commandText, CommandType commandType,
-            params TDbParameter[] parameters);
+            params TDataParameter[] parameters);
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+        /// <param name="parameters"> Parmeters rquired to execute CommandText. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        TDbDataReader ExecuteReader(string commandText, CommandBehavior commandBehavior,
+            params TDataParameter[] parameters);
+
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+        /// <param name="parameters"> Parmeters rquired to execute CommandText. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        TDbDataReader ExecuteReader(string commandText, CommandType commandType, CommandBehavior commandBehavior,
+            params TDataParameter[] parameters);
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
         /// 
@@ -251,7 +278,7 @@ namespace SimpleAccess.Core
         /// <returns> The TEntity value </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, string fieldsToSkip = null,
                                              Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
-                                             params TDbParameter[] parameters)
+                                             params TDataParameter[] parameters)
             where TEntity : new();
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
@@ -268,7 +295,7 @@ namespace SimpleAccess.Core
         /// <returns> The {TEntity} value </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, CommandType commandType, string fieldsToSkip = null,
                                              Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
-                                             params TDbParameter[] parameters)
+                                             params TDataParameter[] parameters)
             where TEntity : new();
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
@@ -319,7 +346,7 @@ namespace SimpleAccess.Core
         /// <returns> The {TEntity} value </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(TDbTransaction transaction, string commandText, 
                                              string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
-                                             params TDbParameter[] parameters)
+                                             params TDataParameter[] parameters)
             where TEntity : new();
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -337,7 +364,7 @@ namespace SimpleAccess.Core
         /// <returns> The {TEntity} value </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(TDbTransaction transaction, string commandText, CommandType commandType,
                                              string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
-                                             params TDbParameter[] parameters)
+                                             params TDataParameter[] parameters)
             where TEntity : new();
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
@@ -390,7 +417,7 @@ namespace SimpleAccess.Core
         /// <returns> The value of the entity. </returns>
         TEntity ExecuteEntity<TEntity>(string commandText, string fieldsToSkip = null,
                                              Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
-                                             params TDbParameter[] parameters)
+                                             params TDataParameter[] parameters)
             where TEntity : class, new();
 
         /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
@@ -407,7 +434,7 @@ namespace SimpleAccess.Core
         /// <returns> The value of the entity. </returns>
         TEntity ExecuteEntity<TEntity>(string commandText, CommandType commandType, string fieldsToSkip = null,
                                              Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
-                                             params TDbParameter[] parameters)
+                                             params TDataParameter[] parameters)
             where TEntity : class, new();
 
         /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
@@ -457,7 +484,7 @@ namespace SimpleAccess.Core
         /// <returns> The value of the entity. </returns>
         TEntity ExecuteEntity<TEntity>(TDbTransaction transaction, string commandText, string fieldsToSkip = null, 
                                             Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
-                                             params TDbParameter[] parameters)
+                                             params TDataParameter[] parameters)
             where TEntity : class, new();
 
         /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
@@ -475,7 +502,7 @@ namespace SimpleAccess.Core
         /// <returns> The value of the entity. </returns>
         TEntity ExecuteEntity<TEntity>(TDbTransaction transaction, string commandText, CommandType commandType,
                                              string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
-                                             params TDbParameter[] parameters)
+                                             params TDataParameter[] parameters)
             where TEntity : class, new();
 
 
@@ -527,7 +554,7 @@ namespace SimpleAccess.Core
         /// 
         /// <returns> A list of dynamic. </returns>
         IEnumerable<dynamic> ExecuteDynamics(string commandText
-            , string fieldsToSkip = null, params TDbParameter[] parameters);
+            , string fieldsToSkip = null, params TDataParameter[] parameters);
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
         /// 
@@ -540,7 +567,7 @@ namespace SimpleAccess.Core
         /// 
         /// <returns> A list of dynamic. </returns>
         IEnumerable<dynamic> ExecuteDynamics(string commandText, CommandType commandType
-            , string fieldsToSkip = null, params TDbParameter[] parameters);
+            , string fieldsToSkip = null, params TDataParameter[] parameters);
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
         ///  
@@ -580,7 +607,7 @@ namespace SimpleAccess.Core
         /// 
         /// <returns> A list of dynamic. </returns>
         IEnumerable<dynamic> ExecuteDynamics(TDbTransaction transaction, string commandText,
-                                     string fieldsToSkip = null, params TDbParameter[] parameters);
+                                     string fieldsToSkip = null, params TDataParameter[] parameters);
 
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
@@ -595,7 +622,7 @@ namespace SimpleAccess.Core
         /// 
         /// <returns> A list of dynamic. </returns>
         IEnumerable<dynamic> ExecuteDynamics(TDbTransaction transaction, string commandText, CommandType commandType,                                     
-            string fieldsToSkip = null , params TDbParameter[] parameters);
+            string fieldsToSkip = null , params TDataParameter[] parameters);
 
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
@@ -637,7 +664,7 @@ namespace SimpleAccess.Core
         /// 
         /// <returns> Result in a dynamic object. </returns>
         dynamic ExecuteDynamic(string commandText 
-            , string fieldsToSkip = null, params TDbParameter[] parameters);
+            , string fieldsToSkip = null, params TDataParameter[] parameters);
 
 
         /// <summary> Sends the CommandText to the Connection and builds a dynamic object from DataReader. </summary>
@@ -651,7 +678,7 @@ namespace SimpleAccess.Core
         /// 
         /// <returns> Result in a dynamic object. </returns>
         dynamic ExecuteDynamic(string commandText, CommandType commandType
-            , string fieldsToSkip = null, params TDbParameter[] parameters);
+            , string fieldsToSkip = null, params TDataParameter[] parameters);
 
 
         /// <summary> Sends the CommandText to the Connection and builds a dynamic object from DataReader. </summary>
@@ -692,7 +719,7 @@ namespace SimpleAccess.Core
         /// 
         /// <returns> Result in a dynamic object. </returns>
         dynamic ExecuteDynamic(TDbTransaction transaction, string commandText,
-                                    string fieldsToSkip = null, params TDbParameter[] parameters);
+                                    string fieldsToSkip = null, params TDataParameter[] parameters);
 
 
 
@@ -708,7 +735,7 @@ namespace SimpleAccess.Core
         /// 
         /// <returns> Result in a dynamic object. </returns>
         dynamic ExecuteDynamic(TDbTransaction transaction, string commandText, CommandType commandType,
-                                    string fieldsToSkip = null, params TDbParameter[] parameters);
+                                    string fieldsToSkip = null, params TDataParameter[] parameters);
 
 
 

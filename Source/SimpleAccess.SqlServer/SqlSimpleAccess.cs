@@ -467,10 +467,41 @@ namespace SimpleAccess.SqlServer
         public SqlDataReader ExecuteReader(string commandText, CommandType commandType,
             params SqlParameter[] sqlParameters)
         {
+            return ExecuteReader(commandText, commandType, CommandBehavior.Default, sqlParameters);
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+        /// <param name="sqlParameters"> Parmeters rquired to execute CommandText. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public SqlDataReader ExecuteReader(string commandText, CommandBehavior commandBehavior,
+            params SqlParameter[] sqlParameters)
+        {
+            return ExecuteReader(commandText, DefaultSimpleAccessSettings.DefaultCommandType, commandBehavior, sqlParameters);
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+        /// <param name="sqlParameters"> Parmeters rquired to execute CommandText. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public SqlDataReader ExecuteReader(string commandText, CommandType commandType, CommandBehavior commandBehavior,
+            params SqlParameter[] sqlParameters)
+        {
             try
             {
                 var dbCommand = CreateCommand(commandText, commandType, sqlParameters);
-                var result = dbCommand.ExecuteReader();
+                var result = dbCommand.ExecuteReader(commandBehavior);
                 return result;
             }
             catch (Exception ex)

@@ -3,9 +3,9 @@
 namespace SimpleAccess
 {
     /// <summary>
-    /// Not in use.
+    /// Interface is required for Repository Delete methods
     /// </summary>
-    [Obsolete()]
+    [Obsolete("No need to use this interface.")]
     public interface IEntity
     {
 

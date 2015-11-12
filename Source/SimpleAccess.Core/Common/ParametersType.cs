@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleAccess
+namespace SimpleAccess.Core
 {
     /// <summary>
     /// Defines the DbParameters type to be generated

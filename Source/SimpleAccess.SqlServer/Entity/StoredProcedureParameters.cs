@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using SimpleAccess.Core;
 using SimpleAccess.DbExtensions;
 
 namespace SimpleAccess
@@ -52,22 +53,6 @@ namespace SimpleAccess
 
             _storedParametersType = parametersType;
             return _sqlParameters.ToArray();
-        }
-
-        /// <summary>
-        /// Get underline DbParametes
-        /// </summary>
-        /// <param name="parametersType"></param>
-        /// <returns></returns>
-        public SqlParameter[] GetSpParameters(ParametersType parametersType) 
-        {
-            if (_storedParametersType != parametersType)
-                return CreateSqlParametersFromProperties(parametersType);
-
-            if (_sqlParameters == null || _sqlParameters.Count < 1)
-                return CreateSqlParametersFromProperties(parametersType);
-            else
-                return _sqlParameters.ToArray();
         }
 
         private SqlParameter CreateSqlParameter(PropertyInfo propertyInfo, ParametersType parametesType, IEnumerable<PropertyInfo> propertyInfos)
@@ -151,7 +136,7 @@ namespace SimpleAccess
             Debug.WriteLine(sqlParam.ParameterName);
             return sqlParam;
         }
-
+        
         /// <summary>
         /// Load all the properties from DbParameters which were marked as ParameterDirection.Out
         /// </summary>
@@ -181,6 +166,23 @@ namespace SimpleAccess
             _sqlParameters.Clear();
             _outParameterPropertyInfoCollection.Clear();
         }
+
+        /// <summary>
+        /// Get underline DbParametes
+        /// </summary>
+        /// <param name="parametersType"></param>
+        /// <returns></returns>
+        public SqlParameter[] GetSpParameters(ParametersType parametersType)
+        {
+            if (_storedParametersType != parametersType)
+                return CreateSqlParametersFromProperties(parametersType);
+
+            if (_sqlParameters == null || _sqlParameters.Count < 1)
+                return CreateSqlParametersFromProperties(parametersType);
+            else
+                return _sqlParameters.ToArray();
+        }
+
 
         /// <summary>
         /// Validate the object and get the result if any.

@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 
-namespace SimpleAccess.DbExtensions
+namespace SimpleAccess.Core
 {
 
     /**--------------------------------------------------------------------------------------------------
@@ -20,12 +20,12 @@ namespace SimpleAccess.DbExtensions
 		
         <returns> . </returns>
         **/
-        public static SqlConnection OpenSafely(this SqlConnection con)
+        public static void OpenSafely(this SqlConnection con)
         {
             if (con.State != ConnectionState.Open)
                 con.Open();
 
-            return con;
+            //return con;
         }
 
         /**--------------------------------------------------------------------------------------------------
@@ -35,12 +35,12 @@ namespace SimpleAccess.DbExtensions
 		
         <returns> . </returns>
         **/
-        public static SqlConnection CloseSafely(this SqlConnection con)
+        public static void CloseSafely(this SqlConnection con)
         {
             if (con.State == ConnectionState.Open)
                 con.Close();
 
-            return con;
+            //return con;
         }
     }
 }

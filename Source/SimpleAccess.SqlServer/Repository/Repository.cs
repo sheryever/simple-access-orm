@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Dynamic;
 using System.Reflection;
-using SimpleAccess.DbExtensions;
+using SimpleAccess.Core;
 using SimpleAccess.Entity;
 
 namespace SimpleAccess.Repository

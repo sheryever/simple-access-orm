@@ -19,7 +19,7 @@ namespace SimpleAccess.SqlServer
     /// Sql Server implementaion for SimpleAccess
     /// </summary>
     public interface ISqlSimpleAccess : 
-        ISimpleAccess <SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlDataAdapter>
+        ISimpleAccess <SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlParameterBuilder>
         , IDisposable
     {
         

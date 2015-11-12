@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using SimpleAccess.Entity;
+using SimpleAccess.Core.Entity;
 
-namespace SimpleAccess.DbExtensions
+namespace SimpleAccess.Core
 {
     /// <summary>
     /// Extension to load objects from DataReaders

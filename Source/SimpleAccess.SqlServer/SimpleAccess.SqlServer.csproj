@@ -48,27 +48,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\DbColumnAttribute.cs" />
-    <Compile Include="Attributes\DefaultValueAttribute.cs" />
-    <Compile Include="Attributes\IdentityAttribute.cs" />
-    <Compile Include="Attributes\NotASpParameterAttribute.cs" />
-    <Compile Include="Attributes\TableAttribute.cs" />
-    <Compile Include="Attributes\ParameterDirectionAttribute.cs" />
-    <Compile Include="Common\ParametersType.cs" />
-    <Compile Include="DbExtensions\ConnectionExtension.cs" />
     <Compile Include="DbExtensions\SqlParametersExtensions.cs" />
-    <Compile Include="DbExtensions\DatabaseExtensions.cs" />
-    <Compile Include="DbExtensions\DataReaderToObject.cs" />
     <Compile Include="Entity\EntityInfo.cs" />
     <Compile Include="Entity\IEntity.cs" />
     <Compile Include="Entity\StoredProcedureParameters.cs" />
+    <Compile Include="SqlParameterBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\RepositorySetting.cs" />
     <Compile Include="Repository\ISqlRepository.cs" />
     <Compile Include="Repository\SqlRepository.cs" />
-    <Compile Include="ISimpleAccess.cs" />
+    <Compile Include="ISqlSimpleAccess.cs" />
     <Compile Include="SqlSimpleAccess.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +67,9 @@
       <Project>{ca67607f-1d89-47fd-b8bf-8deac4d0ac60}</Project>
       <Name>SimpleAccess.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Attributes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
