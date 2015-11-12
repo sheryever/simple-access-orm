@@ -4,7 +4,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
-using JetBrains.Annotations;
 using SimpleAccess.Core;
 
 
@@ -100,7 +99,7 @@ namespace SimpleAccess.Core.Entity
         /// </summary>
         /// <param name="parametersType"></param>
         /// <returns></returns>
-        public IDataParameter[] CreateSqlParametersFromProperties([NotNull]ParametersType parametersType)
+        public IDataParameter[] CreateSqlParametersFromProperties(ParametersType parametersType)
         {
             
             _outParameterPropertyInfoCollection = new List<PropertyInfo>();
@@ -130,7 +129,7 @@ namespace SimpleAccess.Core.Entity
         /// Load all the properties from DbParameters which were marked as ParameterDirection.Out
         /// </summary>
         /// <param name="instance"> The instance of object </param>
-        public void LoadOutParametersProperties([NotNull]object instance)
+        public void LoadOutParametersProperties(object instance)
         {
             _outParameterPropertyInfoCollection.ForEach(p => {
                 var propertyName = p.Name;
