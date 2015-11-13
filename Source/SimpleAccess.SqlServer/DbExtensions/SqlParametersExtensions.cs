@@ -26,7 +26,7 @@ namespace SimpleAccess
             {
                  var sqlParams = otherParametersObj.GetType().GetProperties().Select(
                     param => {
-                        object value = param.GetValue(otherParameters);
+                        object value = param.GetValue(otherParameters, new object[] {});
                         if (param.Name.GetType().Name.ToLower() == "string" && value != null)
                         {
                             value = SafeSqlLiteral(value.ToString());
@@ -52,7 +52,7 @@ namespace SimpleAccess
                 var sqlParams = otherParametersObj.GetType().GetProperties().Select(
                    param =>
                    {
-                       object value = param.GetValue(otherParameters);
+                       object value = param.GetValue(otherParameters, new object[] { });
                        if (param.Name.GetType().Name.ToLower() == "string" && value != null)
                        {
                            value = SafeSqlLiteral(value.ToString());

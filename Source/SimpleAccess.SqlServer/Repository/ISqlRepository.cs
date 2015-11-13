@@ -1,9 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
-using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
-using SimpleAccess.Entity;
 
 namespace SimpleAccess.Repository
 {
@@ -186,6 +182,23 @@ namespace SimpleAccess.Repository
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         int Delete<TEntity>(SqlTransaction sqlTransaction, params SqlParameter[] sqlParameters)
+            where TEntity : class;
+
+        /// <summary> Delete All records from the table. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        int DeleteAll<TEntity>()
+            where TEntity : class;
+
+        /// <summary> Delete All records from the table with a transaction. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        int DeleteAll<TEntity>(SqlTransaction sqlTransaction)
             where TEntity : class;
 
         /// <summary> Soft delete. </summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 
 namespace SimpleAccess.Entity
@@ -35,8 +36,16 @@ namespace SimpleAccess.Entity
 
         private void LoadTypeName()
         {
-            var customAttr = Type.GetCustomAttribute<EntityAttribute>();
-            Name  = customAttr != null ?  customAttr.EntityName :  this.Type.Name;
+            var entityAttribute = Type.GetCustomAttributes(true).FirstOrDefault( t => t is EntityAttribute);
+            if (entityAttribute != null)
+            {
+                Name = ((EntityAttribute)entityAttribute).EntityName;
+            }
+            else
+            {
+                Name = this.Type.Name;
+
+            }//var customAttr = Type.GetCustomAttribute<EntityAttribute>();
         }
     }
 }

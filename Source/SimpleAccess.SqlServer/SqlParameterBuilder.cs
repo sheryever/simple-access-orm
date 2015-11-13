@@ -41,7 +41,7 @@ namespace SimpleAccess.Core
 
             var attrbutes = propertyInfo.GetCustomAttributes(true);
 
-            if (propertyInfo.GetMethod.IsVirtual)
+            if (propertyInfo.GetGetMethod().IsVirtual)
                 return null;
 
             if (attrbutes.FirstOrDefault(a => a is NotASpParameterAttribute) != null)

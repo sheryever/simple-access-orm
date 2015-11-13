@@ -86,7 +86,7 @@ namespace SimpleAccess
             if (propertyInfo.PropertyType.IsEnum)
                 sqlParam.Value = value.ToString();
             */
-            if (propertyInfo.GetMethod.IsVirtual)
+            if (propertyInfo.GetAccessors()[0].IsVirtual)
                 return null;
 
             if (attrbutes.FirstOrDefault(a => a is NotASpParameterAttribute) != null)

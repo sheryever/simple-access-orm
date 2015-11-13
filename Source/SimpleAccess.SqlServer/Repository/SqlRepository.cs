@@ -7,7 +7,7 @@ using SimpleAccess.Core;
 using SimpleAccess.Repository;
 using SimpleAccess.SqlServer;
 
-namespace SimpleAccess.SqlServer.Repository
+namespace SimpleAccess.Repository
 {
     /// <summary> Implements SqlRepository base SqlSimpleAccess with command type stored procedures. </summary>
     public class SqlRepository : ISqlRepository, IDisposable
@@ -420,6 +420,34 @@ namespace SimpleAccess.SqlServer.Repository
             var commandText = string.Format("{0}_Delete", entityInfo.Name);
 
             return SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, sqlParameters);
+        }
+
+        /// <summary> Delete All records from the table. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        public int DeleteAll<TEntity>() where TEntity : class
+        {
+            var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
+            var commandText = string.Format("{0}_DeleteAll", entityInfo.Name);
+
+            return SimpleAccess.ExecuteNonQuery(commandText, CommandType.StoredProcedure);
+        }
+
+        /// <summary> Delete All records from the table with a transaction. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+
+        public int DeleteAll<TEntity>(SqlTransaction sqlTransaction) where TEntity : class
+        {
+            var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
+            var commandText = string.Format("{0}_DeleteAll", entityInfo.Name);
+
+            return SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure);
         }
 
         /// <summary> Soft delete. </summary>
