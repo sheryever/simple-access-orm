@@ -52,6 +52,7 @@
     <Compile Include="Entity\EntityInfo.cs" />
     <Compile Include="Entity\IEntity.cs" />
     <Compile Include="Entity\StoredProcedureParameters.cs" />
+    <Compile Include="NamespaceDoc.cs" />
     <Compile Include="SqlParameterBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IRepository.cs" />

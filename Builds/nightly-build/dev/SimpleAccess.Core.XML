@@ -4,6 +4,331 @@
         <name>SimpleAccess.Core</name>
     </assembly>
     <members>
+        <member name="T:SimpleAccess.DbColumnAttribute">
+            <summary>
+            Use for mappint the property with database table column.
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.DbColumnAttribute.DbColumn">
+            <summary>
+            Database table column name.
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.DbColumnAttribute.#ctor(System.String)">
+            <summary>
+            Initialize the attribute.
+            </summary>
+            <param name="dbColumn">Database table column name of the marked property.</param>
+        </member>
+        <member name="T:SimpleAccess.DefaultValueAttribute">
+            <summary>
+            Used to set the default value on Entity Property
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.DefaultValueAttribute.DefaultValue">
+            <summary>
+            Default value on the marked property
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.DefaultValueAttribute.#ctor(System.Object)">
+            <summary>
+            Initialize the DefaultValueAttribute
+            </summary>
+            <param name="value"> All type of value except DataTime </param>
+        </member>
+        <member name="M:SimpleAccess.DefaultValueAttribute.#ctor(System.DateTime)">
+            <summary>
+            Initialize the DefaultValueAttribute
+            </summary>
+            <param name="value"> The DataTime value </param>
+        </member>
+        <member name="T:SimpleAccess.StoredProcedureNameKeyWordAttribute">
+            <summary>
+            Specifies the stored produres name of the Entity.
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.StoredProcedureNameKeyWordAttribute.NameKeyWord">
+            <summary>
+            Stored procedure name key word of the Entity.
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.StoredProcedureNameKeyWordAttribute.#ctor(System.String)">
+            <summary>
+            Specifies the stored procedure name key word of the Entity.
+            </summary>
+            <param name="nameKeyWord"> Stored procedures name keyword. </param>
+        </member>
+        <member name="T:SimpleAccess.IdentityAttribute">
+            <summary>
+            Mark a Entity property as Identity columns
+            </summary>
+        </member>
+        <member name="T:SimpleAccess.NotASpParameterAttribute">
+            <summary>
+            Specifies that the property is not an SqlParameter.
+            </summary>
+        </member>
+        <member name="T:SimpleAccess.ParameterDirectionAttribute">
+            <summary>
+            Specifies that the ParameterDirection for a SqlParameter Property.
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.ParameterDirectionAttribute.SpParameterDirection">
+            <summary>
+            Direction of the Marked property in DbParameter
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.ParameterDirectionAttribute.#ctor(System.Data.ParameterDirection)">
+            <summary>
+            Specifies that the ParameterDirection for a SqlParameter Property.
+            </summary>
+            <param name="spParameterDirection"> Direction for the SqlParameter.</param>
+        </member>
+        <member name="T:SimpleAccess.EntityAttribute">
+            <summary>
+            Specifies the database table/view name of the Entity.
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.EntityAttribute.EntityName">
+            <summary>
+            Database table/view name.
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.EntityAttribute.Type">
+            <summary>
+            Object type in the database (Table/View)
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.EntityAttribute.#ctor(System.String)">
+            <summary>
+            Specifies the database table/view name of the Entity.
+            </summary>
+            <param name="entityName"> Table/View name.</param>
+        </member>
+        <member name="M:SimpleAccess.EntityAttribute.#ctor(System.String,SimpleAccess.DbObjectType)">
+            <summary>
+            Specifies the database table/view name of the Entity.
+            </summary>
+            <param name="entityName"> Table/View name.</param>
+            <param neme="dbObjectType"> Type of the entity in the database. </param>
+        </member>
+        <member name="T:SimpleAccess.DbObjectType">
+            <summary>
+            Type of the entity in the database
+            </summary>
+        </member>
+        <member name="F:SimpleAccess.DbObjectType.Table">
+            <summary>
+            Table in the Database
+            </summary>
+        </member>
+        <member name="F:SimpleAccess.DbObjectType.View">
+            <summary>
+            View in the Database
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.Core.IParameterBuilder.CreateDataParameter(System.Reflection.PropertyInfo,SimpleAccess.Core.ParametersType,System.Collections.Generic.IEnumerable{System.Reflection.PropertyInfo},System.Collections.Generic.IList{System.Reflection.PropertyInfo},System.Collections.Generic.List{System.Data.IDataParameter})">
+            <summary>
+            
+            </summary>
+            <param name="propertyInfo"></param>
+            <param name="parametesType"></param>
+            <param name="propertyInfos"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SimpleAccess.Core.ParametersType">
+            <summary>
+            Defines the DbParameters type to be generated
+            </summary>
+        </member>
+        <member name="F:SimpleAccess.Core.ParametersType.Insert">
+            <summary>
+            Uses for Insert parameters type, Specially for out parameters
+            </summary>
+        </member>
+        <member name="F:SimpleAccess.Core.ParametersType.Update">
+            <summary>
+            Uses for Update parameters type. Just normal parameters
+            </summary>
+        </member>
+        <member name="T:SimpleAccess.Core.ConnectionExtension">
+            --------------------------------------------------------------------------------------------------
+                <summary> Connection extension. </summary>
+                *
+        </member>
+        <member name="M:SimpleAccess.Core.ConnectionExtension.OpenSafely(System.Data.SqlClient.SqlConnection)">
+            --------------------------------------------------------------------------------------------------
+                    <summary> A SqlConnection extension method that opens a safely. </summary>
+            		
+                    <param name="con"> The con to act on. </param>
+            		
+                    <returns> . </returns>
+                    *
+        </member>
+        <member name="M:SimpleAccess.Core.ConnectionExtension.CloseSafely(System.Data.SqlClient.SqlConnection)">
+            --------------------------------------------------------------------------------------------------
+                    <summary> A SqlConnection extension method that closes a safely. </summary>
+            		
+                    <param name="con"> The con to act on. </param>
+            		
+                    <returns> . </returns>
+                    *
+        </member>
+        <member name="T:SimpleAccess.Core.DatabaseExtensions">
+            <summary>
+            Class only exsist for idea
+            </summary>
+        </member>
+        <member name="T:SimpleAccess.Core.DatabaseExtensions.IStoredProcedure`1">
+            <summary>
+            Only Exist for idea
+            </summary>
+            <typeparam name="TResult"></typeparam>
+        </member>
+        <member name="T:SimpleAccess.Core.DataReaderToObjectExtensions">
+            <summary>
+            Extension to load objects from DataReaders
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.Core.DataReaderToObjectExtensions.DataReaderToObjectList``1(System.Data.IDataReader,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+            <summary>
+            Creates a list of a given type from all the rows in a DataReader.
+            
+            Note this method uses Reflection so this isn't a high performance
+            operation, but it can be useful for generic data reader to entity
+            conversions on the fly and with anonymous types.
+            </summary>
+            <typeparam name="TType"></typeparam>
+            <param name="reader">An open DataReader that's in position to read</param>
+            <param name="fieldsToSkip">Optional - comma delimited list of fields that you don't want to update</param>
+            <param name="piList">
+            Optional - Cached PropertyInfo dictionary that holds property info data for this object.
+            Can be used for caching hte PropertyInfo structure for multiple operations to speed up
+            translation. If not passed automatically created.
+            </param>
+            <param name="piListBasedOnDbColumn"> List of <see cref="T:System.Reflection.PropertyInfo"/> object having <see cref="T:SimpleAccess.DbColumnAttribute"/> in it's custom attributes</param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleAccess.Core.DataReaderToObjectExtensions.DataReaderToObject``1(System.Data.IDataReader,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+            <summary>
+            Created the object of TType and populates the properties of that object from a single DataReader row using
+            Reflection by matching the DataReader fields to a public property 
+            of the object. Unmatched properties are left unchanged.
+            
+            You need to pass in a data reader located on the active row you want
+            to serialize.
+            
+            </summary>
+            <param name="reader">Instance of the DataReader to read data from. Should be located on the correct record (Read() should have been called on it before calling this method)</param>
+            <param name="fieldsToSkip">Optional - A comma delimited list of object properties that should not be updated</param>
+            <param name="piList">Optional - Cached PropertyInfo dictionary that holds property info data for this object</param>
+            <param name="piListBasedOnDbColumn"> List of <see cref="T:System.Reflection.PropertyInfo"/> object having <see cref="T:SimpleAccess.DbColumnAttribute"/> in it's custom attributes</param>
+        </member>
+        <member name="M:SimpleAccess.Core.DataReaderToObjectExtensions.DataReaderToObject(System.Data.IDataReader,System.Object,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+            <summary>
+            Populates the properties of an object from a single DataReader row using
+            Reflection by matching the DataReader fields to a public property on
+            the object passed in. Unmatched properties are left unchanged.
+            
+            You need to pass in a data reader located on the active row you want
+            to serialize.
+            
+            This routine works best for matching pure data entities and should
+            be used only in low volume environments where retrieval speed is not
+            critical due to its use of Reflection.
+            </summary>
+            <param name="reader">Instance of the DataReader to read data from. Should be located on the correct record (Read() should have been called on it before calling this method)</param>
+            <param name="instance">Instance of the object to populate properties on</param>
+            <param name="fieldsToSkip">Optional - A comma delimited list of object properties that should not be updated</param>
+            <param name="piList">Optional - Cached PropertyInfo dictionary that holds property info data for this object</param>
+            <param name="piListBasedOnDbColumn"> List of <see cref="T:System.Reflection.PropertyInfo"/> object having <see cref="T:SimpleAccess.DbColumnAttribute"/> in it's custom attributes</param>
+        </member>
+        <member name="T:SimpleAccess.Core.Entity.EntityInfo`1">
+            <summary>
+            Represents the SimpleAccess Entity information.
+            The EntityInfo is create and cache the stored procedure name, queris and parameters
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.Core.Entity.EntityInfo`1.InsertParameters">
+            <summary>
+            Get the Insert statement or StoredProcedure Paramenters based on TDataParameters in ISimple
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.Core.Entity.EntityInfo`1.UpdateParameters">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.Core.Entity.EntityInfo`1.SelectAllStatement">
+            <summary>
+            Default select statement with all coulmns of the entity
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.Core.Entity.EntityInfo`1.InsertStatement">
+            <summary>
+            Default insert statement with all coulmns and parameters of the entity
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.Core.Entity.EntityInfo`1.UpdateSatetment">
+            <summary>
+            Default update statement with all coulmns and parameters of the entity
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.Core.Entity.EntityInfo`1.DeleteStatment">
+            <summary>
+            Default delete statement with id parameter of the entity
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.Core.Entity.EntityInfo`1.#ctor(System.Type)">
+            <summary>
+            Initialize the new object
+            </summary>
+            <param name="type"> The Entity </param>
+        </member>
+        <member name="P:SimpleAccess.Core.Entity.EntityInfo`1.DbObjectName">
+            <summary>
+            Table/View Name of the Entity extracted from the <see cref="T:SimpleAccess.EntityAttribute"/> if the Entity is marked with it, otherwise the same name of Entity
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.Core.Entity.EntityInfo`1.StoredProcedureNameKeyWord">
+            <summary>
+            Stored procedure prefix of the Entity extracted from the <see cref="T:SimpleAccess.StoredProcedureNameKeyWordAttribute"/> 
+            if the Entity is marked with it, otherwise the same name of Entity
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.Core.Entity.EntityInfo`1.EntityType">
+            <summary>
+            The Type of the Entity.
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.Core.Entity.EntityInfo`1.LoadEntityInformation">
+            <summary>
+            Load entity name from <see cref="T:SimpleAccess.EntityAttribute"/> if entity is marked ortherwise that the entity name
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.Core.Entity.EntityInfo`1.CreateSqlParametersFromProperties(SimpleAccess.Core.ParametersType)">
+            <summary>
+            Create paramters from object properties
+            </summary>
+            <param name="parametersType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleAccess.Core.Entity.EntityInfo`1.ClearSpParameters">
+            <summary>
+            Clear all DbParamters
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.Core.Entity.EntityInfo`1.LoadOutParametersProperties(System.Object)">
+            <summary>
+            Load all the properties from DbParameters which were marked as ParameterDirection.Out
+            </summary>
+            <param name="instance"> The instance of object </param>
+        </member>
+        <member name="T:SimpleAccess.Core.Entity.NamespaceDoc">
+            <summary>
+            The <see cref="N:SimpleAccess.Core.Entity"/> namespace contains the core implementation for Entities in SimpleAcces.
+            </summary>
+        </member>
         <member name="T:SimpleAccess.Core.ISimpleAccess`6">
             <summary>
             Represent the interface of SimpleAccess methods and it's implemented by SimpleAccess 
@@ -206,6 +531,29 @@
             
             <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="commandType">   Type of the command. </param>
+            <param name="parameters"> Parmeters rquired to execute CommandText. </param>
+            
+            <returns> The TDbDataReader </returns>
+        </member>
+        <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteReader(System.String,System.Data.CommandBehavior,`3[])">
+            <summary> Executes the commandText and return TDbDataReader. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+            <param name="parameters"> Parmeters rquired to execute CommandText. </param>
+            
+            <returns> The TDbDataReader </returns>
+        </member>
+        <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteReader(System.String,System.Data.CommandType,System.Data.CommandBehavior,`3[])">
+            <summary> Executes the commandText and return TDbDataReader. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType">   Type of the command. </param>
+            <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
             <param name="parameters"> Parmeters rquired to execute CommandText. </param>
             
             <returns> The TDbDataReader </returns>
@@ -673,6 +1021,11 @@
             </summary>
             <param name="exception"></param>
         </member>
+        <member name="T:SimpleAccess.Core.Logger.NamespaceDoc">
+            <summary>
+            The <see cref="N:SimpleAccess.Core.Logger"/> namespace contains the Logging interface and default implementation <see cref="T:SimpleAccess.Core.Logger.ISimpleLogger"/> of SimpleAcces.
+            </summary>
+        </member>
         <member name="T:SimpleAccess.Core.Logger.SimpleLogger">
             <summary>
             Default implementaion of ISimpleLoger, It uses the <see cref="T:System.Diagnostics.Trace"/> to log the <see cref="T:System.Exception"/>.
@@ -683,6 +1036,11 @@
             Log the <see cref="T:System.Exception"/> using <see cref="T:System.Diagnostics.Trace"/>.
             </summary>
             <param name="exception"> <see cref="T:System.Exception"/> thrown from the methods</param>
+        </member>
+        <member name="T:SimpleAccess.Core.NamespaceDoc">
+            <summary>
+            The <see cref="N:SimpleAccess.Core"/> namespace contains the core corfiguration, interfaces, attributes, helper classes and methods of SimpleAcces.
+            </summary>
         </member>
         <member name="T:SimpleAccess.Core.SimpleAccessSettings">
             <summary>

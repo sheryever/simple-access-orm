@@ -1,5 +1,4 @@
-﻿#define JETBRAINS_ANNOTATIONS
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
