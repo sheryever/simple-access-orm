@@ -8,8 +8,7 @@ namespace SimpleAccess.Core
     /// <summary>
     /// The <see cref="SimpleAccess.Core"/> namespace contains the core corfiguration, interfaces, attributes, helper classes and methods of SimpleAcces.
     /// </summary>
-
-    [System.Runtime.CompilerServices.CompilerGenerated]
+    [System.Runtime.CompilerServices.CompilerGeneratedAttribute]
     class NamespaceDoc
     {
     }
