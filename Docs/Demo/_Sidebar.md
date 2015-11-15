@@ -1,491 +1,491 @@
-- [Welcome to the [TODO: Add project name]](487af52a-eee7-43da-a3f4-3009a1414bf9.md}
-- [Version History](383f8930-6417-4c8b-a557-3c3d2ab1cea7.md}
-  - [Version 1.0.0.0](211284b6-c33b-45d9-a965-ebd0f211b856.md}
-- [SimpleAccess Namespace](5b81da8e-9a02-e6f3-6346-ccc62ec531d3.md}
-  - [DbColumnAttribute Class](f6e7b413-d896-0b4a-4ca8-34052f37dd41.md}
-    - [DbColumnAttribute Constructor](07505203-9234-9fd2-7348-a5c61c4b11cd.md}
-    - [DbColumnAttribute Properties](2e4fb652-0109-6f78-d7a4-77092029ee8a.md}
-      - [DbColumnAttribute.DbColumn Property](273aa5c6-658c-1888-eee0-4f4c022be56d.md}
-    - [DbColumnAttribute Methods](07b4cf25-e293-d8ad-333e-fa5d485308ac.md}
-  - [DbObjectType Enumeration](227842b6-0c18-8da4-1908-da0719e6f35a.md}
-  - [DefaultValueAttribute Class](7ba3e5d2-ca1d-9422-cd82-aea4db22f18f.md}
-    - [DefaultValueAttribute Constructor](16d7ce16-e77f-4b72-b300-fac2c34b0695.md}
-      - [DefaultValueAttribute Constructor (DateTime.md}](1db96626-bde6-6358-1ca4-0b860f6d01a8.md}
-      - [DefaultValueAttribute Constructor (Object.md}](bb999f4a-56d1-b8a7-c36e-cdee791644dd.md}
-    - [DefaultValueAttribute Properties](1f424674-bedc-48a4-3f79-c5b00b4ab346.md}
-      - [DefaultValueAttribute.DefaultValue Property](6b31941a-35c5-7058-3ea8-97876b1ad866.md}
-    - [DefaultValueAttribute Methods](562b6197-ac8f-f9af-f1b8-f1d1c7dbfb38.md}
-  - [EntityAttribute Class](f2f90d8d-efcb-ce9e-c7f6-51b29330a0f9.md}
-    - [EntityAttribute Constructor](1d9b0e59-54c1-74e3-241a-bf071cfa87c1.md}
-      - [EntityAttribute Constructor (String.md}](fbfbf3f0-60eb-3f39-f8f1-d9727cdec397.md}
-      - [EntityAttribute Constructor (String, DbObjectType.md}](957928ef-bad6-89c3-a1d4-0046e98e86d4.md}
-    - [EntityAttribute Properties](31d222ed-05d1-cb63-89ff-373ac0aa979b.md}
-      - [EntityAttribute.EntityName Property](383073a6-5144-1e39-ee95-822861876778.md}
-      - [EntityAttribute.Type Property](d7d27b91-e579-8af0-57b2-879718f827e4.md}
-    - [EntityAttribute Methods](1dfdb55c-2ce1-8b74-954c-f8e863258c68.md}
-  - [IdentityAttribute Class](3430b263-9396-ac14-ac2e-5ef050f25b5b.md}
-    - [IdentityAttribute Constructor](3b1fe928-01cd-71f8-bc7c-54a1ba63e229.md}
-    - [IdentityAttribute Properties](a5823338-264d-c664-a76f-5d1354e6374b.md}
-    - [IdentityAttribute Methods](b7df463a-f907-17e2-0eea-c458ae1a53f0.md}
-  - [IEntity Interface](a2fce3a2-1e86-e023-d10c-d1aa9216b11b.md}
-  - [NotASpParameterAttribute Class](db843ec4-447a-92d3-bef9-42673a0ec293.md}
-    - [NotASpParameterAttribute Constructor](591b87e4-1834-3527-4ca2-a7c86aca4a83.md}
-    - [NotASpParameterAttribute Properties](b47909c4-413f-aecf-40c0-0e624b9450a6.md}
-    - [NotASpParameterAttribute Methods](48c9249c-2838-c199-7c88-c95d98ca932c.md}
-  - [ParameterDirectionAttribute Class](3acd6809-7ee5-5ffb-e6bb-43fd095be78e.md}
-    - [ParameterDirectionAttribute Constructor](3fb5abfa-ae66-0a7d-a0e2-0f95c1ad4344.md}
-    - [ParameterDirectionAttribute Properties](e3426dcf-6dbe-35c2-199b-1f5ad05abd3e.md}
-      - [ParameterDirectionAttribute.SpParameterDirection Property](f0b447e0-c0bf-5650-fbdf-d85a9ace8156.md}
-    - [ParameterDirectionAttribute Methods](f25c696e-fa62-8f8d-e700-693504e236d5.md}
-  - [SqlParametersExtensions Class](9bb9ff96-3109-a828-ee7b-8ff0c9f601d5.md}
-    - [SqlParametersExtensions Methods](9c669c46-7c8e-f6ee-ac1a-ef92c23f138c.md}
-      - [SqlParametersExtensions.CreateSqlParametersFromDynamic Method](72be76df-5efa-e834-772d-7c4742dc3f4f.md}
-        - [SqlParametersExtensions.CreateSqlParametersFromDynamic Method (List(SqlParameter.md}, Object.md}](1d2bb28d-44c5-00fa-ab59-f62bca980081.md}
-        - [SqlParametersExtensions.CreateSqlParametersFromDynamic Method (SqlParameter[], Object.md}](e42cdefb-efaf-a1a7-cba6-9eabe52e23d7.md}
-      - [SqlParametersExtensions.ToDataParam Method](30bf22dd-e75c-406f-7491-954fc4529f51.md}
-        - [SqlParametersExtensions.ToDataParam(*T*.md} Method (Nullable(*T*.md}, String.md}](301a1a62-b96a-f8b5-e5aa-e51df1505a89.md}
-        - [SqlParametersExtensions.ToDataParam Method (String, String.md}](1139c771-5afe-4d42-a637-388de47d2e20.md}
-        - [SqlParametersExtensions.ToDataParam(*T*.md} Method (*T*, String.md}](381fb386-8118-6fb7-e421-ded4136f5a7d.md}
-        - [SqlParametersExtensions.ToDataParam(*T*.md} Method (Nullable(*T*.md}, String, SqlDbType.md}](a6972982-f957-ddc8-eef5-4734d17f6a04.md}
-        - [SqlParametersExtensions.ToDataParam Method (String, String, Int32.md}](b3487418-a1e2-d528-febc-70ce28e759b1.md}
-        - [SqlParametersExtensions.ToDataParam(*T*.md} Method (*T*, String, SqlDbType.md}](642fd72d-85d1-dda2-464e-a6051dfcdb4a.md}
-      - [SqlParametersExtensions.ToSafeDataParam Method](9090cc25-e72e-1d2e-2a40-59c8648205a8.md}
-  - [StoredProcedureNameKeyWordAttribute Class](28a6dcb3-af1a-dfce-d4ea-5d3e480a4ffd.md}
-    - [StoredProcedureNameKeyWordAttribute Constructor](0169b9a3-d1a2-5d4c-9fe3-ad768c5da67b.md}
-    - [StoredProcedureNameKeyWordAttribute Properties](48bb5ded-7847-12eb-0012-a70e3cfdc4e2.md}
-      - [StoredProcedureNameKeyWordAttribute.NameKeyWord Property](a0e2eac4-5b16-9ce9-1de8-81d6d96c5954.md}
-    - [StoredProcedureNameKeyWordAttribute Methods](2fdcdfd5-11e7-e06b-5999-e8bcd3e2c37e.md}
-  - [StoredProcedureParameters Class](1e3afd83-1b60-7d93-412a-daa2862067e2.md}
-    - [StoredProcedureParameters Constructor](afdb079c-c2f2-7dbf-b29f-c00f060412f1.md}
-    - [StoredProcedureParameters Methods](9e6bd84b-1948-b1a9-4cbd-b5d18817f8c9.md}
-      - [StoredProcedureParameters.AddSqlParameters Method](71328454-a7f2-723b-3155-47ab6af4f709.md}
-      - [StoredProcedureParameters.ClearSpParameters Method](3a923f19-7b5f-8111-f5f4-6a747ff4f735.md}
-      - [StoredProcedureParameters.CreateSqlParametersFromProperties Method](60b17e7e-7189-cc3e-a030-b4a9552f0c0a.md}
-      - [StoredProcedureParameters.GetSpParameters Method](5e0f1b18-ef93-eab6-35c5-793c320d1662.md}
-      - [StoredProcedureParameters.LoadOutParametersProperties Method](d041bd9f-3d2a-d479-109a-ba7b3efe9297.md}
-      - [StoredProcedureParameters.Validate Method](a6d56063-c2ad-9051-c285-4b1a6995e00c.md}
-- [SimpleAccess.Core Namespace](a16105b5-9ef0-1333-33d4-5a00c99c3614.md}
-  - [ConnectionExtension Class](ae6cdd9e-c590-250c-c081-d18069807f18.md}
-    - [ConnectionExtension Methods](0d384d0a-f186-640d-332f-ece41c1e4ac1.md}
-      - [ConnectionExtension.CloseSafely Method](f04a7b38-9de1-7d50-892d-ee79d32907b6.md}
-      - [ConnectionExtension.OpenSafely Method](3a0acf7c-35ef-59bc-c1cc-c5f332ee523b.md}
-  - [DataReaderToObjectExtensions Class](48951270-aee7-1aef-d48d-d0dc7151bd83.md}
-    - [DataReaderToObjectExtensions Methods](53f21982-fddd-dfc7-7fd3-b2946a98c95e.md}
-      - [DataReaderToObjectExtensions.DataReaderToObject Method](b07bb4d8-88ba-28be-b18f-6b1b1be035e9.md}
-        - [DataReaderToObjectExtensions.DataReaderToObject(*TType*.md} Method (IDataReader, String, Dictionary(String, PropertyInfo.md}, Dictionary(String, PropertyInfo.md}.md}](1fdde7ca-c4d7-0bc3-ced5-a3df3a01b5f2.md}
-        - [DataReaderToObjectExtensions.DataReaderToObject Method (IDataReader, Object, String, Dictionary(String, PropertyInfo.md}, Dictionary(String, PropertyInfo.md}.md}](2a9e6795-d0c2-f136-6a1f-5ae492f83cbb.md}
-      - [DataReaderToObjectExtensions.DataReaderToObjectList(*TType*.md} Method](e1431c1c-c9fe-2ea8-8dd0-a202a7f9a5f8.md}
-  - [IParameterBuilder Interface](811761d8-7fba-1743-d95f-e13ad5073da4.md}
-    - [IParameterBuilder Methods](53469af5-0835-5e06-ae87-0a5d5a1160e7.md}
-      - [IParameterBuilder.CreateDataParameter Method](cb748753-7e64-2353-3110-b687dee2cbb0.md}
-  - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md} Interface](0a1ff90a-7c2b-18a8-adb6-ac494a3c34b5.md}
-    - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md} Properties](06d119b6-7ec6-8e50-944a-da16eda1fb6e.md}
-      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.DefaultSimpleAccessSettings Property](b822c693-9ca0-3e62-e22c-6dd4b0b8c119.md}
-    - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md} Methods](ed6b09d6-6446-a643-9380-ed70a88ee064.md}
-      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.BeginTrasaction Method](ad330a42-92cb-074b-2ddc-5a3ee178a491.md}
-      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.CloseCurrentDbConnection Method](6b5bdd4c-ad15-dccc-9db7-05af6cdf99c4.md}
-      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.EndTransaction Method](4226b3de-86c2-a45e-a0fc-da4b52ea142f.md}
-      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteDynamic Method](9c57a0b7-7d7a-266c-b83e-1e728da219d7.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteDynamic Method (String, String, Object.md}](4b2f4a35-04f0-fbd1-3dd6-3e486959d5a5.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteDynamic Method (String, String, *TDataParameter*[].md}](c82227b2-7ec5-6ca4-c99a-63dd5f85e052.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteDynamic Method (String, CommandType, String, Object.md}](ccfc97b8-deb2-8daf-58bd-c1bf83061796.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteDynamic Method (String, CommandType, String, *TDataParameter*[].md}](991db11e-79e8-d87b-2fd8-13519d21f2fb.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteDynamic Method (*TDbTransaction*, String, String, Object.md}](dfff28a0-0951-07f8-7965-dcd80e19e243.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteDynamic Method (*TDbTransaction*, String, String, *TDataParameter*[].md}](17fbcf11-7b22-06ea-78b6-a1c6f71d1328.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteDynamic Method (*TDbTransaction*, String, CommandType, String, Object.md}](39e3961b-1e2b-0f2f-1340-6dd667039d3a.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteDynamic Method (*TDbTransaction*, String, CommandType, String, *TDataParameter*[].md}](c7e0e2e4-76ff-cd9c-6166-50b7603b7781.md}
-      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteDynamics Method](4149ba16-beb7-6632-09c4-13d976574a9c.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteDynamics Method (String, String, Object.md}](9af2e0a6-96f8-4933-0dd4-0cdd4fb9dc6d.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteDynamics Method (String, String, *TDataParameter*[].md}](0ec32d27-4fba-b147-1071-34b141794914.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteDynamics Method (String, CommandType, String, Object.md}](212dc335-b104-2932-d0dd-df8161e10dc6.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteDynamics Method (String, CommandType, String, *TDataParameter*[].md}](f2f6357c-901b-04d4-1416-ef7b9a31b986.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteDynamics Method (*TDbTransaction*, String, String, Object.md}](42b15eea-3e37-abdb-9665-30538dfe928e.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteDynamics Method (*TDbTransaction*, String, String, *TDataParameter*[].md}](0a075574-2530-0cb6-6beb-c6e7ec94b278.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteDynamics Method (*TDbTransaction*, String, CommandType, String, Object.md}](3f567e82-dcc0-1f9e-a608-22a7588f08ae.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteDynamics Method (*TDbTransaction*, String, CommandType, String, *TDataParameter*[].md}](5d7015d0-08de-3d9c-c0e9-d7f06b5eab1b.md}
-      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteEntities Method](7539f9ce-acff-efd1-8926-8d5ee0c8f790.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteEntities(*TEntity*.md} Method (String, String, Dictionary(String, PropertyInfo.md}, Object.md}](2c998199-cc50-fe48-0de4-a053b21439b0.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteEntities(*TEntity*.md} Method (String, String, Dictionary(String, PropertyInfo.md}, *TDataParameter*[].md}](deb47db6-eea4-6f04-2827-f6459e172b95.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteEntities(*TEntity*.md} Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](1952f38c-826f-7e25-5edc-89dd6fc9eb44.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteEntities(*TEntity*.md} Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, *TDataParameter*[].md}](c059d414-ddff-314f-c9b1-8619b1ce0a35.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteEntities(*TEntity*.md} Method (*TDbTransaction*, String, String, Dictionary(String, PropertyInfo.md}, Object.md}](5b758571-69a2-0d1a-358b-480e8f6cb59d.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteEntities(*TEntity*.md} Method (*TDbTransaction*, String, String, Dictionary(String, PropertyInfo.md}, *TDataParameter*[].md}](71bb1620-91ff-734b-bb5e-b64dffc7b6ac.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteEntities(*TEntity*.md} Method (*TDbTransaction*, String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](291af211-e77b-f694-4d88-0c19825c60f6.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteEntities(*TEntity*.md} Method (*TDbTransaction*, String, CommandType, String, Dictionary(String, PropertyInfo.md}, *TDataParameter*[].md}](93483023-1a38-99c4-a973-4ac40087ed8e.md}
-      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteEntity Method](5ae9f68c-7b49-fbb4-9711-517468f59c59.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteEntity(*TEntity*.md} Method (String, String, Dictionary(String, PropertyInfo.md}, Object.md}](16729ee2-7d3e-3843-499f-8a8908880bad.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteEntity(*TEntity*.md} Method (String, String, Dictionary(String, PropertyInfo.md}, *TDataParameter*[].md}](75092b58-46dd-2fd3-c152-7a5f12f9ec6e.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteEntity(*TEntity*.md} Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](c1a933d0-99d7-ebca-3bd2-13fd91cc0ae9.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteEntity(*TEntity*.md} Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, *TDataParameter*[].md}](ad0de4b8-f142-3c4e-ee19-e98900408374.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteEntity(*TEntity*.md} Method (*TDbTransaction*, String, String, Dictionary(String, PropertyInfo.md}, Object.md}](4f1b2c6c-a8e1-b717-1340-833a965f02ee.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteEntity(*TEntity*.md} Method (*TDbTransaction*, String, String, Dictionary(String, PropertyInfo.md}, *TDataParameter*[].md}](0fba62b2-f18f-8e68-0add-b7aed5eeb868.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteEntity(*TEntity*.md} Method (*TDbTransaction*, String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](486a415e-cf15-e43f-de8c-a9e586312b67.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteEntity(*TEntity*.md} Method (*TDbTransaction*, String, CommandType, String, Dictionary(String, PropertyInfo.md}, *TDataParameter*[].md}](531d7f0d-4383-2295-42ea-116f447b03d6.md}
-      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteNonQuery Method](d6ff008e-7aa2-aacd-8855-372a0d76759c.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteNonQuery Method (String, Object.md}](a724dc9f-f7dd-fa8a-5a8b-3bf84d979865.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteNonQuery Method (String, *TDataParameter*[].md}](c88ebf82-b1b2-93d8-7683-3d44f6505b65.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteNonQuery Method (String, CommandType, Object.md}](a9784ccb-a08e-f234-960f-2c40f4acf17e.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteNonQuery Method (String, CommandType, *TDataParameter*[].md}](e39cc4f5-4781-72cc-b2fb-a5649439198b.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteNonQuery Method (*TDbTransaction*, String, Object.md}](e75397fc-14cd-becf-fbe2-b33c7500ae56.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteNonQuery Method (*TDbTransaction*, String, *TDataParameter*[].md}](0db24328-5599-05b8-9dc0-7afd7bbb1ea7.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteNonQuery Method (*TDbTransaction*, String, CommandType, Object.md}](578b4d0e-e511-c36c-7771-4f2a72e03ec9.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteNonQuery Method (*TDbTransaction*, String, CommandType, *TDataParameter*[].md}](3dce5bd9-cf81-5cd6-bd9d-e652146881f4.md}
-      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteReader Method](99ea9f99-daf1-78ca-009c-a453d5fb44c1.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteReader Method (String, *TDataParameter*[].md}](d63716fa-a584-e3db-c014-dbbbca80e921.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteReader Method (String, CommandBehavior, *TDataParameter*[].md}](b324ad34-3906-8b30-a1f5-da4f3d31d7c2.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteReader Method (String, CommandType, *TDataParameter*[].md}](05552584-1b37-a64a-54e5-96b476c0f6af.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteReader Method (String, CommandType, CommandBehavior, *TDataParameter*[].md}](54fc2355-44dd-39dd-03ed-e11d958ac77d.md}
-      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteScalar Method](30f7cce8-5b37-7db9-088f-1663f7d6b8fa.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteScalar(*T*.md} Method (String, Object.md}](b636ca17-7153-f4bc-8783-c89955f1056a.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteScalar(*T*.md} Method (String, *TDataParameter*[].md}](f5d0d62e-c69a-8ea0-29a1-94f81c2deb4e.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteScalar(*T*.md} Method (String, CommandType, Object.md}](efd8c8a9-ef12-f576-bf28-ccf012507728.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteScalar(*T*.md} Method (String, CommandType, *TDataParameter*[].md}](8d710880-0aa5-ce23-65bf-c199f124a7bb.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteScalar(*T*.md} Method (*TDbTransaction*, String, Object.md}](ab7c1c07-6f3a-3be0-0145-6c4c56879a40.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteScalar(*T*.md} Method (*TDbTransaction*, String, *TDataParameter*[].md}](bc9622e8-0a2e-c84f-d3e8-020d52eb2bf8.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteScalar(*T*.md} Method (*TDbTransaction*, String, CommandType, Object.md}](6f33af35-9115-a573-28df-2f18df7d1cf3.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.ExecuteScalar(*T*.md} Method (*TDbTransaction*, String, CommandType, *TDataParameter*[].md}](8eafa5b8-87ec-87a5-d759-419d0e0d0ff7.md}
-      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.Fill Method](cf12a84f-3bdf-5c98-4684-cbe74b98c5d6.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.Fill Method (String, DataSet.md}](ad643cea-413e-4579-61fe-fe0b297fe2af.md}
-        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.Fill Method (String, DataTable.md}](f30add7c-78a3-6acc-f537-ee58c98185f2.md}
-      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md}.GetNewConnection Method](dbd20612-a192-4b54-1bc6-403da859402e.md}
-  - [ParametersType Enumeration](c63dea1f-5a40-ad28-bb6a-a3ff35ad068c.md}
-  - [SimpleAccessSettings Class](43f972b4-e83c-53c8-a130-8b815b2375b7.md}
-    - [SimpleAccessSettings Constructor](388c6fa2-ca35-834b-ee6b-1c96e795ae11.md}
-      - [SimpleAccessSettings Constructor](d8858c1d-aba5-e5fc-0bd1-a572be8c3693.md}
-      - [SimpleAccessSettings Constructor (CommandType.md}](75ac8071-fb7f-3f5f-714c-16acd9711816.md}
-      - [SimpleAccessSettings Constructor (CommandType, ISimpleLogger.md}](41ebefa2-f62b-e258-2517-e71f65bee6cb.md}
-    - [SimpleAccessSettings Properties](60401980-e893-c20c-0d12-b70f2f0a9b4b.md}
-      - [SimpleAccessSettings.DefaultCommandType Property](3ba665c6-4436-a9ba-fc4f-cf5eb1f82567.md}
-      - [SimpleAccessSettings.DefaultLogger Property](185fc652-16c3-e7b2-e67e-ac52c0aa8ab5.md}
-    - [SimpleAccessSettings Methods](304cd0a4-990c-799e-f6c2-8b8bb7df9139.md}
-      - [SimpleAccessSettings.GetProperConnectionString Method](238498c5-e279-b5a8-e454-c756e6fa61e6.md}
-      - [SimpleAccessSettings.LoadConnectionStringSettingsFromConfigurationFile Method](6a3e25fb-9ba6-6960-8cfb-77828dfab209.md}
-  - [SqlParameterBuilder Class](38b69a7b-392e-01f8-7c62-5b2b9bac621d.md}
-    - [SqlParameterBuilder Constructor](3ee4b5a0-024a-a3cf-f38e-a2eb9c14235f.md}
-    - [SqlParameterBuilder Methods](07ae8565-6f2e-2ec9-d56e-81a034f795b1.md}
-      - [SqlParameterBuilder.CreateDataParameter Method](7adcceef-c783-add8-58ef-d000ee588475.md}
-- [SimpleAccess.Core.Entity Namespace](4a1a1091-e8bb-9ab6-959b-cd29bdaf000e.md}
-  - [EntityInfo(*TParameterBuilder*.md} Class](1e4b0944-7ad6-9cec-d228-3270257d05e4.md}
-    - [EntityInfo(*TParameterBuilder*.md} Constructor](6cc15362-5a8e-2328-0fb2-e722060dec1b.md}
-    - [EntityInfo(*TParameterBuilder*.md} Properties](b9a0d661-e5f9-6285-7f98-3a89946c0621.md}
-      - [EntityInfo(*TParameterBuilder*.md}.DbObjectName Property](a808dcbb-f627-7be1-60e6-f4edaaa25d80.md}
-      - [EntityInfo(*TParameterBuilder*.md}.DeleteStatment Property](494069b8-da81-a55e-3780-06c9dd064edc.md}
-      - [EntityInfo(*TParameterBuilder*.md}.EntityType Property](4de7b43a-2013-16fb-9c75-b67e36a76b18.md}
-      - [EntityInfo(*TParameterBuilder*.md}.InsertParameters Property](09b5ed74-c627-60b3-7a26-edf3c3b9fa83.md}
-      - [EntityInfo(*TParameterBuilder*.md}.InsertStatement Property](bca66f01-c314-7a73-f0da-55c4112923e6.md}
-      - [EntityInfo(*TParameterBuilder*.md}.SelectAllStatement Property](4da0c918-2829-3452-653b-bb324368595f.md}
-      - [EntityInfo(*TParameterBuilder*.md}.StoredProcedureNameKeyWord Property](0b775d5c-b346-7de8-9cf7-c995ed1d26c1.md}
-      - [EntityInfo(*TParameterBuilder*.md}.UpdateParameters Property](3954cbb0-3f91-98ab-a747-521caa7cb158.md}
-      - [EntityInfo(*TParameterBuilder*.md}.UpdateSatetment Property](f6df582e-dff9-2f0a-0868-1700dee5868d.md}
-    - [EntityInfo(*TParameterBuilder*.md} Methods](aee97995-391f-fdae-3f62-88fa16a3babe.md}
-      - [EntityInfo(*TParameterBuilder*.md}.ClearSpParameters Method](8d83f6b2-1e79-e6d0-cba2-6ab8a0c72a8e.md}
-      - [EntityInfo(*TParameterBuilder*.md}.CreateSqlParametersFromProperties Method](624ede99-bd4b-71e2-ffaa-a92d9dba32d4.md}
-      - [EntityInfo(*TParameterBuilder*.md}.LoadOutParametersProperties Method](0cdb3507-41c5-6cdf-7bf5-a1eab0345c50.md}
-- [SimpleAccess.Core.Logger Namespace](87b68a76-c6c2-1ca8-acf7-c56ca0fee23f.md}
-  - [ISimpleLogger Interface](996d6010-ca3a-a104-5e7d-54aae67f3973.md}
-    - [ISimpleLogger Methods](8da5939b-3d55-3c34-0bcb-b71c5dba3e2f.md}
-      - [ISimpleLogger.LogException Method](b68a9a30-83c6-8fe7-eb93-ed396d05c932.md}
-  - [SimpleLogger Class](39ba9cdd-9f8e-d789-e6d8-5bd091bedfeb.md}
-    - [SimpleLogger Constructor](3d282540-936b-6d8e-e0e3-5aed987b089e.md}
-    - [SimpleLogger Methods](7d56de57-3cf4-2fcc-254a-8d3093ca20af.md}
-      - [SimpleLogger.LogException Method](4959bc4e-84c3-ed8c-4706-6017275c9f2c.md}
-- [SimpleAccess.DbExtensions Namespace](e143475c-e9c8-4196-9091-492a00252e5f.md}
-  - [DatabaseExtensions Class](729eadcb-20c8-6ba9-94d6-b28567b68448.md}
-  - [DatabaseExtensions.IStoredProcedure(*TResult*.md} Interface](54ac6869-7b39-fd94-3ff5-86f681dd2d3f.md}
-- [SimpleAccess.Entity Namespace](4175bea4-ceac-e0a9-927d-9b8fb67bd317.md}
-  - [EntityInfo Class](7ddea220-271b-84c1-a72f-9066d89a4385.md}
-    - [EntityInfo Constructor](89e65cca-e506-0296-51b6-b884db5f1316.md}
-    - [EntityInfo Properties](cc1071b4-2b33-9938-d27e-bd7638520a9c.md}
-      - [EntityInfo.Name Property](21246f95-0e2b-1159-84cb-719888f22553.md}
-      - [EntityInfo.Type Property](6109b0c9-a9ba-5d74-2c09-eeb022a188cf.md}
-    - [EntityInfo Methods](26ad43d1-6f8d-b87b-b3e8-108de57f780f.md}
-- [SimpleAccess.Repository Namespace](41571b4f-ca9a-e902-c5ef-a7c14c631bb2.md}
-  - [IRepository Interface](fd07fd9c-c261-ae68-1133-7b203b4c101f.md}
-    - [IRepository Methods](0e6e4fa3-0cc2-e985-4f13-f101df51e58e.md}
-      - [IRepository.BeginTrasaction Method](6241b383-6ef7-aded-3c48-83e9ebbe1ec8.md}
-      - [IRepository.Delete Method](c861ca39-a64a-fb98-2d1e-796f996e058b.md}
-        - [IRepository.Delete(*TEntity*.md} Method (SqlParameter[].md}](3db7df24-614b-32c1-2def-59ce1bbfe7f3.md}
-        - [IRepository.Delete(*TEntity*.md} Method (Object.md}](ec4ec24c-627c-a5bf-f9f6-f88269d76ca9.md}
-        - [IRepository.Delete(*TEntity*.md} Method (SqlTransaction, SqlParameter[].md}](5262982b-da6b-ace3-8b1d-1a2359c688ef.md}
-        - [IRepository.Delete(*TEntity*.md} Method (Int64, SqlTransaction.md}](14441a2c-1768-d3fc-5400-2f936be524d9.md}
-      - [IRepository.EndTransaction Method](67608a69-92cf-7593-3319-3bbeeec5b278.md}
-      - [IRepository.ExecuteNonQuery Method](4305174c-a507-55ea-4dfa-c2f770b58e8b.md}
-        - [IRepository.ExecuteNonQuery Method (String, CommandType, SqlParameter[].md}](9e9c9862-6750-ed65-4c25-257811523494.md}
-        - [IRepository.ExecuteNonQuery Method (String, CommandType, Object.md}](3c43a767-0472-9d43-c654-133fe7a1705d.md}
-        - [IRepository.ExecuteNonQuery Method (SqlTransaction, String, CommandType, SqlParameter[].md}](759a6cce-6c9c-dc05-b7e4-f61d07fabd84.md}
-        - [IRepository.ExecuteNonQuery Method (SqlTransaction, String, CommandType, Object.md}](3e3d090b-1818-3bb5-63fa-42d4e92016d7.md}
-      - [IRepository.ExecuteReader Method](9fae1021-8f55-082f-e637-7f8a63f3df55.md}
-        - [IRepository.ExecuteReader(*TEntity*.md} Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](a58cf6f5-8c60-8d68-1a7f-0fced99f8103.md}
-        - [IRepository.ExecuteReader Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](c23a6b7e-efa9-6558-a90e-bb5ce15e47b9.md}
-        - [IRepository.ExecuteReader(*TEntity*.md} Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](73f6fb45-8a41-88bb-c976-3a12ba0e5964.md}
-        - [IRepository.ExecuteReader Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](1f05539b-5939-da2f-0423-cccfa971dd9b.md}
-        - [IRepository.ExecuteReader(*TEntity*.md} Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](76046eee-9a57-c3b8-19bd-67c3a148cdbd.md}
-        - [IRepository.ExecuteReader Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](e88ab6fc-0339-25d4-0762-6bba33e394ac.md}
-        - [IRepository.ExecuteReader(*TEntity*.md} Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](2a9eb760-5fc1-fee4-6f66-15b3098df142.md}
-        - [IRepository.ExecuteReader Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](ba1e7ed0-1591-4c85-4371-4690d33f97bd.md}
-      - [IRepository.ExecuteReaderSingle Method](30ff4b55-3f58-e9a4-9d5c-fb7a2c050ad7.md}
-        - [IRepository.ExecuteReaderSingle(*TEntity*.md} Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](09d4f7a4-3cd1-bf35-0db8-7db8670fe480.md}
-        - [IRepository.ExecuteReaderSingle Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](e418f949-b379-7a6e-fd10-a60819fd1c53.md}
-        - [IRepository.ExecuteReaderSingle(*TEntity*.md} Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](992b174b-69f6-1d13-ee76-29b9a773411c.md}
-        - [IRepository.ExecuteReaderSingle Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](edef040f-3307-375c-1bb1-7c38e9a0830e.md}
-        - [IRepository.ExecuteReaderSingle(*TEntity*.md} Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](e2ddf315-f0ce-68c8-1522-5f7a4c18d309.md}
-        - [IRepository.ExecuteReaderSingle Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](03985ddd-a1b5-b346-0b8d-2e475afc5271.md}
-        - [IRepository.ExecuteReaderSingle(*TEntity*.md} Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](9ae47acb-0906-a7de-e4ee-fbaf5944c3e6.md}
-        - [IRepository.ExecuteReaderSingle Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](751e1408-1e2d-31d1-7817-3722b6e58e27.md}
-      - [IRepository.ExecuteScalar Method](8dbd57bb-21de-9ff4-8970-c68ec80f2e02.md}
-        - [IRepository.ExecuteScalar(*T*.md} Method (String, CommandType, SqlParameter[].md}](80f6de16-2bcd-7550-b5fe-23e4a4476cf9.md}
-        - [IRepository.ExecuteScalar(*T*.md} Method (String, CommandType, Object.md}](2e7a657c-2c33-a9d6-9c6a-383331d1b7b5.md}
-        - [IRepository.ExecuteScalar(*T*.md} Method (SqlTransaction, String, CommandType, SqlParameter[].md}](76a258bc-62b5-3316-d621-b5f465ac72d6.md}
-        - [IRepository.ExecuteScalar(*T*.md} Method (SqlTransaction, String, CommandType, Object.md}](f5cc0dc8-4999-3843-3d66-aea0657cde5e.md}
-      - [IRepository.Get Method](f662de9c-8281-fcd5-9969-b0183722fcae.md}
-        - [IRepository.Get(*TEntity*.md} Method (SqlParameter, SqlTransaction, String, Dictionary(String, PropertyInfo.md}.md}](02c29085-f0f4-d325-7f2b-d877b4fa3254.md}
-        - [IRepository.Get(*TEntity*.md} Method (Int64, SqlTransaction, String, Dictionary(String, PropertyInfo.md}.md}](f3750379-18bb-824f-8b91-4a1edd78f67d.md}
-        - [IRepository.Get(*TEntity*.md} Method (Object, SqlTransaction, String, Dictionary(String, PropertyInfo.md}.md}](9f900c86-e010-84ae-d241-e23aa5641ca8.md}
-        - [IRepository.Get Method (String, SqlParameter, String, Dictionary(String, PropertyInfo.md}.md}](b9ec0075-7a52-1a44-2aed-05e588fcf059.md}
-        - [IRepository.Get Method (String, Int64, String, Dictionary(String, PropertyInfo.md}.md}](35c22701-8ff3-2fac-1e8c-4c099e654364.md}
-        - [IRepository.Get Method (String, Object, String, Dictionary(String, PropertyInfo.md}.md}](37a603e9-1e86-d795-8677-5f1ae30be80b.md}
-      - [IRepository.GetAll(*TEntity*.md} Method](b758889a-7bdf-b694-1358-46aacd529e5a.md}
-      - [IRepository.GetNewConnection Method](2b39190b-f614-32fa-34b7-6be8d7e6c04d.md}
-      - [IRepository.Insert Method](e84d94ba-f197-086a-6523-be7a44b63a75.md}
-        - [IRepository.Insert(*TEntity*.md} Method (SqlParameter[].md}](e4d20d58-6c83-47b3-dd6b-b85c04ffeafa.md}
-        - [IRepository.Insert(*TEntity*.md} Method (Object.md}](896e59f4-aef7-62e5-02bb-5254a0ce6c56.md}
-        - [IRepository.Insert(*TEntity*.md} Method (StoredProcedureParameters.md}](a80070f7-095f-8b65-bc8c-12ae638be89d.md}
-        - [IRepository.Insert(*TEntity*.md} Method (SqlTransaction, StoredProcedureParameters.md}](33d01bb7-750a-f871-c7ef-151ca5cd1008.md}
-        - [IRepository.Insert(*TEntity*.md} Method (StoredProcedureParameters, SqlTransaction.md}](46238d97-cc3c-3d43-8b0a-7b40726217de.md}
-      - [IRepository.SoftDelete(*TEntity*.md} Method](a7d06a8f-10d0-7ede-255a-e5cb8afb42b9.md}
-      - [IRepository.Update Method](675f513a-1925-73de-872c-cd497cc4ec8d.md}
-        - [IRepository.Update(*TEntity*.md} Method (SqlParameter[].md}](7a662222-2728-90ed-fa8f-33f3bac5e4fc.md}
-        - [IRepository.Update(*TEntity*.md} Method (Object.md}](7d536e8a-8267-09b8-f425-b5f856a27d2f.md}
-        - [IRepository.Update(*TEntity*.md} Method (StoredProcedureParameters.md}](6adc6874-e47e-7849-c4fd-6b039246e21d.md}
-        - [IRepository.Update(*TEntity*.md} Method (SqlTransaction, StoredProcedureParameters.md}](b581d031-932a-49f0-dc17-aa718d7254b6.md}
-  - [ISqlRepository Interface](f40c60f9-7bd9-9bed-0857-200cfb858bcb.md}
-    - [ISqlRepository Methods](bc41697e-a937-7c5e-825a-57ddc8a5fa43.md}
-      - [ISqlRepository.Delete Method](714c43c6-fb95-75d7-d55c-db9d9c2bdf63.md}
-        - [ISqlRepository.Delete(*TEntity*.md} Method (SqlParameter[].md}](c3560a22-f9e1-c2ba-36f5-5ebbc5f49c25.md}
-        - [ISqlRepository.Delete(*TEntity*.md} Method (Int64.md}](164bb7d9-413b-3fd2-ff0f-5a7fd7b3d618.md}
-        - [ISqlRepository.Delete(*TEntity*.md} Method (Object.md}](72d3492e-56e8-8a79-ee93-0d6b830c0d38.md}
-        - [ISqlRepository.Delete(*TEntity*.md} Method (SqlTransaction, SqlParameter[].md}](32b57794-be8d-9ac1-9e67-d43d2a83f830.md}
-        - [ISqlRepository.Delete(*TEntity*.md} Method (SqlTransaction, Int64.md}](abbb8431-be0b-d28f-82a5-eeba64154915.md}
-      - [ISqlRepository.Get Method](6da840c2-a3be-6759-3187-ea85c04a8778.md}
-        - [ISqlRepository.Get(*TEntity*.md} Method (SqlParameter, String.md}](719747c4-a9a8-6495-f685-54fbd12be61a.md}
-        - [ISqlRepository.Get(*TEntity*.md} Method (SqlTransaction, SqlParameter, String.md}](88bc7f42-d8aa-b7ee-ac91-64539003ae7a.md}
-        - [ISqlRepository.Get(*TEntity*.md} Method (Int64, SqlTransaction, String.md}](e175c68a-ce6a-e780-61d4-0deb0c785779.md}
-        - [ISqlRepository.Get(*TEntity*.md} Method (Object, SqlTransaction, String.md}](9d437f51-32e0-4d44-4e7f-6355e30ae954.md}
-      - [ISqlRepository.GetAll(*TEntity*.md} Method](3903913e-9602-b79d-2afc-44fc07c7503f.md}
-      - [ISqlRepository.Insert Method](b0ff00bb-d192-3f29-3b99-75756166e611.md}
-        - [ISqlRepository.Insert(*TEntity*.md} Method (SqlParameter[].md}](2edd0c0d-14b3-7834-b7ab-034de838b1d3.md}
-        - [ISqlRepository.Insert(*TEntity*.md} Method (Object.md}](f8f59492-3393-493c-86eb-1a5f6b578318.md}
-        - [ISqlRepository.Insert(*TEntity*.md} Method (StoredProcedureParameters.md}](89054966-6a98-cb18-a9be-449b81abbd70.md}
-        - [ISqlRepository.Insert(*TEntity*.md} Method (SqlTransaction, StoredProcedureParameters.md}](b134d2b3-921d-81b0-41b7-5b9fd1f53479.md}
-      - [ISqlRepository.SoftDelete(*TEntity*.md} Method](ccadeabc-6928-8881-e60f-00b37287d314.md}
-      - [ISqlRepository.Update Method](9de346ec-866a-d5d9-fddc-d74c53ef3710.md}
-        - [ISqlRepository.Update(*TEntity*.md} Method (SqlParameter[].md}](46b0fb50-04b5-135d-7bd6-47414897eb2a.md}
-        - [ISqlRepository.Update(*TEntity*.md} Method (Object.md}](00667799-9cad-4dc4-609e-6e098594754d.md}
-        - [ISqlRepository.Update(*TEntity*.md} Method (StoredProcedureParameters.md}](a5c717af-f428-81a3-44d6-5cefbbcebca4.md}
-        - [ISqlRepository.Update(*TEntity*.md} Method (SqlTransaction, StoredProcedureParameters.md}](543ab689-7244-da0a-464c-9e6f6bb12e9e.md}
-  - [Repository Class](edb9c152-cd28-6594-590a-18a81e266968.md}
-    - [Repository Constructor](5f661832-0e66-7460-c41f-54610fe20c23.md}
-      - [Repository Constructor](06c708c9-4fcf-8773-d15a-15da7e05ad18.md}
-      - [Repository Constructor (SqlConnection.md}](3cddef47-be94-acad-4fda-d9fb77179337.md}
-      - [Repository Constructor (String.md}](a319a853-0395-9379-7685-015dae1a59fc.md}
-    - [Repository Properties](225b33c5-6610-47c3-7706-45ed73aad6a7.md}
-      - [Repository.DefaultConnectionString Property](0d03fb0c-cc5d-4851-3f25-a0e812b4d3d5.md}
-    - [Repository Methods](35ad05f5-6a1c-1ec5-dd11-317c64fc712e.md}
-      - [Repository.BeginTrasaction Method](147799c6-a870-7d52-5f8a-6b74ee2a5143.md}
-      - [Repository.Delete Method](1524a328-7f16-6509-7038-a58eff83fa00.md}
-        - [Repository.Delete(*TEntity*.md} Method (SqlParameter[].md}](485cf145-37d0-a9e6-70ba-bd74983deb70.md}
-        - [Repository.Delete(*TEntity*.md} Method (Object.md}](e09bdaf0-571d-312e-bbb5-26bf76fa0509.md}
-        - [Repository.Delete(*TEntity*.md} Method (SqlTransaction, SqlParameter[].md}](6a5a0055-5bfe-8448-d013-bb75aaee4ec0.md}
-        - [Repository.Delete(*TEntity*.md} Method (Int64, SqlTransaction.md}](52f9a5e1-424d-17a2-a79c-aa007f99f3ab.md}
-      - [Repository.Dispose Method](61d11994-93fd-db84-aa68-4cbe23384bba.md}
-      - [Repository.EndTransaction Method](a1a27de7-d6e8-3f2f-7e5a-b604485a4004.md}
-      - [Repository.ExecuteNonQuery Method](1f5f5d31-b64c-cc56-f94b-1ccb54891749.md}
-        - [Repository.ExecuteNonQuery Method (String, CommandType, SqlParameter[].md}](e6462bbf-0f5c-0f2d-8a30-d2b6c5c0d4e0.md}
-        - [Repository.ExecuteNonQuery Method (String, CommandType, Object.md}](16c22b04-84a4-b488-b3e1-587814f981b4.md}
-        - [Repository.ExecuteNonQuery Method (SqlTransaction, String, CommandType, SqlParameter[].md}](fc55ee30-ccd5-ef15-134e-ac4c888f26c2.md}
-        - [Repository.ExecuteNonQuery Method (SqlTransaction, String, CommandType, Object.md}](6ecaaaba-1062-986a-d290-b2406d66e22d.md}
-      - [Repository.ExecuteReader Method](0c582b31-6581-325f-b87a-1402c8d993e7.md}
-        - [Repository.ExecuteReader(*TEntity*.md} Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](23c4a4ee-4a0d-79fd-b490-d6fae0407ce8.md}
-        - [Repository.ExecuteReader Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](673bbd67-bda1-5f61-cee6-efe413351fc8.md}
-        - [Repository.ExecuteReader(*TEntity*.md} Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](aae4ec80-8b7c-4469-dfbe-15395b4acb4d.md}
-        - [Repository.ExecuteReader Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](07fbaf6a-f665-1391-d8b3-b6f0fa23b559.md}
-        - [Repository.ExecuteReader(*TEntity*.md} Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](1d1b6f24-1f70-9167-a161-c4257a308058.md}
-        - [Repository.ExecuteReader Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](c1b8b41a-ecf3-d761-f93e-b860c3c83fe7.md}
-        - [Repository.ExecuteReader(*TEntity*.md} Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](31d0901f-8315-8771-d4ec-e7269e00d482.md}
-        - [Repository.ExecuteReader Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](ecc4a068-fb08-5443-de98-889270cfa321.md}
-      - [Repository.ExecuteReaderSingle Method](49f8f495-ce25-af7f-2226-e7073936a6b7.md}
-        - [Repository.ExecuteReaderSingle(*TEntity*.md} Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](51f4d925-8a84-e239-7fee-ba0aa8852201.md}
-        - [Repository.ExecuteReaderSingle Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](ab7d3eda-76b4-ff7e-de71-dd48c308eea7.md}
-        - [Repository.ExecuteReaderSingle(*TEntity*.md} Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](a83cf148-845f-f665-da13-43c9808d840b.md}
-        - [Repository.ExecuteReaderSingle Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](485b0ec2-8ab0-43ab-33db-acd5709d55c0.md}
-        - [Repository.ExecuteReaderSingle(*TEntity*.md} Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](d019d3fd-e34c-7e93-a114-14381f06659b.md}
-        - [Repository.ExecuteReaderSingle Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](b6d60838-5e32-da5c-0307-e04314c710a3.md}
-        - [Repository.ExecuteReaderSingle(*TEntity*.md} Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](b8e8a017-a523-8519-0fdd-0e9df9c9ad17.md}
-        - [Repository.ExecuteReaderSingle Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](a3cb5b57-e032-2fc1-c7cc-dfe4821628e5.md}
-      - [Repository.ExecuteScalar Method](a5ab3873-359f-443d-b78b-c12b80417cf6.md}
-        - [Repository.ExecuteScalar(*T*.md} Method (String, CommandType, SqlParameter[].md}](6716fa46-69b6-aa3d-ebb8-72defe172806.md}
-        - [Repository.ExecuteScalar(*T*.md} Method (String, CommandType, Object.md}](8fa7303f-de3e-39e9-b3f1-1138a3373fe5.md}
-        - [Repository.ExecuteScalar(*T*.md} Method (SqlTransaction, String, CommandType, SqlParameter[].md}](f0323757-c0f1-7f9b-eb2d-091930da7e1d.md}
-        - [Repository.ExecuteScalar(*T*.md} Method (SqlTransaction, String, CommandType, Object.md}](72d39ec7-06a4-51ae-830a-098001656844.md}
-      - [Repository.Get Method](3e74e63d-aa9d-e282-7d43-f3afc594d120.md}
-        - [Repository.Get(*TEntity*.md} Method (SqlParameter, SqlTransaction, String, Dictionary(String, PropertyInfo.md}.md}](4878511e-cc04-20bb-a540-d48644ec79d5.md}
-        - [Repository.Get(*TEntity*.md} Method (Int64, SqlTransaction, String, Dictionary(String, PropertyInfo.md}.md}](f8e9e112-6b2e-d18f-3512-65e58756eead.md}
-        - [Repository.Get(*TEntity*.md} Method (Object, SqlTransaction, String, Dictionary(String, PropertyInfo.md}.md}](424fcfd5-8314-407b-19a5-42e927ddc5f4.md}
-        - [Repository.Get Method (String, SqlParameter, String, Dictionary(String, PropertyInfo.md}.md}](01e6b452-e2cf-70be-3a75-37948fcb97b1.md}
-        - [Repository.Get Method (String, Int64, String, Dictionary(String, PropertyInfo.md}.md}](b3b5aa18-2235-6c37-acf3-b26fab9c95a7.md}
-        - [Repository.Get Method (String, Object, String, Dictionary(String, PropertyInfo.md}.md}](c7e39821-47c2-8426-b257-d50828b465f5.md}
-      - [Repository.GetAll(*TEntity*.md} Method](2c192d9a-7419-39e9-f658-4d11859f777f.md}
-      - [Repository.GetNewConnection Method](be121655-c23b-1daf-a122-6faccac444ab.md}
-      - [Repository.Insert Method](bb724172-ee9d-a4ff-106f-770b12cb5279.md}
-        - [Repository.Insert(*TEntity*.md} Method (SqlParameter[].md}](1cb635cf-a15c-cdc9-9f6b-3b93eea51730.md}
-        - [Repository.Insert(*TEntity*.md} Method (Object.md}](a08658c8-a795-8f1e-8ed7-a5df7d597479.md}
-        - [Repository.Insert(*TEntity*.md} Method (StoredProcedureParameters.md}](ccbf6cb6-5bdf-aa7d-313a-00a83819d1bc.md}
-        - [Repository.Insert(*TEntity*.md} Method (SqlTransaction, StoredProcedureParameters.md}](57186dd6-366d-27c1-3b4f-c45a322bb157.md}
-        - [Repository.Insert(*TEntity*.md} Method (StoredProcedureParameters, SqlTransaction.md}](20d6dfe0-cc06-efb3-431e-c135cbbac8f4.md}
-      - [Repository.SoftDelete(*TEntity*.md} Method](b8365ac9-6b23-917f-0fec-ff79a22ad674.md}
-      - [Repository.Update Method](b8e1dd79-6b9c-be06-4b1d-b010cd91674f.md}
-        - [Repository.Update(*TEntity*.md} Method (SqlParameter[].md}](b89a3ab3-72ef-f422-11ab-9c23136c85e0.md}
-        - [Repository.Update(*TEntity*.md} Method (Object.md}](fdfc57de-f1c3-fcde-62b7-5259cb0bf73d.md}
-        - [Repository.Update(*TEntity*.md} Method (StoredProcedureParameters.md}](027d65ba-aa78-8e84-7e2f-efbaaee73658.md}
-        - [Repository.Update(*TEntity*.md} Method (SqlTransaction, StoredProcedureParameters.md}](45cdcc98-55b4-eb68-001a-b83c7d8eea0e.md}
-  - [RepositorySetting Class](b33ad84a-c609-d92e-7ae5-abb6683677b5.md}
-    - [RepositorySetting Properties](068b8cc7-26a7-805c-4a4d-8a535466996a.md}
-      - [RepositorySetting.EntityInfos Property](0f9a055f-aef4-cdae-fb48-717a9614ea3a.md}
-    - [RepositorySetting Methods](b577a8e7-ec2d-cb8e-1538-c96d78e27010.md}
-      - [RepositorySetting.GetEntityInfo Method](420bd767-b812-e329-985c-008bd71ed9b4.md}
-- [SimpleAccess.SqlServer Namespace](0aec4ece-a28c-8a60-ec49-ed778f89c036.md}
-  - [ISqlSimpleAccess Interface](809ed696-f903-b013-e8cb-92778c76d386.md}
-    - [ISqlSimpleAccess Properties](18cd1a48-edbc-80e0-f45d-ad3daef090c6.md}
-      - [ISqlSimpleAccess.SimpleLogger Property](49c2c8bf-d15b-704a-b2e4-2bd9d704f6ae.md}
-    - [ISqlSimpleAccess Methods](efdfb491-db68-9511-7320-678f6319e6d4.md}
-      - [ISqlSimpleAccess.BuildSqlParameters Method](2c197295-37d3-2a9d-f6bb-7f250100df41.md}
-      - [ISqlSimpleAccess.CreateCommand Method](4e6af74e-6dd0-9e6d-52bc-309370bb3e5c.md}
-        - [ISqlSimpleAccess.CreateCommand Method (String, CommandType, SqlParameter[].md}](1369aced-423d-202b-dd3e-b5b482acb96e.md}
-        - [ISqlSimpleAccess.CreateCommand Method (SqlTransaction, String, CommandType, SqlParameter[].md}](bb2c37c8-0277-a9dc-0a02-069710c8789f.md}
-      - [ISqlSimpleAccess.GetDynamicSqlData Method](3564452e-e7c1-3114-2342-15cca63cd6c3.md}
-      - [ISqlSimpleAccess.SqlDataReaderToExpando Method](3e99ce02-2bb3-9fc4-c52a-57329a191e6d.md}
-  - [SqlSimpleAccess Class](51cba069-bca7-767f-b9f4-7a420dd10a28.md}
-    - [SqlSimpleAccess Constructor](0b0f752a-0edb-b2f0-8373-d1317b9ee89e.md}
-      - [SqlSimpleAccess Constructor](d48e1f42-b8dc-cca3-cd4f-c1209fda066c.md}
-      - [SqlSimpleAccess Constructor (CommandType.md}](a1331763-a8db-f631-5714-e9c22f2283c1.md}
-      - [SqlSimpleAccess Constructor (SqlConnection.md}](da2a6df2-7f3d-f364-def3-ab1805433bd9.md}
-      - [SqlSimpleAccess Constructor (String.md}](8d4945be-c8aa-5a20-fcf3-c0cc46d7e7b9.md}
-      - [SqlSimpleAccess Constructor (SimpleAccessSettings.md}](50d6dcf6-64e7-16c5-945d-553e10683a8a.md}
-      - [SqlSimpleAccess Constructor (SqlConnection, SimpleAccessSettings.md}](31f2ea14-4ad9-7bcb-142c-25256157c932.md}
-      - [SqlSimpleAccess Constructor (SqlConnection, CommandType.md}](4ad3c32d-29a8-e9e1-a4bc-5af8758d051c.md}
-      - [SqlSimpleAccess Constructor (String, SimpleAccessSettings.md}](ec7373ee-ab0e-8374-fea3-7d438d8265a7.md}
-      - [SqlSimpleAccess Constructor (String, CommandType.md}](facc926d-ebc6-d4f2-4564-16442207b241.md}
-    - [SqlSimpleAccess Properties](3094873b-5a82-a292-4e16-bdb744f58c00.md}
-      - [SqlSimpleAccess.DefaultConnectionString Property](730c3012-01c6-5e2e-1aa2-2cb3ffbccb84.md}
-      - [SqlSimpleAccess.DefaultSimpleAccessSettings Property](45c169d7-ac3f-332d-c5ac-324e8ccce880.md}
-      - [SqlSimpleAccess.SimpleLogger Property](6ea2e016-b62f-8047-9142-f52324b5cde7.md}
-    - [SqlSimpleAccess Methods](dd2ae075-771d-ffba-919b-489d4749e6d3.md}
-      - [SqlSimpleAccess.BeginTrasaction Method](48093fed-d4f7-65cc-4cd5-74e53bcfbfa3.md}
-      - [SqlSimpleAccess.BuildSqlParameters Method](4e12d5b3-ebec-22dd-bf70-e955ed3b86e1.md}
-      - [SqlSimpleAccess.CloseCurrentDbConnection Method](c729f076-2102-7909-a313-2a56335dd7a2.md}
-      - [SqlSimpleAccess.CreateCommand Method](ae3454d2-1d52-d15a-bd0a-252c784fd799.md}
-        - [SqlSimpleAccess.CreateCommand Method (String, CommandType, SqlParameter[].md}](709b50fa-307f-2748-e310-0a3c2d0cc632.md}
-        - [SqlSimpleAccess.CreateCommand Method (SqlTransaction, String, CommandType, SqlParameter[].md}](0e5eeb0f-35bb-6f8f-089a-7309db936bcc.md}
-      - [SqlSimpleAccess.Dispose Method](501ee4dd-ed60-6b1d-b57a-4e7da7a179cb.md}
-      - [SqlSimpleAccess.EndTransaction Method](4a3161f1-cb3b-7634-2280-1bbb10db3d46.md}
-      - [SqlSimpleAccess.ExecuteDynamic Method](9a3892d2-eeb8-2ba2-038e-1bbb0ebabed2.md}
-        - [SqlSimpleAccess.ExecuteDynamic Method (String, String, SqlParameter[].md}](04798084-1cdc-3a33-c48a-1aab4e4d108d.md}
-        - [SqlSimpleAccess.ExecuteDynamic Method (String, String, Object.md}](1be4a695-65d9-28b0-9e45-749baa2d7f74.md}
-        - [SqlSimpleAccess.ExecuteDynamic Method (SqlTransaction, String, String, SqlParameter[].md}](5b645e5e-4c8b-4ee0-a677-c0e2af772d40.md}
-        - [SqlSimpleAccess.ExecuteDynamic Method (SqlTransaction, String, String, Object.md}](57c879bd-cfdd-fe39-50e5-380a273909dc.md}
-        - [SqlSimpleAccess.ExecuteDynamic Method (String, CommandType, String, SqlParameter[].md}](0747251e-8daa-3df4-2f8a-c840a9b42fe6.md}
-        - [SqlSimpleAccess.ExecuteDynamic Method (String, CommandType, String, Object.md}](5fcf5ba2-c6de-9c50-3d3a-a5c0b6f941dc.md}
-        - [SqlSimpleAccess.ExecuteDynamic Method (SqlTransaction, String, CommandType, String, SqlParameter[].md}](20388fa5-f490-2585-699b-e5daa365b5a7.md}
-        - [SqlSimpleAccess.ExecuteDynamic Method (SqlTransaction, String, CommandType, String, Object.md}](caba91f9-57dd-74dc-ee21-e0a1808882a4.md}
-      - [SqlSimpleAccess.ExecuteDynamics Method](3b1b8cda-8178-68e9-9c1d-c2cc004f3f4e.md}
-        - [SqlSimpleAccess.ExecuteDynamics Method (String, String, SqlParameter[].md}](e1348fc4-c7c8-536a-1816-bb3fea3eaab2.md}
-        - [SqlSimpleAccess.ExecuteDynamics Method (String, String, Object.md}](d5eadca1-980f-4f35-5da4-2b5c40375ac1.md}
-        - [SqlSimpleAccess.ExecuteDynamics Method (SqlTransaction, String, String, SqlParameter[].md}](8dffcd7e-5326-274c-e74b-a6098b0629f3.md}
-        - [SqlSimpleAccess.ExecuteDynamics Method (SqlTransaction, String, String, Object.md}](1c3a296f-7d1b-e185-7ac0-0697ef992ba8.md}
-        - [SqlSimpleAccess.ExecuteDynamics Method (String, CommandType, String, SqlParameter[].md}](28491348-e503-ab62-c752-e57344a23573.md}
-        - [SqlSimpleAccess.ExecuteDynamics Method (String, CommandType, String, Object.md}](ce3fb621-5bf3-2e4d-575c-b85ab3fff559.md}
-        - [SqlSimpleAccess.ExecuteDynamics Method (SqlTransaction, String, CommandType, String, SqlParameter[].md}](0d8dac5a-14c0-1f18-c7c2-81f9613263d4.md}
-        - [SqlSimpleAccess.ExecuteDynamics Method (SqlTransaction, String, CommandType, String, Object.md}](409a816f-6e3d-4851-4e60-bc37b22b8120.md}
-      - [SqlSimpleAccess.ExecuteEntities Method](79a9497e-a8d3-7fad-cb2d-0132b451497a.md}
-        - [SqlSimpleAccess.ExecuteEntities(*TEntity*.md} Method (String, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](2f74be32-0868-f0fd-e4c3-272360fbd59e.md}
-        - [SqlSimpleAccess.ExecuteEntities(*TEntity*.md} Method (String, String, Dictionary(String, PropertyInfo.md}, Object.md}](da8b2949-3cf8-3eaa-deb6-f02b0c635be1.md}
-        - [SqlSimpleAccess.ExecuteEntities(*TEntity*.md} Method (SqlTransaction, String, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](397ebf45-47fb-14c0-3f47-21176e2638ff.md}
-        - [SqlSimpleAccess.ExecuteEntities(*TEntity*.md} Method (SqlTransaction, String, String, Dictionary(String, PropertyInfo.md}, Object.md}](9e7499d9-1512-ddf2-d0a6-3027cc61f0d5.md}
-        - [SqlSimpleAccess.ExecuteEntities(*TEntity*.md} Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](8c17528a-7648-1600-fed2-8a4f3f90a958.md}
-        - [SqlSimpleAccess.ExecuteEntities(*TEntity*.md} Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](8a747d2f-094e-e6b5-b64c-2ca67569d323.md}
-        - [SqlSimpleAccess.ExecuteEntities(*TEntity*.md} Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](a1bb9f10-37d2-04f8-ef6d-29d922848430.md}
-        - [SqlSimpleAccess.ExecuteEntities(*TEntity*.md} Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](409d3a8b-abbc-e9c0-8692-7a3e568b2659.md}
-      - [SqlSimpleAccess.ExecuteEntity Method](ba97dabe-d09e-e637-6adb-6252704b999a.md}
-        - [SqlSimpleAccess.ExecuteEntity(*TEntity*.md} Method (String, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](0569cb62-0277-5073-f8d9-6c98172efaab.md}
-        - [SqlSimpleAccess.ExecuteEntity(*TEntity*.md} Method (String, String, Dictionary(String, PropertyInfo.md}, Object.md}](44bd1e01-c19f-a92e-1daa-01d2edc3c0c7.md}
-        - [SqlSimpleAccess.ExecuteEntity(*TEntity*.md} Method (SqlTransaction, String, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](359b0245-170e-1aaa-972d-90e5c6da5f57.md}
-        - [SqlSimpleAccess.ExecuteEntity(*TEntity*.md} Method (SqlTransaction, String, String, Dictionary(String, PropertyInfo.md}, Object.md}](7ea52518-f5db-159c-c08a-6ffd4428e256.md}
-        - [SqlSimpleAccess.ExecuteEntity(*TEntity*.md} Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](2fb8f84d-846a-a422-8721-02b4f5d74561.md}
-        - [SqlSimpleAccess.ExecuteEntity(*TEntity*.md} Method (String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](10bdc015-0cc7-8ca2-9842-2d24283d56a5.md}
-        - [SqlSimpleAccess.ExecuteEntity(*TEntity*.md} Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, SqlParameter[].md}](70137d25-361f-0abf-4b18-1534d75b193b.md}
-        - [SqlSimpleAccess.ExecuteEntity(*TEntity*.md} Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md}, Object.md}](b17e4707-8ef4-4c28-90dc-5ae8feb8ef42.md}
-      - [SqlSimpleAccess.ExecuteNonQuery Method](25c4a4b0-a20b-9f15-12b5-a9b37113465c.md}
-        - [SqlSimpleAccess.ExecuteNonQuery Method (String, SqlParameter[].md}](17264dd7-b42f-0cb5-8834-db75cd93cfb9.md}
-        - [SqlSimpleAccess.ExecuteNonQuery Method (String, Object.md}](5fba6356-b238-40f3-1e4f-5366baf19da6.md}
-        - [SqlSimpleAccess.ExecuteNonQuery Method (SqlTransaction, String, SqlParameter[].md}](5a23c2e8-bf8e-eb94-c9af-c45ec918c3e1.md}
-        - [SqlSimpleAccess.ExecuteNonQuery Method (SqlTransaction, String, Object.md}](94cda740-f668-663d-c2a2-1876e4614535.md}
-        - [SqlSimpleAccess.ExecuteNonQuery Method (String, CommandType, SqlParameter[].md}](5f863045-bb82-ee3c-2cf0-8f29eb3e58b7.md}
-        - [SqlSimpleAccess.ExecuteNonQuery Method (String, CommandType, Object.md}](3075b35c-f56a-b812-f763-0ddb87dd0ab7.md}
-        - [SqlSimpleAccess.ExecuteNonQuery Method (SqlTransaction, String, CommandType, SqlParameter[].md}](2e4361bf-5898-fc20-911f-c3582a7c7410.md}
-        - [SqlSimpleAccess.ExecuteNonQuery Method (SqlTransaction, String, CommandType, Object.md}](05777d76-08c7-3998-bf6f-976aa517794d.md}
-      - [SqlSimpleAccess.ExecuteReader Method](919d6432-c8a7-3b83-4076-39089d5542b6.md}
-        - [SqlSimpleAccess.ExecuteReader Method (String, SqlParameter[].md}](e411b0fa-3a08-6064-b614-05d46f30f0f0.md}
-        - [SqlSimpleAccess.ExecuteReader Method (String, CommandBehavior, SqlParameter[].md}](135cc613-967c-f51b-7db2-d05eb9beb0bc.md}
-        - [SqlSimpleAccess.ExecuteReader Method (String, CommandType, SqlParameter[].md}](1543aa7a-4b87-b130-935a-baa75d9af296.md}
-        - [SqlSimpleAccess.ExecuteReader Method (String, CommandType, CommandBehavior, SqlParameter[].md}](23b97797-d714-426f-36b8-a4e5e28852fc.md}
-      - [SqlSimpleAccess.ExecuteScalar Method](c9b84b9a-b8c1-53c4-7249-ba723b64aa70.md}
-        - [SqlSimpleAccess.ExecuteScalar(*T*.md} Method (String, SqlParameter[].md}](8c02deed-8a8e-9613-288a-80551ea2cfe5.md}
-        - [SqlSimpleAccess.ExecuteScalar(*T*.md} Method (String, Object.md}](b0409091-dac5-4f15-4ea3-1ce29ae4e227.md}
-        - [SqlSimpleAccess.ExecuteScalar(*T*.md} Method (SqlTransaction, String, SqlParameter[].md}](7cf3847b-8a2f-10be-aa59-95ff549b63f2.md}
-        - [SqlSimpleAccess.ExecuteScalar(*T*.md} Method (SqlTransaction, String, Object.md}](b5ed2835-75a6-7931-db00-1de7d21557c7.md}
-        - [SqlSimpleAccess.ExecuteScalar(*T*.md} Method (String, CommandType, SqlParameter[].md}](7418ae3c-b1b4-81b6-627f-6db87e999092.md}
-        - [SqlSimpleAccess.ExecuteScalar(*T*.md} Method (String, CommandType, Object.md}](0133f2a9-c2be-fb31-7d47-0bea33f814d3.md}
-        - [SqlSimpleAccess.ExecuteScalar(*T*.md} Method (SqlTransaction, String, CommandType, SqlParameter[].md}](be149007-ebb2-4b85-cdcd-22ec484e9119.md}
-        - [SqlSimpleAccess.ExecuteScalar(*T*.md} Method (SqlTransaction, String, CommandType, Object.md}](1e583842-3a17-e0b9-8718-dcd836598a52.md}
-      - [SqlSimpleAccess.Fill Method](bd0ec21e-e329-7711-0163-53efb7d9af20.md}
-        - [SqlSimpleAccess.Fill Method (String, DataSet.md}](8f9f8234-2dce-fd31-d252-664ea26cf114.md}
-        - [SqlSimpleAccess.Fill Method (String, DataTable.md}](ed4ab211-9581-26f9-b6fa-101549146b89.md}
-      - [SqlSimpleAccess.GetDynamicSqlData Method](489fac29-7e4f-8ba9-9f7a-9841d49ec3f2.md}
-      - [SqlSimpleAccess.GetNewConnection Method](df3ec123-1f31-b5d3-62a6-647bce7b3435.md}
-      - [SqlSimpleAccess.SqlDataReaderToExpando Method](7af324d0-11e4-722a-a506-844dd0588af1.md}
-- [SimpleAccess.SqlServer.Repository Namespace](7ca62ec4-9e1e-7797-72d1-08cdad8b8511.md}
-  - [SqlRepository Class](0ff2b0ef-5784-3948-375a-e5aebc484660.md}
-    - [SqlRepository Constructor](8c719e7b-3220-1ed9-212e-0dfa46fbb31c.md}
-      - [SqlRepository Constructor](aeff0c9c-a5c0-41d7-c2db-a696855dde61.md}
-      - [SqlRepository Constructor (String.md}](9ef63284-f2d3-b4d7-8448-ce95db45d048.md}
-      - [SqlRepository Constructor (ISqlSimpleAccess.md}](45aee785-c43e-259e-a091-2b6416a64861.md}
-    - [SqlRepository Properties](c16a056e-70a0-b437-9741-268a8c439193.md}
-      - [SqlRepository.SimpleAccess Property](2466021e-1260-f76a-4bd5-9e1c6153af03.md}
-    - [SqlRepository Methods](1bc02ac5-ff5c-5419-ab72-f008d08a665d.md}
-      - [SqlRepository.Delete Method](110fb930-cc21-1bf0-fd21-2e5889c14513.md}
-        - [SqlRepository.Delete(*TEntity*.md} Method (SqlParameter[].md}](02120975-72b6-28cb-1cf2-485b32b9b9e4.md}
-        - [SqlRepository.Delete(*TEntity*.md} Method (Int64.md}](63d56d86-37da-7a1e-4b2d-5d497f56ebf1.md}
-        - [SqlRepository.Delete(*TEntity*.md} Method (Object.md}](a5a6f264-bff5-8f60-850c-66c2e59c2993.md}
-        - [SqlRepository.Delete(*TEntity*.md} Method (SqlTransaction, SqlParameter[].md}](622ae439-0f1a-753c-dd83-d664aa7f33a9.md}
-        - [SqlRepository.Delete(*TEntity*.md} Method (SqlTransaction, Int64.md}](d6a86500-a1c9-cd71-bb76-b685ee4f860e.md}
-      - [SqlRepository.Dispose Method](fc416b05-bb16-4989-e788-d6c6cb565908.md}
-      - [SqlRepository.Get Method](34ba0667-340a-d99f-8603-5655f9c3e2e7.md}
-        - [SqlRepository.Get(*TEntity*.md} Method (SqlParameter, String.md}](c26c7233-7018-b71f-d4c4-81b18a15de91.md}
-        - [SqlRepository.Get(*TEntity*.md} Method (SqlTransaction, SqlParameter, String.md}](2265b452-3860-f150-1d66-c822dcbe0afc.md}
-        - [SqlRepository.Get(*TEntity*.md} Method (Int64, SqlTransaction, String.md}](43801d9a-d0ae-1d09-baf2-cb72c6cab07a.md}
-        - [SqlRepository.Get(*TEntity*.md} Method (Object, SqlTransaction, String.md}](cc042bd8-7cd1-8519-5364-2c40e4da2460.md}
-        - [SqlRepository.Get Method (String, SqlParameter, String.md}](c0ccdbfe-58fc-6512-7642-33f056e78b7f.md}
-        - [SqlRepository.Get Method (String, Int64, String.md}](9243d255-79f1-1dee-7928-f09018e6f3d3.md}
-        - [SqlRepository.Get Method (String, Object, String.md}](2fee08d6-849c-7937-8a8c-d577d6a23417.md}
-      - [SqlRepository.GetAll(*TEntity*.md} Method](d2458443-4beb-9dac-a054-922bd71d680d.md}
-      - [SqlRepository.Insert Method](591602dd-c84a-5472-a365-826f82412718.md}
-        - [SqlRepository.Insert(*TEntity*.md} Method (SqlParameter[].md}](868aeed4-e41a-0267-cde3-b5cbb2e387f2.md}
-        - [SqlRepository.Insert(*TEntity*.md} Method (Object.md}](e2e2a73b-72ba-1504-fc8c-f1df38244020.md}
-        - [SqlRepository.Insert(*TEntity*.md} Method (StoredProcedureParameters.md}](689439f2-c726-edc1-5a2b-2967f63e26b0.md}
-        - [SqlRepository.Insert(*TEntity*.md} Method (SqlTransaction, StoredProcedureParameters.md}](d85a05c6-32f3-c37e-090f-929112ac3ca7.md}
-      - [SqlRepository.SoftDelete(*TEntity*.md} Method](be3232cd-a8e7-86b8-408d-54f806bf7d21.md}
-      - [SqlRepository.Update Method](d052ca76-ab05-6e10-4f7d-44a4cd391196.md}
-        - [SqlRepository.Update(*TEntity*.md} Method (SqlParameter[].md}](4e7cc20a-1b3d-35e7-21c1-65516763ccff.md}
-        - [SqlRepository.Update(*TEntity*.md} Method (Object.md}](37634116-d6e7-5b0f-1c87-a04f7d4a78f6.md}
-        - [SqlRepository.Update(*TEntity*.md} Method (StoredProcedureParameters.md}](7232a8bb-6f84-cfcf-2963-ed4ceefe6274.md}
-        - [SqlRepository.Update(*TEntity*.md} Method (SqlTransaction, StoredProcedureParameters.md}](eb553a24-6a8d-2dca-a638-6f1e36b87544.md}
+- [Welcome to the [TODO: Add project name]](487af52a-eee7-43da-a3f4-3009a1414bf9.md)
+- [Version History](383f8930-6417-4c8b-a557-3c3d2ab1cea7.md)
+  - [Version 1.0.0.0](211284b6-c33b-45d9-a965-ebd0f211b856.md)
+- [SimpleAccess Namespace](5b81da8e-9a02-e6f3-6346-ccc62ec531d3.md)
+  - [DbColumnAttribute Class](f6e7b413-d896-0b4a-4ca8-34052f37dd41.md)
+    - [DbColumnAttribute Constructor](07505203-9234-9fd2-7348-a5c61c4b11cd.md)
+    - [DbColumnAttribute Properties](2e4fb652-0109-6f78-d7a4-77092029ee8a.md)
+      - [DbColumnAttribute.DbColumn Property](273aa5c6-658c-1888-eee0-4f4c022be56d.md)
+    - [DbColumnAttribute Methods](07b4cf25-e293-d8ad-333e-fa5d485308ac.md)
+  - [DbObjectType Enumeration](227842b6-0c18-8da4-1908-da0719e6f35a.md)
+  - [DefaultValueAttribute Class](7ba3e5d2-ca1d-9422-cd82-aea4db22f18f.md)
+    - [DefaultValueAttribute Constructor](16d7ce16-e77f-4b72-b300-fac2c34b0695.md)
+      - [DefaultValueAttribute Constructor (DateTime.md)](1db96626-bde6-6358-1ca4-0b860f6d01a8.md)
+      - [DefaultValueAttribute Constructor (Object.md)](bb999f4a-56d1-b8a7-c36e-cdee791644dd.md)
+    - [DefaultValueAttribute Properties](1f424674-bedc-48a4-3f79-c5b00b4ab346.md)
+      - [DefaultValueAttribute.DefaultValue Property](6b31941a-35c5-7058-3ea8-97876b1ad866.md)
+    - [DefaultValueAttribute Methods](562b6197-ac8f-f9af-f1b8-f1d1c7dbfb38.md)
+  - [EntityAttribute Class](f2f90d8d-efcb-ce9e-c7f6-51b29330a0f9.md)
+    - [EntityAttribute Constructor](1d9b0e59-54c1-74e3-241a-bf071cfa87c1.md)
+      - [EntityAttribute Constructor (String.md)](fbfbf3f0-60eb-3f39-f8f1-d9727cdec397.md)
+      - [EntityAttribute Constructor (String, DbObjectType.md)](957928ef-bad6-89c3-a1d4-0046e98e86d4.md)
+    - [EntityAttribute Properties](31d222ed-05d1-cb63-89ff-373ac0aa979b.md)
+      - [EntityAttribute.EntityName Property](383073a6-5144-1e39-ee95-822861876778.md)
+      - [EntityAttribute.Type Property](d7d27b91-e579-8af0-57b2-879718f827e4.md)
+    - [EntityAttribute Methods](1dfdb55c-2ce1-8b74-954c-f8e863258c68.md)
+  - [IdentityAttribute Class](3430b263-9396-ac14-ac2e-5ef050f25b5b.md)
+    - [IdentityAttribute Constructor](3b1fe928-01cd-71f8-bc7c-54a1ba63e229.md)
+    - [IdentityAttribute Properties](a5823338-264d-c664-a76f-5d1354e6374b.md)
+    - [IdentityAttribute Methods](b7df463a-f907-17e2-0eea-c458ae1a53f0.md)
+  - [IEntity Interface](a2fce3a2-1e86-e023-d10c-d1aa9216b11b.md)
+  - [NotASpParameterAttribute Class](db843ec4-447a-92d3-bef9-42673a0ec293.md)
+    - [NotASpParameterAttribute Constructor](591b87e4-1834-3527-4ca2-a7c86aca4a83.md)
+    - [NotASpParameterAttribute Properties](b47909c4-413f-aecf-40c0-0e624b9450a6.md)
+    - [NotASpParameterAttribute Methods](48c9249c-2838-c199-7c88-c95d98ca932c.md)
+  - [ParameterDirectionAttribute Class](3acd6809-7ee5-5ffb-e6bb-43fd095be78e.md)
+    - [ParameterDirectionAttribute Constructor](3fb5abfa-ae66-0a7d-a0e2-0f95c1ad4344.md)
+    - [ParameterDirectionAttribute Properties](e3426dcf-6dbe-35c2-199b-1f5ad05abd3e.md)
+      - [ParameterDirectionAttribute.SpParameterDirection Property](f0b447e0-c0bf-5650-fbdf-d85a9ace8156.md)
+    - [ParameterDirectionAttribute Methods](f25c696e-fa62-8f8d-e700-693504e236d5.md)
+  - [SqlParametersExtensions Class](9bb9ff96-3109-a828-ee7b-8ff0c9f601d5.md)
+    - [SqlParametersExtensions Methods](9c669c46-7c8e-f6ee-ac1a-ef92c23f138c.md)
+      - [SqlParametersExtensions.CreateSqlParametersFromDynamic Method](72be76df-5efa-e834-772d-7c4742dc3f4f.md)
+        - [SqlParametersExtensions.CreateSqlParametersFromDynamic Method (List(SqlParameter.md), Object.md)](1d2bb28d-44c5-00fa-ab59-f62bca980081.md)
+        - [SqlParametersExtensions.CreateSqlParametersFromDynamic Method (SqlParameter[], Object.md)](e42cdefb-efaf-a1a7-cba6-9eabe52e23d7.md)
+      - [SqlParametersExtensions.ToDataParam Method](30bf22dd-e75c-406f-7491-954fc4529f51.md)
+        - [SqlParametersExtensions.ToDataParam(*T*.md) Method (Nullable(*T*.md), String.md)](301a1a62-b96a-f8b5-e5aa-e51df1505a89.md)
+        - [SqlParametersExtensions.ToDataParam Method (String, String.md)](1139c771-5afe-4d42-a637-388de47d2e20.md)
+        - [SqlParametersExtensions.ToDataParam(*T*.md) Method (*T*, String.md)](381fb386-8118-6fb7-e421-ded4136f5a7d.md)
+        - [SqlParametersExtensions.ToDataParam(*T*.md) Method (Nullable(*T*.md), String, SqlDbType.md)](a6972982-f957-ddc8-eef5-4734d17f6a04.md)
+        - [SqlParametersExtensions.ToDataParam Method (String, String, Int32.md)](b3487418-a1e2-d528-febc-70ce28e759b1.md)
+        - [SqlParametersExtensions.ToDataParam(*T*.md) Method (*T*, String, SqlDbType.md)](642fd72d-85d1-dda2-464e-a6051dfcdb4a.md)
+      - [SqlParametersExtensions.ToSafeDataParam Method](9090cc25-e72e-1d2e-2a40-59c8648205a8.md)
+  - [StoredProcedureNameKeyWordAttribute Class](28a6dcb3-af1a-dfce-d4ea-5d3e480a4ffd.md)
+    - [StoredProcedureNameKeyWordAttribute Constructor](0169b9a3-d1a2-5d4c-9fe3-ad768c5da67b.md)
+    - [StoredProcedureNameKeyWordAttribute Properties](48bb5ded-7847-12eb-0012-a70e3cfdc4e2.md)
+      - [StoredProcedureNameKeyWordAttribute.NameKeyWord Property](a0e2eac4-5b16-9ce9-1de8-81d6d96c5954.md)
+    - [StoredProcedureNameKeyWordAttribute Methods](2fdcdfd5-11e7-e06b-5999-e8bcd3e2c37e.md)
+  - [StoredProcedureParameters Class](1e3afd83-1b60-7d93-412a-daa2862067e2.md)
+    - [StoredProcedureParameters Constructor](afdb079c-c2f2-7dbf-b29f-c00f060412f1.md)
+    - [StoredProcedureParameters Methods](9e6bd84b-1948-b1a9-4cbd-b5d18817f8c9.md)
+      - [StoredProcedureParameters.AddSqlParameters Method](71328454-a7f2-723b-3155-47ab6af4f709.md)
+      - [StoredProcedureParameters.ClearSpParameters Method](3a923f19-7b5f-8111-f5f4-6a747ff4f735.md)
+      - [StoredProcedureParameters.CreateSqlParametersFromProperties Method](60b17e7e-7189-cc3e-a030-b4a9552f0c0a.md)
+      - [StoredProcedureParameters.GetSpParameters Method](5e0f1b18-ef93-eab6-35c5-793c320d1662.md)
+      - [StoredProcedureParameters.LoadOutParametersProperties Method](d041bd9f-3d2a-d479-109a-ba7b3efe9297.md)
+      - [StoredProcedureParameters.Validate Method](a6d56063-c2ad-9051-c285-4b1a6995e00c.md)
+- [SimpleAccess.Core Namespace](a16105b5-9ef0-1333-33d4-5a00c99c3614.md)
+  - [ConnectionExtension Class](ae6cdd9e-c590-250c-c081-d18069807f18.md)
+    - [ConnectionExtension Methods](0d384d0a-f186-640d-332f-ece41c1e4ac1.md)
+      - [ConnectionExtension.CloseSafely Method](f04a7b38-9de1-7d50-892d-ee79d32907b6.md)
+      - [ConnectionExtension.OpenSafely Method](3a0acf7c-35ef-59bc-c1cc-c5f332ee523b.md)
+  - [DataReaderToObjectExtensions Class](48951270-aee7-1aef-d48d-d0dc7151bd83.md)
+    - [DataReaderToObjectExtensions Methods](53f21982-fddd-dfc7-7fd3-b2946a98c95e.md)
+      - [DataReaderToObjectExtensions.DataReaderToObject Method](b07bb4d8-88ba-28be-b18f-6b1b1be035e9.md)
+        - [DataReaderToObjectExtensions.DataReaderToObject(*TType*.md) Method (IDataReader, String, Dictionary(String, PropertyInfo.md), Dictionary(String, PropertyInfo.md).md)](1fdde7ca-c4d7-0bc3-ced5-a3df3a01b5f2.md)
+        - [DataReaderToObjectExtensions.DataReaderToObject Method (IDataReader, Object, String, Dictionary(String, PropertyInfo.md), Dictionary(String, PropertyInfo.md).md)](2a9e6795-d0c2-f136-6a1f-5ae492f83cbb.md)
+      - [DataReaderToObjectExtensions.DataReaderToObjectList(*TType*.md) Method](e1431c1c-c9fe-2ea8-8dd0-a202a7f9a5f8.md)
+  - [IParameterBuilder Interface](811761d8-7fba-1743-d95f-e13ad5073da4.md)
+    - [IParameterBuilder Methods](53469af5-0835-5e06-ae87-0a5d5a1160e7.md)
+      - [IParameterBuilder.CreateDataParameter Method](cb748753-7e64-2353-3110-b687dee2cbb0.md)
+  - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md) Interface](0a1ff90a-7c2b-18a8-adb6-ac494a3c34b5.md)
+    - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md) Properties](06d119b6-7ec6-8e50-944a-da16eda1fb6e.md)
+      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).DefaultSimpleAccessSettings Property](b822c693-9ca0-3e62-e22c-6dd4b0b8c119.md)
+    - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md) Methods](ed6b09d6-6446-a643-9380-ed70a88ee064.md)
+      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).BeginTrasaction Method](ad330a42-92cb-074b-2ddc-5a3ee178a491.md)
+      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).CloseCurrentDbConnection Method](6b5bdd4c-ad15-dccc-9db7-05af6cdf99c4.md)
+      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).EndTransaction Method](4226b3de-86c2-a45e-a0fc-da4b52ea142f.md)
+      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteDynamic Method](9c57a0b7-7d7a-266c-b83e-1e728da219d7.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteDynamic Method (String, String, Object.md)](4b2f4a35-04f0-fbd1-3dd6-3e486959d5a5.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteDynamic Method (String, String, *TDataParameter*[].md)](c82227b2-7ec5-6ca4-c99a-63dd5f85e052.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteDynamic Method (String, CommandType, String, Object.md)](ccfc97b8-deb2-8daf-58bd-c1bf83061796.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteDynamic Method (String, CommandType, String, *TDataParameter*[].md)](991db11e-79e8-d87b-2fd8-13519d21f2fb.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteDynamic Method (*TDbTransaction*, String, String, Object.md)](dfff28a0-0951-07f8-7965-dcd80e19e243.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteDynamic Method (*TDbTransaction*, String, String, *TDataParameter*[].md)](17fbcf11-7b22-06ea-78b6-a1c6f71d1328.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteDynamic Method (*TDbTransaction*, String, CommandType, String, Object.md)](39e3961b-1e2b-0f2f-1340-6dd667039d3a.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteDynamic Method (*TDbTransaction*, String, CommandType, String, *TDataParameter*[].md)](c7e0e2e4-76ff-cd9c-6166-50b7603b7781.md)
+      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteDynamics Method](4149ba16-beb7-6632-09c4-13d976574a9c.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteDynamics Method (String, String, Object.md)](9af2e0a6-96f8-4933-0dd4-0cdd4fb9dc6d.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteDynamics Method (String, String, *TDataParameter*[].md)](0ec32d27-4fba-b147-1071-34b141794914.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteDynamics Method (String, CommandType, String, Object.md)](212dc335-b104-2932-d0dd-df8161e10dc6.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteDynamics Method (String, CommandType, String, *TDataParameter*[].md)](f2f6357c-901b-04d4-1416-ef7b9a31b986.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteDynamics Method (*TDbTransaction*, String, String, Object.md)](42b15eea-3e37-abdb-9665-30538dfe928e.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteDynamics Method (*TDbTransaction*, String, String, *TDataParameter*[].md)](0a075574-2530-0cb6-6beb-c6e7ec94b278.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteDynamics Method (*TDbTransaction*, String, CommandType, String, Object.md)](3f567e82-dcc0-1f9e-a608-22a7588f08ae.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteDynamics Method (*TDbTransaction*, String, CommandType, String, *TDataParameter*[].md)](5d7015d0-08de-3d9c-c0e9-d7f06b5eab1b.md)
+      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteEntities Method](7539f9ce-acff-efd1-8926-8d5ee0c8f790.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteEntities(*TEntity*.md) Method (String, String, Dictionary(String, PropertyInfo.md), Object.md)](2c998199-cc50-fe48-0de4-a053b21439b0.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteEntities(*TEntity*.md) Method (String, String, Dictionary(String, PropertyInfo.md), *TDataParameter*[].md)](deb47db6-eea4-6f04-2827-f6459e172b95.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteEntities(*TEntity*.md) Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](1952f38c-826f-7e25-5edc-89dd6fc9eb44.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteEntities(*TEntity*.md) Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), *TDataParameter*[].md)](c059d414-ddff-314f-c9b1-8619b1ce0a35.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteEntities(*TEntity*.md) Method (*TDbTransaction*, String, String, Dictionary(String, PropertyInfo.md), Object.md)](5b758571-69a2-0d1a-358b-480e8f6cb59d.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteEntities(*TEntity*.md) Method (*TDbTransaction*, String, String, Dictionary(String, PropertyInfo.md), *TDataParameter*[].md)](71bb1620-91ff-734b-bb5e-b64dffc7b6ac.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteEntities(*TEntity*.md) Method (*TDbTransaction*, String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](291af211-e77b-f694-4d88-0c19825c60f6.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteEntities(*TEntity*.md) Method (*TDbTransaction*, String, CommandType, String, Dictionary(String, PropertyInfo.md), *TDataParameter*[].md)](93483023-1a38-99c4-a973-4ac40087ed8e.md)
+      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteEntity Method](5ae9f68c-7b49-fbb4-9711-517468f59c59.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteEntity(*TEntity*.md) Method (String, String, Dictionary(String, PropertyInfo.md), Object.md)](16729ee2-7d3e-3843-499f-8a8908880bad.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteEntity(*TEntity*.md) Method (String, String, Dictionary(String, PropertyInfo.md), *TDataParameter*[].md)](75092b58-46dd-2fd3-c152-7a5f12f9ec6e.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteEntity(*TEntity*.md) Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](c1a933d0-99d7-ebca-3bd2-13fd91cc0ae9.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteEntity(*TEntity*.md) Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), *TDataParameter*[].md)](ad0de4b8-f142-3c4e-ee19-e98900408374.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteEntity(*TEntity*.md) Method (*TDbTransaction*, String, String, Dictionary(String, PropertyInfo.md), Object.md)](4f1b2c6c-a8e1-b717-1340-833a965f02ee.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteEntity(*TEntity*.md) Method (*TDbTransaction*, String, String, Dictionary(String, PropertyInfo.md), *TDataParameter*[].md)](0fba62b2-f18f-8e68-0add-b7aed5eeb868.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteEntity(*TEntity*.md) Method (*TDbTransaction*, String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](486a415e-cf15-e43f-de8c-a9e586312b67.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteEntity(*TEntity*.md) Method (*TDbTransaction*, String, CommandType, String, Dictionary(String, PropertyInfo.md), *TDataParameter*[].md)](531d7f0d-4383-2295-42ea-116f447b03d6.md)
+      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteNonQuery Method](d6ff008e-7aa2-aacd-8855-372a0d76759c.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteNonQuery Method (String, Object.md)](a724dc9f-f7dd-fa8a-5a8b-3bf84d979865.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteNonQuery Method (String, *TDataParameter*[].md)](c88ebf82-b1b2-93d8-7683-3d44f6505b65.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteNonQuery Method (String, CommandType, Object.md)](a9784ccb-a08e-f234-960f-2c40f4acf17e.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteNonQuery Method (String, CommandType, *TDataParameter*[].md)](e39cc4f5-4781-72cc-b2fb-a5649439198b.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteNonQuery Method (*TDbTransaction*, String, Object.md)](e75397fc-14cd-becf-fbe2-b33c7500ae56.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteNonQuery Method (*TDbTransaction*, String, *TDataParameter*[].md)](0db24328-5599-05b8-9dc0-7afd7bbb1ea7.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteNonQuery Method (*TDbTransaction*, String, CommandType, Object.md)](578b4d0e-e511-c36c-7771-4f2a72e03ec9.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteNonQuery Method (*TDbTransaction*, String, CommandType, *TDataParameter*[].md)](3dce5bd9-cf81-5cd6-bd9d-e652146881f4.md)
+      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteReader Method](99ea9f99-daf1-78ca-009c-a453d5fb44c1.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteReader Method (String, *TDataParameter*[].md)](d63716fa-a584-e3db-c014-dbbbca80e921.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteReader Method (String, CommandBehavior, *TDataParameter*[].md)](b324ad34-3906-8b30-a1f5-da4f3d31d7c2.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteReader Method (String, CommandType, *TDataParameter*[].md)](05552584-1b37-a64a-54e5-96b476c0f6af.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteReader Method (String, CommandType, CommandBehavior, *TDataParameter*[].md)](54fc2355-44dd-39dd-03ed-e11d958ac77d.md)
+      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteScalar Method](30f7cce8-5b37-7db9-088f-1663f7d6b8fa.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteScalar(*T*.md) Method (String, Object.md)](b636ca17-7153-f4bc-8783-c89955f1056a.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteScalar(*T*.md) Method (String, *TDataParameter*[].md)](f5d0d62e-c69a-8ea0-29a1-94f81c2deb4e.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteScalar(*T*.md) Method (String, CommandType, Object.md)](efd8c8a9-ef12-f576-bf28-ccf012507728.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteScalar(*T*.md) Method (String, CommandType, *TDataParameter*[].md)](8d710880-0aa5-ce23-65bf-c199f124a7bb.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteScalar(*T*.md) Method (*TDbTransaction*, String, Object.md)](ab7c1c07-6f3a-3be0-0145-6c4c56879a40.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteScalar(*T*.md) Method (*TDbTransaction*, String, *TDataParameter*[].md)](bc9622e8-0a2e-c84f-d3e8-020d52eb2bf8.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteScalar(*T*.md) Method (*TDbTransaction*, String, CommandType, Object.md)](6f33af35-9115-a573-28df-2f18df7d1cf3.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).ExecuteScalar(*T*.md) Method (*TDbTransaction*, String, CommandType, *TDataParameter*[].md)](8eafa5b8-87ec-87a5-d759-419d0e0d0ff7.md)
+      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).Fill Method](cf12a84f-3bdf-5c98-4684-cbe74b98c5d6.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).Fill Method (String, DataSet.md)](ad643cea-413e-4579-61fe-fe0b297fe2af.md)
+        - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).Fill Method (String, DataTable.md)](f30add7c-78a3-6acc-f537-ee58c98185f2.md)
+      - [ISimpleAccess(*TDbConnection*, *TDbTransaction*, *TDbCommand*, *TDataParameter*, *TDbDataReader*, *TParameterBuilder*.md).GetNewConnection Method](dbd20612-a192-4b54-1bc6-403da859402e.md)
+  - [ParametersType Enumeration](c63dea1f-5a40-ad28-bb6a-a3ff35ad068c.md)
+  - [SimpleAccessSettings Class](43f972b4-e83c-53c8-a130-8b815b2375b7.md)
+    - [SimpleAccessSettings Constructor](388c6fa2-ca35-834b-ee6b-1c96e795ae11.md)
+      - [SimpleAccessSettings Constructor](d8858c1d-aba5-e5fc-0bd1-a572be8c3693.md)
+      - [SimpleAccessSettings Constructor (CommandType.md)](75ac8071-fb7f-3f5f-714c-16acd9711816.md)
+      - [SimpleAccessSettings Constructor (CommandType, ISimpleLogger.md)](41ebefa2-f62b-e258-2517-e71f65bee6cb.md)
+    - [SimpleAccessSettings Properties](60401980-e893-c20c-0d12-b70f2f0a9b4b.md)
+      - [SimpleAccessSettings.DefaultCommandType Property](3ba665c6-4436-a9ba-fc4f-cf5eb1f82567.md)
+      - [SimpleAccessSettings.DefaultLogger Property](185fc652-16c3-e7b2-e67e-ac52c0aa8ab5.md)
+    - [SimpleAccessSettings Methods](304cd0a4-990c-799e-f6c2-8b8bb7df9139.md)
+      - [SimpleAccessSettings.GetProperConnectionString Method](238498c5-e279-b5a8-e454-c756e6fa61e6.md)
+      - [SimpleAccessSettings.LoadConnectionStringSettingsFromConfigurationFile Method](6a3e25fb-9ba6-6960-8cfb-77828dfab209.md)
+  - [SqlParameterBuilder Class](38b69a7b-392e-01f8-7c62-5b2b9bac621d.md)
+    - [SqlParameterBuilder Constructor](3ee4b5a0-024a-a3cf-f38e-a2eb9c14235f.md)
+    - [SqlParameterBuilder Methods](07ae8565-6f2e-2ec9-d56e-81a034f795b1.md)
+      - [SqlParameterBuilder.CreateDataParameter Method](7adcceef-c783-add8-58ef-d000ee588475.md)
+- [SimpleAccess.Core.Entity Namespace](4a1a1091-e8bb-9ab6-959b-cd29bdaf000e.md)
+  - [EntityInfo(*TParameterBuilder*.md) Class](1e4b0944-7ad6-9cec-d228-3270257d05e4.md)
+    - [EntityInfo(*TParameterBuilder*.md) Constructor](6cc15362-5a8e-2328-0fb2-e722060dec1b.md)
+    - [EntityInfo(*TParameterBuilder*.md) Properties](b9a0d661-e5f9-6285-7f98-3a89946c0621.md)
+      - [EntityInfo(*TParameterBuilder*.md).DbObjectName Property](a808dcbb-f627-7be1-60e6-f4edaaa25d80.md)
+      - [EntityInfo(*TParameterBuilder*.md).DeleteStatment Property](494069b8-da81-a55e-3780-06c9dd064edc.md)
+      - [EntityInfo(*TParameterBuilder*.md).EntityType Property](4de7b43a-2013-16fb-9c75-b67e36a76b18.md)
+      - [EntityInfo(*TParameterBuilder*.md).InsertParameters Property](09b5ed74-c627-60b3-7a26-edf3c3b9fa83.md)
+      - [EntityInfo(*TParameterBuilder*.md).InsertStatement Property](bca66f01-c314-7a73-f0da-55c4112923e6.md)
+      - [EntityInfo(*TParameterBuilder*.md).SelectAllStatement Property](4da0c918-2829-3452-653b-bb324368595f.md)
+      - [EntityInfo(*TParameterBuilder*.md).StoredProcedureNameKeyWord Property](0b775d5c-b346-7de8-9cf7-c995ed1d26c1.md)
+      - [EntityInfo(*TParameterBuilder*.md).UpdateParameters Property](3954cbb0-3f91-98ab-a747-521caa7cb158.md)
+      - [EntityInfo(*TParameterBuilder*.md).UpdateSatetment Property](f6df582e-dff9-2f0a-0868-1700dee5868d.md)
+    - [EntityInfo(*TParameterBuilder*.md) Methods](aee97995-391f-fdae-3f62-88fa16a3babe.md)
+      - [EntityInfo(*TParameterBuilder*.md).ClearSpParameters Method](8d83f6b2-1e79-e6d0-cba2-6ab8a0c72a8e.md)
+      - [EntityInfo(*TParameterBuilder*.md).CreateSqlParametersFromProperties Method](624ede99-bd4b-71e2-ffaa-a92d9dba32d4.md)
+      - [EntityInfo(*TParameterBuilder*.md).LoadOutParametersProperties Method](0cdb3507-41c5-6cdf-7bf5-a1eab0345c50.md)
+- [SimpleAccess.Core.Logger Namespace](87b68a76-c6c2-1ca8-acf7-c56ca0fee23f.md)
+  - [ISimpleLogger Interface](996d6010-ca3a-a104-5e7d-54aae67f3973.md)
+    - [ISimpleLogger Methods](8da5939b-3d55-3c34-0bcb-b71c5dba3e2f.md)
+      - [ISimpleLogger.LogException Method](b68a9a30-83c6-8fe7-eb93-ed396d05c932.md)
+  - [SimpleLogger Class](39ba9cdd-9f8e-d789-e6d8-5bd091bedfeb.md)
+    - [SimpleLogger Constructor](3d282540-936b-6d8e-e0e3-5aed987b089e.md)
+    - [SimpleLogger Methods](7d56de57-3cf4-2fcc-254a-8d3093ca20af.md)
+      - [SimpleLogger.LogException Method](4959bc4e-84c3-ed8c-4706-6017275c9f2c.md)
+- [SimpleAccess.DbExtensions Namespace](e143475c-e9c8-4196-9091-492a00252e5f.md)
+  - [DatabaseExtensions Class](729eadcb-20c8-6ba9-94d6-b28567b68448.md)
+  - [DatabaseExtensions.IStoredProcedure(*TResult*.md) Interface](54ac6869-7b39-fd94-3ff5-86f681dd2d3f.md)
+- [SimpleAccess.Entity Namespace](4175bea4-ceac-e0a9-927d-9b8fb67bd317.md)
+  - [EntityInfo Class](7ddea220-271b-84c1-a72f-9066d89a4385.md)
+    - [EntityInfo Constructor](89e65cca-e506-0296-51b6-b884db5f1316.md)
+    - [EntityInfo Properties](cc1071b4-2b33-9938-d27e-bd7638520a9c.md)
+      - [EntityInfo.Name Property](21246f95-0e2b-1159-84cb-719888f22553.md)
+      - [EntityInfo.Type Property](6109b0c9-a9ba-5d74-2c09-eeb022a188cf.md)
+    - [EntityInfo Methods](26ad43d1-6f8d-b87b-b3e8-108de57f780f.md)
+- [SimpleAccess.Repository Namespace](41571b4f-ca9a-e902-c5ef-a7c14c631bb2.md)
+  - [IRepository Interface](fd07fd9c-c261-ae68-1133-7b203b4c101f.md)
+    - [IRepository Methods](0e6e4fa3-0cc2-e985-4f13-f101df51e58e.md)
+      - [IRepository.BeginTrasaction Method](6241b383-6ef7-aded-3c48-83e9ebbe1ec8.md)
+      - [IRepository.Delete Method](c861ca39-a64a-fb98-2d1e-796f996e058b.md)
+        - [IRepository.Delete(*TEntity*.md) Method (SqlParameter[].md)](3db7df24-614b-32c1-2def-59ce1bbfe7f3.md)
+        - [IRepository.Delete(*TEntity*.md) Method (Object.md)](ec4ec24c-627c-a5bf-f9f6-f88269d76ca9.md)
+        - [IRepository.Delete(*TEntity*.md) Method (SqlTransaction, SqlParameter[].md)](5262982b-da6b-ace3-8b1d-1a2359c688ef.md)
+        - [IRepository.Delete(*TEntity*.md) Method (Int64, SqlTransaction.md)](14441a2c-1768-d3fc-5400-2f936be524d9.md)
+      - [IRepository.EndTransaction Method](67608a69-92cf-7593-3319-3bbeeec5b278.md)
+      - [IRepository.ExecuteNonQuery Method](4305174c-a507-55ea-4dfa-c2f770b58e8b.md)
+        - [IRepository.ExecuteNonQuery Method (String, CommandType, SqlParameter[].md)](9e9c9862-6750-ed65-4c25-257811523494.md)
+        - [IRepository.ExecuteNonQuery Method (String, CommandType, Object.md)](3c43a767-0472-9d43-c654-133fe7a1705d.md)
+        - [IRepository.ExecuteNonQuery Method (SqlTransaction, String, CommandType, SqlParameter[].md)](759a6cce-6c9c-dc05-b7e4-f61d07fabd84.md)
+        - [IRepository.ExecuteNonQuery Method (SqlTransaction, String, CommandType, Object.md)](3e3d090b-1818-3bb5-63fa-42d4e92016d7.md)
+      - [IRepository.ExecuteReader Method](9fae1021-8f55-082f-e637-7f8a63f3df55.md)
+        - [IRepository.ExecuteReader(*TEntity*.md) Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](a58cf6f5-8c60-8d68-1a7f-0fced99f8103.md)
+        - [IRepository.ExecuteReader Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](c23a6b7e-efa9-6558-a90e-bb5ce15e47b9.md)
+        - [IRepository.ExecuteReader(*TEntity*.md) Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](73f6fb45-8a41-88bb-c976-3a12ba0e5964.md)
+        - [IRepository.ExecuteReader Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](1f05539b-5939-da2f-0423-cccfa971dd9b.md)
+        - [IRepository.ExecuteReader(*TEntity*.md) Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](76046eee-9a57-c3b8-19bd-67c3a148cdbd.md)
+        - [IRepository.ExecuteReader Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](e88ab6fc-0339-25d4-0762-6bba33e394ac.md)
+        - [IRepository.ExecuteReader(*TEntity*.md) Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](2a9eb760-5fc1-fee4-6f66-15b3098df142.md)
+        - [IRepository.ExecuteReader Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](ba1e7ed0-1591-4c85-4371-4690d33f97bd.md)
+      - [IRepository.ExecuteReaderSingle Method](30ff4b55-3f58-e9a4-9d5c-fb7a2c050ad7.md)
+        - [IRepository.ExecuteReaderSingle(*TEntity*.md) Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](09d4f7a4-3cd1-bf35-0db8-7db8670fe480.md)
+        - [IRepository.ExecuteReaderSingle Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](e418f949-b379-7a6e-fd10-a60819fd1c53.md)
+        - [IRepository.ExecuteReaderSingle(*TEntity*.md) Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](992b174b-69f6-1d13-ee76-29b9a773411c.md)
+        - [IRepository.ExecuteReaderSingle Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](edef040f-3307-375c-1bb1-7c38e9a0830e.md)
+        - [IRepository.ExecuteReaderSingle(*TEntity*.md) Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](e2ddf315-f0ce-68c8-1522-5f7a4c18d309.md)
+        - [IRepository.ExecuteReaderSingle Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](03985ddd-a1b5-b346-0b8d-2e475afc5271.md)
+        - [IRepository.ExecuteReaderSingle(*TEntity*.md) Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](9ae47acb-0906-a7de-e4ee-fbaf5944c3e6.md)
+        - [IRepository.ExecuteReaderSingle Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](751e1408-1e2d-31d1-7817-3722b6e58e27.md)
+      - [IRepository.ExecuteScalar Method](8dbd57bb-21de-9ff4-8970-c68ec80f2e02.md)
+        - [IRepository.ExecuteScalar(*T*.md) Method (String, CommandType, SqlParameter[].md)](80f6de16-2bcd-7550-b5fe-23e4a4476cf9.md)
+        - [IRepository.ExecuteScalar(*T*.md) Method (String, CommandType, Object.md)](2e7a657c-2c33-a9d6-9c6a-383331d1b7b5.md)
+        - [IRepository.ExecuteScalar(*T*.md) Method (SqlTransaction, String, CommandType, SqlParameter[].md)](76a258bc-62b5-3316-d621-b5f465ac72d6.md)
+        - [IRepository.ExecuteScalar(*T*.md) Method (SqlTransaction, String, CommandType, Object.md)](f5cc0dc8-4999-3843-3d66-aea0657cde5e.md)
+      - [IRepository.Get Method](f662de9c-8281-fcd5-9969-b0183722fcae.md)
+        - [IRepository.Get(*TEntity*.md) Method (SqlParameter, SqlTransaction, String, Dictionary(String, PropertyInfo.md).md)](02c29085-f0f4-d325-7f2b-d877b4fa3254.md)
+        - [IRepository.Get(*TEntity*.md) Method (Int64, SqlTransaction, String, Dictionary(String, PropertyInfo.md).md)](f3750379-18bb-824f-8b91-4a1edd78f67d.md)
+        - [IRepository.Get(*TEntity*.md) Method (Object, SqlTransaction, String, Dictionary(String, PropertyInfo.md).md)](9f900c86-e010-84ae-d241-e23aa5641ca8.md)
+        - [IRepository.Get Method (String, SqlParameter, String, Dictionary(String, PropertyInfo.md).md)](b9ec0075-7a52-1a44-2aed-05e588fcf059.md)
+        - [IRepository.Get Method (String, Int64, String, Dictionary(String, PropertyInfo.md).md)](35c22701-8ff3-2fac-1e8c-4c099e654364.md)
+        - [IRepository.Get Method (String, Object, String, Dictionary(String, PropertyInfo.md).md)](37a603e9-1e86-d795-8677-5f1ae30be80b.md)
+      - [IRepository.GetAll(*TEntity*.md) Method](b758889a-7bdf-b694-1358-46aacd529e5a.md)
+      - [IRepository.GetNewConnection Method](2b39190b-f614-32fa-34b7-6be8d7e6c04d.md)
+      - [IRepository.Insert Method](e84d94ba-f197-086a-6523-be7a44b63a75.md)
+        - [IRepository.Insert(*TEntity*.md) Method (SqlParameter[].md)](e4d20d58-6c83-47b3-dd6b-b85c04ffeafa.md)
+        - [IRepository.Insert(*TEntity*.md) Method (Object.md)](896e59f4-aef7-62e5-02bb-5254a0ce6c56.md)
+        - [IRepository.Insert(*TEntity*.md) Method (StoredProcedureParameters.md)](a80070f7-095f-8b65-bc8c-12ae638be89d.md)
+        - [IRepository.Insert(*TEntity*.md) Method (SqlTransaction, StoredProcedureParameters.md)](33d01bb7-750a-f871-c7ef-151ca5cd1008.md)
+        - [IRepository.Insert(*TEntity*.md) Method (StoredProcedureParameters, SqlTransaction.md)](46238d97-cc3c-3d43-8b0a-7b40726217de.md)
+      - [IRepository.SoftDelete(*TEntity*.md) Method](a7d06a8f-10d0-7ede-255a-e5cb8afb42b9.md)
+      - [IRepository.Update Method](675f513a-1925-73de-872c-cd497cc4ec8d.md)
+        - [IRepository.Update(*TEntity*.md) Method (SqlParameter[].md)](7a662222-2728-90ed-fa8f-33f3bac5e4fc.md)
+        - [IRepository.Update(*TEntity*.md) Method (Object.md)](7d536e8a-8267-09b8-f425-b5f856a27d2f.md)
+        - [IRepository.Update(*TEntity*.md) Method (StoredProcedureParameters.md)](6adc6874-e47e-7849-c4fd-6b039246e21d.md)
+        - [IRepository.Update(*TEntity*.md) Method (SqlTransaction, StoredProcedureParameters.md)](b581d031-932a-49f0-dc17-aa718d7254b6.md)
+  - [ISqlRepository Interface](f40c60f9-7bd9-9bed-0857-200cfb858bcb.md)
+    - [ISqlRepository Methods](bc41697e-a937-7c5e-825a-57ddc8a5fa43.md)
+      - [ISqlRepository.Delete Method](714c43c6-fb95-75d7-d55c-db9d9c2bdf63.md)
+        - [ISqlRepository.Delete(*TEntity*.md) Method (SqlParameter[].md)](c3560a22-f9e1-c2ba-36f5-5ebbc5f49c25.md)
+        - [ISqlRepository.Delete(*TEntity*.md) Method (Int64.md)](164bb7d9-413b-3fd2-ff0f-5a7fd7b3d618.md)
+        - [ISqlRepository.Delete(*TEntity*.md) Method (Object.md)](72d3492e-56e8-8a79-ee93-0d6b830c0d38.md)
+        - [ISqlRepository.Delete(*TEntity*.md) Method (SqlTransaction, SqlParameter[].md)](32b57794-be8d-9ac1-9e67-d43d2a83f830.md)
+        - [ISqlRepository.Delete(*TEntity*.md) Method (SqlTransaction, Int64.md)](abbb8431-be0b-d28f-82a5-eeba64154915.md)
+      - [ISqlRepository.Get Method](6da840c2-a3be-6759-3187-ea85c04a8778.md)
+        - [ISqlRepository.Get(*TEntity*.md) Method (SqlParameter, String.md)](719747c4-a9a8-6495-f685-54fbd12be61a.md)
+        - [ISqlRepository.Get(*TEntity*.md) Method (SqlTransaction, SqlParameter, String.md)](88bc7f42-d8aa-b7ee-ac91-64539003ae7a.md)
+        - [ISqlRepository.Get(*TEntity*.md) Method (Int64, SqlTransaction, String.md)](e175c68a-ce6a-e780-61d4-0deb0c785779.md)
+        - [ISqlRepository.Get(*TEntity*.md) Method (Object, SqlTransaction, String.md)](9d437f51-32e0-4d44-4e7f-6355e30ae954.md)
+      - [ISqlRepository.GetAll(*TEntity*.md) Method](3903913e-9602-b79d-2afc-44fc07c7503f.md)
+      - [ISqlRepository.Insert Method](b0ff00bb-d192-3f29-3b99-75756166e611.md)
+        - [ISqlRepository.Insert(*TEntity*.md) Method (SqlParameter[].md)](2edd0c0d-14b3-7834-b7ab-034de838b1d3.md)
+        - [ISqlRepository.Insert(*TEntity*.md) Method (Object.md)](f8f59492-3393-493c-86eb-1a5f6b578318.md)
+        - [ISqlRepository.Insert(*TEntity*.md) Method (StoredProcedureParameters.md)](89054966-6a98-cb18-a9be-449b81abbd70.md)
+        - [ISqlRepository.Insert(*TEntity*.md) Method (SqlTransaction, StoredProcedureParameters.md)](b134d2b3-921d-81b0-41b7-5b9fd1f53479.md)
+      - [ISqlRepository.SoftDelete(*TEntity*.md) Method](ccadeabc-6928-8881-e60f-00b37287d314.md)
+      - [ISqlRepository.Update Method](9de346ec-866a-d5d9-fddc-d74c53ef3710.md)
+        - [ISqlRepository.Update(*TEntity*.md) Method (SqlParameter[].md)](46b0fb50-04b5-135d-7bd6-47414897eb2a.md)
+        - [ISqlRepository.Update(*TEntity*.md) Method (Object.md)](00667799-9cad-4dc4-609e-6e098594754d.md)
+        - [ISqlRepository.Update(*TEntity*.md) Method (StoredProcedureParameters.md)](a5c717af-f428-81a3-44d6-5cefbbcebca4.md)
+        - [ISqlRepository.Update(*TEntity*.md) Method (SqlTransaction, StoredProcedureParameters.md)](543ab689-7244-da0a-464c-9e6f6bb12e9e.md)
+  - [Repository Class](edb9c152-cd28-6594-590a-18a81e266968.md)
+    - [Repository Constructor](5f661832-0e66-7460-c41f-54610fe20c23.md)
+      - [Repository Constructor](06c708c9-4fcf-8773-d15a-15da7e05ad18.md)
+      - [Repository Constructor (SqlConnection.md)](3cddef47-be94-acad-4fda-d9fb77179337.md)
+      - [Repository Constructor (String.md)](a319a853-0395-9379-7685-015dae1a59fc.md)
+    - [Repository Properties](225b33c5-6610-47c3-7706-45ed73aad6a7.md)
+      - [Repository.DefaultConnectionString Property](0d03fb0c-cc5d-4851-3f25-a0e812b4d3d5.md)
+    - [Repository Methods](35ad05f5-6a1c-1ec5-dd11-317c64fc712e.md)
+      - [Repository.BeginTrasaction Method](147799c6-a870-7d52-5f8a-6b74ee2a5143.md)
+      - [Repository.Delete Method](1524a328-7f16-6509-7038-a58eff83fa00.md)
+        - [Repository.Delete(*TEntity*.md) Method (SqlParameter[].md)](485cf145-37d0-a9e6-70ba-bd74983deb70.md)
+        - [Repository.Delete(*TEntity*.md) Method (Object.md)](e09bdaf0-571d-312e-bbb5-26bf76fa0509.md)
+        - [Repository.Delete(*TEntity*.md) Method (SqlTransaction, SqlParameter[].md)](6a5a0055-5bfe-8448-d013-bb75aaee4ec0.md)
+        - [Repository.Delete(*TEntity*.md) Method (Int64, SqlTransaction.md)](52f9a5e1-424d-17a2-a79c-aa007f99f3ab.md)
+      - [Repository.Dispose Method](61d11994-93fd-db84-aa68-4cbe23384bba.md)
+      - [Repository.EndTransaction Method](a1a27de7-d6e8-3f2f-7e5a-b604485a4004.md)
+      - [Repository.ExecuteNonQuery Method](1f5f5d31-b64c-cc56-f94b-1ccb54891749.md)
+        - [Repository.ExecuteNonQuery Method (String, CommandType, SqlParameter[].md)](e6462bbf-0f5c-0f2d-8a30-d2b6c5c0d4e0.md)
+        - [Repository.ExecuteNonQuery Method (String, CommandType, Object.md)](16c22b04-84a4-b488-b3e1-587814f981b4.md)
+        - [Repository.ExecuteNonQuery Method (SqlTransaction, String, CommandType, SqlParameter[].md)](fc55ee30-ccd5-ef15-134e-ac4c888f26c2.md)
+        - [Repository.ExecuteNonQuery Method (SqlTransaction, String, CommandType, Object.md)](6ecaaaba-1062-986a-d290-b2406d66e22d.md)
+      - [Repository.ExecuteReader Method](0c582b31-6581-325f-b87a-1402c8d993e7.md)
+        - [Repository.ExecuteReader(*TEntity*.md) Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](23c4a4ee-4a0d-79fd-b490-d6fae0407ce8.md)
+        - [Repository.ExecuteReader Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](673bbd67-bda1-5f61-cee6-efe413351fc8.md)
+        - [Repository.ExecuteReader(*TEntity*.md) Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](aae4ec80-8b7c-4469-dfbe-15395b4acb4d.md)
+        - [Repository.ExecuteReader Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](07fbaf6a-f665-1391-d8b3-b6f0fa23b559.md)
+        - [Repository.ExecuteReader(*TEntity*.md) Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](1d1b6f24-1f70-9167-a161-c4257a308058.md)
+        - [Repository.ExecuteReader Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](c1b8b41a-ecf3-d761-f93e-b860c3c83fe7.md)
+        - [Repository.ExecuteReader(*TEntity*.md) Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](31d0901f-8315-8771-d4ec-e7269e00d482.md)
+        - [Repository.ExecuteReader Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](ecc4a068-fb08-5443-de98-889270cfa321.md)
+      - [Repository.ExecuteReaderSingle Method](49f8f495-ce25-af7f-2226-e7073936a6b7.md)
+        - [Repository.ExecuteReaderSingle(*TEntity*.md) Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](51f4d925-8a84-e239-7fee-ba0aa8852201.md)
+        - [Repository.ExecuteReaderSingle Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](ab7d3eda-76b4-ff7e-de71-dd48c308eea7.md)
+        - [Repository.ExecuteReaderSingle(*TEntity*.md) Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](a83cf148-845f-f665-da13-43c9808d840b.md)
+        - [Repository.ExecuteReaderSingle Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](485b0ec2-8ab0-43ab-33db-acd5709d55c0.md)
+        - [Repository.ExecuteReaderSingle(*TEntity*.md) Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](d019d3fd-e34c-7e93-a114-14381f06659b.md)
+        - [Repository.ExecuteReaderSingle Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](b6d60838-5e32-da5c-0307-e04314c710a3.md)
+        - [Repository.ExecuteReaderSingle(*TEntity*.md) Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](b8e8a017-a523-8519-0fdd-0e9df9c9ad17.md)
+        - [Repository.ExecuteReaderSingle Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](a3cb5b57-e032-2fc1-c7cc-dfe4821628e5.md)
+      - [Repository.ExecuteScalar Method](a5ab3873-359f-443d-b78b-c12b80417cf6.md)
+        - [Repository.ExecuteScalar(*T*.md) Method (String, CommandType, SqlParameter[].md)](6716fa46-69b6-aa3d-ebb8-72defe172806.md)
+        - [Repository.ExecuteScalar(*T*.md) Method (String, CommandType, Object.md)](8fa7303f-de3e-39e9-b3f1-1138a3373fe5.md)
+        - [Repository.ExecuteScalar(*T*.md) Method (SqlTransaction, String, CommandType, SqlParameter[].md)](f0323757-c0f1-7f9b-eb2d-091930da7e1d.md)
+        - [Repository.ExecuteScalar(*T*.md) Method (SqlTransaction, String, CommandType, Object.md)](72d39ec7-06a4-51ae-830a-098001656844.md)
+      - [Repository.Get Method](3e74e63d-aa9d-e282-7d43-f3afc594d120.md)
+        - [Repository.Get(*TEntity*.md) Method (SqlParameter, SqlTransaction, String, Dictionary(String, PropertyInfo.md).md)](4878511e-cc04-20bb-a540-d48644ec79d5.md)
+        - [Repository.Get(*TEntity*.md) Method (Int64, SqlTransaction, String, Dictionary(String, PropertyInfo.md).md)](f8e9e112-6b2e-d18f-3512-65e58756eead.md)
+        - [Repository.Get(*TEntity*.md) Method (Object, SqlTransaction, String, Dictionary(String, PropertyInfo.md).md)](424fcfd5-8314-407b-19a5-42e927ddc5f4.md)
+        - [Repository.Get Method (String, SqlParameter, String, Dictionary(String, PropertyInfo.md).md)](01e6b452-e2cf-70be-3a75-37948fcb97b1.md)
+        - [Repository.Get Method (String, Int64, String, Dictionary(String, PropertyInfo.md).md)](b3b5aa18-2235-6c37-acf3-b26fab9c95a7.md)
+        - [Repository.Get Method (String, Object, String, Dictionary(String, PropertyInfo.md).md)](c7e39821-47c2-8426-b257-d50828b465f5.md)
+      - [Repository.GetAll(*TEntity*.md) Method](2c192d9a-7419-39e9-f658-4d11859f777f.md)
+      - [Repository.GetNewConnection Method](be121655-c23b-1daf-a122-6faccac444ab.md)
+      - [Repository.Insert Method](bb724172-ee9d-a4ff-106f-770b12cb5279.md)
+        - [Repository.Insert(*TEntity*.md) Method (SqlParameter[].md)](1cb635cf-a15c-cdc9-9f6b-3b93eea51730.md)
+        - [Repository.Insert(*TEntity*.md) Method (Object.md)](a08658c8-a795-8f1e-8ed7-a5df7d597479.md)
+        - [Repository.Insert(*TEntity*.md) Method (StoredProcedureParameters.md)](ccbf6cb6-5bdf-aa7d-313a-00a83819d1bc.md)
+        - [Repository.Insert(*TEntity*.md) Method (SqlTransaction, StoredProcedureParameters.md)](57186dd6-366d-27c1-3b4f-c45a322bb157.md)
+        - [Repository.Insert(*TEntity*.md) Method (StoredProcedureParameters, SqlTransaction.md)](20d6dfe0-cc06-efb3-431e-c135cbbac8f4.md)
+      - [Repository.SoftDelete(*TEntity*.md) Method](b8365ac9-6b23-917f-0fec-ff79a22ad674.md)
+      - [Repository.Update Method](b8e1dd79-6b9c-be06-4b1d-b010cd91674f.md)
+        - [Repository.Update(*TEntity*.md) Method (SqlParameter[].md)](b89a3ab3-72ef-f422-11ab-9c23136c85e0.md)
+        - [Repository.Update(*TEntity*.md) Method (Object.md)](fdfc57de-f1c3-fcde-62b7-5259cb0bf73d.md)
+        - [Repository.Update(*TEntity*.md) Method (StoredProcedureParameters.md)](027d65ba-aa78-8e84-7e2f-efbaaee73658.md)
+        - [Repository.Update(*TEntity*.md) Method (SqlTransaction, StoredProcedureParameters.md)](45cdcc98-55b4-eb68-001a-b83c7d8eea0e.md)
+  - [RepositorySetting Class](b33ad84a-c609-d92e-7ae5-abb6683677b5.md)
+    - [RepositorySetting Properties](068b8cc7-26a7-805c-4a4d-8a535466996a.md)
+      - [RepositorySetting.EntityInfos Property](0f9a055f-aef4-cdae-fb48-717a9614ea3a.md)
+    - [RepositorySetting Methods](b577a8e7-ec2d-cb8e-1538-c96d78e27010.md)
+      - [RepositorySetting.GetEntityInfo Method](420bd767-b812-e329-985c-008bd71ed9b4.md)
+- [SimpleAccess.SqlServer Namespace](0aec4ece-a28c-8a60-ec49-ed778f89c036.md)
+  - [ISqlSimpleAccess Interface](809ed696-f903-b013-e8cb-92778c76d386.md)
+    - [ISqlSimpleAccess Properties](18cd1a48-edbc-80e0-f45d-ad3daef090c6.md)
+      - [ISqlSimpleAccess.SimpleLogger Property](49c2c8bf-d15b-704a-b2e4-2bd9d704f6ae.md)
+    - [ISqlSimpleAccess Methods](efdfb491-db68-9511-7320-678f6319e6d4.md)
+      - [ISqlSimpleAccess.BuildSqlParameters Method](2c197295-37d3-2a9d-f6bb-7f250100df41.md)
+      - [ISqlSimpleAccess.CreateCommand Method](4e6af74e-6dd0-9e6d-52bc-309370bb3e5c.md)
+        - [ISqlSimpleAccess.CreateCommand Method (String, CommandType, SqlParameter[].md)](1369aced-423d-202b-dd3e-b5b482acb96e.md)
+        - [ISqlSimpleAccess.CreateCommand Method (SqlTransaction, String, CommandType, SqlParameter[].md)](bb2c37c8-0277-a9dc-0a02-069710c8789f.md)
+      - [ISqlSimpleAccess.GetDynamicSqlData Method](3564452e-e7c1-3114-2342-15cca63cd6c3.md)
+      - [ISqlSimpleAccess.SqlDataReaderToExpando Method](3e99ce02-2bb3-9fc4-c52a-57329a191e6d.md)
+  - [SqlSimpleAccess Class](51cba069-bca7-767f-b9f4-7a420dd10a28.md)
+    - [SqlSimpleAccess Constructor](0b0f752a-0edb-b2f0-8373-d1317b9ee89e.md)
+      - [SqlSimpleAccess Constructor](d48e1f42-b8dc-cca3-cd4f-c1209fda066c.md)
+      - [SqlSimpleAccess Constructor (CommandType.md)](a1331763-a8db-f631-5714-e9c22f2283c1.md)
+      - [SqlSimpleAccess Constructor (SqlConnection.md)](da2a6df2-7f3d-f364-def3-ab1805433bd9.md)
+      - [SqlSimpleAccess Constructor (String.md)](8d4945be-c8aa-5a20-fcf3-c0cc46d7e7b9.md)
+      - [SqlSimpleAccess Constructor (SimpleAccessSettings.md)](50d6dcf6-64e7-16c5-945d-553e10683a8a.md)
+      - [SqlSimpleAccess Constructor (SqlConnection, SimpleAccessSettings.md)](31f2ea14-4ad9-7bcb-142c-25256157c932.md)
+      - [SqlSimpleAccess Constructor (SqlConnection, CommandType.md)](4ad3c32d-29a8-e9e1-a4bc-5af8758d051c.md)
+      - [SqlSimpleAccess Constructor (String, SimpleAccessSettings.md)](ec7373ee-ab0e-8374-fea3-7d438d8265a7.md)
+      - [SqlSimpleAccess Constructor (String, CommandType.md)](facc926d-ebc6-d4f2-4564-16442207b241.md)
+    - [SqlSimpleAccess Properties](3094873b-5a82-a292-4e16-bdb744f58c00.md)
+      - [SqlSimpleAccess.DefaultConnectionString Property](730c3012-01c6-5e2e-1aa2-2cb3ffbccb84.md)
+      - [SqlSimpleAccess.DefaultSimpleAccessSettings Property](45c169d7-ac3f-332d-c5ac-324e8ccce880.md)
+      - [SqlSimpleAccess.SimpleLogger Property](6ea2e016-b62f-8047-9142-f52324b5cde7.md)
+    - [SqlSimpleAccess Methods](dd2ae075-771d-ffba-919b-489d4749e6d3.md)
+      - [SqlSimpleAccess.BeginTrasaction Method](48093fed-d4f7-65cc-4cd5-74e53bcfbfa3.md)
+      - [SqlSimpleAccess.BuildSqlParameters Method](4e12d5b3-ebec-22dd-bf70-e955ed3b86e1.md)
+      - [SqlSimpleAccess.CloseCurrentDbConnection Method](c729f076-2102-7909-a313-2a56335dd7a2.md)
+      - [SqlSimpleAccess.CreateCommand Method](ae3454d2-1d52-d15a-bd0a-252c784fd799.md)
+        - [SqlSimpleAccess.CreateCommand Method (String, CommandType, SqlParameter[].md)](709b50fa-307f-2748-e310-0a3c2d0cc632.md)
+        - [SqlSimpleAccess.CreateCommand Method (SqlTransaction, String, CommandType, SqlParameter[].md)](0e5eeb0f-35bb-6f8f-089a-7309db936bcc.md)
+      - [SqlSimpleAccess.Dispose Method](501ee4dd-ed60-6b1d-b57a-4e7da7a179cb.md)
+      - [SqlSimpleAccess.EndTransaction Method](4a3161f1-cb3b-7634-2280-1bbb10db3d46.md)
+      - [SqlSimpleAccess.ExecuteDynamic Method](9a3892d2-eeb8-2ba2-038e-1bbb0ebabed2.md)
+        - [SqlSimpleAccess.ExecuteDynamic Method (String, String, SqlParameter[].md)](04798084-1cdc-3a33-c48a-1aab4e4d108d.md)
+        - [SqlSimpleAccess.ExecuteDynamic Method (String, String, Object.md)](1be4a695-65d9-28b0-9e45-749baa2d7f74.md)
+        - [SqlSimpleAccess.ExecuteDynamic Method (SqlTransaction, String, String, SqlParameter[].md)](5b645e5e-4c8b-4ee0-a677-c0e2af772d40.md)
+        - [SqlSimpleAccess.ExecuteDynamic Method (SqlTransaction, String, String, Object.md)](57c879bd-cfdd-fe39-50e5-380a273909dc.md)
+        - [SqlSimpleAccess.ExecuteDynamic Method (String, CommandType, String, SqlParameter[].md)](0747251e-8daa-3df4-2f8a-c840a9b42fe6.md)
+        - [SqlSimpleAccess.ExecuteDynamic Method (String, CommandType, String, Object.md)](5fcf5ba2-c6de-9c50-3d3a-a5c0b6f941dc.md)
+        - [SqlSimpleAccess.ExecuteDynamic Method (SqlTransaction, String, CommandType, String, SqlParameter[].md)](20388fa5-f490-2585-699b-e5daa365b5a7.md)
+        - [SqlSimpleAccess.ExecuteDynamic Method (SqlTransaction, String, CommandType, String, Object.md)](caba91f9-57dd-74dc-ee21-e0a1808882a4.md)
+      - [SqlSimpleAccess.ExecuteDynamics Method](3b1b8cda-8178-68e9-9c1d-c2cc004f3f4e.md)
+        - [SqlSimpleAccess.ExecuteDynamics Method (String, String, SqlParameter[].md)](e1348fc4-c7c8-536a-1816-bb3fea3eaab2.md)
+        - [SqlSimpleAccess.ExecuteDynamics Method (String, String, Object.md)](d5eadca1-980f-4f35-5da4-2b5c40375ac1.md)
+        - [SqlSimpleAccess.ExecuteDynamics Method (SqlTransaction, String, String, SqlParameter[].md)](8dffcd7e-5326-274c-e74b-a6098b0629f3.md)
+        - [SqlSimpleAccess.ExecuteDynamics Method (SqlTransaction, String, String, Object.md)](1c3a296f-7d1b-e185-7ac0-0697ef992ba8.md)
+        - [SqlSimpleAccess.ExecuteDynamics Method (String, CommandType, String, SqlParameter[].md)](28491348-e503-ab62-c752-e57344a23573.md)
+        - [SqlSimpleAccess.ExecuteDynamics Method (String, CommandType, String, Object.md)](ce3fb621-5bf3-2e4d-575c-b85ab3fff559.md)
+        - [SqlSimpleAccess.ExecuteDynamics Method (SqlTransaction, String, CommandType, String, SqlParameter[].md)](0d8dac5a-14c0-1f18-c7c2-81f9613263d4.md)
+        - [SqlSimpleAccess.ExecuteDynamics Method (SqlTransaction, String, CommandType, String, Object.md)](409a816f-6e3d-4851-4e60-bc37b22b8120.md)
+      - [SqlSimpleAccess.ExecuteEntities Method](79a9497e-a8d3-7fad-cb2d-0132b451497a.md)
+        - [SqlSimpleAccess.ExecuteEntities(*TEntity*.md) Method (String, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](2f74be32-0868-f0fd-e4c3-272360fbd59e.md)
+        - [SqlSimpleAccess.ExecuteEntities(*TEntity*.md) Method (String, String, Dictionary(String, PropertyInfo.md), Object.md)](da8b2949-3cf8-3eaa-deb6-f02b0c635be1.md)
+        - [SqlSimpleAccess.ExecuteEntities(*TEntity*.md) Method (SqlTransaction, String, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](397ebf45-47fb-14c0-3f47-21176e2638ff.md)
+        - [SqlSimpleAccess.ExecuteEntities(*TEntity*.md) Method (SqlTransaction, String, String, Dictionary(String, PropertyInfo.md), Object.md)](9e7499d9-1512-ddf2-d0a6-3027cc61f0d5.md)
+        - [SqlSimpleAccess.ExecuteEntities(*TEntity*.md) Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](8c17528a-7648-1600-fed2-8a4f3f90a958.md)
+        - [SqlSimpleAccess.ExecuteEntities(*TEntity*.md) Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](8a747d2f-094e-e6b5-b64c-2ca67569d323.md)
+        - [SqlSimpleAccess.ExecuteEntities(*TEntity*.md) Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](a1bb9f10-37d2-04f8-ef6d-29d922848430.md)
+        - [SqlSimpleAccess.ExecuteEntities(*TEntity*.md) Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](409d3a8b-abbc-e9c0-8692-7a3e568b2659.md)
+      - [SqlSimpleAccess.ExecuteEntity Method](ba97dabe-d09e-e637-6adb-6252704b999a.md)
+        - [SqlSimpleAccess.ExecuteEntity(*TEntity*.md) Method (String, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](0569cb62-0277-5073-f8d9-6c98172efaab.md)
+        - [SqlSimpleAccess.ExecuteEntity(*TEntity*.md) Method (String, String, Dictionary(String, PropertyInfo.md), Object.md)](44bd1e01-c19f-a92e-1daa-01d2edc3c0c7.md)
+        - [SqlSimpleAccess.ExecuteEntity(*TEntity*.md) Method (SqlTransaction, String, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](359b0245-170e-1aaa-972d-90e5c6da5f57.md)
+        - [SqlSimpleAccess.ExecuteEntity(*TEntity*.md) Method (SqlTransaction, String, String, Dictionary(String, PropertyInfo.md), Object.md)](7ea52518-f5db-159c-c08a-6ffd4428e256.md)
+        - [SqlSimpleAccess.ExecuteEntity(*TEntity*.md) Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](2fb8f84d-846a-a422-8721-02b4f5d74561.md)
+        - [SqlSimpleAccess.ExecuteEntity(*TEntity*.md) Method (String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](10bdc015-0cc7-8ca2-9842-2d24283d56a5.md)
+        - [SqlSimpleAccess.ExecuteEntity(*TEntity*.md) Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), SqlParameter[].md)](70137d25-361f-0abf-4b18-1534d75b193b.md)
+        - [SqlSimpleAccess.ExecuteEntity(*TEntity*.md) Method (SqlTransaction, String, CommandType, String, Dictionary(String, PropertyInfo.md), Object.md)](b17e4707-8ef4-4c28-90dc-5ae8feb8ef42.md)
+      - [SqlSimpleAccess.ExecuteNonQuery Method](25c4a4b0-a20b-9f15-12b5-a9b37113465c.md)
+        - [SqlSimpleAccess.ExecuteNonQuery Method (String, SqlParameter[].md)](17264dd7-b42f-0cb5-8834-db75cd93cfb9.md)
+        - [SqlSimpleAccess.ExecuteNonQuery Method (String, Object.md)](5fba6356-b238-40f3-1e4f-5366baf19da6.md)
+        - [SqlSimpleAccess.ExecuteNonQuery Method (SqlTransaction, String, SqlParameter[].md)](5a23c2e8-bf8e-eb94-c9af-c45ec918c3e1.md)
+        - [SqlSimpleAccess.ExecuteNonQuery Method (SqlTransaction, String, Object.md)](94cda740-f668-663d-c2a2-1876e4614535.md)
+        - [SqlSimpleAccess.ExecuteNonQuery Method (String, CommandType, SqlParameter[].md)](5f863045-bb82-ee3c-2cf0-8f29eb3e58b7.md)
+        - [SqlSimpleAccess.ExecuteNonQuery Method (String, CommandType, Object.md)](3075b35c-f56a-b812-f763-0ddb87dd0ab7.md)
+        - [SqlSimpleAccess.ExecuteNonQuery Method (SqlTransaction, String, CommandType, SqlParameter[].md)](2e4361bf-5898-fc20-911f-c3582a7c7410.md)
+        - [SqlSimpleAccess.ExecuteNonQuery Method (SqlTransaction, String, CommandType, Object.md)](05777d76-08c7-3998-bf6f-976aa517794d.md)
+      - [SqlSimpleAccess.ExecuteReader Method](919d6432-c8a7-3b83-4076-39089d5542b6.md)
+        - [SqlSimpleAccess.ExecuteReader Method (String, SqlParameter[].md)](e411b0fa-3a08-6064-b614-05d46f30f0f0.md)
+        - [SqlSimpleAccess.ExecuteReader Method (String, CommandBehavior, SqlParameter[].md)](135cc613-967c-f51b-7db2-d05eb9beb0bc.md)
+        - [SqlSimpleAccess.ExecuteReader Method (String, CommandType, SqlParameter[].md)](1543aa7a-4b87-b130-935a-baa75d9af296.md)
+        - [SqlSimpleAccess.ExecuteReader Method (String, CommandType, CommandBehavior, SqlParameter[].md)](23b97797-d714-426f-36b8-a4e5e28852fc.md)
+      - [SqlSimpleAccess.ExecuteScalar Method](c9b84b9a-b8c1-53c4-7249-ba723b64aa70.md)
+        - [SqlSimpleAccess.ExecuteScalar(*T*.md) Method (String, SqlParameter[].md)](8c02deed-8a8e-9613-288a-80551ea2cfe5.md)
+        - [SqlSimpleAccess.ExecuteScalar(*T*.md) Method (String, Object.md)](b0409091-dac5-4f15-4ea3-1ce29ae4e227.md)
+        - [SqlSimpleAccess.ExecuteScalar(*T*.md) Method (SqlTransaction, String, SqlParameter[].md)](7cf3847b-8a2f-10be-aa59-95ff549b63f2.md)
+        - [SqlSimpleAccess.ExecuteScalar(*T*.md) Method (SqlTransaction, String, Object.md)](b5ed2835-75a6-7931-db00-1de7d21557c7.md)
+        - [SqlSimpleAccess.ExecuteScalar(*T*.md) Method (String, CommandType, SqlParameter[].md)](7418ae3c-b1b4-81b6-627f-6db87e999092.md)
+        - [SqlSimpleAccess.ExecuteScalar(*T*.md) Method (String, CommandType, Object.md)](0133f2a9-c2be-fb31-7d47-0bea33f814d3.md)
+        - [SqlSimpleAccess.ExecuteScalar(*T*.md) Method (SqlTransaction, String, CommandType, SqlParameter[].md)](be149007-ebb2-4b85-cdcd-22ec484e9119.md)
+        - [SqlSimpleAccess.ExecuteScalar(*T*.md) Method (SqlTransaction, String, CommandType, Object.md)](1e583842-3a17-e0b9-8718-dcd836598a52.md)
+      - [SqlSimpleAccess.Fill Method](bd0ec21e-e329-7711-0163-53efb7d9af20.md)
+        - [SqlSimpleAccess.Fill Method (String, DataSet.md)](8f9f8234-2dce-fd31-d252-664ea26cf114.md)
+        - [SqlSimpleAccess.Fill Method (String, DataTable.md)](ed4ab211-9581-26f9-b6fa-101549146b89.md)
+      - [SqlSimpleAccess.GetDynamicSqlData Method](489fac29-7e4f-8ba9-9f7a-9841d49ec3f2.md)
+      - [SqlSimpleAccess.GetNewConnection Method](df3ec123-1f31-b5d3-62a6-647bce7b3435.md)
+      - [SqlSimpleAccess.SqlDataReaderToExpando Method](7af324d0-11e4-722a-a506-844dd0588af1.md)
+- [SimpleAccess.SqlServer.Repository Namespace](7ca62ec4-9e1e-7797-72d1-08cdad8b8511.md)
+  - [SqlRepository Class](0ff2b0ef-5784-3948-375a-e5aebc484660.md)
+    - [SqlRepository Constructor](8c719e7b-3220-1ed9-212e-0dfa46fbb31c.md)
+      - [SqlRepository Constructor](aeff0c9c-a5c0-41d7-c2db-a696855dde61.md)
+      - [SqlRepository Constructor (String.md)](9ef63284-f2d3-b4d7-8448-ce95db45d048.md)
+      - [SqlRepository Constructor (ISqlSimpleAccess.md)](45aee785-c43e-259e-a091-2b6416a64861.md)
+    - [SqlRepository Properties](c16a056e-70a0-b437-9741-268a8c439193.md)
+      - [SqlRepository.SimpleAccess Property](2466021e-1260-f76a-4bd5-9e1c6153af03.md)
+    - [SqlRepository Methods](1bc02ac5-ff5c-5419-ab72-f008d08a665d.md)
+      - [SqlRepository.Delete Method](110fb930-cc21-1bf0-fd21-2e5889c14513.md)
+        - [SqlRepository.Delete(*TEntity*.md) Method (SqlParameter[].md)](02120975-72b6-28cb-1cf2-485b32b9b9e4.md)
+        - [SqlRepository.Delete(*TEntity*.md) Method (Int64.md)](63d56d86-37da-7a1e-4b2d-5d497f56ebf1.md)
+        - [SqlRepository.Delete(*TEntity*.md) Method (Object.md)](a5a6f264-bff5-8f60-850c-66c2e59c2993.md)
+        - [SqlRepository.Delete(*TEntity*.md) Method (SqlTransaction, SqlParameter[].md)](622ae439-0f1a-753c-dd83-d664aa7f33a9.md)
+        - [SqlRepository.Delete(*TEntity*.md) Method (SqlTransaction, Int64.md)](d6a86500-a1c9-cd71-bb76-b685ee4f860e.md)
+      - [SqlRepository.Dispose Method](fc416b05-bb16-4989-e788-d6c6cb565908.md)
+      - [SqlRepository.Get Method](34ba0667-340a-d99f-8603-5655f9c3e2e7.md)
+        - [SqlRepository.Get(*TEntity*.md) Method (SqlParameter, String.md)](c26c7233-7018-b71f-d4c4-81b18a15de91.md)
+        - [SqlRepository.Get(*TEntity*.md) Method (SqlTransaction, SqlParameter, String.md)](2265b452-3860-f150-1d66-c822dcbe0afc.md)
+        - [SqlRepository.Get(*TEntity*.md) Method (Int64, SqlTransaction, String.md)](43801d9a-d0ae-1d09-baf2-cb72c6cab07a.md)
+        - [SqlRepository.Get(*TEntity*.md) Method (Object, SqlTransaction, String.md)](cc042bd8-7cd1-8519-5364-2c40e4da2460.md)
+        - [SqlRepository.Get Method (String, SqlParameter, String.md)](c0ccdbfe-58fc-6512-7642-33f056e78b7f.md)
+        - [SqlRepository.Get Method (String, Int64, String.md)](9243d255-79f1-1dee-7928-f09018e6f3d3.md)
+        - [SqlRepository.Get Method (String, Object, String.md)](2fee08d6-849c-7937-8a8c-d577d6a23417.md)
+      - [SqlRepository.GetAll(*TEntity*.md) Method](d2458443-4beb-9dac-a054-922bd71d680d.md)
+      - [SqlRepository.Insert Method](591602dd-c84a-5472-a365-826f82412718.md)
+        - [SqlRepository.Insert(*TEntity*.md) Method (SqlParameter[].md)](868aeed4-e41a-0267-cde3-b5cbb2e387f2.md)
+        - [SqlRepository.Insert(*TEntity*.md) Method (Object.md)](e2e2a73b-72ba-1504-fc8c-f1df38244020.md)
+        - [SqlRepository.Insert(*TEntity*.md) Method (StoredProcedureParameters.md)](689439f2-c726-edc1-5a2b-2967f63e26b0.md)
+        - [SqlRepository.Insert(*TEntity*.md) Method (SqlTransaction, StoredProcedureParameters.md)](d85a05c6-32f3-c37e-090f-929112ac3ca7.md)
+      - [SqlRepository.SoftDelete(*TEntity*.md) Method](be3232cd-a8e7-86b8-408d-54f806bf7d21.md)
+      - [SqlRepository.Update Method](d052ca76-ab05-6e10-4f7d-44a4cd391196.md)
+        - [SqlRepository.Update(*TEntity*.md) Method (SqlParameter[].md)](4e7cc20a-1b3d-35e7-21c1-65516763ccff.md)
+        - [SqlRepository.Update(*TEntity*.md) Method (Object.md)](37634116-d6e7-5b0f-1c87-a04f7d4a78f6.md)
+        - [SqlRepository.Update(*TEntity*.md) Method (StoredProcedureParameters.md)](7232a8bb-6f84-cfcf-2963-ed4ceefe6274.md)
+        - [SqlRepository.Update(*TEntity*.md) Method (SqlTransaction, StoredProcedureParameters.md)](eb553a24-6a8d-2dca-a638-6f1e36b87544.md)
