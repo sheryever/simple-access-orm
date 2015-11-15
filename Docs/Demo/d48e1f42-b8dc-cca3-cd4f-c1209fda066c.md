@@ -1,0 +1,36 @@
+# SqlSimpleAccess Constructor 
+ 
+
+Default constructor.
+
+**Namespace:**&nbsp;<a href="0aec4ece-a28c-8a60-ec49-ed778f89c036">SimpleAccess.SqlServer</a><br />**Assembly:**&nbsp;SimpleAccess.SqlServer (in SimpleAccess.SqlServer.dll) Version: 0.2.3.0 (0.2.8.0)
+
+## Syntax
+
+**C#**<br />
+``` C#
+public SqlSimpleAccess()
+```
+
+**VB**<br />
+``` VB
+Public Sub New
+```
+
+**C++**<br />
+``` C++
+public:
+SqlSimpleAccess()
+```
+
+**F#**<br />
+``` F#
+new : unit -> SqlSimpleAccess
+```
+
+
+## See Also
+
+
+#### Reference
+<a href="51cba069-bca7-767f-b9f4-7a420dd10a28">SqlSimpleAccess Class</a><br /><a href="0b0f752a-0edb-b2f0-8373-d1317b9ee89e">SqlSimpleAccess Overload</a><br /><a href="0aec4ece-a28c-8a60-ec49-ed778f89c036">SimpleAccess.SqlServer Namespace</a><br />
