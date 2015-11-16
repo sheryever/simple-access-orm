@@ -10,7 +10,7 @@
 ISimpleAccess sqlSimpleAccess = SimpleAccessFactory.Create("SqlServer")
 ISimpleAccess oralceSimpleAccess = SimpleAccessFactory.Create("OracleServer")
 ```
-- Allow developer to add custome database column mapper and parameter builder using IDbDataMapper.
+- Allow developer to add custom database column mapper and parameter builder using IDbDataMapper.
 ```C#
 SimpleAccess.DataMappers.Add(new GeomaryDataMapper());
 ```
