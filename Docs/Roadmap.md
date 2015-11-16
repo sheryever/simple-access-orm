@@ -15,6 +15,7 @@ ISimpleAccess oralceSimpleAccess = SimpleAccessFactory.Create("OracleServer")
 SimpleAccess.DataMappers.Add(new GeomaryDataMapper());
 ```
 - Allow developer to force SimpleAccess to use specific custom DataMapper to map and build parameter using MapperAttribute Mapper(typeof(GeomaryDataMapper)) 
+- ExecuteJson and ExecuteBson
 - Rewrite code generation application
  - Allow developer to add more T4 Templates
  - Allow developer to edit T4 Templates directly inside the application
