@@ -38,6 +38,8 @@ All methods as bsed on stored procedures with a specific sotred procedure naming
 | Delete&lt;TEntity&gt; | TEntity_Delete </br> ie. Person_Delete | Deletes TEntity by the given Id |
 | SoftDelete&lt;TEntity&gt; | TEntity_MarkDelete </br> ie. Person_MarkDelete | Marks  TEntity deleted by the given Id   |
 
+## Initial Documents
+[Initial documents link...](/Docs/Demo/_Sidebar.md)
 
 ## Support
 - Simple Access is written in C# and support .net Managed Code langues (C# and VB.net etc)
