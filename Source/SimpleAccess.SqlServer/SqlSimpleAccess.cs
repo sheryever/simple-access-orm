@@ -11,7 +11,6 @@ using System.Dynamic;
 using System.Reflection;
 using SimpleAccess.Core;
 using SimpleAccess.Core.Logger;
-using SimpleAccess.DbExtensions;
 
 namespace SimpleAccess.SqlServer
 {
@@ -220,7 +219,8 @@ namespace SimpleAccess.SqlServer
             return ExecuteNonQuery(commandText, commandType, BuildSqlParameters(paramObject));
         }
 
-        /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
+        /// <summary> Executes a command text against the connection and returns the number of rows affected. 
+        /// </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// <param name="transaction"> The SQL transaction. </param>

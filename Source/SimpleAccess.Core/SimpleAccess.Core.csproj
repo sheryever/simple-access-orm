@@ -56,9 +56,12 @@
     <Compile Include="DbExtensions\DatabaseExtensions.cs" />
     <Compile Include="DbExtensions\DataReaderToObject.cs" />
     <Compile Include="Entity\EntityInfo.cs" />
+    <Compile Include="Entity\NamespaceDoc.cs" />
     <Compile Include="ISimpleAccess.cs" />
     <Compile Include="Logger\ISimpleLogger.cs" />
+    <Compile Include="Logger\NamespaceDoc.cs" />
     <Compile Include="Logger\SimpleLogger.cs" />
+    <Compile Include="NamespaceDoc.cs" />
     <Compile Include="SimpleAccessSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -32,12 +32,24 @@ namespace SimpleAccess.Core.Entity
         /// </summary>
         public IDataParameter[] UpdateParameters { get; private set; }
 
+        /// <summary>
+        /// Default select statement with all coulmns of the entity
+        /// </summary>
         public string SelectAllStatement { get; private set; }
 
+        /// <summary>
+        /// Default insert statement with all coulmns and parameters of the entity
+        /// </summary>
         public string InsertStatement { get; private set; }
 
+        /// <summary>
+        /// Default update statement with all coulmns and parameters of the entity
+        /// </summary>
         public string UpdateSatetment { get; private set; }
 
+        /// <summary>
+        /// Default delete statement with id parameter of the entity
+        /// </summary>
         public string DeleteStatment { get; private set; }
 
         /// <summary>
@@ -79,17 +91,17 @@ namespace SimpleAccess.Core.Entity
             }
             else
             {
-                DbObjectName = this.EntityType.Name;
+                DbObjectName = EntityType.Name;
             }
 
             var storedProcedureNameKeywordAttribute = EntityType.GetCustomAttributes(true).FirstOrDefault(c => c is StoredProcedureNameKeyWordAttribute);
             if (storedProcedureNameKeywordAttribute != null)
             {
-                StoredProcedureNameKeyWord = ((StoredProcedureNameKeyWordAttribute)entityAttribute).NameKeyWord;
+                StoredProcedureNameKeyWord = ((StoredProcedureNameKeyWordAttribute)storedProcedureNameKeywordAttribute).NameKeyWord;
             }
             else
             {
-                StoredProcedureNameKeyWord = this.EntityType.Name;
+                StoredProcedureNameKeyWord = EntityType.Name;
             }
 
         }
@@ -110,7 +122,7 @@ namespace SimpleAccess.Core.Entity
 
             _dataParameters =
                 propertiesForDataParams.Select(propertyInfo => _parameterBuilder.CreateDataParameter(propertyInfo, parametersType, propertiesForDataParams, _outParameterPropertyInfoCollection, _outParameters))
-                    .Where<IDataParameter>(p => p != null).ToList();
+                    .Where(p => p != null).ToList();
 
             return _dataParameters.ToArray();
         }
