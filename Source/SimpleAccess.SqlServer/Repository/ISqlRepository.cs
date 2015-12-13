@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
+using SimpleAccess.SqlServer;
 
 namespace SimpleAccess.Repository
 {
@@ -8,6 +9,12 @@ namespace SimpleAccess.Repository
     /// </summary>
     public interface ISqlRepository
     {
+
+        /// <summary>
+        /// Internal ISqlSimpleAccess instance
+        /// </summary>
+        ISqlSimpleAccess SimpleAccess { get; set; }
+
         /// <summary> Get all TEntity object in a <see cref="IEnumerable{TEntity}"/>. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -18,7 +25,7 @@ namespace SimpleAccess.Repository
         IEnumerable<TEntity> GetAll<TEntity>(string fieldToSkip = null)
                     where TEntity : new();
 
-        /// <summary> Get TEntity by Id or anyother parameter. </summary>
+        /// <summary> Get TEntity by Id or any other parameter. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sqlParameter"> The SQL parameter. </param>
@@ -82,23 +89,23 @@ namespace SimpleAccess.Repository
         /// <returns> . </returns>
         int Insert<TEntity>(dynamic paramObject);
 
-        /// <summary> Inserts the given TEntity. </summary>
+        /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <param name="entity"> Entity to insert </param>
         /// 
         /// <returns> . </returns>
-        int Insert<TEntity>(StoredProcedureParameters storedProcedureParameters)
-            where TEntity: class;
+        int Insert<TEntity>(TEntity entity)
+            where TEntity : class;
 
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
         /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="entity"> Entity to insert </param>
         /// 
         /// <returns> . </returns>
-        int Insert<TEntity>(SqlTransaction sqlTransaction, StoredProcedureParameters storedProcedureParameters)
+        int Insert<TEntity>(SqlTransaction sqlTransaction, TEntity entity)
             where TEntity : class;
 
         /// <summary> Updates the given sqlParameters. </summary>
@@ -121,20 +128,20 @@ namespace SimpleAccess.Repository
         /// <summary> Updates the given sqlParameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <param name="entity"> Entity to insert </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int Update<TEntity>(StoredProcedureParameters storedProcedureParameters)
+        int Update<TEntity>(TEntity entity)
          where TEntity : class;
 
         /// <summary> Updates the given sqlParameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sqlTransaction">			 The SQL transaction. </param>
-        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <param name="entity"> Entity to insert </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int Update<TEntity>(SqlTransaction sqlTransaction, StoredProcedureParameters storedProcedureParameters)
+        int Update<TEntity>(SqlTransaction sqlTransaction, TEntity entity)
             where TEntity : class;
 
         /// <summary> Deletes the given ID. </summary>

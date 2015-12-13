@@ -50,11 +50,12 @@
     <Compile Include="Attributes\NotASpParameterAttribute.cs" />
     <Compile Include="Attributes\ParameterDirectionAttribute.cs" />
     <Compile Include="Attributes\EntityAttribute.cs" />
-    <Compile Include="Common\IParameterBuilder.cs" />
+    <Compile Include="Common\ISqlBuilder.cs" />
     <Compile Include="Common\ParametersType.cs" />
     <Compile Include="DbExtensions\ConnectionExtension.cs" />
     <Compile Include="DbExtensions\DatabaseExtensions.cs" />
     <Compile Include="DbExtensions\DataReaderToObject.cs" />
+    <Compile Include="Entity\EntityParameters.cs" />
     <Compile Include="Entity\EntityInfo.cs" />
     <Compile Include="Entity\NamespaceDoc.cs" />
     <Compile Include="ISimpleAccess.cs" />

@@ -12,13 +12,13 @@ namespace SimpleAccess.Core
     /// <summary>
     /// Represent the interface of SimpleAccess methods and it's implemented by SimpleAccess 
     /// </summary>
-    public interface ISimpleAccess<TDbConnection, TDbTransaction, TDbCommand, TDataParameter, TDbDataReader, TParameterBuilder>
+    public interface ISimpleAccess<TDbConnection, TDbTransaction, TDbCommand, TDataParameter, TDbDataReader, TSqlBuilder>
             where TDbConnection : IDbConnection, new()
             where TDbTransaction : IDbTransaction
             where TDbCommand : IDbCommand, new()
             where TDataParameter : IDataParameter, new()
             where TDbDataReader : IDataReader
-            where TParameterBuilder : IParameterBuilder, new()
+            where TSqlBuilder : ISqlBuilder<TDataParameter>, new()
     {
 
 

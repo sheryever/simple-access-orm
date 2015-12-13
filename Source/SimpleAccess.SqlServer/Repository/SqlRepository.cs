@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Reflection;
 using SimpleAccess.Core;
 using SimpleAccess.Repository;
@@ -137,47 +138,6 @@ namespace SimpleAccess.Repository
                 return SimpleAccess.ExecuteEntity<TEntity>(transaction, commandText, CommandType.StoredProcedure, fieldToSkip, null, paramObject);
         }
 
-
-        /// <summary> Gets. </summary>
-        /// 
-        /// <param name="sql">		   The SQL. </param>
-        /// <param name="id">		   The identifier. </param>
-        /// <param name="fieldToSkip"> (optional) the field to skip. </param>
-        /// 
-        /// <returns> . </returns>
-        public dynamic Get(string sql, long id, string fieldToSkip = null)
-        {
-            return Get(sql, new SqlParameter("@id", id), fieldToSkip);
-        }
-
-        /// <summary> Gets. </summary>
-        /// 
-        /// <param name="sql">		    The SQL. </param>
-        /// <param name="sqlParameter"> The SQL parameter. </param>
-        /// <param name="fieldToSkip">  (optional) the field to skip. </param>
-        /// 
-        /// <returns> . </returns>
-        public dynamic Get(string sql, SqlParameter sqlParameter, string fieldToSkip = null)
-        {
-            return SimpleAccess.ExecuteDynamic(sql, CommandType.StoredProcedure, fieldToSkip, new []{ sqlParameter });
-            
-        }
-
-
-        /// <summary> Gets. </summary>
-        /// 
-        /// <param name="sql">		    The SQL. </param>
-        /// <param name="paramObject"> The dynamic object as parameters. </param>
-        /// <param name="fieldToSkip">  (optional) the field to skip. </param>
-        /// 
-        /// <returns> . </returns>
-        public dynamic Get(string sql, dynamic paramObject, string fieldToSkip = null)
-        {
-
-            return SimpleAccess.ExecuteDynamic(sql, CommandType.StoredProcedure, fieldToSkip, paramObject);
-
-        }
-
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -213,49 +173,49 @@ namespace SimpleAccess.Repository
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <param name="entity"> Entity to insert </param>
         /// 
         /// <returns> . </returns>
-        public int Insert<TEntity>(StoredProcedureParameters storedProcedureParameters)
-            where TEntity: class
+        public int Insert<TEntity>(TEntity entity)
+            where TEntity : class
         {
-            SqlParameter[] sqlParameters = storedProcedureParameters.GetSpParameters(ParametersType.Insert);
-            //var name = typeof(TEntity).Name;
-            var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
+            
+            var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
+            var entityParameters = entityInfo.GetInsertParameters(entity);
 
-            string commandText = string.Format("[dbo].{0}_Insert", entityInfo.Name);
+            string commandText = string.Format("[dbo].{0}_Insert", entityInfo.DbObjectName);
 
-            var result = SimpleAccess.ExecuteNonQuery(commandText, CommandType.StoredProcedure, sqlParameters);
+            var result = SimpleAccess.ExecuteNonQuery(commandText, CommandType.StoredProcedure
+                , entityParameters.DataParametersDictionary.Values.ToArray());
 
-            storedProcedureParameters.LoadOutParametersProperties();
-            storedProcedureParameters.ClearSpParameters();
+            entityParameters.LoadOutParametersProperties(entity);
 
             return result;
         }
-        
 
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sqlTransaction">			 The SQL transaction. </param>
-        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <param name="entity"> Entity to insert </param>
         /// 
         /// <returns> . </returns>
-        public int Insert<TEntity>(SqlTransaction sqlTransaction, StoredProcedureParameters storedProcedureParameters)
+        public int Insert<TEntity>(SqlTransaction sqlTransaction, TEntity entity)
             where TEntity : class
         {
-            SqlParameter[] sqlParameters = storedProcedureParameters.GetSpParameters(ParametersType.Insert);
-            //var name = typeof(TEntity).Name;
-            var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
+            var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
+            var entityParameters = entityInfo.GetInsertParameters(entity);
 
-            string commandText = string.Format("{0}_Insert", entityInfo.Name);
 
-            var result = SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, sqlParameters);
+            string commandText = string.Format("{0}_Insert", entityInfo.DbObjectName);
 
-            storedProcedureParameters.LoadOutParametersProperties();
-            storedProcedureParameters.ClearSpParameters();
+            var result = SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure
+                , entityParameters.DataParametersDictionary.Values.ToArray());
+
+            entityParameters.LoadOutParametersProperties(entity);
 
             return result;
+
         }
 
         /// <summary> Updates the given sqlParameters. </summary>
@@ -292,21 +252,21 @@ namespace SimpleAccess.Repository
         /// <summary> Updates the given sqlParameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <param name="entity"> Entity to insert </param>
         /// 
         /// <returns> . </returns>
-        public int Update<TEntity>(StoredProcedureParameters storedProcedureParameters)
+        public int Update<TEntity>(TEntity entity)
             where TEntity : class 
         {
-            var sqlParameters = storedProcedureParameters.GetSpParameters(ParametersType.Update);
+            var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
+            var entityParameters = entityInfo.GetUpdateParameters(entity);
 
-            //var name = typeof(TEntity).Name;
-            var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
+            string commandText = string.Format("{0}_Update", entityInfo.DbObjectName);
 
-            string commandText = string.Format("{0}_Update", entityInfo.Name);
-            var result = SimpleAccess.ExecuteNonQuery(commandText, CommandType.StoredProcedure, sqlParameters);
+            var result = SimpleAccess.ExecuteNonQuery(commandText, CommandType.StoredProcedure
+                , entityParameters.DataParametersDictionary.Values.ToArray());
 
-            storedProcedureParameters.ClearSpParameters();
+            entityParameters.LoadOutParametersProperties(entity);
 
             return result;
         }
@@ -315,21 +275,21 @@ namespace SimpleAccess.Repository
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sqlTransaction">			 The SQL transaction. </param>
-        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <param name="entity"> Entity to insert </param>
         /// 
         /// <returns> . </returns>
-        public int Update<TEntity>(SqlTransaction sqlTransaction, StoredProcedureParameters storedProcedureParameters)
+        public int Update<TEntity>(SqlTransaction sqlTransaction, TEntity entity)
             where TEntity : class
         {
-            var sqlParameters = storedProcedureParameters.GetSpParameters(ParametersType.Update);
+            var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
+            var entityParameters = entityInfo.GetUpdateParameters(entity);
 
-            //var name = typeof(TEntity).Name;
-            var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
+            string commandText = string.Format("{0}_Update", entityInfo.DbObjectName);
 
-            var commandText = string.Format("{0}_Update", entityInfo.Name);
-            var result = SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, sqlParameters);
+            var result = SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure
+                , entityParameters.DataParametersDictionary.Values.ToArray());
 
-            storedProcedureParameters.ClearSpParameters();
+            entityParameters.LoadOutParametersProperties(entity);
 
             return result;
         }

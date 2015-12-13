@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SimpleAccess;
 using SimpleAccess.Core;
+using SimpleAccess.Repository;
 using SimpleAccess.SqlServer;
 
 namespace SimpeAccess.SqlServer.ConsoleTest
@@ -18,8 +19,9 @@ namespace SimpeAccess.SqlServer.ConsoleTest
         {
 
             ConstructorTests();
-            TestTextCommandSimpleAccess(GetTextQuerySimpleAccess());
-            TestSotredProcedureCommandSimpleAccess(GetStroedProcedureSimpleAccess());
+            //TestTextCommandSimpleAccess(GetTextQuerySimpleAccess());
+            //TestSotredProcedureCommandSimpleAccess(GetStroedProcedureSimpleAccess());
+            TestSotredProcedureCommandSimpleAccessRepository();
             Console.WriteLine("Press any key to close.");
             Console.ReadKey();
         }
@@ -115,6 +117,35 @@ namespace SimpeAccess.SqlServer.ConsoleTest
             Console.WriteLine("End Of StoredProcedure Command with SimpleAccess");
         }
 
+        public static void TestSotredProcedureCommandSimpleAccessRepository()
+        {
+            var sqlRepo = new SqlRepository();
+
+            Console.WriteLine("Test StoredProcedure Command with SimpleAccess SQL Repository");
+
+            
+            WriteLine("\nTesting simpleAccess.ExecuteNonQuery(\"dbo.Product_Insert\", fieldsToSkip: null, propertyInfoDictionary:null, parameters:dynamicParam);");
+            var product = new Product
+            {
+                Name = "Shampu",
+                CategoryId = 1,
+                IsActive = true,
+                ProductType =  ProductType.Liquid
+                                    ,
+                PricePerUnit = 10.50f,
+                PricePerPackage = (decimal) 100.50,
+                UnitPerPackage = (short)20
+                                    ,
+                AvailableTill = DateTime.Now,
+                LastPurchase = DateTime.Now
+            };
+            var recordAffected = sqlRepo.Insert<Product>(product);
+
+            WriteLine("Record affacted:{0}", recordAffected);
+
+            Console.WriteLine("Test StoredProcedure Command with SimpleAccess SQL Repository");
+        }
+
 
         public static void WriteLine(string format, params object[] args)
         {
@@ -155,16 +186,17 @@ namespace SimpeAccess.SqlServer.ConsoleTest
 
     public class Product
     {
+        [Identity]
         public long Id { get; set; }
         public string Name { get; set; }
         public int CategoryId { get; set; }
-        public string CategoryName { get; set; }
+        public virtual string CategoryName { get; set; }
         public bool IsActive { get; set; }
         public ProductType ProductType { get; set; }
         public double PricePerUnit { get; set; }
         public decimal PricePerPackage { get; set; }
         public short? UnitPerPackage { get; set; }
-        public DateTime AbailabelTill { get; set; }
+        public DateTime AvailableTill { get; set; }
         public DateTime LastPurchase { get; set; }
 
         public override string ToString()

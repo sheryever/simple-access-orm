@@ -83,5 +83,6 @@ namespace SimpleAccess.Core
         /// Default <see cref="ISimpleLogger"/>.
         /// </summary>
         public ISimpleLogger DefaultLogger { get; set; }
+
     }
 }

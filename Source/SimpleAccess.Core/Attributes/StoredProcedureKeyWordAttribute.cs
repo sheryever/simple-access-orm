@@ -9,7 +9,7 @@ namespace SimpleAccess
 {
 
     /// <summary>
-    /// Specifies the stored produres name of the Entity.
+    /// Specifies the stored procedure name of the Entity.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class StoredProcedureNameKeyWordAttribute : Attribute

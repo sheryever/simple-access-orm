@@ -11,46 +11,68 @@ namespace SimpleAccess.Core.Entity
 {
     /// <summary>
     /// Represents the SimpleAccess Entity information.
-    /// The EntityInfo is create and cache the stored procedure name, queris and parameters
+    /// The EntityInfo is create and cache the stored procedure name, quires and parameters
     /// </summary>
-    public class EntityInfo<TParameterBuilder>
-        where TParameterBuilder : IParameterBuilder, new()
+    public class EntityInfo<TISqlBuilder, TDbParameter>
+        where TISqlBuilder : ISqlBuilder<TDbParameter>, new()
+        where TDbParameter : IDataParameter
     {
-        //Muhammad Ahsan
-        private List<PropertyInfo> _outParameterPropertyInfoCollection;
-        private List<IDataParameter> _outParameters;
-        private List<IDataParameter> _dataParameters;
-        private readonly IParameterBuilder _parameterBuilder;
+        private List<PropertyInfo> OutParameterPropertyInfoCollection
+        {
+            get { return _sqlBuilder.OutParameterPropertyInfoCollection; }
+        }
+
+        private readonly ISqlBuilder<TDbParameter> _sqlBuilder;
 
         /// <summary>
-        /// Get the Insert statement or StoredProcedure Paramenters based on TDataParameters in ISimple
+        /// Get the Insert statement or StoredProcedure Parameters based on TDataParameters in ISimple
         /// </summary>
-        public IDataParameter[] InsertParameters { get; private set; }
+        public EntityParameters<TDbParameter> GetInsertParameters(object entity)
+        {
+            return _sqlBuilder.GetInsertParameters(entity);
+        }
 
         /// <summary>
-        /// 
+        /// Get the Update statement or StoredProcedure Parameters based on TDataParameters in ISimple
         /// </summary>
-        public IDataParameter[] UpdateParameters { get; private set; }
+        public EntityParameters<TDbParameter> GetUpdateParameters(object entity)
+        {
+            return _sqlBuilder.GetUpdateParameters(entity);
+        }
 
         /// <summary>
-        /// Default select statement with all coulmns of the entity
+        /// Default select statement with all columns of the entity
         /// </summary>
-        public string SelectAllStatement { get; private set; }
+        public string GetSelectAllStatement()
+        {
+            return _sqlBuilder.GetSelectAllStatement();
+        }
 
         /// <summary>
-        /// Default insert statement with all coulmns and parameters of the entity
+        /// Default insert statement with all columns and parameters of the entity
         /// </summary>
-        public string InsertStatement { get; private set; }
+        public string GetInsertStatement()
+        {
+            return _sqlBuilder.GetInsertStatement();
+
+
+        }
 
         /// <summary>
-        /// Default update statement with all coulmns and parameters of the entity
+        /// Default update statement with all columns and parameters of the entity
         /// </summary>
-        public string UpdateSatetment { get; private set; }
+        public string GetUpdateSatetment()
+        {
+            return _sqlBuilder.GetUpdateSatetment();
+        }
 
         /// <summary>
         /// Default delete statement with id parameter of the entity
         /// </summary>
-        public string DeleteStatment { get; private set; }
+        public string GetDeleteStatment()
+        {
+            return _sqlBuilder.GetDeleteStatment();
+        }
 
         /// <summary>
         /// Initialize the new object
@@ -60,7 +82,7 @@ namespace SimpleAccess.Core.Entity
         {
             EntityType = type;
             LoadEntityInformation();
-            _parameterBuilder = new TParameterBuilder();
+            _sqlBuilder = new TISqlBuilder();
         }
 
         /// <summary>
@@ -80,7 +102,7 @@ namespace SimpleAccess.Core.Entity
         public Type EntityType { get; set; }
 
         /// <summary>
-        /// Load entity name from <see cref="EntityAttribute"/> if entity is marked ortherwise that the entity name
+        /// Load entity name from <see cref="EntityAttribute"/> if entity is marked otherwise that the entity name
         /// </summary>
         private void LoadEntityInformation()
         {
@@ -106,35 +128,14 @@ namespace SimpleAccess.Core.Entity
 
         }
 
-        /// <summary>
-        /// Create paramters from object properties
-        /// </summary>
-        /// <param name="parametersType"></param>
-        /// <returns></returns>
-        public IDataParameter[] CreateSqlParametersFromProperties(ParametersType parametersType)
-        {
-            
-            _outParameterPropertyInfoCollection = new List<PropertyInfo>();
-            _outParameters = new List<IDataParameter>();
-
-            var procedureType = this.GetType();
-            var propertiesForDataParams = procedureType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Default);
-
-            _dataParameters =
-                propertiesForDataParams.Select(propertyInfo => _parameterBuilder.CreateDataParameter(propertyInfo, parametersType, propertiesForDataParams, _outParameterPropertyInfoCollection, _outParameters))
-                    .Where(p => p != null).ToList();
-
-            return _dataParameters.ToArray();
-        }
+       
 
         /// <summary>
         /// Clear all DbParamters
         /// </summary>
-        public void ClearSpParameters()
+        public void ClearDbParameters()
         {
-            _outParameters.Clear();
-            _dataParameters.Clear();
-            _outParameterPropertyInfoCollection.Clear();
+            _sqlBuilder.ClearDbParameters();
         }
 
         /// <summary>
@@ -143,19 +144,8 @@ namespace SimpleAccess.Core.Entity
         /// <param name="instance"> The instance of object </param>
         public void LoadOutParametersProperties(object instance)
         {
-            _outParameterPropertyInfoCollection.ForEach(p => {
-                var propertyName = p.Name;
-                try
-                {
-                    p.SetValue(instance, _outParameters.Single(
-                        sp => sp.ParameterName == string.Format("@{0}", propertyName)).Value, new object[] { });
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(string.Format("Error in reading @{0} out parameter value", propertyName), ex);
-                }
-            });
-            // ClearSpParameters();
+
+            _sqlBuilder.LoadOutParametersProperties(instance);
         }
     }
 
