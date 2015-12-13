@@ -27,7 +27,7 @@ Sql Server implementaion for SimpleAccess.
 
 ## SqlRepository
 
-All methods as bsed on stored procedures with a specific sotred procedure naming convention.
+All methods are based on stored procedures with it's related sotred procedure naming convention.
 
 | Methods            | Sp Name | Description |
 |--------------------|---------|-------------|
