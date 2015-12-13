@@ -171,9 +171,10 @@ namespace SimpleAccess.SqlServer
             params SqlParameter[] sqlParameters)
         {
             int result;
+            SqlCommand dbCommand = null;
             try
             {
-                var dbCommand = CreateCommand(commandText, commandType, sqlParameters);
+                dbCommand = CreateCommand(commandText, commandType, sqlParameters);
                 dbCommand.Connection.OpenSafely();
                 result = dbCommand.ExecuteNonQuery();
             }
@@ -186,6 +187,8 @@ namespace SimpleAccess.SqlServer
             {
                 if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
             }
             return result;
         }
@@ -246,11 +249,13 @@ namespace SimpleAccess.SqlServer
             CommandType commandType, params SqlParameter[] parameters)
         {
             int result;
+            SqlCommand dbCommand = null;
+
             try
             {
-                var sqlCommand = CreateCommand(sqlTransaction, commandText, commandType, parameters);
-                sqlCommand.Connection.OpenSafely();
-                result = sqlCommand.ExecuteNonQuery();
+                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, parameters);
+                dbCommand.Connection.OpenSafely();
+                result = dbCommand.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
@@ -315,9 +320,10 @@ namespace SimpleAccess.SqlServer
         /// <returns> The {T} value </returns>
         public T ExecuteScalar<T>(string commandText, CommandType commandType, params SqlParameter[] sqlParameters)
         {
+            SqlCommand dbCommand = null;
             try
             {
-                var dbCommand = CreateCommand(commandText, commandType, sqlParameters);
+                dbCommand = CreateCommand(commandText, commandType, sqlParameters);
                 dbCommand.Connection.Open();
                 var result = dbCommand.ExecuteScalar();
 
@@ -332,6 +338,8 @@ namespace SimpleAccess.SqlServer
             {
                 if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
             }
         }
 
@@ -396,18 +404,27 @@ namespace SimpleAccess.SqlServer
         public T ExecuteScalar<T>(SqlTransaction sqlTransaction, string commandText,
             CommandType commandType, params SqlParameter[] sqlParameters)
         {
+            SqlCommand dbCommand = null;
             try
             {
-                var dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
+                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
                 dbCommand.Connection.OpenSafely();
                 var result = dbCommand.ExecuteScalar();
 
-                return (T)Convert.ChangeType(result, typeof(T));
+                return (T) Convert.ChangeType(result, typeof (T));
             }
             catch (Exception ex)
             {
                 SimpleLogger.LogException(ex);
                 throw;
+            }
+            finally
+            {
+                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                    _sqlConnection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
+
             }
         }
 
@@ -502,6 +519,7 @@ namespace SimpleAccess.SqlServer
             {
                 var dbCommand = CreateCommand(commandText, commandType, sqlParameters);
                 var result = dbCommand.ExecuteReader(commandBehavior);
+                dbCommand.Parameters.Clear();
                 return result;
             }
             catch (Exception ex)
@@ -546,9 +564,10 @@ namespace SimpleAccess.SqlServer
             string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null
             , params SqlParameter[] sqlParameters) where TEntity : new()
         {
+            SqlCommand dbCommand = null;
             try
             {
-                var dbCommand = CreateCommand(commandText, commandType, sqlParameters);
+                dbCommand = CreateCommand(commandText, commandType, sqlParameters);
                 dbCommand.Connection.OpenSafely();
                 using (var reader = dbCommand.ExecuteReader())
                 {
@@ -565,6 +584,9 @@ namespace SimpleAccess.SqlServer
             {
                 if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
+
             }
         }
 
@@ -645,9 +667,10 @@ namespace SimpleAccess.SqlServer
             CommandType commandType, string fieldsToSkip = null,
             Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SqlParameter[] sqlParameters) where TEntity : new()
         {
+            SqlCommand dbCommand = null;
             try
             {
-                var dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
+                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
                 dbCommand.Connection.OpenSafely();
                 using (var reader = dbCommand.ExecuteReader())
                 {
@@ -659,6 +682,14 @@ namespace SimpleAccess.SqlServer
             {
                 SimpleLogger.LogException(ex);
                 throw;
+            }
+            finally
+            {
+                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                    _sqlConnection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
+
             }
         }
 
@@ -736,9 +767,10 @@ namespace SimpleAccess.SqlServer
         public TEntity ExecuteEntity<TEntity>(string commandText, CommandType commandType, string fieldsToSkip = null,
             Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SqlParameter[] sqlParameters) where TEntity : class, new()
         {
+            SqlCommand dbCommand = null;
             try
             {
-                var dbCommand = CreateCommand(commandText, commandType, sqlParameters);
+                dbCommand = CreateCommand(commandText, commandType, sqlParameters);
                 dbCommand.Connection.OpenSafely();
                 using (var reader = dbCommand.ExecuteReader(CommandBehavior.SingleRow))
                 {
@@ -755,6 +787,9 @@ namespace SimpleAccess.SqlServer
             {
                 if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
+
             }
         }
 
@@ -833,9 +868,10 @@ namespace SimpleAccess.SqlServer
             string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null
             , params SqlParameter[] sqlParameters) where TEntity : class, new()
         {
+            SqlCommand dbCommand = null;
             try
             {
-                var dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
+                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
                 dbCommand.Connection.OpenSafely();
                 using (var reader = dbCommand.ExecuteReader())
                 {
@@ -847,6 +883,14 @@ namespace SimpleAccess.SqlServer
             {
                 SimpleLogger.LogException(ex);
                 throw;
+            }
+            finally
+            {
+                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                    _sqlConnection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
+
             }
         }
 
@@ -917,9 +961,10 @@ namespace SimpleAccess.SqlServer
         public IEnumerable<dynamic> ExecuteDynamics(string commandText, CommandType commandType, string fieldsToSkip = null,
             params SqlParameter[] sqlParameters)
         {
+            SqlCommand dbCommand = null;
             try
             {
-                var dbCommand = CreateCommand(commandText, commandType, sqlParameters);
+                dbCommand = CreateCommand(commandText, commandType, sqlParameters);
                 dbCommand.Connection.OpenSafely();
                 return GetDynamicSqlData(dbCommand.ExecuteReader());
             }
@@ -932,6 +977,9 @@ namespace SimpleAccess.SqlServer
             {
                 if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
+
             }
         }
 
@@ -998,9 +1046,10 @@ namespace SimpleAccess.SqlServer
         public IEnumerable<dynamic> ExecuteDynamics(SqlTransaction sqlTransaction, string commandText, CommandType commandType,
             string fieldsToSkip = null, params SqlParameter[] sqlParameters)
         {
+            SqlCommand dbCommand = null;
             try
             {
-                var dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
+                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
                 dbCommand.Connection.OpenSafely();
                 return GetDynamicSqlData(dbCommand.ExecuteReader());
             }
@@ -1008,6 +1057,14 @@ namespace SimpleAccess.SqlServer
             {
                 SimpleLogger.LogException(ex);
                 throw;
+            }
+            finally
+            {
+                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                    _sqlConnection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
+
             }
         }
 
@@ -1074,9 +1131,10 @@ namespace SimpleAccess.SqlServer
         public dynamic ExecuteDynamic(string commandText, CommandType commandType, string fieldsToSkip = null,
             params SqlParameter[] sqlParameters)
         {
+            SqlCommand dbCommand = null;
             try
             {
-                var dbCommand = CreateCommand(commandText, commandType, sqlParameters);
+                dbCommand = CreateCommand(commandText, commandType, sqlParameters);
                 dbCommand.Connection.OpenSafely();
                 var reader = dbCommand.ExecuteReader(CommandBehavior.SingleRow);
                 if (reader.Read())
@@ -1097,6 +1155,9 @@ namespace SimpleAccess.SqlServer
             {
                 if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
+
             }
         }
 
@@ -1163,9 +1224,10 @@ namespace SimpleAccess.SqlServer
         public dynamic ExecuteDynamic(SqlTransaction sqlTransaction, string commandText, CommandType commandType,
             string fieldsToSkip = null, params SqlParameter[] sqlParameters)
         {
+            SqlCommand dbCommand = null;
             try
             {
-                var dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
+                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
                 dbCommand.Connection.OpenSafely();
                 var reader = dbCommand.ExecuteReader();
                 if (reader.Read())
@@ -1177,6 +1239,14 @@ namespace SimpleAccess.SqlServer
             {
                 SimpleLogger.LogException(ex);
                 throw;
+            }
+            finally
+            {
+                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                    _sqlConnection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
+
             }
         }
 
@@ -1222,11 +1292,13 @@ namespace SimpleAccess.SqlServer
         /// <returns></returns>
         public int Fill(string commandText, DataTable dataTable)
         {
+            SqlCommand dbCommand = null;
             try
             {
                 if (dataTable == null)
-                    dataTable = new DataTable(); 
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(new SqlCommand(commandText));
+                    dataTable = new DataTable();
+                dbCommand = new SqlCommand(commandText);
+                var sqlDataAdapter = new SqlDataAdapter(dbCommand);
                 return sqlDataAdapter.Fill(dataTable);
 
             }
@@ -1235,6 +1307,13 @@ namespace SimpleAccess.SqlServer
                 SimpleLogger.LogException(ex);
 
                 throw;
+            }
+            finally
+            {
+                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                    _sqlConnection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
             }
         }
 
@@ -1246,11 +1325,15 @@ namespace SimpleAccess.SqlServer
         /// <returns></returns>
         public int Fill(string commandText, DataSet dataSet)
         {
+            SqlCommand dbCommand = null;
             try
             {
                 if (dataSet == null)
                     dataSet = new DataSet();
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(new SqlCommand(commandText));
+
+                dbCommand = new SqlCommand(commandText);
+
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(dbCommand);
                 return sqlDataAdapter.Fill(dataSet);
             }
             catch (Exception ex)
@@ -1258,6 +1341,13 @@ namespace SimpleAccess.SqlServer
                 SimpleLogger.LogException(ex);
 
                 throw;
+            }
+            finally
+            {
+                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                    _sqlConnection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
             }
         }
 

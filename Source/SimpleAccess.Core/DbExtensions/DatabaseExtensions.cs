@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
@@ -48,6 +49,13 @@ namespace SimpleAccess.Core
         /// <typeparam name="TResult"></typeparam>
         public interface IStoredProcedure<TResult>
         {
+        }
+
+
+        public static void ClearDbCommand(this IDbCommand dbCommand)
+        {
+            if (dbCommand != null)
+                dbCommand.Parameters.Clear();
         }
     }
 }

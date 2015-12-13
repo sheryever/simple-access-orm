@@ -250,7 +250,7 @@ namespace SimpleAccess.Core
 
             EntityUpdateParameters.FillParameters(entity, FillInsertParameters);
 
-            return EntityInsertParameters;
+            return EntityUpdateParameters;
         }
 
 

@@ -141,6 +141,12 @@ namespace SimpeAccess.SqlServer.ConsoleTest
             };
             var recordAffected = sqlRepo.Insert<Product>(product);
 
+            product.Name = "Updated Records " + product.Name;
+
+            recordAffected = sqlRepo.Update<Product>(product);
+
+            recordAffected = sqlRepo.Insert<Product>(product);
+
             WriteLine("Record affacted:{0}", recordAffected);
 
             Console.WriteLine("Test StoredProcedure Command with SimpleAccess SQL Repository");
