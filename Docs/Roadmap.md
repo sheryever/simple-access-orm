@@ -16,7 +16,7 @@ SimpleAccess.DataMappers.Add(new GeomaryDataMapper());
 ```
 - Allow developer to force SimpleAccess to use specific custom DataMapper to map and build parameter using DbMapperAttribute DbMapper(typeof(GeomaryDataMapper)) 
 - Add InsertAll\<TEntity\>, UpdateAll\<TEntity\>, DeleteAll\<TEntity\> with support of internal trasaction in Repository
-- Add FindSingle\<TEntity\> and  Find\<TEntity\> in Repository
+- Add Find\<TEntity\> and  FindAll\<TEntity\> in Repository
 - ExecuteJson and ExecuteBson
 - Rewrite code generation application
  - Allow developer to add more T4 Templates
