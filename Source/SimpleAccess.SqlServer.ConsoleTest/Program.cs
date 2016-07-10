@@ -11,7 +11,7 @@ using SimpleAccess.Core;
 using SimpleAccess.Repository;
 using SimpleAccess.SqlServer;
 
-namespace SimpeAccess.SqlServer.ConsoleTest
+namespace SimpleAccess.SqlServer.ConsoleTest
 {
     class Program
     {

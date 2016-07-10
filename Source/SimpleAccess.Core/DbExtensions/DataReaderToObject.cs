@@ -12,6 +12,15 @@ namespace SimpleAccess.Core
     /// </summary>
     public static class DataReaderToObjectExtensions
     {
+        public static Dictionary<string, Dictionary<string, PropertyInfo>> EntityProperties { get; set; }
+        public static Dictionary<string, Dictionary<string, PropertyInfo>> EntityDbColumnProperties { get; set; }
+
+        static DataReaderToObjectExtensions()
+        {
+            EntityProperties = new Dictionary<string, Dictionary<string, PropertyInfo>>();
+            EntityDbColumnProperties = new Dictionary<string, Dictionary<string, PropertyInfo>>();
+        }
+
         /// <summary>
         /// Creates a list of a given type from all the rows in a DataReader.
         /// 
@@ -37,37 +46,63 @@ namespace SimpleAccess.Core
                 return null;
 
             var items = new List<TType>();
-
+            var entityFullName = typeof(TType).FullName;
             // Create lookup list of property info objects            
             if (piList == null)
             {
-                piList = new Dictionary<string, PropertyInfo>();
-                var props = typeof(TType).GetProperties(BindingFlags.Instance | BindingFlags.Public);
-                foreach (var prop in props)
-                    piList.Add(prop.Name.ToLower(), prop);
+                piList = GetEntityPerpertiesInfoList<TType>(entityFullName);
             }
 
             if (piListBasedOnDbColumn == null)
             {
-                piListBasedOnDbColumn = new Dictionary<string, PropertyInfo>();
-                foreach (var prop in piList.Values)
-                {
-                    var dbColumnAttribute =
-                                prop.GetCustomAttributes(false).FirstOrDefault(a =>
-                                    a is DbColumnAttribute) as DbColumnAttribute;
-                    if (dbColumnAttribute != null)
-                        piListBasedOnDbColumn.Add(dbColumnAttribute.DbColumn.ToLower(), prop);
-                }
+                piListBasedOnDbColumn = GetEntityDbColumnPropertiesInfoList(entityFullName, piList);
             }
 
             while (reader.Read())
             {
                 var inst = new TType();
-                DataReaderToObject(reader, inst, fieldsToSkip, piList, piListBasedOnDbColumn);
+                DataReaderToObject<TType>(reader, inst, fieldsToSkip, piList, piListBasedOnDbColumn);
                 items.Add(inst);
             }
 
             return items;
+        }
+
+        private static Dictionary<string, PropertyInfo> GetEntityDbColumnPropertiesInfoList(string entityFullName, Dictionary<string, PropertyInfo> piList)
+        {
+
+            if (EntityDbColumnProperties.ContainsKey(entityFullName))
+                return EntityDbColumnProperties[entityFullName];
+
+            var piListBasedOnDbColumn = new Dictionary<string, PropertyInfo>();
+            foreach (var prop in piList.Values)
+            {
+                var dbColumnAttribute =
+                            prop.GetCustomAttributes(false).FirstOrDefault(a =>
+                                a is DbColumnAttribute) as DbColumnAttribute;
+                if (dbColumnAttribute != null)
+                    piListBasedOnDbColumn.Add(dbColumnAttribute.DbColumn.ToLower(), prop);
+            }
+
+            EntityDbColumnProperties.Add(entityFullName, piListBasedOnDbColumn);
+
+            return piListBasedOnDbColumn;
+        }
+
+        private static Dictionary<string, PropertyInfo> GetEntityPerpertiesInfoList<TType>(string entityFullName) where TType : new()
+        {
+            if (EntityProperties.ContainsKey(entityFullName))
+                return EntityProperties[entityFullName];
+            
+            var piList = new Dictionary<string, PropertyInfo>();
+
+            var props = typeof(TType).GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            foreach (var prop in props)
+                piList.Add(prop.Name.ToLower(), prop);
+
+            EntityProperties.Add(entityFullName, piList);
+
+            return piList;
         }
 
 
@@ -96,31 +131,21 @@ namespace SimpleAccess.Core
 
             item = new TType();
 
+            var entityFullName = typeof(TType).FullName;
             // Create lookup list of property info objects            
             if (piList == null)
             {
-                piList = new Dictionary<string, PropertyInfo>();
-                var props = typeof(TType).GetProperties(BindingFlags.Instance | BindingFlags.Public);
-                foreach (var prop in props)
-                    piList.Add(prop.Name.ToLower(), prop);
+                piList = GetEntityPerpertiesInfoList<TType>(entityFullName);
             }
 
             if (piListBasedOnDbColumn == null)
             {
-                piListBasedOnDbColumn = new Dictionary<string, PropertyInfo>();
-                foreach (var prop in piList.Values)
-                {
-                    var dbColumnAttribute =
-                                prop.GetCustomAttributes(false).FirstOrDefault(a =>
-                                    a is DbColumnAttribute) as DbColumnAttribute;
-                    if (dbColumnAttribute != null)
-                        piListBasedOnDbColumn.Add(dbColumnAttribute.DbColumn.ToLower(), prop);
-                }
+                piListBasedOnDbColumn = GetEntityDbColumnPropertiesInfoList(entityFullName, piList);
             }
 
             if (reader.Read())
             {
-                DataReaderToObject(reader, item, fieldsToSkip, piList, piListBasedOnDbColumn);
+                DataReaderToObject<TType>(reader, item, fieldsToSkip, piList, piListBasedOnDbColumn);
             }
 
 
@@ -145,7 +170,7 @@ namespace SimpleAccess.Core
         /// <param name="fieldsToSkip">Optional - A comma delimited list of object properties that should not be updated</param>
         /// <param name="piList">Optional - Cached PropertyInfo dictionary that holds property info data for this object</param>
         /// <param name="piListBasedOnDbColumn"> List of <see cref="PropertyInfo"/> object having <see cref="DbColumnAttribute"/> in it's custom attributes</param>
-        public static void DataReaderToObject(this IDataReader reader, object instance, string fieldsToSkip = null
+        public static void DataReaderToObject<TEntity>(this IDataReader reader, TEntity instance, string fieldsToSkip = null
             , Dictionary<string, PropertyInfo> piList = null, Dictionary<string, PropertyInfo> piListBasedOnDbColumn = null)
         {
             if (reader.IsClosed)
@@ -161,14 +186,18 @@ namespace SimpleAccess.Core
             // create a dictionary of properties to look up
             // we can pass this in so we can cache the list once 
             // for a list operation 
-            if (piList == null)
-            {
-                piList = new Dictionary<string, PropertyInfo>();
-                var props = instance.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
 
-                foreach (var prop in props)
-                    piList.Add(prop.Name.ToLower(), prop);
-            }
+            //var entityFullName = typeof(TType).FullName;
+            //// Create lookup list of property info objects            
+            //if (piList == null)
+            //{
+            //    piList = GetEntityPerpertiesInfoList<TType>(entityFullName);
+            //}
+
+            //if (piListBasedOnDbColumn == null)
+            //{
+            //    piListBasedOnDbColumn = GetEntityDbColumnPropertiesInfoList(entityFullName, piList);
+            //}
 
             for (int index = 0; index < reader.FieldCount; index++)
             {

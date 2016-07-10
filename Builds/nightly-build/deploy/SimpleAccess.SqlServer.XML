@@ -9,7 +9,7 @@
             Defines the extra extensions method for <see cref="T:System.Data.SqlClient.SqlParameter"/>.
             </summary>
         </member>
-        <member name="M:SimpleAccess.SqlParametersExtensions.CreateSqlParametersFromDynamic(System.Collections.Generic.List{System.Data.SqlClient.SqlParameter},System.Object)">
+        <member name="M:SimpleAccess.SqlParametersExtensions.CreateSqlParametersFromObject(System.Collections.Generic.List{System.Data.SqlClient.SqlParameter},System.Object)">
             <summary>
             Takes the dynamic object and creates the Sql Parameters from its properties
             </summary>
@@ -314,7 +314,7 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -325,7 +325,7 @@
             
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="commandType">    Type of the command. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -357,7 +357,7 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>        
+            <param name="paramObject"> The anonymous object as parameters. </param>        
             <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteNonQuery(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.Object)">
@@ -367,7 +367,7 @@
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
             <param name="commandType">   Type of the command. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>        
+            <param name="paramObject"> The anonymous object as parameters. </param>        
             <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteScalar``1(System.String,System.Data.SqlClient.SqlParameter[])">
@@ -400,7 +400,7 @@
             
             <typeparam name="T"> Generic type parameter. </typeparam>
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The {T} value </returns>
         </member>
@@ -412,7 +412,7 @@
             <typeparam name="T"> Generic type parameter. </typeparam>
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="commandType">    Type of the command. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The {T} value </returns>
         </member>
@@ -449,7 +449,7 @@
             <typeparam name="T"> Generic type parameter. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-             <param name="paramObject"> The dynamic object as parameters. </param>
+             <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The {T} value </returns>
         </member>
@@ -462,7 +462,7 @@
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="commandType">    Type of the command. </param>
-             <param name="paramObject"> The dynamic object as parameters. </param>
+             <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The {T} value </returns>
         </member>
@@ -543,7 +543,7 @@
             <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-             <param name="paramObject"> The dynamic object as parameters. </param>
+             <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The {TEntity} value </returns>
         </member>
@@ -557,7 +557,7 @@
             <param name="commandType">   Type of the command. </param>
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-             <param name="paramObject"> The dynamic object as parameters. </param>
+             <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The {TEntity} value </returns>
         </member>
@@ -600,7 +600,7 @@
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-             <param name="paramObject"> The dynamic object as parameters. </param>
+             <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> value </returns>
         </member>
@@ -615,7 +615,7 @@
             <param name="commandType">    Type of the command. </param>
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-             <param name="paramObject"> The dynamic object as parameters. </param>
+             <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> value </returns>
         </member>
@@ -655,7 +655,7 @@
             <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The value of the entity. </returns>
         </member>
@@ -669,7 +669,7 @@
             <param name="commandType">   Type of the command. </param>
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The value of the entity. </returns>
         </member>
@@ -712,7 +712,7 @@
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The value of the entity. </returns>
         </member>
@@ -727,12 +727,12 @@
             <param name="commandType">    Type of the command. </param>
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The value of the entity. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteDynamics(System.String,System.String,System.Data.SqlClient.SqlParameter[])">
-            <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
@@ -740,10 +740,10 @@
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
             <param name="sqlParameters"> Parmeters rquired to execute CommandText. </param>
             
-            <returns> A list of dynamic. </returns>
+            <returns> A list of object. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteDynamics(System.String,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
-            <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
@@ -752,33 +752,33 @@
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
             <param name="sqlParameters"> Parmeters rquired to execute CommandText. </param>
             
-            <returns> A list of dynamic. </returns>
+            <returns> A list of object. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteDynamics(System.String,System.String,System.Object)">
-            <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
              
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
              
             <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
              
-             <returns> A list of dynamic. </returns>
+             <returns> A list of object. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteDynamics(System.String,System.Data.CommandType,System.String,System.Object)">
-            <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
              
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
              
             <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="commandType">   Type of the command. </param>
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
              
-             <returns> A list of dynamic. </returns>
+             <returns> A list of object. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteDynamics(System.Data.SqlClient.SqlTransaction,System.String,System.String,System.Data.SqlClient.SqlParameter[])">
-            <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
@@ -787,10 +787,10 @@
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
             <param name="sqlParameters">  Parmeters rquired to execute CommandText. </param>
             
-            <returns> A list of dynamic. </returns>
+            <returns> A list of object. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteDynamics(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
-            <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
@@ -800,22 +800,22 @@
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
             <param name="sqlParameters">  Parmeters rquired to execute CommandText. </param>
             
-            <returns> A list of dynamic. </returns>
+            <returns> A list of object. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteDynamics(System.Data.SqlClient.SqlTransaction,System.String,System.String,System.Object)">
-            <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
-            <returns> A list of dynamic. </returns>
+            <returns> A list of object. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteDynamics(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Object)">
-            <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
@@ -823,12 +823,12 @@
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="commandType">    Type of the command. </param>
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
-            <returns> A list of dynamic. </returns>
+            <returns> A list of object. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteDynamic(System.String,System.String,System.Data.SqlClient.SqlParameter[])">
-            <summary> Sends the CommandText to the Connection and builds a dynamic object from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
@@ -836,10 +836,10 @@
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
             <param name="sqlParameters"> Parmeters rquired to execute CommandText. </param>
             
-            <returns> Result in a dynamic object. </returns>
+            <returns> Result in a anonymous object. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteDynamic(System.String,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
-            <summary> Sends the CommandText to the Connection and builds a dynamic object from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
@@ -848,33 +848,33 @@
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
             <param name="sqlParameters"> Parmeters rquired to execute CommandText. </param>
             
-            <returns> Result in a dynamic object. </returns>
+            <returns> Result in a anonymous object. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteDynamic(System.String,System.String,System.Object)">
-            <summary> Sends the CommandText to the Connection and builds a dynamic object from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
-            <returns> Result in a dynamic object. </returns>
+            <returns> Result in a anonymous object. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteDynamic(System.String,System.Data.CommandType,System.String,System.Object)">
-            <summary> Sends the CommandText to the Connection and builds a dynamic object from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="commandType">   Type of the command. </param>
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
-            <returns> Result in a dynamic object. </returns>
+            <returns> Result in a anonymous object. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteDynamic(System.Data.SqlClient.SqlTransaction,System.String,System.String,System.Data.SqlClient.SqlParameter[])">
-            <summary> Sends the CommandText to the Connection and builds a dynamic object from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
@@ -883,10 +883,10 @@
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
             <param name="sqlParameters">  Parmeters rquired to execute CommandText. </param>
             
-            <returns> Result in a dynamic object. </returns>
+            <returns> Result in a anonymous object. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteDynamic(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
-            <summary> Sends the CommandText to the Connection and builds a dynamic object from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
@@ -896,22 +896,22 @@
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
             <param name="sqlParameters">  Parmeters rquired to execute CommandText. </param>
             
-            <returns> Result in a dynamic object. </returns>
+            <returns> Result in a anonymous object. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteDynamic(System.Data.SqlClient.SqlTransaction,System.String,System.String,System.Object)">
-            <summary> Sends the CommandText to the Connection and builds a dynamic object from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
             -<param name="fieldsToSkip">   (optional) the fields to skip. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
-            <returns> Result in a dynamic object. </returns>
+            <returns> Result in a anonymous object. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteDynamic(System.Data.SqlClient.SqlTransaction,System.String,System.Data.CommandType,System.String,System.Object)">
-            <summary> Sends the CommandText to the Connection and builds a dynamic object from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
@@ -919,9 +919,9 @@
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="commandType">    Type of the command. </param>
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
-            <returns> Result in a dynamic object. </returns>
+            <returns> Result in a anonymous object. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.Fill(System.String,System.Data.DataTable)">
             <summary>
@@ -984,15 +984,15 @@
             <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.GetDynamicSqlData(System.Data.SqlClient.SqlDataReader)">
-            <summary> Gets a dynamic SQL data. </summary>
+            <summary> Gets a object SQL data. </summary>
             
             <param name="reader"> The reader. </param>
             
-            <returns> The dynamic SQL data. </returns>
+            <returns> The object SQL data. </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.BuildSqlParameters(System.Object)">
-            <summary> Build SqlParameter Array from dynamic object. </summary>
-             <param name="paramObject"> The dynamic object as parameters. </param>
+            <summary> Build SqlParameter Array from anonymous object. </summary>
+             <param name="paramObject"> The anonymous object as parameters. </param>
             <returns> SqlParameter[] object and if paramObject is null then return null </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.Dispose">

@@ -27,9 +27,9 @@ namespace SimpleAccess
         /// Add more parameters in underline DbParameters
         /// </summary>
         /// <param name="paramsObject"></param>
-        public void AddSqlParameters(dynamic paramsObject)
+        public void AddSqlParameters(object paramsObject)
         {
-            _sqlParameters.CreateSqlParametersFromDynamic(paramsObject as Object);
+            _sqlParameters.CreateSqlParametersFromObject(paramsObject);
         }
 
         /// <summary>

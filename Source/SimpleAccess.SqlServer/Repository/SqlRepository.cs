@@ -31,13 +31,13 @@ namespace SimpleAccess.Repository
         /// 
         /// <param name="connection"> The connection string. </param>
         public SqlRepository(string connection)
-            : this(new SqlSimpleAccess(connection))
+            : this(new SqlSimpleAccess(connection, CommandType.StoredProcedure))
         {
         }
 
         /// <summary> Default constructor. </summary>
         public SqlRepository()
-            : this(new SqlSimpleAccess())
+            : this(new SqlSimpleAccess(CommandType.StoredProcedure))
         {
         }
 
@@ -77,7 +77,14 @@ namespace SimpleAccess.Repository
         public TEntity Get<TEntity>(long id, SqlTransaction transaction = null, string fieldToSkip = null)
             where TEntity : class, new()
         {
-            return Get<TEntity>(new SqlParameter("@id", id), transaction, fieldToSkip);
+            var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
+
+            var commandText = string.Format("{0}_GetById", entityInfo.Name);
+
+            return SimpleAccess.ExecuteEntity<TEntity>(transaction, commandText, CommandType.StoredProcedure, fieldToSkip, null, 
+                new SqlParameter("@id", id));
+
+           // return Get<TEntity>(new SqlParameter("@id", id), transaction, fieldToSkip);
         }
 
 

@@ -18,7 +18,7 @@ namespace SimpleAccess
         /// </summary>
         /// <param name="sqlParameters"></param>
         /// <param name="otherParameters"></param>
-        public static void CreateSqlParametersFromDynamic(this List<SqlParameter> sqlParameters, dynamic otherParameters)
+        public static void CreateSqlParametersFromObject(this List<SqlParameter> sqlParameters, object otherParameters)
         {
 
             var otherParametersObj = otherParameters as Object;
@@ -42,7 +42,7 @@ namespace SimpleAccess
         /// </summary>
         /// <param name="sqlParameters"></param>
         /// <param name="otherParameters"></param>
-        public static SqlParameter[] CreateSqlParametersFromDynamic(this SqlParameter[] sqlParameters, dynamic otherParameters)
+        public static SqlParameter[] CreateSqlParametersFromDynamic(this SqlParameter[] sqlParameters, object otherParameters)
         {
             var sqlParameterList = new List<SqlParameter>(sqlParameters);
 

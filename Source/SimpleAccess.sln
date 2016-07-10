@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAccess.SqlServer", "SimpleAccess.SqlServer\SimpleAccess.SqlServer.csproj", "{D97DEB44-C9BD-4813-AE06-3119CE29214A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAccess.Core", "SimpleAccess.Core\SimpleAccess.Core.csproj", "{CA67607F-1D89-47FD-B8BF-8DEAC4D0AC60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpeAccess.SqlServer.ConsoleTest", "SimpleAccess.SqlServer\SimpeAccess.SqlServer.ConsoleTest\SimpeAccess.SqlServer.ConsoleTest.csproj", "{4A15A6BD-062A-4043-85D9-FDBCCD603D6E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAccess.SqlServer.ConsoleTest", "SimpleAccess.SqlServer.ConsoleTest\SimpleAccess.SqlServer.ConsoleTest.csproj", "{4A15A6BD-062A-4043-85D9-FDBCCD603D6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

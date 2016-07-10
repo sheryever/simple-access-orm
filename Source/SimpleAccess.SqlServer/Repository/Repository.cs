@@ -1302,7 +1302,7 @@ namespace SimpleAccess.Repository
             if (paramObject == null)
                 return null;
             var sqlParameters = new List<SqlParameter>();
-            sqlParameters.CreateSqlParametersFromDynamic(paramObject as Object);
+            sqlParameters.CreateSqlParametersFromObject(paramObject as Object);
             
             return sqlParameters.ToArray();
         }

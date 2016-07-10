@@ -66,6 +66,6 @@ namespace SimpleAccess.SqlServer
         /// <summary> Build SqlParameter Array from dynamic object. </summary>
         ///  <param name="paramObject"> The dynamic object as parameters. </param>
         /// <returns> SqlParameter[] object and if paramObject is null then return null </returns>
-        SqlParameter[] BuildSqlParameters(dynamic paramObject);
+        SqlParameter[] BuildSqlParameters(object paramObject);
     }
 }
