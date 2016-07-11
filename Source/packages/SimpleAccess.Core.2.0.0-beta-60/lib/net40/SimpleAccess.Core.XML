@@ -274,7 +274,7 @@
             <param name="piList">Optional - Cached PropertyInfo dictionary that holds property info data for this object</param>
             <param name="piListBasedOnDbColumn"> List of <see cref="T:System.Reflection.PropertyInfo"/> object having <see cref="T:SimpleAccess.DbColumnAttribute"/> in it's custom attributes</param>
         </member>
-        <member name="M:SimpleAccess.Core.DataReaderToObjectExtensions.DataReaderToObject(System.Data.IDataReader,System.Object,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
+        <member name="M:SimpleAccess.Core.DataReaderToObjectExtensions.DataReaderToObject``1(System.Data.IDataReader,``0,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
             <summary>
             Populates the properties of an object from a single DataReader row using
             Reflection by matching the DataReader fields to a public property on
@@ -439,7 +439,7 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="commandText">	The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -450,7 +450,7 @@
             
             <param name="commandText">	The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="commandType">    Type of the command. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -481,7 +481,7 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             <param name="transaction"> The SQL transaction. </param>
             <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>        
+            <param name="paramObject"> The anonymous object as parameters. </param>        
             <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteNonQuery(`1,System.String,System.Data.CommandType,System.Object)">
@@ -491,7 +491,7 @@
             <param name="transaction"> The SQL transaction. </param>
             <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
             <param name="commandType">   Type of the command. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>        
+            <param name="paramObject"> The anonymous object as parameters. </param>        
             <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteScalar``1(System.String,`3[])">
@@ -524,7 +524,7 @@
             
             <typeparam name="T"> Generic type parameter. </typeparam>
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The {T} value </returns>
         </member>
@@ -536,7 +536,7 @@
             <typeparam name="T"> Generic type parameter. </typeparam>
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="commandType">    Type of the command. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The {T} value </returns>
         </member>
@@ -573,7 +573,7 @@
             <typeparam name="T"> Generic type parameter. </typeparam>
             <param name="transaction"> The SQL transaction. </param>
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-             <param name="paramObject"> The dynamic object as parameters. </param>
+             <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The {T} value </returns>
         </member>
@@ -586,7 +586,7 @@
             <param name="transaction"> The SQL transaction. </param>
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="commandType">    Type of the command. </param>
-             <param name="paramObject"> The dynamic object as parameters. </param>
+             <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The {T} value </returns>
         </member>
@@ -667,7 +667,7 @@
             <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-             <param name="paramObject"> The dynamic object as parameters. </param>
+             <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The {TEntity} value </returns>
         </member>
@@ -681,7 +681,7 @@
             <param name="commandType">   Type of the command. </param>
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-             <param name="paramObject"> The dynamic object as parameters. </param>
+             <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The {TEntity} value </returns>
         </member>
@@ -724,7 +724,7 @@
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-             <param name="paramObject"> The dynamic object as parameters. </param>
+             <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> value </returns>
         </member>
@@ -739,7 +739,7 @@
             <param name="commandType">    Type of the command. </param>
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-             <param name="paramObject"> The dynamic object as parameters. </param>
+             <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> value </returns>
         </member>
@@ -779,7 +779,7 @@
             <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The value of the entity. </returns>
         </member>
@@ -793,7 +793,7 @@
             <param name="commandType">   Type of the command. </param>
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The value of the entity. </returns>
         </member>
@@ -836,7 +836,7 @@
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The value of the entity. </returns>
         </member>
@@ -851,7 +851,7 @@
             <param name="commandType">    Type of the command. </param>
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The value of the entity. </returns>
         </member>
@@ -885,7 +885,7 @@
              
             <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
              
              <returns> A list of dynamic. </returns>
         </member>
@@ -897,7 +897,7 @@
             <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="commandType">   Type of the command. </param>
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
              
              <returns> A list of dynamic. </returns>
         </member>
@@ -934,7 +934,7 @@
             <param name="transaction"> The SQL transaction. </param>
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> A list of dynamic. </returns>
         </member>
@@ -947,12 +947,12 @@
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="commandType">    Type of the command. </param>
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> A list of dynamic. </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteDynamic(System.String,System.String,`3[])">
-            <summary> Sends the CommandText to the Connection and builds a dynamic object from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
@@ -960,10 +960,10 @@
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
             <param name="parameters"> Parmeters rquired to execute CommandText. </param>
             
-            <returns> Result in a dynamic object. </returns>
+            <returns> Result in a anonymous object. </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteDynamic(System.String,System.Data.CommandType,System.String,`3[])">
-            <summary> Sends the CommandText to the Connection and builds a dynamic object from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
@@ -972,33 +972,33 @@
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
             <param name="parameters"> Parmeters rquired to execute CommandText. </param>
             
-            <returns> Result in a dynamic object. </returns>
+            <returns> Result in a anonymous object. </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteDynamic(System.String,System.String,System.Object)">
-            <summary> Sends the CommandText to the Connection and builds a dynamic object from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
-            <returns> Result in a dynamic object. </returns>
+            <returns> Result in a anonymous object. </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteDynamic(System.String,System.Data.CommandType,System.String,System.Object)">
-            <summary> Sends the CommandText to the Connection and builds a dynamic object from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="commandType">   Type of the command. </param>
             <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
-            <returns> Result in a dynamic object. </returns>
+            <returns> Result in a anonymous object. </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteDynamic(`1,System.String,System.String,`3[])">
-            <summary> Sends the CommandText to the Connection and builds a dynamic object from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
@@ -1007,10 +1007,10 @@
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
             <param name="parameters">  Parmeters rquired to execute CommandText. </param>
             
-            <returns> Result in a dynamic object. </returns>
+            <returns> Result in a anonymous object. </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteDynamic(`1,System.String,System.Data.CommandType,System.String,`3[])">
-            <summary> Sends the CommandText to the Connection and builds a dynamic object from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
@@ -1020,22 +1020,22 @@
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
             <param name="parameters">  Parmeters rquired to execute CommandText. </param>
             
-            <returns> Result in a dynamic object. </returns>
+            <returns> Result in a anonymous object. </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteDynamic(`1,System.String,System.String,System.Object)">
-            <summary> Sends the CommandText to the Connection and builds a dynamic object from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="transaction"> The SQL transaction. </param>
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
             -<param name="fieldsToSkip">   (optional) the fields to skip. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
-            <returns> Result in a dynamic object. </returns>
+            <returns> Result in a anonymous object. </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteDynamic(`1,System.String,System.Data.CommandType,System.String,System.Object)">
-            <summary> Sends the CommandText to the Connection and builds a dynamic object from DataReader. </summary>
+            <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
@@ -1043,9 +1043,9 @@
             <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="commandType">    Type of the command. </param>
             <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
             
-            <returns> Result in a dynamic object. </returns>
+            <returns> Result in a anonymous object. </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.Fill(System.String,System.Data.DataTable)">
             <summary>
