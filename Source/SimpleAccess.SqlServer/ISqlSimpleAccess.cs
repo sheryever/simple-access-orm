@@ -15,7 +15,7 @@ using SimpleAccess.Core.Logger;
 namespace SimpleAccess.SqlServer
 {
     /// <summary>
-    /// Sql Server implementaion for SimpleAccess
+    /// Sql Server implementation for SimpleAccess
     /// </summary>
     public interface ISqlSimpleAccess : 
         ISimpleAccess <SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlServerSqlBuilder>
@@ -49,7 +49,7 @@ namespace SimpleAccess.SqlServer
         SqlCommand CreateCommand(SqlTransaction sqlTransaction, string commandText, CommandType commandType
             , params SqlParameter[] sqlParameters);
 
-        /// <summary> SQL data reader to expando. </summary>
+        /// <summary> SQL data reader to <see cref="ExpandoObject"/>. </summary>
         /// 
         /// <param name="reader"> The reader. </param>
         /// 

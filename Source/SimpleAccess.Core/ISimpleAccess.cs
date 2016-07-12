@@ -32,7 +32,7 @@ namespace SimpleAccess.Core
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-        /// <param name="parameters">  Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         int ExecuteNonQuery(string commandText, params TDataParameter[] parameters);
@@ -43,7 +43,7 @@ namespace SimpleAccess.Core
         /// 
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType">    Type of the command. </param>
-        /// <param name="parameters">  Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         int ExecuteNonQuery(string commandText, CommandType commandType, params TDataParameter[] parameters);
@@ -75,7 +75,7 @@ namespace SimpleAccess.Core
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
-        /// <param name="parameters"> Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         int ExecuteNonQuery(TDbTransaction transaction, string commandText
@@ -88,7 +88,7 @@ namespace SimpleAccess.Core
         /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
         /// <param name="commandType">   Type of the command. </param>
-        /// <param name="parameters"> Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         int ExecuteNonQuery(TDbTransaction transaction, string commandText
@@ -122,7 +122,7 @@ namespace SimpleAccess.Core
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-        /// <param name="parameters">  Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
         T ExecuteScalar<T>(string commandText, params TDataParameter[] parameters);
@@ -135,7 +135,7 @@ namespace SimpleAccess.Core
         /// <typeparam name="T"> Generic type parameter. </typeparam>
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType">    Type of the command. </param>
-        /// <param name="parameters">  Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {T} value </returns>
         T ExecuteScalar<T>(string commandText, CommandType commandType, params TDataParameter[] parameters);
@@ -170,7 +170,7 @@ namespace SimpleAccess.Core
         /// <typeparam name="T"> Generic type parameter. </typeparam>
         /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-        /// <param name="parameters">  Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {T} value </returns>
         T ExecuteScalar<T>(TDbTransaction transaction, string commandText
@@ -184,7 +184,7 @@ namespace SimpleAccess.Core
         /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType">    Type of the command. </param>
-        /// <param name="parameters">  Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
         T ExecuteScalar<T>(TDbTransaction transaction, string commandText
@@ -222,7 +222,7 @@ namespace SimpleAccess.Core
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
-        /// <param name="parameters"> Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// <returns> The TDbDataReader </returns>
         TDbDataReader ExecuteReader(string commandText,
             params TDataParameter[] parameters);
@@ -233,7 +233,7 @@ namespace SimpleAccess.Core
         /// 
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType">   Type of the command. </param>
-        /// <param name="parameters"> Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The TDbDataReader </returns>
         TDbDataReader ExecuteReader(string commandText, CommandType commandType,
@@ -245,7 +245,7 @@ namespace SimpleAccess.Core
         /// 
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
-        /// <param name="parameters"> Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The TDbDataReader </returns>
         TDbDataReader ExecuteReader(string commandText, CommandBehavior commandBehavior,
@@ -259,7 +259,7 @@ namespace SimpleAccess.Core
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType">   Type of the command. </param>
         /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
-        /// <param name="parameters"> Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The TDbDataReader </returns>
         TDbDataReader ExecuteReader(string commandText, CommandType commandType, CommandBehavior commandBehavior,
@@ -273,7 +273,7 @@ namespace SimpleAccess.Core
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
         /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="parameters"> Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The TEntity value </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, string fieldsToSkip = null,
@@ -290,7 +290,7 @@ namespace SimpleAccess.Core
         /// <param name="commandType">   Type of the command. </param>
         /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="parameters"> Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, CommandType commandType, string fieldsToSkip = null,
@@ -304,14 +304,13 @@ namespace SimpleAccess.Core
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        ///  <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
-        IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, string fieldsToSkip = null,
-                                     Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
-                                     object paramObject = null)
+        IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, object paramObject = null, string fieldsToSkip = null,
+                                     Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : new();
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
@@ -321,14 +320,13 @@ namespace SimpleAccess.Core
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
         /// <param name="commandType">   Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        ///  <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
-        IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, CommandType commandType, string fieldsToSkip = null,
-                                     Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
-                                     object paramObject = null)
+        IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, CommandType commandType, object paramObject = null,
+                            string fieldsToSkip = null,Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : new();
 
 
@@ -341,7 +339,7 @@ namespace SimpleAccess.Core
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
         /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        /// <param name="parameters">  Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(TDbTransaction transaction, string commandText, 
@@ -359,7 +357,7 @@ namespace SimpleAccess.Core
         /// <param name="commandType">    Type of the command. </param>
         /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="parameters">  Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(TDbTransaction transaction, string commandText, CommandType commandType,
@@ -374,14 +372,13 @@ namespace SimpleAccess.Core
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        ///  <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{TEntity}" /> value </returns>
-        IEnumerable<TEntity> ExecuteEntities<TEntity>(TDbTransaction transaction, string commandText,
-                                     string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
-                                     object paramObject = null)
+        IEnumerable<TEntity> ExecuteEntities<TEntity>(TDbTransaction transaction, string commandText, object paramObject = null,
+                                     string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : new();
 
 
@@ -394,14 +391,14 @@ namespace SimpleAccess.Core
         /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType">    Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        ///  <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{TEntity}" /> value </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(TDbTransaction transaction, string commandText, CommandType commandType,
-                                     string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
-                                     object paramObject = null)
+                                     object paramObject = null, string fieldsToSkip = null, 
+                                     Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : new();
 
         /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
@@ -412,7 +409,7 @@ namespace SimpleAccess.Core
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="parameters"> Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The value of the entity. </returns>
         TEntity ExecuteEntity<TEntity>(string commandText, string fieldsToSkip = null,
@@ -429,7 +426,7 @@ namespace SimpleAccess.Core
         /// <param name="commandType">   Type of the command. </param>
         /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="parameters"> Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The value of the entity. </returns>
         TEntity ExecuteEntity<TEntity>(string commandText, CommandType commandType, string fieldsToSkip = null,
@@ -443,14 +440,13 @@ namespace SimpleAccess.Core
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        TEntity ExecuteEntity<TEntity>(string commandText, string fieldsToSkip = null,
-                                             Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
-                                             object paramObject = null)
+        TEntity ExecuteEntity<TEntity>(string commandText, object paramObject = null, string fieldsToSkip = null,
+                                             Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : class, new();
 
         /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
@@ -460,14 +456,13 @@ namespace SimpleAccess.Core
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType">   Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        TEntity ExecuteEntity<TEntity>(string commandText, CommandType commandType, string fieldsToSkip = null,
-                                             Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
-                                             object paramObject = null)
+        TEntity ExecuteEntity<TEntity>(string commandText, CommandType commandType, object paramObject = null, string fieldsToSkip = null,
+                                             Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : class, new();
 
         /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
@@ -479,7 +474,7 @@ namespace SimpleAccess.Core
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="parameters">  Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The value of the entity. </returns>
         TEntity ExecuteEntity<TEntity>(TDbTransaction transaction, string commandText, string fieldsToSkip = null, 
@@ -497,7 +492,7 @@ namespace SimpleAccess.Core
         /// <param name="commandType">    Type of the command. </param>
         /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="parameters">  Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The value of the entity. </returns>
         TEntity ExecuteEntity<TEntity>(TDbTransaction transaction, string commandText, CommandType commandType,
@@ -515,14 +510,14 @@ namespace SimpleAccess.Core
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        TEntity ExecuteEntity<TEntity>(TDbTransaction transaction, string commandText,
-                                     string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
-                                     object paramObject = null)
+        TEntity ExecuteEntity<TEntity>(TDbTransaction transaction, string commandText, object paramObject = null,
+                                     string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null
+                                     )
             where TEntity : class, new();
 
 
@@ -534,14 +529,13 @@ namespace SimpleAccess.Core
         /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType">    Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        TEntity ExecuteEntity<TEntity>(TDbTransaction transaction, string commandText, CommandType commandType,
-                                     string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
-                                     object paramObject = null)
+        TEntity ExecuteEntity<TEntity>(TDbTransaction transaction, string commandText, CommandType commandType, object paramObject = null,
+                                     string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : class, new();
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
@@ -550,7 +544,7 @@ namespace SimpleAccess.Core
         /// 
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        /// <param name="parameters"> Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> A list of dynamic. </returns>
         IEnumerable<dynamic> ExecuteDynamics(string commandText
@@ -563,7 +557,7 @@ namespace SimpleAccess.Core
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType">   Type of the command. </param>
         /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        /// <param name="parameters"> Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> A list of dynamic. </returns>
         IEnumerable<dynamic> ExecuteDynamics(string commandText, CommandType commandType
@@ -574,12 +568,11 @@ namespace SimpleAccess.Core
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         ///  
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
-        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
         ///  
         ///  <returns> A list of dynamic. </returns>
-        IEnumerable<dynamic> ExecuteDynamics(string commandText
-            , string fieldsToSkip = null, object paramObject = null);
+        IEnumerable<dynamic> ExecuteDynamics(string commandText, object paramObject = null, string fieldsToSkip = null);
 
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
@@ -588,12 +581,12 @@ namespace SimpleAccess.Core
         ///  
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType">   Type of the command. </param>
-        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
         ///  
         ///  <returns> A list of dynamic. </returns>
-        IEnumerable<dynamic> ExecuteDynamics(string commandText, CommandType commandType
-            , string fieldsToSkip = null, object paramObject = null);
+        IEnumerable<dynamic> ExecuteDynamics(string commandText, CommandType commandType, object paramObject = null
+            , string fieldsToSkip = null);
 
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
@@ -603,7 +596,7 @@ namespace SimpleAccess.Core
         /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        /// <param name="parameters">  Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> A list of dynamic. </returns>
         IEnumerable<dynamic> ExecuteDynamics(TDbTransaction transaction, string commandText,
@@ -618,7 +611,7 @@ namespace SimpleAccess.Core
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType">    Type of the command. </param>
         /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        /// <param name="parameters">  Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> A list of dynamic. </returns>
         IEnumerable<dynamic> ExecuteDynamics(TDbTransaction transaction, string commandText, CommandType commandType,                                     
@@ -631,12 +624,12 @@ namespace SimpleAccess.Core
         /// 
         /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
         /// 
         /// <returns> A list of dynamic. </returns>
-        IEnumerable<dynamic> ExecuteDynamics(TDbTransaction transaction, string commandText,
-                             string fieldsToSkip = null, object paramObject = null);
+        IEnumerable<dynamic> ExecuteDynamics(TDbTransaction transaction, string commandText, object paramObject = null,
+                             string fieldsToSkip = null);
 
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
@@ -646,12 +639,12 @@ namespace SimpleAccess.Core
         /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType">    Type of the command. </param>
-        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
         /// 
         /// <returns> A list of dynamic. </returns>
         IEnumerable<dynamic> ExecuteDynamics(TDbTransaction transaction, string commandText, CommandType commandType,
-                             string fieldsToSkip = null, object paramObject = null);
+                             object paramObject = null, string fieldsToSkip = null);
 
 
         /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
@@ -660,7 +653,7 @@ namespace SimpleAccess.Core
         /// 
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        /// <param name="parameters"> Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
         dynamic ExecuteDynamic(string commandText 
@@ -674,7 +667,7 @@ namespace SimpleAccess.Core
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType">   Type of the command. </param>
         /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        /// <param name="parameters"> Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
         dynamic ExecuteDynamic(string commandText, CommandType commandType
@@ -686,12 +679,12 @@ namespace SimpleAccess.Core
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
-        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        dynamic ExecuteDynamic(string commandText
-            , string fieldsToSkip = null, object paramObject = null);
+        dynamic ExecuteDynamic(string commandText, object paramObject = null
+            , string fieldsToSkip = null);
 
 
         /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
@@ -700,12 +693,12 @@ namespace SimpleAccess.Core
         /// 
         /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType">   Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        dynamic ExecuteDynamic(string commandText, CommandType commandType
-            , string fieldsToSkip = null, object paramObject = null);
+        dynamic ExecuteDynamic(string commandText, CommandType commandType, object paramObject = null,
+                string fieldsToSkip = null);
 
 
         /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
@@ -715,7 +708,7 @@ namespace SimpleAccess.Core
         /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        /// <param name="parameters">  Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
         dynamic ExecuteDynamic(TDbTransaction transaction, string commandText,
@@ -731,7 +724,7 @@ namespace SimpleAccess.Core
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType">    Type of the command. </param>
         /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        /// <param name="parameters">  Parmeters rquired to execute CommandText. </param>
+        /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
         dynamic ExecuteDynamic(TDbTransaction transaction, string commandText, CommandType commandType,
@@ -745,12 +738,12 @@ namespace SimpleAccess.Core
         /// 
         /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-        /// -<param name="fieldsToSkip">   (optional) the fields to skip. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
         dynamic ExecuteDynamic(TDbTransaction transaction, string commandText,
-                                    string fieldsToSkip = null, object paramObject = null);
+                                    object paramObject = null, string fieldsToSkip = null);
 
 
         /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
@@ -760,15 +753,15 @@ namespace SimpleAccess.Core
         /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType">    Type of the command. </param>
-        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
         dynamic ExecuteDynamic(TDbTransaction transaction, string commandText, CommandType commandType,
-                                    string fieldsToSkip = null, object paramObject = null);
+                                    object paramObject = null, string fieldsToSkip = null );
 
         /// <summary>
-        /// Execute commant text against connection and add or refresh rows in <see cref="DataTable"/>
+        /// Execute the CommandText against connection and add or refresh rows in <see cref="DataTable"/>
         /// </summary>
         /// <param name="commandText"></param>
         /// <param name="dataTable">A <see cref="DataTable"/> to fill with records and, if necessary, schema  </param>
@@ -776,7 +769,7 @@ namespace SimpleAccess.Core
         int Fill(string commandText, DataTable dataTable);
 
         /// <summary>
-        /// Execute commant text against connection and add or refresh rows in <see cref="DataSet"/>
+        /// Execute the CommandText against connection and add or refresh rows in <see cref="DataSet"/>
         /// </summary>
         /// <param name="commandText">	The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="dataSet"> A <see cref="DataSet"/> to fill with records and, if necessary, schema  </param>

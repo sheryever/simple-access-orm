@@ -24,16 +24,34 @@ namespace SimpleAccess
             var otherParametersObj = otherParameters as Object;
             if (otherParametersObj != null)
             {
-                 var sqlParams = otherParametersObj.GetType().GetProperties().Select(
-                    param => {
-                        object value = param.GetValue(otherParameters, new object[] {});
-                        if (param.Name.GetType().Name.ToLower() == "string" && value != null)
-                        {
-                            value = SafeSqlLiteral(value.ToString());
-                        }
-                        return new SqlParameter("@" + Clean(param.Name), value ?? DBNull.Value );
-                    }).ToList();
-                sqlParameters.AddRange(sqlParams);
+                var propInfos = otherParametersObj.GetType().GetProperties();
+                var propCount = propInfos.Length;
+                for (int i = 0; i < propCount; i++)
+                {
+                    var propInfo = propInfos[i];
+                    object value = propInfo.GetValue(otherParameters, new object[] { });
+                    if (propInfo.PropertyType.Name.ToLower() != "string")
+                    {
+                        sqlParameters.Add(new SqlParameter("@" + Clean(propInfo.Name), value));
+                        continue;
+                    }
+                    else if (value != null)
+                    {
+                        value = SafeSqlLiteral(value.ToString());
+                    }
+                    sqlParameters.Add(new SqlParameter("@" + Clean(propInfo.Name), value ?? DBNull.Value));
+                }
+                //var sqlParams = otherParametersObj.GetType().GetProperties().Select(
+                //    param =>
+                //    {
+                //        object value = param.GetValue(otherParameters, new object[] { });
+                //        if (param.PropertyType.Name.ToLower() == "string" && value != null)
+                //        {
+                //            value = SafeSqlLiteral(value.ToString());
+                //        }
+                //        return new SqlParameter("@" + Clean(param.Name), value ?? DBNull.Value);
+                //    });//.ToList();
+                //sqlParameters.AddRange(sqlParams);
             }
         }
 

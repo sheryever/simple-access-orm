@@ -119,8 +119,7 @@ namespace SimpleAccess.SqlServer.ConsoleTest
 
         public static void TestSotredProcedureCommandSimpleAccessRepository()
         {
-            var sqlRepo = new SqlRepository();
-
+            ISqlRepository sqlRepo = new SqlRepository();
             Console.WriteLine("Test StoredProcedure Command with SimpleAccess SQL Repository");
 
             
