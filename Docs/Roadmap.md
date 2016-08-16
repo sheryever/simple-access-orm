@@ -1,7 +1,7 @@
 ## Roadmap
-- Separate SimpleCommand and Repositoy (Testing)
-- vitual properties must behave like NotASpParameter marked perperty in Entities drived from StoredProcedureParameters (Testing)
-- Remove StoredProcedureParameters inheritance from Enity Class to make entity more lighter (Testing)
+- Separate SimpleCommand and Repositoy (Done)
+- vitual properties must behave like NotASpParameter marked perperty in Entities drived from StoredProcedureParameters (Done)
+- Remove StoredProcedureParameters inheritance from Enity Class to make entity more lighter (Done)
 - Add StoredProcedure names with repository method mappings in repository settings
 - Add Sql Generation for Non StoredProcedures command types (Insert,Update,Delete,GetAll and Get)
 - Documentation in reStructuredText on [readthedocs](https://readthedocs.org/)
@@ -21,3 +21,7 @@ SimpleAccess.DataMappers.Add(new GeomaryDataMapper());
 - Rewrite code generation application
  - Allow developer to add more T4 Templates
  - Allow developer to edit T4 Templates directly inside the application
+
+### SqlRepository Without SP implementation
+- Add `DefaultView` property in EntityAttribute support for default select
+- Add `GetAllFrom(string viewName)` select the data from given view name insead of EntityNmae (Table name) & EntityAttribute (EntityName / DefaultView)
