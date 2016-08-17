@@ -55,8 +55,8 @@ namespace SimpleAccess.Core
         /// <returns></returns>
         public void CreateDataParameter(PropertyInfo propertyInfo, IDictionary<PropertyInfo, SqlParameter> dataParameters, IDictionary<PropertyInfo, SqlParameter> outParamsDictionary, bool checkForIdentity)
         {
-
-            if (propertyInfo.GetGetMethod().IsVirtual)
+            var getMethodInfo = propertyInfo.GetGetMethod();
+            if (getMethodInfo.IsVirtual && !getMethodInfo.IsFinal)
                 return;
 
             var sqlParam = new SqlParameter();
