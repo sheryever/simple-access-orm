@@ -265,6 +265,7 @@ namespace SimpleAccess.SqlServer.ConsoleTest
 - Oracle 10g and later (in default Simple Access uese Oracle Data Provider for .NET, to use Oracle Data Access Components (ODAC))
 
 ## Roadmap
-- Separate SimpleCommand and Repositoy (Testing)
-- vitual properties must behave like NotASpParameter marked perperty in Entities drived from StoredProcedureParameters (Testing)
+- Separate SimpleCommand and Repositoy ***(Done)***
+- vitual properties must behave like NotASpParameter marked perperty in Entities drived from StoredProcedureParameters ***(Done)***
+- Remove StoredProcedureParameters inheritance from Enity Class to make entity more lighter ***(Done)***
 [Read more...](/Docs/Roadmap.md)
