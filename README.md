@@ -33,9 +33,14 @@ All methods are based on stored procedures with it's related sotred procedure na
 |--------------------|---------|-------------|
 | Get&lt;TEntity&gt; | TEntity_GetById </br> ie. Person_GetById | Get TEntity by Id or anyother parameter |
 | GetAll&lt;TEntity&gt; | TEntity_GetAll </br> ie. Person_GetAll | Get all TEntity object in an IEnumerable&lt;TEntity&gt;. |
+| FindSingle&lt;TEntity&gt; | TEntity_Find </br> ie. Person_Find | Find a single TEntity object based on where expression. |
+| FindAll&lt;TEntity&gt; | TEntity_Find </br> ie. Person_Find | Find all TEntity objects based on where expression. |
 | Insert&lt;TEntity&gt; | TEntity_Insert </br> ie. Person_Insert  | Inserts the given TEntity |
+| InsertAll&lt;TEntity&gt; | TEntity_Insert </br> ie. Person_Insert  | Inserts all the given entities |
 | Update&lt;TEntity&gt; | TEntity_Update </br> ie. Person_Update | Updates the given TEntity |
+| UpdateAll&lt;TEntity&gt; | TEntity_Update </br> ie. Person_Update  | Updates all the given entities |
 | Delete&lt;TEntity&gt; | TEntity_Delete </br> ie. Person_Delete | Deletes TEntity by the given Id |
+| DeleteAll&lt;TEntity&gt; | TEntity_Delete </br> ie. Person_Delete | Deletes all the TEntity records by the given Ids |
 | SoftDelete&lt;TEntity&gt; | TEntity_MarkDelete </br> ie. Person_MarkDelete | Marks  TEntity deleted by the given Id   |
 
 ## Initial Documents

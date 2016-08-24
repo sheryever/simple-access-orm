@@ -26,6 +26,11 @@ namespace SimpleAccess.SqlServer.ConsoleTest
             Console.ReadKey();
         }
 
+        public static void d(object obj)
+        {
+            
+        }
+
         public static void TestTextCommandSimpleAccess(ISqlSimpleAccess sqlSimpleAccess)
         {
             ISqlSimpleAccess simpleAccess = sqlSimpleAccess;

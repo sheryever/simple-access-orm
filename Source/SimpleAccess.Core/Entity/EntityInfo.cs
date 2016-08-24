@@ -19,17 +19,17 @@ namespace SimpleAccess.Core.Entity
     {
         private List<PropertyInfo> OutParameterPropertyInfoCollection
         {
-            get { return _sqlBuilder.OutParameterPropertyInfoCollection; }
+            get { return SqlBuilder.OutParameterPropertyInfoCollection; }
         }
 
-        private readonly ISqlBuilder<TDbParameter> _sqlBuilder;
+        public readonly ISqlBuilder<TDbParameter> SqlBuilder;
 
         /// <summary>
         /// Get the Insert statement or StoredProcedure Parameters based on TDataParameters in ISimple
         /// </summary>
         public EntityParameters<TDbParameter> GetInsertParameters(object entity)
         {
-            return _sqlBuilder.GetInsertParameters(entity);
+            return SqlBuilder.GetInsertParameters(entity);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace SimpleAccess.Core.Entity
         /// </summary>
         public EntityParameters<TDbParameter> GetUpdateParameters(object entity)
         {
-            return _sqlBuilder.GetUpdateParameters(entity);
+            return SqlBuilder.GetUpdateParameters(entity);
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace SimpleAccess.Core.Entity
         /// </summary>
         public string GetSelectAllStatement()
         {
-            return _sqlBuilder.GetSelectAllStatement();
+            return SqlBuilder.GetSelectAllStatement();
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace SimpleAccess.Core.Entity
         /// </summary>
         public string GetInsertStatement()
         {
-            return _sqlBuilder.GetInsertStatement();
+            return SqlBuilder.GetInsertStatement();
 
 
         }
@@ -63,7 +63,7 @@ namespace SimpleAccess.Core.Entity
         /// </summary>
         public string GetUpdateSatetment()
         {
-            return _sqlBuilder.GetUpdateSatetment();
+            return SqlBuilder.GetUpdateSatetment();
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace SimpleAccess.Core.Entity
         /// </summary>
         public string GetDeleteStatment()
         {
-            return _sqlBuilder.GetDeleteStatment();
+            return SqlBuilder.GetDeleteStatment();
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace SimpleAccess.Core.Entity
         {
             EntityType = type;
             LoadEntityInformation();
-            _sqlBuilder = new TISqlBuilder();
+            SqlBuilder = new TISqlBuilder();
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace SimpleAccess.Core.Entity
         /// </summary>
         public void ClearDbParameters()
         {
-            _sqlBuilder.ClearDbParameters();
+            SqlBuilder.ClearDbParameters();
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace SimpleAccess.Core.Entity
         public void LoadOutParametersProperties(object instance)
         {
 
-            _sqlBuilder.LoadOutParametersProperties(instance);
+            SqlBuilder.LoadOutParametersProperties(instance);
         }
     }
 

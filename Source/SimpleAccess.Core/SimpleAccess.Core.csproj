@@ -55,6 +55,7 @@
     <Compile Include="DbExtensions\ConnectionExtension.cs" />
     <Compile Include="DbExtensions\DatabaseExtensions.cs" />
     <Compile Include="DbExtensions\DataReaderToObject.cs" />
+    <Compile Include="Entity\DynamicQuery.cs" />
     <Compile Include="Entity\EntityParameters.cs" />
     <Compile Include="Entity\EntityInfo.cs" />
     <Compile Include="Entity\NamespaceDoc.cs" />

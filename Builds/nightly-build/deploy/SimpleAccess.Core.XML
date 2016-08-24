@@ -94,9 +94,9 @@
             Database table/view name.
             </summary>
         </member>
-        <member name="P:SimpleAccess.EntityAttribute.Type">
+        <member name="P:SimpleAccess.EntityAttribute.DefaultView">
             <summary>
-            Object type in the database (Table/View)
+            Database default view name for select.
             </summary>
         </member>
         <member name="M:SimpleAccess.EntityAttribute.#ctor(System.String)">
@@ -105,27 +105,12 @@
             </summary>
             <param name="entityName"> Table/View name.</param>
         </member>
-        <member name="M:SimpleAccess.EntityAttribute.#ctor(System.String,SimpleAccess.DbObjectType)">
+        <member name="M:SimpleAccess.EntityAttribute.#ctor(System.String,System.String)">
             <summary>
             Specifies the database table/view name of the Entity.
             </summary>
             <param name="entityName"> Table/View name.</param>
-            <param neme="dbObjectType"> Type of the entity in the database. </param>
-        </member>
-        <member name="T:SimpleAccess.DbObjectType">
-            <summary>
-            Type of the entity in the database
-            </summary>
-        </member>
-        <member name="F:SimpleAccess.DbObjectType.Table">
-            <summary>
-            Table in the Database
-            </summary>
-        </member>
-        <member name="F:SimpleAccess.DbObjectType.View">
-            <summary>
-            View in the Database
-            </summary>
+            <param neme="defaultView"> Type of the entity in the database. </param>
         </member>
         <member name="M:SimpleAccess.Core.ISqlBuilder`1.CreateDataParameter(System.Reflection.PropertyInfo,SimpleAccess.Core.ParametersType,System.Collections.Generic.IEnumerable{System.Reflection.PropertyInfo},System.Collections.Generic.IList{System.Reflection.PropertyInfo},System.Collections.Generic.List{System.Data.IDataParameter})">
             <summary>
@@ -293,35 +278,85 @@
             <param name="piList">Optional - Cached PropertyInfo dictionary that holds property info data for this object</param>
             <param name="piListBasedOnDbColumn"> List of <see cref="T:System.Reflection.PropertyInfo"/> object having <see cref="T:SimpleAccess.DbColumnAttribute"/> in it's custom attributes</param>
         </member>
-        <member name="T:SimpleAccess.Core.EntityParameters`1">
+        <member name="T:SimpleAccess.Core.Entity.RepoWrapper.DynamicQuery">
             <summary>
-            Represents the SimpleAccess Entity information.
-            The EntityInfo is create and cache the stored procedure name, quires and parameters
+            Dynamic query class.
             </summary>
         </member>
-        <member name="M:SimpleAccess.Core.EntityParameters`1.LoadOutParametersProperties(System.Object)">
+        <member name="M:SimpleAccess.Core.Entity.RepoWrapper.DynamicQuery.GetInsertQuery(System.String,System.Object)">
             <summary>
-            Load all the properties from DbParameters which were marked as ParameterDirection.Out
+            Gets the insert query.
             </summary>
-            <param name="instance"> The instance of object </param>
+            <param name="tableName">Name of the table.</param>
+            <param name="item">The item.</param>
+            <returns>
+            The Sql query based on the item properties.
+            </returns>
         </member>
-        <member name="M:SimpleAccess.Core.EntityParameters`1.Create``1(``0,System.Action{``0,System.Collections.Generic.IDictionary{System.Reflection.PropertyInfo,`0},System.Collections.Generic.IDictionary{System.Reflection.PropertyInfo,`0},System.Boolean},System.Boolean)">
+        <member name="M:SimpleAccess.Core.Entity.RepoWrapper.DynamicQuery.GetUpdateQuery(System.String,System.Object)">
             <summary>
-            
+            Gets the update query.
             </summary>
-            <param name="entity"></param>
-            <param name="createAction"></param>
-            <typeparam name="TEntity"></typeparam>
-            <returns></returns>
+            <param name="tableName">Name of the table.</param>
+            <param name="item">The item.</param>
+            <returns>
+            The Sql query based on the item properties.
+            </returns>
         </member>
-        <member name="M:SimpleAccess.Core.EntityParameters`1.FillParameters``1(``0,System.Action{``0,System.Collections.Generic.IDictionary{System.Reflection.PropertyInfo,`0}})">
+        <member name="M:SimpleAccess.Core.Entity.RepoWrapper.DynamicQuery.GetDynamicQuery``1(System.String,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
             <summary>
-            
+            Gets the dynamic query.
             </summary>
-            <param name="entity"></param>
-            <param name="createAction"></param>
-            <typeparam name="TEntity"></typeparam>
-            <returns></returns>
+            <param name="tableName">Name of the table.</param>
+            <param name="expression">The expression.</param>
+            <returns>A result object with the generated sql and dynamic params.</returns>
+        </member>
+        <member name="M:SimpleAccess.Core.Entity.RepoWrapper.DynamicQuery.GetStoredProcedureWhere``3(System.Linq.Expressions.Expression{System.Func{``2,System.Boolean}},SimpleAccess.Core.Entity.EntityInfo{``0,``1})">
+            <summary>
+            Gets the dynamic query.
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <param name="expression">The expression.</param>
+            <returns>A result object with the generated sql and dynamic params.</returns>
+        </member>
+        <member name="M:SimpleAccess.Core.Entity.RepoWrapper.DynamicQuery.WalkTree(System.Linq.Expressions.BinaryExpression,System.Linq.Expressions.ExpressionType,System.Collections.Generic.List{SimpleAccess.Core.Entity.RepoWrapper.QueryParameter}@)">
+            <summary>
+            Walks the tree.
+            </summary>
+            <param name="body">The body.</param>
+            <param name="linkingType">Type of the linking.</param>
+            <param name="queryProperties">The query properties.</param>
+        </member>
+        <member name="M:SimpleAccess.Core.Entity.RepoWrapper.DynamicQuery.GetPropertyName(System.Linq.Expressions.BinaryExpression)">
+            <summary>
+            Gets the name of the property.
+            </summary>
+            <param name="body">The body.</param>
+            <returns>The property name for the property expression.</returns>
+        </member>
+        <member name="M:SimpleAccess.Core.Entity.RepoWrapper.DynamicQuery.GetOperator(System.Linq.Expressions.ExpressionType)">
+            <summary>
+            Gets the operator.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>
+            The expression types SQL server equivalent operator.
+            </returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="T:SimpleAccess.Core.Entity.RepoWrapper.QueryParameter">
+            <summary>
+            Class that models the data structure in coverting the expression tree into SQL and Params.
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.Core.Entity.RepoWrapper.QueryParameter.#ctor(System.String,System.String,System.Object,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SimpleAccess.Core.Entity.RepoWrapper.QueryParameter" /> class.
+            </summary>
+            <param name="linkingOperator">The linking operator.</param>
+            <param name="propertyName">Name of the property.</param>
+            <param name="propertyValue">The property value.</param>
+            <param name="queryOperator">The query operator.</param>
         </member>
         <member name="T:SimpleAccess.Core.Entity.EntityInfo`2">
             <summary>
@@ -401,6 +436,36 @@
             <summary>
             The <see cref="N:SimpleAccess.Core.Entity"/> namespace contains the core implementation for Entities in SimpleAcces.
             </summary>
+        </member>
+        <member name="T:SimpleAccess.Core.EntityParameters`1">
+            <summary>
+            Represents the SimpleAccess Entity information.
+            The EntityInfo is create and cache the stored procedure name, quires and parameters
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.Core.EntityParameters`1.LoadOutParametersProperties(System.Object)">
+            <summary>
+            Load all the properties from DbParameters which were marked as ParameterDirection.Out
+            </summary>
+            <param name="instance"> The instance of object </param>
+        </member>
+        <member name="M:SimpleAccess.Core.EntityParameters`1.Create``1(``0,System.Action{``0,System.Collections.Generic.IDictionary{System.Reflection.PropertyInfo,`0},System.Collections.Generic.IDictionary{System.Reflection.PropertyInfo,`0},System.Boolean},System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <param name="createAction"></param>
+            <typeparam name="TEntity"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleAccess.Core.EntityParameters`1.FillParameters``1(``0,System.Action{``0,System.Collections.Generic.IDictionary{System.Reflection.PropertyInfo,`0}})">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <param name="createAction"></param>
+            <typeparam name="TEntity"></typeparam>
+            <returns></returns>
         </member>
         <member name="T:SimpleAccess.Core.ISimpleAccess`6">
             <summary>

@@ -20,10 +20,9 @@ namespace SimpleAccess
         public string EntityName { get; private set; }
 
         /// <summary>
-        /// Object type in the database (Table/View)
+        /// Database default view name for select.
         /// </summary>
-        public DbObjectType Type { get; set; }
-
+        public string DefaultView { get; set; }
 
         /// <summary>
         /// Specifies the database table/view name of the Entity.
@@ -31,33 +30,33 @@ namespace SimpleAccess
         /// <param name="entityName"> Table/View name.</param>
         public EntityAttribute(string entityName)
         {
-            this.EntityName = entityName;
+            if (string.IsNullOrEmpty(entityName))
+            {
+                throw new ArgumentNullException(nameof(entityName));
+            }
+            DefaultView = EntityName = entityName;
+            
         }
 
         /// <summary>
         /// Specifies the database table/view name of the Entity.
         /// </summary>
         /// <param name="entityName"> Table/View name.</param>
-        /// <param neme="dbObjectType"> Type of the entity in the database. </param>
-        public EntityAttribute(string entityName, DbObjectType dbObjectType)
+        /// <param neme="defaultView"> Type of the entity in the database. </param>
+        public EntityAttribute(string entityName, string defaultView)
         {
-            this.EntityName = entityName;
-            Type = dbObjectType;
-        }
-    }
+            if (string.IsNullOrEmpty(entityName))
+            {
+                throw new ArgumentNullException(nameof(entityName));
+            }
 
-    /// <summary>
-    /// Type of the entity in the database
-    /// </summary>
-    public enum DbObjectType
-    {
-        /// <summary>
-        /// Table in the Database
-        /// </summary>
-        Table,
-        /// <summary>
-        /// View in the Database
-        /// </summary>
-        View
+            if (string.IsNullOrEmpty(defaultView))
+            {
+                throw new ArgumentNullException(nameof(defaultView));
+            }
+
+            EntityName = entityName;
+            DefaultView = defaultView;
+        }
     }
 }

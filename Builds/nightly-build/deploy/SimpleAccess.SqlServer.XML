@@ -1022,6 +1022,27 @@
             <param name="propertyInfos"></param>
             <returns></returns>
         </member>
+        <member name="M:SimpleAccess.Core.SqlServerSqlBuilder.In``1(``0,``0[])">
+            <summary>
+            Compare the value with multiple value.
+            </summary>
+            <typeparam name="T">Type of the value</typeparam>
+            <param name="source">Any type</param>
+            <param name="list">Multiple values or array of the same type</param>
+            <returns>Returns a bool value indicates criteria matched or not</returns>
+            <example>
+            Example shows how to use In function
+            <code>
+            <![CDATA[
+                var names = new [] { "Salman", "Jameel", "Kareem", "Kashif" };
+                if ("Kareem".In(names))
+                {
+                    Console.Write("Kareem is in names");
+                }
+            ]]>
+            </code>
+            </example>
+        </member>
         <member name="M:SimpleAccess.Core.SqlServerSqlBuilder.ClearDbParameters">
             <summary>
             Clear all DbParamters
@@ -2211,22 +2232,78 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Get``1(System.Object,System.Data.SqlClient.SqlTransaction,System.String)">
+        <member name="M:SimpleAccess.Repository.ISqlRepository.Get``1(System.Object,System.String)">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="paramObject"> The dynamic object as parameters. </param>
-            <param name="transaction">  (optional) the transaction. </param>
             <param name="fieldToSkip">  (optional) the field to skip. </param>
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.ISqlRepository.Get``1(System.Int64,System.Data.SqlClient.SqlTransaction,System.String)">
+        <member name="M:SimpleAccess.Repository.ISqlRepository.Get``1(System.Data.SqlClient.SqlTransaction,System.Object,System.String)">
+            <summary> Gets. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="transaction"> The transaction. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="fieldToSkip">  (optional) the field to skip. </param>
+            
+            <returns> . </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.ISqlRepository.Get``1(System.Int64,System.String)">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="id">		   The identifier. </param>
-            <param name="transaction"> (optional) the transaction. </param>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            
+            <returns> . </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.ISqlRepository.Get``1(System.Data.SqlClient.SqlTransaction,System.Int64,System.String)">
+            <summary> Gets. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="transaction"> The transaction. </param>
+            <param name="id">		   The identifier. </param>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            
+            <returns> . </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.ISqlRepository.FindSingle``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
+            <summary> Find a single <typeparamref name="TEntity"/>. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="expression">The expression.</param>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            
+            <returns> . </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.ISqlRepository.FindSingle``1(System.Data.SqlClient.SqlTransaction,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
+            <summary> Find a single <typeparamref name="TEntity"/>. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="transaction"> The transaction. </param>
+            <param name="expression">The expression.</param>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            
+            <returns> . </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.ISqlRepository.Find``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
+            <summary> Find a single <typeparamref name="TEntity"/>. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="expression">The expression.</param>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            
+            <returns> . </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.ISqlRepository.Find``1(System.Data.SqlClient.SqlTransaction,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
+            <summary> Find a single <typeparamref name="TEntity"/>. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="transaction"> The transaction. </param>
+            <param name="expression">The expression.</param>
             <param name="fieldToSkip"> (optional) the field to skip. </param>
             
             <returns> . </returns>
@@ -2264,6 +2341,23 @@
             
             <returns> . </returns>
         </member>
+        <member name="M:SimpleAccess.Repository.ISqlRepository.InsertAll``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary> Inserts the given SQL parameters. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="entities"> The <![CDATA[IEnumerable<TEntity>]]> to insert </param>
+            
+            <returns> The number of affected records</returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.ISqlRepository.InsertAll``1(System.Data.SqlClient.SqlTransaction,System.Collections.Generic.IEnumerable{``0})">
+             <summary> Inserts the given SQL parameters. </summary>
+             
+             <typeparam name="TEntity"> Type of the entity. </typeparam>
+             <param name="sqlTransaction">			 The SQL transaction. </param>
+             <param name="entities"> The <![CDATA[IEnumerable<TEntity>]]> to insert </param>
+            
+             <returns> The number of affected records</returns>
+        </member>
         <member name="M:SimpleAccess.Repository.ISqlRepository.Update``1(System.Data.SqlClient.SqlParameter[])">
             <summary> Updates the given sqlParameters. </summary>
             
@@ -2296,8 +2390,25 @@
             
             <returns> Number of rows affected (integer) </returns>
         </member>
+        <member name="M:SimpleAccess.Repository.ISqlRepository.UpdateAll``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary> Updates all the given entities. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="entities"> The <![CDATA[IEnumerable<TEntity>]]> to update </param>
+            
+            <returns> Number of rows affected (integer) </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.ISqlRepository.UpdateAll``1(System.Data.SqlClient.SqlTransaction,System.Collections.Generic.IEnumerable{``0})">
+            <summary> Updates all the given entities. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="entities"> The <![CDATA[IEnumerable<TEntity>]]> to update </param>
+            
+            <returns> Number of rows affected (integer) </returns>
+        </member>
         <member name="M:SimpleAccess.Repository.ISqlRepository.Delete``1(System.Data.SqlClient.SqlParameter[])">
-            <summary> Deletes the given ID. </summary>
+            <summary> Deletes the <typeparamref name="TEntity"/>  by given ID. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlParameters"> Options for controlling the SQL. </param>
@@ -2305,7 +2416,7 @@
             <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.ISqlRepository.Delete``1(System.Object)">
-            <summary> Deletes the given dynamic object as SqlParameter names and values. </summary>
+            <summary> Deletes the <typeparamref name="TEntity"/>  by given object as SqlParameter names and values. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="paramObject"> The dynamic object as parameters. </param>
@@ -2313,7 +2424,7 @@
             <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.ISqlRepository.Delete``1(System.Int64)">
-            <summary> Deletes TEntity the given ID. </summary>
+            <summary> Deletes the <typeparamref name="TEntity"/>  by given ID. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="id"> The identifier. </param>
@@ -2321,7 +2432,7 @@
             <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.ISqlRepository.Delete``1(System.Data.SqlClient.SqlTransaction,System.Int64)">
-            <summary> Deletes the given ID. </summary>
+            <summary> Deletes the <typeparamref name="TEntity"/> by given ID. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="id"> The identifier. </param>
@@ -2330,7 +2441,7 @@
             <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.ISqlRepository.Delete``1(System.Data.SqlClient.SqlTransaction,System.Data.SqlClient.SqlParameter[])">
-            <summary> Deletes the given ID. </summary>
+            <summary> Deletes the <typeparamref name="TEntity"/>  by given <see cref="T:System.Data.SqlClient.SqlParameter"/> array. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
@@ -2339,22 +2450,47 @@
             <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.ISqlRepository.DeleteAll``1">
-            <summary> Delete All records from the table. </summary>
+            <summary> Delete All the <typeparamref name="TEntity"/> records from the table. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             
             <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.ISqlRepository.DeleteAll``1(System.Data.SqlClient.SqlTransaction)">
-            <summary> Delete All records from the table with a transaction. </summary>
+            <summary> Delete All the <typeparamref name="TEntity"/> records with a transaction. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
             
             <returns> Number of rows affected (integer) </returns>
         </member>
+        <member name="M:SimpleAccess.Repository.ISqlRepository.DeleteAll``1(System.Collections.Generic.IEnumerable{System.Object})">
+            <summary> Deletes all the <typeparamref name="TEntity"/> records by  objects as SqlParameter names and values. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="paramObjects"> The <![CDATA[IEnumerable<object>]]> objects as parameters. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.ISqlRepository.DeleteAll``1(System.Collections.Generic.IEnumerable{System.Int64})">
+            <summary> Deletes all the <typeparamref name="TEntity"/> records by given IDs. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="ids"> The identifiers of records. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.ISqlRepository.DeleteAll``1(System.Data.SqlClient.SqlTransaction,System.Collections.Generic.IEnumerable{System.Int64})">
+            <summary> Deletes all the <typeparamref name="TEntity"/> records by given IDs. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="ids"> The identifiers of records. </param>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
+        </member>
         <member name="M:SimpleAccess.Repository.ISqlRepository.SoftDelete``1(System.Int64)">
-            <summary> Soft delete. </summary>
+            <summary> Soft delete the <typeparamref name="TEntity"/> record. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="id"> The identifier. </param>
@@ -2389,7 +2525,16 @@
             <returns> An enumerator that allows for each to be used to process get all {TEntity} in this
             collection. </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Get``1(System.Int64,System.Data.SqlClient.SqlTransaction,System.String)">
+        <member name="M:SimpleAccess.Repository.SqlRepository.Get``1(System.Int64,System.String)">
+            <summary> Gets. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="id">		   The identifier. </param>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            
+            <returns> . </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.SqlRepository.Get``1(System.Data.SqlClient.SqlTransaction,System.Int64,System.String)">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -2412,19 +2557,66 @@
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="transaction">  (optional) the transaction. </param>
+            <param name="transaction"> The transaction. </param>
             <param name="sqlParameter"> The SQL parameter. </param>
             <param name="fieldToSkip">  (optional) the field to skip. </param>
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.Repository.SqlRepository.Get``1(System.Object,System.Data.SqlClient.SqlTransaction,System.String)">
+        <member name="M:SimpleAccess.Repository.SqlRepository.Get``1(System.Object,System.String)">
             <summary> Gets. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="paramObject"> The dynamic object as parameters. </param>
-            <param name="transaction">  (optional) the transaction. </param>
             <param name="fieldToSkip">  (optional) the field to skip. </param>
+            
+            <returns> . </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.SqlRepository.Get``1(System.Data.SqlClient.SqlTransaction,System.Object,System.String)">
+            <summary> Gets. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="transaction"> The transaction. </param>
+            <param name="paramObject"> The dynamic object as parameters. </param>
+            <param name="fieldToSkip">  (optional) the field to skip. </param>
+            
+            <returns> . </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.SqlRepository.FindSingle``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
+            <summary> Find a single <typeparamref name="TEntity"/>. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="expression">The expression.</param>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            
+            <returns> . </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.SqlRepository.FindSingle``1(System.Data.SqlClient.SqlTransaction,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
+            <summary> Find a single <typeparamref name="TEntity"/>. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="transaction"> The transaction. </param>
+            <param name="expression">The expression.</param>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            
+            <returns> . </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.SqlRepository.Find``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
+            <summary> Find a single <typeparamref name="TEntity"/>. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="expression">The expression.</param>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            
+            <returns> . </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.SqlRepository.Find``1(System.Data.SqlClient.SqlTransaction,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
+            <summary> Find a single <typeparamref name="TEntity"/>. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="transaction"> The transaction. </param>
+            <param name="expression">The expression.</param>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
             
             <returns> . </returns>
         </member>
@@ -2461,6 +2653,23 @@
             
             <returns> . </returns>
         </member>
+        <member name="M:SimpleAccess.Repository.SqlRepository.InsertAll``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary> Inserts the given SQL parameters. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="entities"> The <![CDATA[IEnumerable<TEntity>]]> to insert </param>
+            
+            <returns> The number of affected records</returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.SqlRepository.InsertAll``1(System.Data.SqlClient.SqlTransaction,System.Collections.Generic.IEnumerable{``0})">
+             <summary> Inserts the given SQL parameters. </summary>
+             
+             <typeparam name="TEntity"> Type of the entity. </typeparam>
+             <param name="sqlTransaction">			 The SQL transaction. </param>
+             <param name="entities"> The <![CDATA[IEnumerable<TEntity>]]> to insert </param>
+            
+             <returns> The number of affected records</returns>
+        </member>
         <member name="M:SimpleAccess.Repository.SqlRepository.Update``1(System.Data.SqlClient.SqlParameter[])">
             <summary> Updates the given sqlParameters. </summary>
             
@@ -2477,7 +2686,7 @@
             <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.SqlRepository.Update``1(``0)">
-            <summary> Updates the given sqlParameters. </summary>
+            <summary> Updates the given TEntity. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="entity"> Entity to insert </param>
@@ -2485,13 +2694,30 @@
             <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.Repository.SqlRepository.Update``1(System.Data.SqlClient.SqlTransaction,``0)">
-            <summary> Updates the given sqlParameters. </summary>
+            <summary> Updates the given TEntity. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction">			 The SQL transaction. </param>
             <param name="entity"> Entity to insert </param>
             
             <returns> . </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.SqlRepository.UpdateAll``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary> Updates all the given entities. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="entities"> The <![CDATA[IEnumerable<TEntity>]]> to update </param>
+            
+            <returns> Number of rows affected (integer) </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.SqlRepository.UpdateAll``1(System.Data.SqlClient.SqlTransaction,System.Collections.Generic.IEnumerable{``0})">
+            <summary> Updates all the given entities. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="entities"> The <![CDATA[IEnumerable<TEntity>]]> to update </param>
+            
+            <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.Repository.SqlRepository.Delete``1(System.Int64)">
             <summary> Deletes the given ID. </summary>
@@ -2546,6 +2772,31 @@
             <summary> Delete All records from the table with a transaction. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.SqlRepository.DeleteAll``1(System.Collections.Generic.IEnumerable{System.Object})">
+            <summary> Deletes all the <typeparamref name="TEntity"/> records by  objects as SqlParameter names and values. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="paramObjects"> The <![CDATA[IEnumerable<object>]]> objects as parameters. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.SqlRepository.DeleteAll``1(System.Collections.Generic.IEnumerable{System.Int64})">
+            <summary> Deletes all the <typeparamref name="TEntity"/> records by given IDs. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="ids"> The identifiers of records. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
+        </member>
+        <member name="M:SimpleAccess.Repository.SqlRepository.DeleteAll``1(System.Data.SqlClient.SqlTransaction,System.Collections.Generic.IEnumerable{System.Int64})">
+            <summary> Deletes all the <typeparamref name="TEntity"/> records by given IDs. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="ids"> The identifiers of records. </param>
             <param name="sqlTransaction"> The SQL transaction. </param>
             
             <returns> Number of rows affected (integer) </returns>

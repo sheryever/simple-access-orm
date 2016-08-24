@@ -27,9 +27,9 @@ namespace SimpleAccess.SqlServer
         /// SimpleLogger to log exception
         /// </summary>
         ISimpleLogger SimpleLogger { get; }
-
         
-        /// <summary> Creates a command. </summary>
+
+            /// <summary> Creates a command. </summary>
         /// 
         /// <param name="commandText">   The query string. </param>
         /// <param name="commandType">   Type of the command. </param>

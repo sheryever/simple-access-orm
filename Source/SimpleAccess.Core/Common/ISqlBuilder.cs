@@ -71,6 +71,8 @@ namespace SimpleAccess.Core
         /// </summary>
         List<PropertyInfo> OutParameterPropertyInfoCollection { get; set; }
 
+        string BuildValueOperand(Type valueType, object value);
+
         void ClearDbParameters();
         void LoadOutParametersProperties(object instance);
     }

@@ -254,6 +254,64 @@ namespace SimpleAccess.Core
         }
 
 
+        public string BuildValueOperand(Type valueType, object value)
+        {
+            var result = "";
+            if (value == null)
+            {
+                return "null";
+            }
+
+            if (valueType == typeof(bool))
+            {
+                return (bool)value ? "1" : "0";
+            }
+            else if (In(valueType, typeof(string), typeof(TimeSpan), typeof(TimeSpan?), typeof(DateTime),
+                typeof(DateTime?)))
+            {
+                return string.Format("'{0}'", SafeSqlLiteral(value.ToString()));
+            }
+            else if (In(valueType, typeof(Int16), typeof(Int16?) ,typeof(int), typeof(int?), typeof(Int32), typeof(Int32?), typeof(Int64), typeof(Int64?), typeof(Single), typeof(Single?),
+                                typeof(float), typeof(float?), typeof(decimal), typeof(decimal?), typeof(double), typeof(double?)))
+            {
+                return value.ToString();
+            }
+            else
+            {
+                throw new ArgumentException($"Invalid augument type {valueType.Name}");
+            }
+        }
+
+
+        /// <summary>
+        /// Compare the value with multiple value.
+        /// </summary>
+        /// <typeparam name="T">Type of the value</typeparam>
+        /// <param name="source">Any type</param>
+        /// <param name="list">Multiple values or array of the same type</param>
+        /// <returns>Returns a bool value indicates criteria matched or not</returns>
+        /// <example>
+        /// Example shows how to use In function
+        /// <code>
+        /// <![CDATA[
+        ///     var names = new [] { "Salman", "Jameel", "Kareem", "Kashif" };
+        ///     if ("Kareem".In(names))
+        ///     {
+        ///         Console.Write("Kareem is in names");
+        ///     }
+        /// ]]>
+        /// </code>
+        /// </example>
+        public static bool In<T>(T source, params T[] list)
+        {
+            if (null == source)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            return list.Contains(source);
+        }
+
         /// <summary>
         /// Clear all DbParamters
         /// </summary>
