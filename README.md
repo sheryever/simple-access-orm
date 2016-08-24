@@ -160,17 +160,6 @@ BEGIN
 
 END
 ```
-##### People_Delete
-```Sql
-CREATE PROC [dbo].[People_Delete]
-	@Id INT
-AS
-BEGIN
-    DELETE FROM dbo.People
-    	WHERE Id = @Id
-
-END
-```
 ##### People_MarkDelete
 ```Sql
 CREATE PROC [dbo].[People_MarkDelete]
@@ -243,7 +232,8 @@ namespace SimpleAccess.SqlServer.ConsoleTest
                 , CreatedBy = 1 // user id
             };
 
-			repo.Insert<Person>(newPerson);
+	    repo.Insert<Person>(newPerson);
+            Console.Write("New person id: {0}", newPerson.Id);
 
 			//Update
             var personToUpdate = repo.GetById(1);
@@ -254,7 +244,6 @@ namespace SimpleAccess.SqlServer.ConsoleTest
 
 			var rowAffected = repo.Update<Person>(personToUpdate);
 
-            Console.Write("New person id: {0}", newPerson.Id);
     	}
     }
 
