@@ -107,14 +107,29 @@ namespace SimpleAccess.Core.Entity
                 where TISqlBuilder : ISqlBuilder<TDbParameter>, new()
                 where TDbParameter : IDataParameter
             {
+                BinaryExpression binaryExpressionBody = null;
+                MethodCallExpression methodCallExpressionBody = null;
                 var queryProperties = new List<QueryParameter>();
-                var body = (BinaryExpression)expression.Body;
+                if (expression.Body is BinaryExpression)
+                {
+                    binaryExpressionBody = (BinaryExpression)expression.Body;
+                    // walk the tree and build up a list of query parameter objects
+                    // from the left and right branches of the expression tree
+                    WalkTree(binaryExpressionBody, ExpressionType.Default, ref queryProperties);
+
+
+                }
+                else if (expression.Body is MethodCallExpression)
+                {
+                    methodCallExpressionBody = (MethodCallExpression) expression.Body;
+                    // walk the tree and build up a list of query parameter objects
+                    // from the left and right branches of the expression tree
+                    WalkTree(methodCallExpressionBody, ExpressionType.Default, ref queryProperties);
+
+                }
+
                 IDictionary<string, Object> expando = new ExpandoObject();
                 var builder = new StringBuilder();
-
-                // walk the tree and build up a list of query parameter objects
-                // from the left and right branches of the expression tree
-                WalkTree(body, ExpressionType.Default, ref queryProperties);
 
                 // convert the query parms into a SQL string and dynamic property object
 
@@ -123,26 +138,28 @@ namespace SimpleAccess.Core.Entity
                 for (int i = 0; i < queryProperties.Count(); i++)
                 {
                     QueryParameter item = queryProperties[i];
-                    
+
+                    var propertyInfo = typeof(TEntitiy).GetProperty(item.PropertyName);
                     if (!string.IsNullOrEmpty(item.LinkingOperator) && i > 0)
                     {
-                        var propertyInfo = typeof(TEntitiy).GetProperty(item.PropertyName);
                         //builder.Append(string.Format("{0} {1} {2} @{1} ", item.LinkingOperator, item.PropertyName,
-                        builder.Append(string.Format("{0} {1} {2} {3} ", item.LinkingOperator, item.PropertyName,
-                                                     item.QueryOperator, entityInfo.SqlBuilder.BuildValueOperand(propertyInfo.PropertyType, item.PropertyValue)));
+                        builder.Append(string.Format("{0}  {1} ", item.LinkingOperator,
+                            entityInfo.SqlBuilder.BuildWhereExpression(item.PropertyName, propertyInfo.PropertyType,
+                                item.QueryOperator, item.PropertyValue)));
+
                     }
                     else
                     {
-                        builder.Append(string.Format("{0} {1} @{0} ", item.PropertyName, item.QueryOperator));
+                        builder.Append(entityInfo.SqlBuilder.BuildWhereExpression(item.PropertyName, propertyInfo.PropertyType,
+                                    item.QueryOperator, item.PropertyValue));
+//                                entityInfo.SqlBuilder.BuildValueOperand(propertyInfo.PropertyType, item.PropertyValue)));
+                        
                     }
-
-                    
                 }
 
                 return builder.ToString();
             }
-
-
+            
             /// <summary>
             /// Walks the tree.
             /// </summary>
@@ -163,9 +180,40 @@ namespace SimpleAccess.Core.Entity
                 }
                 else
                 {
-                    WalkTree((BinaryExpression)body.Left, body.NodeType, ref queryProperties);
-                    WalkTree((BinaryExpression)body.Right, body.NodeType, ref queryProperties);
+                    if (body.Left is BinaryExpression)
+                    {
+                        WalkTree((BinaryExpression)body.Left, body.NodeType, ref queryProperties);
+                    }
+                    else if(body.Left is MethodCallExpression)
+                    {
+                        WalkTree((MethodCallExpression)body.Left, body.NodeType, ref queryProperties);
+                    }
+                    if (body.Right is BinaryExpression)
+                    {
+                        WalkTree((BinaryExpression)body.Right, body.NodeType, ref queryProperties);
+                    }
+                    else if (body.Right is MethodCallExpression)
+                    {
+                        WalkTree((MethodCallExpression)body.Right, body.NodeType, ref queryProperties);
+                    }
                 }
+            }
+
+            /// <summary>
+            /// Walks the tree.
+            /// </summary>
+            /// <param name="body">The body.</param>
+            /// <param name="linkingType">Type of the linking.</param>
+            /// <param name="queryProperties">The query properties.</param>
+            private static void WalkTree(MethodCallExpression body, ExpressionType linkingType,
+                                         ref List<QueryParameter> queryProperties)
+            {
+                string propertyName = GetPropertyName(body);
+                dynamic propertyValue = body.Arguments[0];
+                string opr = body.Method.Name;
+                string link = GetOperator(linkingType);
+
+                queryProperties.Add(new QueryParameter(link, propertyName, propertyValue.Value, opr));
             }
 
             /// <summary>
@@ -182,6 +230,18 @@ namespace SimpleAccess.Core.Entity
                     // hack to remove the trailing ) when convering.
                     propertyName = propertyName.Replace(")", string.Empty);
                 }
+
+                return propertyName;
+            }
+
+            /// <summary>
+            /// Gets the name of the property.
+            /// </summary>
+            /// <param name="body">The body.</param>
+            /// <returns>The property name for the property expression.</returns>
+            private static string GetPropertyName(MethodCallExpression body)
+            {
+                string propertyName = body.Object.ToString().Split(new char[] { '.' })[1];
 
                 return propertyName;
             }

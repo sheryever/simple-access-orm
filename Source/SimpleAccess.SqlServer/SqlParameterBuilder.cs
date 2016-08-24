@@ -254,34 +254,43 @@ namespace SimpleAccess.Core
         }
 
 
-        public string BuildValueOperand(Type valueType, object value)
+        public string BuildWhereExpression(string propertyName, Type valueType, string @operator, object value)
         {
             var result = "";
-            if (value == null)
+            if (value == null && @operator == "=")
             {
-                return "null";
+                return string.Format(" {0} is null", propertyName);
+            }
+            if (@operator == "EndsWith")
+            {
+                return string.Format(" {0} LIKE '%{1}'", propertyName, SafeSqlLiteral(value.ToString()));
+            }
+            if (@operator == "StartsWith")
+            {
+                return string.Format(" {0} LIKE '{1}%'", propertyName, SafeSqlLiteral(value.ToString()));
             }
 
             if (valueType == typeof(bool))
             {
-                return (bool)value ? "1" : "0";
+                result = string.Format(" {0} {1} {2} ", propertyName, @operator, (bool)value ? "1" : "0");
             }
             else if (In(valueType, typeof(string), typeof(TimeSpan), typeof(TimeSpan?), typeof(DateTime),
                 typeof(DateTime?)))
             {
-                return string.Format("'{0}'", SafeSqlLiteral(value.ToString()));
+                result = string.Format("{0} {1} '{2}' ", propertyName, @operator, SafeSqlLiteral(value.ToString()));
             }
-            else if (In(valueType, typeof(Int16), typeof(Int16?) ,typeof(int), typeof(int?), typeof(Int32), typeof(Int32?), typeof(Int64), typeof(Int64?), typeof(Single), typeof(Single?),
+            else if (In(valueType, typeof(Int16), typeof(Int16?), typeof(int), typeof(int?), typeof(Int32), typeof(Int32?), typeof(Int64), typeof(Int64?), typeof(Single), typeof(Single?),
                                 typeof(float), typeof(float?), typeof(decimal), typeof(decimal?), typeof(double), typeof(double?)))
             {
-                return value.ToString();
+                result = string.Format("{0} {1} {2} ", propertyName, @operator, value.ToString());
             }
             else
             {
                 throw new ArgumentException($"Invalid augument type {valueType.Name}");
             }
-        }
 
+            return result;
+        }
 
         /// <summary>
         /// Compare the value with multiple value.

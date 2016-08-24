@@ -197,8 +197,7 @@ namespace SimpleAccess.Repository
             var commandText = string.Format("{0}_Find", entityInfo.DbObjectName);
 
             return SimpleAccess.ExecuteEntity<TEntity>(commandText, CommandType.StoredProcedure
-                , DynamicQuery.GetStoredProcedureWhere(expression, entityInfo) , fieldToSkip);
-
+                    , fieldToSkip, parameters: new SqlParameter("@whereClause", DynamicQuery.GetStoredProcedureWhere(expression, entityInfo)));
         }
 
         /// <summary> Find a single <typeparamref name="TEntity"/>. </summary>
@@ -217,8 +216,7 @@ namespace SimpleAccess.Repository
             var commandText = string.Format("{0}_Find", entityInfo.DbObjectName);
 
             return SimpleAccess.ExecuteEntity<TEntity>(transaction, commandText, CommandType.StoredProcedure
-                , DynamicQuery.GetStoredProcedureWhere(expression, entityInfo) , fieldToSkip);
-
+                , fieldToSkip, parameters: new SqlParameter("@whereClause", DynamicQuery.GetStoredProcedureWhere(expression, entityInfo)));
         }
 
         /// <summary> Find a single <typeparamref name="TEntity"/>. </summary>
@@ -236,7 +234,7 @@ namespace SimpleAccess.Repository
             var commandText = string.Format("{0}_Find", entityInfo.DbObjectName);
 
             return SimpleAccess.ExecuteEntities<TEntity>(commandText, CommandType.StoredProcedure
-                , DynamicQuery.GetStoredProcedureWhere(expression, entityInfo), fieldToSkip);
+                , fieldToSkip, parameters: new SqlParameter("@whereClause",DynamicQuery.GetStoredProcedureWhere(expression, entityInfo) ));
 
         }
 
@@ -256,8 +254,7 @@ namespace SimpleAccess.Repository
             var commandText = string.Format("{0}_Find", entityInfo.DbObjectName);
 
             return SimpleAccess.ExecuteEntities<TEntity>(transaction, commandText, CommandType.StoredProcedure
-                , DynamicQuery.GetStoredProcedureWhere(expression, entityInfo), fieldToSkip);
-
+                    , fieldToSkip, parameters: new SqlParameter("@whereClause", DynamicQuery.GetStoredProcedureWhere(expression, entityInfo)));
         }
 
 

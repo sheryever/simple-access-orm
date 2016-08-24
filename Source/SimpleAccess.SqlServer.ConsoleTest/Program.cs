@@ -7,15 +7,43 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using SimpleAccess;
-using SimpleAccess.Core;
 using SimpleAccess.Repository;
-using SimpleAccess.SqlServer;
 
 namespace SimpleAccess.SqlServer.ConsoleTest
 {
     class Program
     {
         static void Main(string[] args)
+        {
+
+            ISqlRepository repo = new SqlRepository("sqlDefaultConnection2");
+
+            var branches = repo.GetAll<Branche>();
+            var branch = repo.FindSingle<Branche>(b => b.Id == 1);
+            branches = repo.Find<Branche>(b => b.Address2.EndsWith("Munawwarah") && b.Name == "البيداء");
+            branches = repo.Find<Branche>(b => b.Address2 == null);
+
+            Console.WriteLine("Press any key to close.");
+            Console.ReadKey();
+        }
+
+        [Entity("Branches")]
+        public class Branche
+        {
+            [Identity]
+            public int Id { get; set; }
+
+            public int CityId { get; set; }
+            public string Name { get; set; }
+            public string PhoneNumbers { get; set; }
+            public string Address { get; set; }
+
+            public string Address2 { get; set; }
+        }
+
+
+
+        static void Main2(string[] args)
         {
 
             ConstructorTests();
@@ -26,10 +54,6 @@ namespace SimpleAccess.SqlServer.ConsoleTest
             Console.ReadKey();
         }
 
-        public static void d(object obj)
-        {
-            
-        }
 
         public static void TestTextCommandSimpleAccess(ISqlSimpleAccess sqlSimpleAccess)
         {

@@ -327,7 +327,22 @@
             <param name="linkingType">Type of the linking.</param>
             <param name="queryProperties">The query properties.</param>
         </member>
+        <member name="M:SimpleAccess.Core.Entity.RepoWrapper.DynamicQuery.WalkTree(System.Linq.Expressions.MethodCallExpression,System.Linq.Expressions.ExpressionType,System.Collections.Generic.List{SimpleAccess.Core.Entity.RepoWrapper.QueryParameter}@)">
+            <summary>
+            Walks the tree.
+            </summary>
+            <param name="body">The body.</param>
+            <param name="linkingType">Type of the linking.</param>
+            <param name="queryProperties">The query properties.</param>
+        </member>
         <member name="M:SimpleAccess.Core.Entity.RepoWrapper.DynamicQuery.GetPropertyName(System.Linq.Expressions.BinaryExpression)">
+            <summary>
+            Gets the name of the property.
+            </summary>
+            <param name="body">The body.</param>
+            <returns>The property name for the property expression.</returns>
+        </member>
+        <member name="M:SimpleAccess.Core.Entity.RepoWrapper.DynamicQuery.GetPropertyName(System.Linq.Expressions.MethodCallExpression)">
             <summary>
             Gets the name of the property.
             </summary>

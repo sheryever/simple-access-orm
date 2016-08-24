@@ -71,7 +71,7 @@ namespace SimpleAccess.Core
         /// </summary>
         List<PropertyInfo> OutParameterPropertyInfoCollection { get; set; }
 
-        string BuildValueOperand(Type valueType, object value);
+        string BuildWhereExpression(string propertyName, Type valueType, string @operator, object value);
 
         void ClearDbParameters();
         void LoadOutParametersProperties(object instance);
