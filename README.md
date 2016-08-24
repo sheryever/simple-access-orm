@@ -5,6 +5,11 @@ SimpleAccess provides excpetion logging.
 
 SimpleAccess returns data in Entity and dynamic data type but also allow developers to work on direct DataReader or DataSet
 
+## Nuget package
+```powershell
+PM > Install-Package SimpleAccess.SqlServer -Pre
+```
+
 ## SqlSimpleAccess
 Sql Server implementaion for SimpleAccess.
 
