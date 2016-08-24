@@ -212,7 +212,7 @@ namespace SimpleAccess.SqlServer.ConsoleTest
             person = repo.FindSingle<Person>(b => b.Id == 1);
             people = repo.Find<Person>(b => b.Address.EndsWith("Munawwarah")
             								&& b.Name == "البيداء"); // EndsWith & StartsWith uses LIKE
-            people = repo.Find<Branche>(b => b.Address == null);  // Where Address is null
+            people = repo.Find<Person>(b => b.Address == null);  // Where Address is null
 
             // Retrive data using SqlRepository.SimpleAccess
             var peopleDeleted = repo.SimpleAccess.ExecuteDynamics("People_GetAllDeleted");
