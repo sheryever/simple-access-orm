@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SimpleAccess;
 using SimpleAccess.Repository;
+using SimpleAccess.SqlServer.ConsoleTest.Entities;
 
 namespace SimpleAccess.SqlServer.ConsoleTest
 {
@@ -16,30 +17,35 @@ namespace SimpleAccess.SqlServer.ConsoleTest
         static void Main(string[] args)
         {
 
-            ISqlRepository repo = new SqlRepository("sqlDefaultConnection2");
 
-            var branches = repo.GetAll<Branche>();
-            var branch = repo.FindSingle<Branche>(b => b.Id == 1);
-            branches = repo.Find<Branche>(b => b.Address2.EndsWith("Munawwarah") && b.Name == "البيداء");
-            branches = repo.Find<Branche>(b => b.Address2 == null);
+
+            (new FindExpressionTest()).Test();
+
+            //branches = repo.Find<Branche>(b => b.Address2.Contains("Munawwarah") && b.Name == "البيداء");
+            (new TestClassFindAndFindAll()).Test("Al Madina", "Munawwarah");
+
 
             Console.WriteLine("Press any key to close.");
             Console.ReadKey();
         }
 
-        [Entity("Branches")]
-        public class Branche
+        public class FindExpressionTest
         {
-            [Identity]
-            public int Id { get; set; }
+            public void Test()
+            {
+                ISqlRepository repo = new SqlRepository("sqlDefaultConnection2");
 
-            public int CityId { get; set; }
-            public string Name { get; set; }
-            public string PhoneNumbers { get; set; }
-            public string Address { get; set; }
+                var branches = repo.GetAll<Branche>();
+                var branch = repo.FindSingle<Branche>(b => b.Id == 1);
+                branches = repo.Find<Branche>(b => b.Address2.EndsWith("Munawwarah") && b.Name == "البيداء");
+                branches = repo.Find<Branche>(b => b.Address2.StartsWith("Al Madina"));
+                branches = repo.Find<Branche>(b => b.Address2 == null);
+            }
 
-            public string Address2 { get; set; }
+
         }
+
+
 
 
 

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Dynamic;
 using System.Linq;
@@ -209,11 +211,11 @@ namespace SimpleAccess.Core.Entity
                                          ref List<QueryParameter> queryProperties)
             {
                 string propertyName = GetPropertyName(body);
-                dynamic propertyValue = body.Arguments[0];
+                dynamic propertyValue = GetExpressionValue(body);
                 string opr = body.Method.Name;
                 string link = GetOperator(linkingType);
 
-                queryProperties.Add(new QueryParameter(link, propertyName, propertyValue.Value, opr));
+                queryProperties.Add(new QueryParameter(link, propertyName, propertyValue, opr));
             }
 
             /// <summary>
@@ -232,6 +234,21 @@ namespace SimpleAccess.Core.Entity
                 }
 
                 return propertyName;
+            }
+
+            private static object GetExpressionValue(MethodCallExpression body)
+            {
+                if (body.Arguments[0] is ConstantExpression)
+                {
+                    return ((dynamic) body.Arguments[0]).Value;
+                }
+                else
+                {
+                    LambdaExpression lambda = Expression.Lambda(body.Arguments[0]);
+                    var compiledExpression = lambda.Compile();
+                    return compiledExpression.DynamicInvoke();
+                }
+
             }
 
             /// <summary>
@@ -282,7 +299,54 @@ namespace SimpleAccess.Core.Entity
                         throw new NotImplementedException();
                 }
             }
+
+
+
         }
+
+        #region Expression helpers
+        public static class ExpressionExtensions
+        {
+            public static string GetMethodName<T>(this Expression<Func<T>> expression)
+            {
+                var body = (MethodCallExpression)expression.Body;
+                return body.Method.Name;
+            }
+
+            public static ReadOnlyCollection<Expression> GetInnerArguments<T>(this Expression<Func<T>> expression)
+            {
+                var body = (MethodCallExpression)expression.Body;
+                return body.GetInnerArguments();
+            }
+
+            public static ReadOnlyCollection<Expression> GetInnerArguments(this MethodCallExpression expression)
+            {
+                var args = new List<Expression>();
+
+                var arguments = expression.Arguments;
+
+                foreach (var a in arguments)
+                {
+                    var methodCallExpression = a.AsMethodCallExpression();
+                    if (methodCallExpression != null && methodCallExpression.Arguments.Count > 0)
+                    {
+                        args.AddRange(methodCallExpression.GetInnerArguments());
+                    }
+                    else
+                    {
+                        args.Add(a);
+                    }
+                }
+
+                return new ReadOnlyCollection<Expression>(args.Where(a => a.NodeType == ExpressionType.MemberAccess).ToList());
+            }
+
+            public static MethodCallExpression AsMethodCallExpression(this Expression expression)
+            {
+                return expression as MethodCallExpression;
+            }
+        }
+        #endregion
 
         /// <summary>
         /// Class that models the data structure in coverting the expression tree into SQL and Params.
@@ -309,6 +373,8 @@ namespace SimpleAccess.Core.Entity
                 this.QueryOperator = queryOperator;
             }
         }
+
+
     }
 
 }

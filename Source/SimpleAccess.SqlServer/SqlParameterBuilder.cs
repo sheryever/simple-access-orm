@@ -269,7 +269,10 @@ namespace SimpleAccess.Core
             {
                 return string.Format(" {0} LIKE '{1}%'", propertyName, SafeSqlLiteral(value.ToString()));
             }
-
+            if (@operator == "Contains")
+            {
+                return string.Format(" {0} LIKE '%{1}%'", propertyName, SafeSqlLiteral(value.ToString()));
+            }
             if (valueType == typeof(bool))
             {
                 result = string.Format(" {0} {1} {2} ", propertyName, @operator, (bool)value ? "1" : "0");
