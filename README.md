@@ -7,7 +7,7 @@ SimpleAccess returns data in Entity and dynamic data type but also allow develop
 
 ## Nuget package
 ```powershell
-PM > Install-Package SimpleAccess.SqlServer -Pre
+PM > Install-Package SimpleAccess.SqlServer
 ```
 
 ## SqlSimpleAccess
