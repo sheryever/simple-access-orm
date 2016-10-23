@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Linq.Expressions;
 using SimpleAccess.SqlServer;
 
-namespace SimpleAccess.Repository
+namespace SimpleAccess.SqlServer
 {
     /// <summary>
     /// Represent the interface of SimpleAccess Repository methods and it's implemented by SqlRepository

@@ -150,7 +150,6 @@ namespace SimpleAccess.SqlServer
         /// <param name="sqlParameters">  Options for controlling the SQL. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-
         public int ExecuteNonQuery(string commandText, params SqlParameter[] sqlParameters)
         {
             return ExecuteNonQuery(commandText, DefaultSimpleAccessSettings.DefaultCommandType, sqlParameters);
@@ -166,7 +165,6 @@ namespace SimpleAccess.SqlServer
         /// <param name="sqlParameters">  Options for controlling the SQL. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-
         public int ExecuteNonQuery(string commandText, CommandType commandType,
             params SqlParameter[] sqlParameters)
         {
@@ -201,7 +199,6 @@ namespace SimpleAccess.SqlServer
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-
         public int ExecuteNonQuery(string commandText, object paramObject = null)
         {
             return ExecuteNonQuery(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSqlParameters(paramObject));
@@ -585,7 +582,6 @@ namespace SimpleAccess.SqlServer
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
-
             }
         }
 

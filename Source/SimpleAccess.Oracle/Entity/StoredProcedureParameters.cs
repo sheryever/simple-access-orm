@@ -1,28 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
+
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Oracle.ManagedDataAccess.Client;
-using SimpleAccess.Oracle.DbExtensions;
+using SimpleAccess.Core;
 
 namespace SimpleAccess.Oracle
 {
+    /// <summary>
+    /// Base class of all TEntity Classes
+    /// </summary>
     public class StoredProcedureParameters
     {
         private string _entityName;
         private List<PropertyInfo> _outParameterPropertyInfoCollection;
         private List<OracleParameter> _spOutParameters;
         private List<OracleParameter> _oracleParameters;
+
         private ParametersType? _storedParametersType = null;
         private OracleParameter IdentityKeyOracleParameter { get; set; }
 
-        public void AddOracleParameters(dynamic paramsObject)
+        /// <summary>
+        /// Add more parameters in underline DbParameters
+        /// </summary>
+        /// <param name="paramsObject"></param>
+        public void AddOracleParameters(object paramsObject)
         {
-            _oracleParameters.CreateOracleParametersFromDynamic(paramsObject as Object);
+            _oracleParameters.CreateOracleParametersFromObject(paramsObject);
         }
 
+        /// <summary>
+        /// Create paramters from object properties
+        /// </summary>
+        /// <param name="parametersType"></param>
+        /// <returns></returns>
         public OracleParameter[] CreateOracleParametersFromProperties(ParametersType parametersType)
         {
 
@@ -40,17 +55,6 @@ namespace SimpleAccess.Oracle
             return _oracleParameters.ToArray();
         }
 
-        public OracleParameter[] GetSpParameters(ParametersType parametersType) 
-        {
-            if (_storedParametersType != parametersType)
-                return CreateOracleParametersFromProperties(parametersType);
-
-            if (_oracleParameters == null || _oracleParameters.Count < 1)
-                return CreateOracleParametersFromProperties(parametersType);
-            else
-                return _oracleParameters.ToArray();
-        }
-
         private OracleParameter CreateOracleParameter(PropertyInfo propertyInfo, ParametersType parametesType, IEnumerable<PropertyInfo> propertyInfos)
         {
             object value = propertyInfo.GetValue(this, new object[] { });
@@ -62,15 +66,13 @@ namespace SimpleAccess.Oracle
                 value = SafeSqlLiteral(value.ToString());
             }
             
-
-
             if ((propertyInfo.PropertyType.IsGenericType
                 || propertyInfo.PropertyType.Name == "String") & value == null)
             {
                 sqlParam.IsNullable = true;
                 sqlParam.Value = DBNull.Value;
             }
-            
+
             var attrbutes = propertyInfo.GetCustomAttributes(true);
 
             /*
@@ -84,33 +86,47 @@ namespace SimpleAccess.Oracle
             if (propertyInfo.PropertyType.IsEnum)
                 sqlParam.Value = value.ToString();
             */
+			var getMethodInfo = propertyInfo.GetGetMethod();
+			
+			
+            if (getMethodInfo.IsVirtual && !getMethodInfo.IsFinal)
+                return null;
 
             if (attrbutes.FirstOrDefault(a => a is NotASpParameterAttribute) != null)
                 return null;
 
-            var dbColumnPropertyAttribute =
-                attrbutes.FirstOrDefault(a => a is DbColumnPropertyAttribute) as DbColumnPropertyAttribute;
-            
-            if (dbColumnPropertyAttribute != null)
-            {
-                var dbColumnPropertyPropertyInfo =
-                    propertyInfos.FirstOrDefault(p => p.Name == dbColumnPropertyAttribute.DbColumnProperty);
+            //var dbColumnPropertyAttribute =
+            //    attrbutes.FirstOrDefault(a => a is DbColumnPropertyAttribute) as DbColumnPropertyAttribute;
 
-                value = dbColumnPropertyPropertyInfo.GetValue(this, new object[] { });
-                sqlParam.Value = value;
+            //if (dbColumnPropertyAttribute != null)
+            //{
+            //    var dbColumnPropertyPropertyInfo =
+            //        propertyInfos.FirstOrDefault(p => p.Name == dbColumnPropertyAttribute.DbColumnProperty);
+
+            //    value = dbColumnPropertyPropertyInfo.GetValue(this, new object[] { });
+            //    sqlParam.Value = value;
+            //}
+
+            var dbColumnAttribute =
+                attrbutes.FirstOrDefault(a => a is DbColumnAttribute) as DbColumnAttribute;
+
+            if (dbColumnAttribute != null)
+            {
+                sqlParam.ParameterName = string.Format("@{0}", dbColumnAttribute.DbColumn);
             }
-                
+
+
 
             if (parametesType == ParametersType.Insert)
             {
-                var propertyDataType = propertyInfo.DeclaringType;
+                //var propertyDataType = propertyInfo.DeclaringType;
                 
                 var outParaAttr = attrbutes.FirstOrDefault(a => a is ParameterDirectionAttribute) as ParameterDirectionAttribute;
                 if (outParaAttr != null)
                 {
                     sqlParam.Direction = outParaAttr.SpParameterDirection;
                     _outParameterPropertyInfoCollection.Add(propertyInfo);
-                    this._spOutParameters.Add(sqlParam);
+                    _spOutParameters.Add(sqlParam);
                 }
 
                 //if (propertyInfo.PropertyType.GetType() is DateTime
@@ -123,7 +139,10 @@ namespace SimpleAccess.Oracle
             Debug.WriteLine(sqlParam.ParameterName);
             return sqlParam;
         }
-
+        
+        /// <summary>
+        /// Load all the properties from DbParameters which were marked as ParameterDirection.Out
+        /// </summary>
         public void LoadOutParametersProperties() 
         {
             _outParameterPropertyInfoCollection.ForEach(p => {
@@ -141,6 +160,9 @@ namespace SimpleAccess.Oracle
             ClearSpParameters();
         }
 
+        /// <summary>
+        /// Clear all DbParamters
+        /// </summary>
         public void ClearSpParameters()
         {
             _spOutParameters.Clear();
@@ -148,7 +170,28 @@ namespace SimpleAccess.Oracle
             _outParameterPropertyInfoCollection.Clear();
         }
 
-        public IList<ValidationResult> Validate()
+        /// <summary>
+        /// Get underline DbParametes
+        /// </summary>
+        /// <param name="parametersType"></param>
+        /// <returns></returns>
+        public OracleParameter[] GetSpParameters(ParametersType parametersType)
+        {
+            if (_storedParametersType != parametersType)
+                return CreateOracleParametersFromProperties(parametersType);
+
+            if (_oracleParameters == null || _oracleParameters.Count < 1)
+                return CreateOracleParametersFromProperties(parametersType);
+            else
+                return _oracleParameters.ToArray();
+        }
+
+
+        /// <summary>
+        /// Validate the object and get the result if any.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ValidationResult> Validate()
         {
             IList<ValidationResult> result = new List<ValidationResult>();
             Validator.TryValidateObject(this, new ValidationContext(this, null, null), result, true);
@@ -156,9 +199,9 @@ namespace SimpleAccess.Oracle
             return result;
         }
 
-        private string SafeSqlLiteral(string inputSQL)
+        private string SafeSqlLiteral(string inputSql)
         {
-            return inputSQL.Replace("'", "''");
+            return inputSql.Replace("'", "''");
         }
 
     }

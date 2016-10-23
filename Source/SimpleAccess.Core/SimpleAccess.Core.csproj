@@ -52,6 +52,8 @@
     <Compile Include="Attributes\EntityAttribute.cs" />
     <Compile Include="Common\ISqlBuilder.cs" />
     <Compile Include="Common\ParametersType.cs" />
+    <Compile Include="Compatible\EntityInfo.cs" />
+    <Compile Include="Compatible\IEntity.cs" />
     <Compile Include="DbExtensions\ConnectionExtension.cs" />
     <Compile Include="DbExtensions\DatabaseExtensions.cs" />
     <Compile Include="DbExtensions\DataReaderToObject.cs" />

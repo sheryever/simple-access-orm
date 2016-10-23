@@ -8,7 +8,7 @@ using System.Reflection;
 using SimpleAccess.Core;
 using SimpleAccess.Entity;
 
-namespace SimpleAccess.Repository
+namespace SimpleAccess.SqlServer
 {
     /// <summary> Repository. </summary>
     public class Repository : IRepository, IDisposable

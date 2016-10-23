@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Reflection;
 using SimpleAccess.Entity;
 
-namespace SimpleAccess.Repository
+namespace SimpleAccess.SqlServer
 {    
     /// <summary> IRepository. </summary>
     public interface IRepository

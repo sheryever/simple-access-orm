@@ -15,7 +15,7 @@ using SimpleAccess.Core.Logger;
 namespace SimpleAccess.SqlServer
 {
     /// <summary>
-    /// Sql Server implementation for SimpleAccess
+    /// Oracle implementation for SimpleAccess
     /// </summary>
     public interface ISqlSimpleAccess : 
         ISimpleAccess <SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlServerSqlBuilder>

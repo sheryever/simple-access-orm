@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using SimpleAccess.Core;
 
-namespace SimpleAccess
+namespace SimpleAccess.SqlServer
 {
     /// <summary>
     /// Base class of all TEntity Classes

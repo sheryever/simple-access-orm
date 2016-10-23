@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace SimpleAccess
+namespace SimpleAccess.SqlServer
 {
     /// <summary>
     /// Defines the extra extensions method for <see cref="SqlParameter"/>.

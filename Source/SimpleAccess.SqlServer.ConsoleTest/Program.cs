@@ -33,7 +33,7 @@ namespace SimpleAccess.SqlServer.ConsoleTest
         {
             public void Test()
             {
-                ISqlRepository repo = new SqlRepository("sqlDefaultConnection2");
+                ISqlRepository repo = new SqlRepository("sqlDefaultConnection");
 
                 var branches = repo.GetAll<Branche>();
                 var branch = repo.FindSingle<Branche>(b => b.Id == 1);

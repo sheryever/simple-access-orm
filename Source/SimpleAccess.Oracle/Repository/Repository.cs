@@ -1,69 +1,60 @@
-﻿/**--------------------------------------------------------------------------------------------------
-// file:	Repository\Repository.cs
-//
-// summary:	Implements the repository class
-**/
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
+
 using System.Configuration;
 using System.Dynamic;
 using System.Reflection;
 using Oracle.ManagedDataAccess.Client;
-using SimpleAccess.Oracle.DbExtensions;
-using SimpleAccess.Oracle.Entity;
+using SimpleAccess.Core;
+using SimpleAccess.Entity;
 
-//using SimpleAccess.Infrastructure.DbExtensions;
-
-namespace SimpleAccess.Oracle.Repository
+namespace SimpleAccess.Oracle
 {
-    /**--------------------------------------------------------------------------------------------------
-    <summary> Repository. </summary>
-    **/
+    /// <summary> Repository. </summary>
     public class Repository : IRepository, IDisposable
     {
-        private const string DefaultConnectionStringKey = "simpleAccess:oracleConnectionStringName";
+        private const string DefaultConnectionStringKey = "simpleAccess:connectionStringName";
         /// <summary>
         /// Default connection string.
         /// </summary>
         public static string DefaultConnectionString { get; set; }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> The SQL connection. </summary>
-        **/
-        private OracleConnection _oracleConnection;
+        
+        /// <summary> The SQL connection. </summary>
+        
+        private OracleConnection _sqlConnection;
 
-		/**--------------------------------------------------------------------------------------------------
-		<summary> The SQL transaction. </summary>
-		**/
-		private OracleTransaction _oracleTransaction;
+        
+		/// <summary> The SQL transaction. </summary>
+		
+        private OracleTransaction _sqlTransaction;
 
         #region Constructor
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Constructor. </summary>
         
-        <param name="sqlConnection"> The SQL connection. </param>
-        **/
-        public Repository(OracleConnection oracleConnection)
+        /// <summary> Constructor. </summary>
+        /// 
+        /// <param name="sqlConnection"> The SQL connection. </param>
+        
+        public Repository(OracleConnection sqlConnection)
         {
-            _oracleConnection = oracleConnection;
-            DefaultConnectionString = oracleConnection.ConnectionString;
+            _sqlConnection = sqlConnection;
         }
 
-        /// <summary>
-        /// Constructor takes connection name.
-        /// </summary>
-        /// <param name="connectionStringName">The connection string.</param>
-        public Repository(string connectionStringName)
+        
+        /// <summary> Constructor. </summary>
+        /// 
+        /// <param name="connectionString"> The connection string. </param>
+        
+        public Repository(string connectionString)
+            : this(new OracleConnection(connectionString))
         {
-            var connectionStringSettings = RepositorySetting.LoadConnectionStringSettingsFromConfigurationFile(connectionStringName, true);
-            DefaultConnectionString = connectionStringSettings.ConnectionString;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Default constructor. </summary>
-        **/
+        
+        /// <summary> Default constructor. </summary>
+        
         public Repository()
             : this(new OracleConnection(DefaultConnectionString))
         {
@@ -72,48 +63,45 @@ namespace SimpleAccess.Oracle.Repository
         static Repository()
         {
             var connectionStringName = ConfigurationManager.AppSettings[DefaultConnectionStringKey];
-            var connectionStringSettings = RepositorySetting.LoadConnectionStringSettingsFromConfigurationFile(connectionStringName);
-            if (connectionStringSettings != null)
-            {
-                DefaultConnectionString = connectionStringSettings.ConnectionString;
-            }
+            var connectionStringSettings = ConfigurationManager.ConnectionStrings[connectionStringName];
+             DefaultConnectionString = connectionStringSettings.ConnectionString;
         }
         #endregion
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Begins a transaction. </summary>
         
-        <returns> . </returns>
-        **/
+        /// <summary> Begins a transaction. </summary>
+        /// 
+        /// <returns> . </returns>
+        
         public OracleTransaction BeginTrasaction()
         {
-            if (_oracleConnection.State != ConnectionState.Open)
-                _oracleConnection.Open();
-            _oracleTransaction = _oracleConnection.BeginTransaction();
+            if (_sqlConnection.State != ConnectionState.Open)
+                _sqlConnection.Open();
+            _sqlTransaction = _sqlConnection.BeginTransaction();
 
-			return _oracleTransaction;
+			return _sqlTransaction;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Gets the new connection. </summary>
-        
-        <returns> The new connection. </returns>
-        **/
+
+        /// <summary> Gets the new connection. </summary>
+        /// 
+        /// <returns> The new connection. </returns>
+
         public OracleConnection GetNewConnection()
         {
             return new OracleConnection(DefaultConnectionString);
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Enumerates get all in this collection. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="fieldToSkip"> (optional) the field to skip. </param>
-        <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <summary> Enumerates get all in this collection. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="fieldToSkip"> (optional) the field to skip. </param>
+        /// <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> An enumerator that allows for each to be used to process get all TEntity in this
+        /// collection.</returns>
         
-        <returns> An enumerator that allows for each to be used to process get all <TEntity> in this
-        collection. </returns>
-        **/
         public virtual IEnumerable<TEntity> GetAll<TEntity>(string fieldToSkip = null, Dictionary<string, PropertyInfo> piList = null)
             where TEntity : new()
         {
@@ -123,23 +111,17 @@ namespace SimpleAccess.Oracle.Repository
             return ExecuteReader<TEntity>(queryString, CommandType.StoredProcedure, fieldToSkip, piList);
         }
 
-        //public TEntity Get<TEntity>(long id, string fieldToSkip = null, Dictionary<string, PropertyInfo> piList = null)
-        //    where TEntity : new()
-        //{
-        //    return Get<TEntity>(new OracleParameter("@id", id), fieldToSkip, piList);
-        //}
-
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Gets. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="id">		   The identifier. </param>
-        <param name="transaction"> (optional) the transaction. </param>
-        <param name="fieldToSkip"> (optional) the field to skip. </param>
-        <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <summary> Gets. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="id">		   The identifier. </param>
+        /// <param name="transaction"> (optional) the transaction. </param>
+        /// <param name="fieldToSkip"> (optional) the field to skip. </param>
+        /// <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public TEntity Get<TEntity>(long id, OracleTransaction transaction = null, string fieldToSkip = null,
                                     Dictionary<string, PropertyInfo> piList = null)
             where TEntity : class, new()
@@ -147,17 +129,17 @@ namespace SimpleAccess.Oracle.Repository
             return Get<TEntity>(new OracleParameter("@id", id), transaction, fieldToSkip, piList);
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Gets. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="oracleParameter"> The SQL parameter. </param>
-        <param name="transaction">  (optional) the transaction. </param>
-        <param name="fieldToSkip">  (optional) the field to skip. </param>
-        <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <summary> Gets. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="oracleParameter"> The SQL parameter. </param>
+        /// <param name="transaction">  (optional) the transaction. </param>
+        /// <param name="fieldToSkip">  (optional) the field to skip. </param>
+        /// <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public TEntity Get<TEntity>(OracleParameter oracleParameter, OracleTransaction transaction = null, string fieldToSkip = null, Dictionary<string, PropertyInfo> piList = null)
             where TEntity : class, new()
         {
@@ -172,17 +154,17 @@ namespace SimpleAccess.Oracle.Repository
                 return ExecuteReaderSingle<TEntity>(transaction, queryString, CommandType.StoredProcedure, fieldToSkip, piList, oracleParameter);
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Gets. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="paramObject"> The dynamic object as parameters. </param>
-        <param name="transaction">  (optional) the transaction. </param>
-        <param name="fieldToSkip">  (optional) the field to skip. </param>
-        <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <summary> Gets. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// <param name="transaction">  (optional) the transaction. </param>
+        /// <param name="fieldToSkip">  (optional) the field to skip. </param>
+        /// <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public TEntity Get<TEntity>(dynamic paramObject, OracleTransaction transaction = null, string fieldToSkip = null, Dictionary<string, PropertyInfo> piList = null)
             where TEntity : class, new()
         {
@@ -198,47 +180,47 @@ namespace SimpleAccess.Oracle.Repository
         }
 
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Gets. </summary>
         
-        <param name="sql">		   The SQL. </param>
-        <param name="id">		   The identifier. </param>
-        <param name="fieldToSkip"> (optional) the field to skip. </param>
-        <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <summary> Gets. </summary>
+        /// 
+        /// <param name="sql">		   The SQL. </param>
+        /// <param name="id">		   The identifier. </param>
+        /// <param name="fieldToSkip"> (optional) the field to skip. </param>
+        /// <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public dynamic Get(string sql, long id, string fieldToSkip = null, Dictionary<string, PropertyInfo> piList = null)
         {
             return Get(sql, new OracleParameter("@id", id), fieldToSkip, piList);
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Gets. </summary>
         
-        <param name="sql">		    The SQL. </param>
-        <param name="oracleParameter"> The SQL parameter. </param>
-        <param name="fieldToSkip">  (optional) the field to skip. </param>
-        <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <summary> Gets. </summary>
+        /// 
+        /// <param name="sql">		    The SQL. </param>
+        /// <param name="oracleParameter"> The SQL parameter. </param>
+        /// <param name="fieldToSkip">  (optional) the field to skip. </param>
+        /// <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public dynamic Get(string sql, OracleParameter oracleParameter, string fieldToSkip = null, Dictionary<string, PropertyInfo> piList = null)
         {
             return ExecuteReaderSingle(sql, CommandType.StoredProcedure, fieldToSkip, piList, oracleParameter);
             
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Gets. </summary>
-        
-        <param name="sql">		    The SQL. </param>
-        <param name="paramObject"> The dynamic object as parameters. </param>
-        <param name="fieldToSkip">  (optional) the field to skip. </param>
-        <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
-        
-        <returns> . </returns>
-        **/
+
+        /// <summary> Gets. </summary>
+        /// 
+        /// <param name="sql">		    The SQL. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// <param name="fieldToSkip">  (optional) the field to skip. </param>
+        /// <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> . </returns>
+
         public dynamic Get(string sql, dynamic paramObject, string fieldToSkip = null, Dictionary<string, PropertyInfo> piList = null)
         {
 
@@ -246,32 +228,32 @@ namespace SimpleAccess.Oracle.Repository
 
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Inserts the given SQL parameters. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// <summary> Inserts the given SQL parameters. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
-        public int Insert<TEntity>(params OracleParameter[] sqlParameters)
+        public int Insert<TEntity>(params OracleParameter[] oracleParameters)
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
 
             string queryString = string.Format("{0}_Insert", entityInfo.Name);
 
-            return ExecuteNonQuery(queryString, CommandType.StoredProcedure, sqlParameters);
+            return ExecuteNonQuery(queryString, CommandType.StoredProcedure, oracleParameters);
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Inserts the given dynamic object as OracleParameter names and values. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="paramObject"> The dynamic object as parameters. </param>
+        /// <summary> Inserts the given dynamic object as OracleParameter names and values. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public int Insert<TEntity>(dynamic paramObject)
         {
             //var name = typeof(TEntity).Name;
@@ -279,27 +261,27 @@ namespace SimpleAccess.Oracle.Repository
 
             string queryString = string.Format("{0}_Insert", entityInfo.Name);
 
-            return ExecuteNonQuery(queryString, CommandType.StoredProcedure, BuildSqlParameters(paramObject));
+            return ExecuteNonQuery(queryString, CommandType.StoredProcedure, BuildOracleParameters(paramObject));
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Inserts the given SQL parameters. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <summary> Inserts the given SQL parameters. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public int Insert<TEntity>(StoredProcedureParameters storedProcedureParameters)
             where TEntity: class
         {
-            OracleParameter[] sqlParameters = storedProcedureParameters.GetSpParameters(ParametersType.Insert);
+            OracleParameter[] oracleParameters = storedProcedureParameters.GetSpParameters(ParametersType.Insert);
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
 
             string queryString = string.Format("[dbo].{0}_Insert", entityInfo.Name);
 
-            var result = ExecuteNonQuery(queryString, CommandType.StoredProcedure, sqlParameters);
+            var result = ExecuteNonQuery(queryString, CommandType.StoredProcedure, oracleParameters);
 
             storedProcedureParameters.LoadOutParametersProperties();
             storedProcedureParameters.ClearSpParameters();
@@ -307,25 +289,25 @@ namespace SimpleAccess.Oracle.Repository
             return result;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Inserts the given SQL parameters. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
-        <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <summary> Inserts the given SQL parameters. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public int Insert<TEntity>(StoredProcedureParameters storedProcedureParameters, OracleTransaction sqlTransaction = null)
             where TEntity : class
         {
-            OracleParameter[] sqlParameters = storedProcedureParameters.GetSpParameters(ParametersType.Insert);
+            OracleParameter[] oracleParameters = storedProcedureParameters.GetSpParameters(ParametersType.Insert);
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
 
             string queryString = string.Format("{0}_Insert", entityInfo.Name);
 
-            var result = ExecuteNonQuery(sqlTransaction, queryString, CommandType.StoredProcedure, sqlParameters);
+            var result = ExecuteNonQuery(sqlTransaction, queryString, CommandType.StoredProcedure, oracleParameters);
 
             storedProcedureParameters.LoadOutParametersProperties();
             storedProcedureParameters.ClearSpParameters();
@@ -333,25 +315,25 @@ namespace SimpleAccess.Oracle.Repository
             return result;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Inserts the given SQL parameters. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlTransaction">			 The SQL transaction. </param>
-        <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <summary> Inserts the given SQL parameters. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public int Insert<TEntity>(OracleTransaction sqlTransaction, StoredProcedureParameters storedProcedureParameters)
             where TEntity : class
         {
-            OracleParameter[] sqlParameters = storedProcedureParameters.GetSpParameters(ParametersType.Insert);
+            OracleParameter[] oracleParameters = storedProcedureParameters.GetSpParameters(ParametersType.Insert);
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
 
             string queryString = string.Format("{0}_Insert", entityInfo.Name);
 
-            var result = ExecuteNonQuery(sqlTransaction, queryString, CommandType.StoredProcedure, sqlParameters);
+            var result = ExecuteNonQuery(sqlTransaction, queryString, CommandType.StoredProcedure, oracleParameters);
 
             storedProcedureParameters.LoadOutParametersProperties();
             storedProcedureParameters.ClearSpParameters();
@@ -359,31 +341,31 @@ namespace SimpleAccess.Oracle.Repository
             return result;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Updates the given sqlParameters. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// <summary> Updates the given oracleParameters. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
-        public int Update<TEntity>(params OracleParameter[] sqlParameters)
+        public int Update<TEntity>(params OracleParameter[] oracleParameters)
             where TEntity : class
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
 
             var queryString = string.Format("{0}_Update", entityInfo.Name);
-            return ExecuteNonQuery(queryString, CommandType.StoredProcedure, sqlParameters);
+            return ExecuteNonQuery(queryString, CommandType.StoredProcedure, oracleParameters);
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Updates the given dynamic object as OracleParameter names and values. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="paramObject"> The dynamic object as parameters. </param>        
-        <returns> . </returns>
-        **/
+        /// <summary> Updates the given dynamic object as OracleParameter names and values. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>        
+        /// <returns> . </returns>
+        
         public int Update<TEntity>(dynamic paramObject)
             where TEntity : class
         {
@@ -391,69 +373,69 @@ namespace SimpleAccess.Oracle.Repository
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
 
             string queryString = string.Format("{0}_Update", entityInfo.Name);
-            return ExecuteNonQuery(queryString, CommandType.StoredProcedure, BuildSqlParameters(paramObject));
+            return ExecuteNonQuery(queryString, CommandType.StoredProcedure, BuildOracleParameters(paramObject));
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Updates the given sqlParameters. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <summary> Updates the given oracleParameters. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public int Update<TEntity>(StoredProcedureParameters storedProcedureParameters)
             where TEntity : class 
         {
-            var sqlParameters = storedProcedureParameters.GetSpParameters(ParametersType.Update);
+            var oracleParameters = storedProcedureParameters.GetSpParameters(ParametersType.Update);
 
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
 
             string queryString = string.Format("{0}_Update", entityInfo.Name);
-            var result = ExecuteNonQuery(queryString, CommandType.StoredProcedure, sqlParameters);
+            var result = ExecuteNonQuery(queryString, CommandType.StoredProcedure, oracleParameters);
 
             storedProcedureParameters.ClearSpParameters();
 
             return result;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Updates the given sqlParameters. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlTransaction">			 The SQL transaction. </param>
-        <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <summary> Updates the given oracleParameters. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public int Update<TEntity>(OracleTransaction sqlTransaction, StoredProcedureParameters storedProcedureParameters)
             where TEntity : class
         {
-            var sqlParameters = storedProcedureParameters.GetSpParameters(ParametersType.Update);
+            var oracleParameters = storedProcedureParameters.GetSpParameters(ParametersType.Update);
 
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
 
             var queryString = string.Format("{0}_Update", entityInfo.Name);
-            var result = ExecuteNonQuery(sqlTransaction, queryString, CommandType.StoredProcedure, sqlParameters);
+            var result = ExecuteNonQuery(sqlTransaction, queryString, CommandType.StoredProcedure, oracleParameters);
 
             storedProcedureParameters.ClearSpParameters();
 
             return result;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Deletes the given ID. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="id"> The identifier. </param>
-        <param name="sqlTransaction">			 The SQL transaction. </param>
-
-        <returns> . </returns>
-        **/
+        /// <summary> Deletes the given ID. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="id"> The identifier. </param>
+        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// 
+        /// <returns> . </returns>
+        
         public int Delete<TEntity>(long id, OracleTransaction sqlTransaction = null)
-            where TEntity : IEntity
+            where TEntity : class
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
@@ -466,72 +448,72 @@ namespace SimpleAccess.Oracle.Repository
 			return result;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Deletes the given ID. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// <summary> Deletes the given ID. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
-        public virtual int Delete<TEntity>(params OracleParameter[] sqlParameters)
-            where TEntity : IEntity
+        public virtual int Delete<TEntity>(params OracleParameter[] oracleParameters)
+            where TEntity : class
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
 
             string queryString = string.Format("{0}_Delete", entityInfo.Name);
 
-            return ExecuteNonQuery(queryString, CommandType.StoredProcedure, sqlParameters);
+            return ExecuteNonQuery(queryString, CommandType.StoredProcedure, oracleParameters);
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Deletes the given dynamic object as OracleParameter names and values. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="paramObject"> The dynamic object as parameters. </param>
+        /// <summary> Deletes the given dynamic object as OracleParameter names and values. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
         public virtual int Delete<TEntity>(dynamic paramObject)
-            where TEntity : IEntity
+            where TEntity : class
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
             var queryString = string.Format("{0}_Delete", entityInfo.Name);
 
-            return ExecuteNonQuery(queryString, CommandType.StoredProcedure, BuildSqlParameters(paramObject));
+            return ExecuteNonQuery(queryString, CommandType.StoredProcedure, BuildOracleParameters(paramObject));
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Deletes the given ID. </summary>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sqlParameters">  Options for controlling the SQL. </param>
+        /// <summary> Deletes the given ID. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="oracleParameters">  Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
-        public virtual int Delete<TEntity>(OracleTransaction sqlTransaction, params OracleParameter[] sqlParameters)
-            where TEntity : IEntity
+        public virtual int Delete<TEntity>(OracleTransaction sqlTransaction, params OracleParameter[] oracleParameters)
+            where TEntity : class
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
             var queryString = string.Format("{0}_Delete", entityInfo.Name);
 
-            return ExecuteNonQuery(sqlTransaction, queryString, CommandType.StoredProcedure, sqlParameters);
+            return ExecuteNonQuery(sqlTransaction, queryString, CommandType.StoredProcedure, oracleParameters);
         }
 
-		/**--------------------------------------------------------------------------------------------------
-		<summary> Soft delete. </summary>
+        
+		/// <summary> Soft delete. </summary>
+		/// 
+		/// <typeparam name="TEntity"> Type of the entity. </typeparam>
+		/// <param name="id"> The identifier. </param>
+		/// 
+		/// <returns> . </returns>
 		
-		<typeparam name="TEntity"> Type of the entity. </typeparam>
-		<param name="id"> The identifier. </param>
-		
-		<returns> . </returns>
-		**/
-		public int SoftDelete<TEntity>(long id)
-			where TEntity : IEntity
+        public int SoftDelete<TEntity>(long id)
+			where TEntity : class
 		{
 			//var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
@@ -540,42 +522,42 @@ namespace SimpleAccess.Oracle.Repository
 			return ExecuteNonQuery(queryString, CommandType.StoredProcedure, new OracleParameter("@id", id));
 		}
 
-        /**--------------------------------------------------------------------------------------------------
-       <summary> Executes the non query operation. </summary>
         
-       <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-        
-       <param name="sqlTransaction"> The SQL transaction. </param>
-       <param name="sql">			  The SQL. </param>
-       <param name="commandType">    Type of the command. </param>
-        <param name="paramObject"> The dynamic object as parameters. </param>
-        
-       <returns> . </returns>
-       **/
+       /// <summary> Executes the non query operation. </summary>
+       ///  
+       /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+       ///  
+       /// <param name="sqlTransaction"> The SQL transaction. </param>
+       /// <param name="sql">			  The SQL. </param>
+       /// <param name="commandType">    Type of the command. </param>
+       /// <param name="paramObject"> The dynamic object as parameters. </param>
+       ///  
+       /// <returns> . </returns>
+       
         public int ExecuteNonQuery(OracleTransaction sqlTransaction, string sql, CommandType commandType, dynamic paramObject)
         {
-            return ExecuteNonQuery(sqlTransaction, sql, commandType, BuildSqlParameters(paramObject));
+            return ExecuteNonQuery(sqlTransaction, sql, commandType, BuildOracleParameters(paramObject));
 
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the non query operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the non query operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="oracleParameters">  Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="sqlParameters">  Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
-        public int ExecuteNonQuery(OracleTransaction sqlTransaction, string sql, CommandType commandType, params OracleParameter[] sqlParameters)
+        public int ExecuteNonQuery(OracleTransaction sqlTransaction, string sql, CommandType commandType, params OracleParameter[] oracleParameters)
         {
             int result;
             try
             {
-                var dbCommand = CreateCommand(sqlTransaction, sql, commandType, sqlParameters);
+                var dbCommand = CreateCommand(sqlTransaction, sql, commandType, oracleParameters);
 				dbCommand.Connection.OpenSafely();
                 result = dbCommand.ExecuteNonQuery();
             }
@@ -587,39 +569,39 @@ namespace SimpleAccess.Oracle.Repository
         }
 
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the non query operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the non query operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>        
+        /// <returns> . </returns>
         
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="paramObject"> The dynamic object as parameters. </param>        
-        <returns> . </returns>
-        **/
         public int ExecuteNonQuery(string sql, CommandType commandType, dynamic paramObject)
         {
-            return ExecuteNonQuery(sql, commandType, BuildSqlParameters(paramObject));
+            return ExecuteNonQuery(sql, commandType, BuildOracleParameters(paramObject));
         }
 
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the non query operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the non query operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
-        public int ExecuteNonQuery(string sql, CommandType commandType, params OracleParameter[] sqlParameters)
+        public int ExecuteNonQuery(string sql, CommandType commandType, params OracleParameter[] oracleParameters)
         {
             int result;
             try
             {
-                var dbCommand = CreateCommand(sql, commandType, sqlParameters);
+                var dbCommand = CreateCommand(sql, commandType, oracleParameters);
                 dbCommand.Connection.OpenSafely();
                 result = dbCommand.ExecuteNonQuery();
             }
@@ -629,49 +611,49 @@ namespace SimpleAccess.Oracle.Repository
             }
             finally
             {
-				if (_oracleTransaction == null && _oracleConnection.State != System.Data.ConnectionState.Closed)
-                    _oracleConnection.CloseSafely();
+				if (_sqlTransaction == null && _sqlConnection.State != System.Data.ConnectionState.Closed)
+                    _sqlConnection.CloseSafely();
             }
             return result;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the scalar operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the scalar operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="T"> Generic type parameter. </typeparam>
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-        <returns> . </returns>
-        **/
         public T ExecuteScalar<T>(OracleTransaction sqlTransaction, string sql, CommandType commandType, dynamic paramObject)
         {
-            return ExecuteScalar<T>(sqlTransaction, sql, commandType, BuildSqlParameters(paramObject));
+            return ExecuteScalar<T>(sqlTransaction, sql, commandType, BuildOracleParameters(paramObject));
         }
 
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the scalar operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the scalar operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="oracleParameters">  Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="T"> Generic type parameter. </typeparam>
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="sqlParameters">  Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
-        public T ExecuteScalar<T>(OracleTransaction sqlTransaction, string sql, CommandType commandType, params OracleParameter[] sqlParameters)
+        public T ExecuteScalar<T>(OracleTransaction sqlTransaction, string sql, CommandType commandType, params OracleParameter[] oracleParameters)
         {
             try
             {
-                var dbCommand = CreateCommand(sqlTransaction, sql, commandType, sqlParameters);
+                var dbCommand = CreateCommand(sqlTransaction, sql, commandType, oracleParameters);
 				dbCommand.Connection.OpenSafely();
                 var result = dbCommand.ExecuteScalar();
 
@@ -684,41 +666,41 @@ namespace SimpleAccess.Oracle.Repository
         }
 
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the scalar operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the scalar operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="T"> Generic type parameter. </typeparam>
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-        <returns> . </returns>
-        **/
         public T ExecuteScalar<T>(string sql, CommandType commandType, dynamic paramObject)
         {
-            return ExecuteScalar<T>(sql, commandType, BuildSqlParameters(paramObject));
+            return ExecuteScalar<T>(sql, commandType, BuildOracleParameters(paramObject));
 
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the scalar operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the scalar operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="T"> Generic type parameter. </typeparam>
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
-        public T ExecuteScalar<T>(string sql, CommandType commandType, params OracleParameter[] sqlParameters)
+        public T ExecuteScalar<T>(string sql, CommandType commandType, params OracleParameter[] oracleParameters)
         {
             try
             {
-                var dbCommand = CreateCommand(sql, commandType, sqlParameters);
+                var dbCommand = CreateCommand(sql, commandType, oracleParameters);
                 dbCommand.Connection.Open();
                 var result = dbCommand.ExecuteScalar();
 
@@ -730,25 +712,25 @@ namespace SimpleAccess.Oracle.Repository
             }
             finally
             {
-				if (_oracleTransaction == null && _oracleConnection.State != System.Data.ConnectionState.Closed)
-                    _oracleConnection.CloseSafely();
+				if (_sqlTransaction == null && _sqlConnection.State != System.Data.ConnectionState.Closed)
+                    _sqlConnection.CloseSafely();
             }
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-        <returns> . </returns>
-        **/
         public List<TEntity> ExecuteReader<TEntity>(string sql, CommandType commandType
             , string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null
             , dynamic paramObject = null)
@@ -756,31 +738,31 @@ namespace SimpleAccess.Oracle.Repository
         {
             return ExecuteReader<TEntity>(sql, commandType
                 , fieldsToSkip, piList
-                , BuildSqlParameters(paramObject));
+                , BuildOracleParameters(paramObject));
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
         public List<TEntity> ExecuteReader<TEntity>(string sql, CommandType commandType
             , string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null
-            , params OracleParameter[] sqlParameters)
+            , params OracleParameter[] oracleParameters)
             where TEntity : new()
         {
             try
             {
-                var dbCommand = CreateCommand(sql, commandType, sqlParameters);
+                var dbCommand = CreateCommand(sql, commandType, oracleParameters);
                 dbCommand.Connection.OpenSafely();
 				using (var reader = dbCommand.ExecuteReader())
 				{
@@ -794,27 +776,27 @@ namespace SimpleAccess.Oracle.Repository
             }
             finally
             {
-				if (_oracleTransaction == null && _oracleConnection.State != System.Data.ConnectionState.Closed)
-                    _oracleConnection.CloseSafely();
+				if (_sqlTransaction == null && _sqlConnection.State != System.Data.ConnectionState.Closed)
+                    _sqlConnection.CloseSafely();
             }
         }
 
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-        <returns> . </returns>
-        **/
         public List<TEntity> ExecuteReader<TEntity>(OracleTransaction sqlTransaction, string sql
             , CommandType commandType, string fieldsToSkip = null
             , Dictionary<string, PropertyInfo> piList = null, dynamic paramObject = null)
@@ -822,31 +804,31 @@ namespace SimpleAccess.Oracle.Repository
         {
             return ExecuteReader<TEntity>(sqlTransaction, sql, commandType
                 , fieldsToSkip, piList
-                , BuildSqlParameters(paramObject));
+                , BuildOracleParameters(paramObject));
         }
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="oracleParameters">  Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        <param name="sqlParameters">  Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
         public List<TEntity> ExecuteReader<TEntity>(OracleTransaction sqlTransaction, string sql
             , CommandType commandType, string fieldsToSkip = null
-            , Dictionary<string, PropertyInfo> piList = null, params OracleParameter[] sqlParameters)
+            , Dictionary<string, PropertyInfo> piList = null, params OracleParameter[] oracleParameters)
             where TEntity : new()
         {
             try
             {
-                var dbCommand = CreateCommand(sqlTransaction, sql, commandType, sqlParameters);
+                var dbCommand = CreateCommand(sqlTransaction, sql, commandType, oracleParameters);
 				dbCommand.Connection.OpenSafely();
 				using (var reader = dbCommand.ExecuteReader())
 				{
@@ -860,48 +842,48 @@ namespace SimpleAccess.Oracle.Repository
             }
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader single operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-        <returns> . </returns>
-        **/
         public TEntity ExecuteReaderSingle<TEntity>(string sql, CommandType commandType
             , string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null
             , dynamic paramObject = null)
             where TEntity : class , new()
         {
-            return ExecuteReaderSingle(sql, commandType, fieldsToSkip, piList, BuildSqlParameters(paramObject));
+            return ExecuteReaderSingle(sql, commandType, fieldsToSkip, piList, BuildOracleParameters(paramObject));
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader single operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
-        public TEntity ExecuteReaderSingle<TEntity>(string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params OracleParameter[] sqlParameters)
+        public TEntity ExecuteReaderSingle<TEntity>(string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params OracleParameter[] oracleParameters)
             where TEntity : class , new()
         {
             try
             {
-                var dbCommand = CreateCommand(sql, commandType, sqlParameters);
+                var dbCommand = CreateCommand(sql, commandType, oracleParameters);
                 dbCommand.Connection.OpenSafely();
 				using (var reader = dbCommand.ExecuteReader())
 				{
@@ -915,55 +897,55 @@ namespace SimpleAccess.Oracle.Repository
             }
             finally
             {
-                if (_oracleTransaction == null && _oracleConnection.State != System.Data.ConnectionState.Closed)
-                    _oracleConnection.CloseSafely();
+                if (_sqlTransaction == null && _sqlConnection.State != System.Data.ConnectionState.Closed)
+                    _sqlConnection.CloseSafely();
             }
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader single operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-        <returns> . </returns>
-        **/
         public TEntity ExecuteReaderSingle<TEntity>(OracleTransaction sqlTransaction, string sql
             , CommandType commandType, string fieldsToSkip = null
             , Dictionary<string, PropertyInfo> piList = null, dynamic paramObject = null)
             where TEntity : class, new()
         {
-            return ExecuteReaderSingle<TEntity>(sqlTransaction, sql, commandType, fieldsToSkip, piList, BuildSqlParameters(paramObject));
+            return ExecuteReaderSingle<TEntity>(sqlTransaction, sql, commandType, fieldsToSkip, piList, BuildOracleParameters(paramObject));
 
         }
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader single operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="oracleParameters">  Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <typeparam name="TEntity"> Type of the entity. </typeparam>
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        <param name="sqlParameters">  Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
-        public TEntity ExecuteReaderSingle<TEntity>(OracleTransaction sqlTransaction, string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params OracleParameter[] sqlParameters)
+        public TEntity ExecuteReaderSingle<TEntity>(OracleTransaction sqlTransaction, string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params OracleParameter[] oracleParameters)
             where TEntity : class, new()
         {
             try
             {
-                var dbCommand = CreateCommand(sqlTransaction, sql, commandType, sqlParameters);
+                var dbCommand = CreateCommand(sqlTransaction, sql, commandType, oracleParameters);
 				dbCommand.Connection.OpenSafely();
 				using (var reader = dbCommand.ExecuteReader())
 				{
@@ -977,47 +959,47 @@ namespace SimpleAccess.Oracle.Repository
             }
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> A list of. </returns>
         
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-        <returns> A list of. </returns>
-        **/
         public IList<dynamic> ExecuteReader(OracleTransaction sqlTransaction, string sql
             , CommandType commandType, string fieldsToSkip = null
             , Dictionary<string, PropertyInfo> piList = null, dynamic paramObject = null)
         {
             return ExecuteReader(sqlTransaction, sql, commandType, fieldsToSkip, piList
-                , BuildSqlParameters(paramObject));
+                , BuildOracleParameters(paramObject));
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="oracleParameters">  Options for controlling the SQL. </param>
+        /// 
+        /// <returns> A list of. </returns>
         
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        <param name="sqlParameters">  Options for controlling the SQL. </param>
-        
-        <returns> A list of. </returns>
-        **/
-        public IList<dynamic> ExecuteReader(OracleTransaction sqlTransaction, string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params OracleParameter[] sqlParameters)
+        public IList<dynamic> ExecuteReader(OracleTransaction sqlTransaction, string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params OracleParameter[] oracleParameters)
         {
             try
             {
-                var dbCommand = CreateCommand(sqlTransaction, sql, commandType, sqlParameters);
+                var dbCommand = CreateCommand(sqlTransaction, sql, commandType, oracleParameters);
 				dbCommand.Connection.OpenSafely();
                 return GetDynamicSqlData(dbCommand.ExecuteReader());
             }
@@ -1027,47 +1009,47 @@ namespace SimpleAccess.Oracle.Repository
             }
         }
 
-        /**--------------------------------------------------------------------------------------------------
-       <summary> Executes the reader operation. </summary>
         
-       <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-        
-       <param name="sql">			 The SQL. </param>
-       <param name="commandType">   Type of the command. </param>
-       <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-       <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-       <returns> A list of. </returns>
-       **/
+       /// <summary> Executes the reader operation. </summary>
+       ///  
+       /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+       ///  
+       /// <param name="sql">			 The SQL. </param>
+       /// <param name="commandType">   Type of the command. </param>
+       /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+       /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+       ///   <param name="paramObject"> The dynamic object as parameters. </param>
+       ///  
+       /// <returns> A list of. </returns>
+       
         public IList<dynamic> ExecuteReader(string sql, CommandType commandType
             , string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null
             , dynamic paramObject = null)
         {
             return ExecuteReader(sql, commandType, fieldsToSkip, piList
-                , BuildSqlParameters(paramObject));
+                , BuildOracleParameters(paramObject));
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> A list of. </returns>
         
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
-        
-        <returns> A list of. </returns>
-        **/
         public IList<dynamic> ExecuteReader(string sql, CommandType commandType
             , string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null
-            , params OracleParameter[] sqlParameters)
+            , params OracleParameter[] oracleParameters)
         {
             try
             {
-                var dbCommand = CreateCommand(sql, commandType, sqlParameters);
+                var dbCommand = CreateCommand(sql, commandType, oracleParameters);
                 dbCommand.Connection.OpenSafely();
                 return GetDynamicSqlData(dbCommand.ExecuteReader());
             }
@@ -1077,24 +1059,24 @@ namespace SimpleAccess.Oracle.Repository
             }
             finally
             {
-				if (_oracleTransaction == null && _oracleConnection.State != System.Data.ConnectionState.Closed)
-                    _oracleConnection.CloseSafely();
+				if (_sqlTransaction == null && _sqlConnection.State != System.Data.ConnectionState.Closed)
+                    _sqlConnection.CloseSafely();
             }
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader single operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-        <returns> . </returns>
-        **/
         public dynamic ExecuteReaderSingle(string sql, CommandType commandType
             , string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null
             , dynamic paramObject = null)
@@ -1102,33 +1084,33 @@ namespace SimpleAccess.Oracle.Repository
 
 
             return ExecuteReaderSingle(sql, commandType, fieldsToSkip, piList
-                , BuildSqlParameters(paramObject));
+                , BuildOracleParameters(paramObject));
  
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader single operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sql">			 The SQL. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <param name="sql">			 The SQL. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="fieldsToSkip">  (optional) the fields to skip. </param>
-        <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
-        public dynamic ExecuteReaderSingle(string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params OracleParameter[] sqlParameters)
+        public dynamic ExecuteReaderSingle(string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params OracleParameter[] oracleParameters)
         {
             try
             {
-                var dbCommand = CreateCommand(sql, commandType, sqlParameters);
+                var dbCommand = CreateCommand(sql, commandType, oracleParameters);
                 dbCommand.Connection.OpenSafely();
                 var reader = dbCommand.ExecuteReader();
                 if (reader.Read())
                 {
-                    var result = SqlDataReaderToExpando(reader);
+                    var result = OracleDataReaderToExpando(reader);
                     reader.Close();
                     return result;
                 }
@@ -1141,57 +1123,57 @@ namespace SimpleAccess.Oracle.Repository
             }
             finally
             {
-				if (_oracleTransaction == null && _oracleConnection.State != System.Data.ConnectionState.Closed)
-                    _oracleConnection.CloseSafely();
+				if (_sqlTransaction == null && _sqlConnection.State != System.Data.ConnectionState.Closed)
+                    _sqlConnection.CloseSafely();
             }
         }
 
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader single operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        
-        <returns> . </returns>
-        **/
         public dynamic ExecuteReaderSingle(OracleTransaction sqlTransaction, string sql
             , CommandType commandType, string fieldsToSkip = null
             , Dictionary<string, PropertyInfo> piList = null, dynamic paramObject = null)
         {
             return ExecuteReaderSingle(sqlTransaction, sql, commandType, fieldsToSkip, piList
-                , BuildSqlParameters(paramObject));
+                , BuildOracleParameters(paramObject));
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Executes the reader single operation. </summary>
         
-        <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <summary> Executes the reader single operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="sql">			  The SQL. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="oracleParameters">  Options for controlling the SQL. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="sql">			  The SQL. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="fieldsToSkip">   (optional) the fields to skip. </param>
-        <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        <param name="sqlParameters">  Options for controlling the SQL. </param>
-        
-        <returns> . </returns>
-        **/
-        public dynamic ExecuteReaderSingle(OracleTransaction sqlTransaction, string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params OracleParameter[] sqlParameters)
+        public dynamic ExecuteReaderSingle(OracleTransaction sqlTransaction, string sql, CommandType commandType, string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null, params OracleParameter[] oracleParameters)
         {
             try
             {
-                var dbCommand = CreateCommand(sqlTransaction, sql, commandType, sqlParameters);
+                var dbCommand = CreateCommand(sqlTransaction, sql, commandType, oracleParameters);
 				dbCommand.Connection.OpenSafely();
                 var reader = dbCommand.ExecuteReader();
                 if (reader.Read())
-                    return SqlDataReaderToExpando(reader);
+                    return OracleDataReaderToExpando(reader);
                 
                 return null;
             }
@@ -1201,13 +1183,13 @@ namespace SimpleAccess.Oracle.Repository
             }
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Ends a transaction. </summary>
         
-        <param name="sqlTransaction">	  The SQL transaction. </param>
-        <param name="transactionSucceed"> (optional) the transaction succeed. </param>
-        <param name="closeConnection">    (optional) the close connection. </param>
-        **/
+        /// <summary> Ends a transaction. </summary>
+        /// 
+        /// <param name="sqlTransaction">	  The SQL transaction. </param>
+        /// <param name="transactionSucceed"> (optional) the transaction succeed. </param>
+        /// <param name="closeConnection">    (optional) the close connection. </param>
+        
         public void EndTransaction(OracleTransaction sqlTransaction, bool transactionSucceed = true, bool closeConnection = true)
         {
             if (transactionSucceed)
@@ -1221,118 +1203,122 @@ namespace SimpleAccess.Oracle.Repository
 
             if (closeConnection)
             {
-                _oracleConnection.CloseSafely();
+                _sqlConnection.CloseSafely();
             }
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Creates a command. </summary>
         
-        <param name="queryString">   The query string. </param>
-        <param name="commandType">   Type of the command. </param>
-        <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// <summary> Creates a command. </summary>
+        /// 
+        /// <param name="queryString">   The query string. </param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> The new command. </returns>
         
-        <returns> The new command. </returns>
-        **/
-        private OracleCommand CreateCommand(string queryString, CommandType commandType, params OracleParameter[] sqlParameters)
+        private OracleCommand CreateCommand(string queryString, CommandType commandType, params OracleParameter[] oracleParameters)
         {
-            var dbCommand = _oracleConnection.CreateCommand();
+            var dbCommand = _sqlConnection.CreateCommand();
             dbCommand.CommandType = commandType;
             dbCommand.CommandText = queryString;
-            if (sqlParameters != null)
-                dbCommand.Parameters.AddRange(sqlParameters);
+            if (oracleParameters != null)
+                dbCommand.Parameters.AddRange(oracleParameters);
 
-			if (_oracleTransaction != null)
-				dbCommand.Transaction = _oracleTransaction;
+			if (_sqlTransaction != null)
+				dbCommand.Transaction = _sqlTransaction;
 
 			return dbCommand;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Creates a command. </summary>
         
-        <param name="sqlTransaction"> The SQL transaction. </param>
-        <param name="queryString">    The query string. </param>
-        <param name="commandType">    Type of the command. </param>
-        <param name="sqlParameters">  Options for controlling the SQL. </param>
+        /// <summary> Creates a command. </summary>
+        /// 
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="queryString">    The query string. </param>
+        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="oracleParameters">  Options for controlling the SQL. </param>
+        /// 
+        /// <returns> The new command. </returns>
         
-        <returns> The new command. </returns>
-        **/
-        private OracleCommand CreateCommand(OracleTransaction sqlTransaction, string queryString, CommandType commandType, params OracleParameter[] sqlParameters)
+        private OracleCommand CreateCommand(OracleTransaction sqlTransaction, string queryString, CommandType commandType, params OracleParameter[] oracleParameters)
         {
-            var dbCommand = _oracleConnection.CreateCommand();
+            var dbCommand = _sqlConnection.CreateCommand();
             dbCommand.Transaction = sqlTransaction;
             dbCommand.CommandType = commandType;
             dbCommand.CommandText = queryString;
-            if (sqlParameters != null)
-                dbCommand.Parameters.AddRange(sqlParameters);
-			if (_oracleTransaction != null)
-				dbCommand.Transaction = _oracleTransaction;
+            if (oracleParameters != null)
+                dbCommand.Parameters.AddRange(oracleParameters);
+			if (_sqlTransaction != null)
+				dbCommand.Transaction = _sqlTransaction;
 
             return dbCommand;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> SQL data reader to expando. </summary>
         
-        <param name="reader"> The reader. </param>
+        /// <summary> SQL data reader to expando. </summary>
+        /// 
+        /// <param name="reader"> The reader. </param>
+        /// 
+        /// <returns> . </returns>
         
-        <returns> . </returns>
-        **/
-        private dynamic SqlDataReaderToExpando(OracleDataReader reader)
+        private dynamic OracleDataReaderToExpando(OracleDataReader reader)
         {
             var expandoObject = new ExpandoObject() as IDictionary<string, object>;
 
             for (var i = 0; i < reader.FieldCount; i++)
-                expandoObject.Add(reader.GetName(i), reader[i]);
+            {
+                var value = reader[i];
+                expandoObject.Add(reader.GetName(i), value == DBNull.Value ? null : value);
+            }
+                
 
             return expandoObject;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Gets a dynamic SQL data. </summary>
         
-        <param name="reader"> The reader. </param>
+        /// <summary> Gets a dynamic SQL data. </summary>
+        /// 
+        /// <param name="reader"> The reader. </param>
+        /// 
+        /// <returns> The dynamic SQL data. </returns>
         
-        <returns> The dynamic SQL data. </returns>
-        **/
         private IList<dynamic> GetDynamicSqlData(OracleDataReader reader)
         {
             var result = new List<dynamic>();
             
             while (reader.Read())
             {
-                result.Add(SqlDataReaderToExpando(reader));
+                result.Add(OracleDataReaderToExpando(reader));
             }
             return result;
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Build OracleParameter Array from dynamic object. </summary>
-         <param name="paramObject"> The dynamic object as parameters. </param>
-        <returns> OracleParameter[] object and if paramObject is null then return null </returns>
-        **/
-        private static OracleParameter[] BuildSqlParameters(dynamic paramObject)
+        
+        /// <summary> Build OracleParameter Array from dynamic object. </summary>
+        /// <param name="paramObject"> The dynamic object as parameters. </param>
+        /// <returns> OracleParameter[] object and if paramObject is null then return null </returns>
+        
+        private static OracleParameter[] BuildOracleParameters(dynamic paramObject)
         {
             if (paramObject == null)
                 return null;
-            var sqlParameters = new List<OracleParameter>();
-            sqlParameters.CreateOracleParametersFromDynamic(paramObject as Object);
+            var oracleParameters = new List<OracleParameter>();
+            oracleParameters.CreateOracleParametersFromObject(paramObject as Object);
             
-            return sqlParameters.ToArray();
+            return oracleParameters.ToArray();
         }
 
-        /**--------------------------------------------------------------------------------------------------
-        <summary> Performs application-defined tasks associated with freeing, releasing, or resetting
-        unmanaged resources. </summary>
-        **/
+        
+        /// <summary> Performs application-defined tasks associated with freeing, releasing, or resetting
+        /// unmanaged resources. </summary>
+        
         public void Dispose()
         {
-			if (_oracleTransaction != null)
-				_oracleTransaction.Dispose();
+			if (_sqlTransaction != null)
+				_sqlTransaction.Dispose();
 
-            if (_oracleConnection.State != ConnectionState.Closed)
-                _oracleConnection.Close();
+            if (_sqlConnection.State != ConnectionState.Closed)
+                _sqlConnection.Close();
         }
 
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
@@ -20,7 +21,7 @@ namespace SimpleAccess.Core
 		
         <returns> . </returns>
         **/
-        public static void OpenSafely(this SqlConnection con)
+        public static void OpenSafely(this DbConnection con)
         {
             if (con.State != ConnectionState.Open)
                 con.Open();
@@ -35,7 +36,7 @@ namespace SimpleAccess.Core
 		
         <returns> . </returns>
         **/
-        public static void CloseSafely(this SqlConnection con)
+        public static void CloseSafely(this DbConnection con)
         {
             if (con.State == ConnectionState.Open)
                 con.Close();

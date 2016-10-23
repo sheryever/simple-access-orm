@@ -10,7 +10,7 @@ using SimpleAccess.Core.Entity.RepoWrapper;
 using SimpleAccess.Repository;
 using SimpleAccess.SqlServer;
 
-namespace SimpleAccess.Repository
+namespace SimpleAccess.SqlServer
 {
     /// <summary> Implements SqlRepository base SqlSimpleAccess with command type stored procedures. </summary>
     public class SqlRepository : ISqlRepository, IDisposable

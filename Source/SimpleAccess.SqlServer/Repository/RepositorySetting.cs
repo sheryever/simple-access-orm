@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using SimpleAccess.Core;
 using SimpleAccess.Entity;
 
-namespace SimpleAccess.Repository
+namespace SimpleAccess.SqlServer
 {
     /// <summary>
     /// Hold the default settings of SimpleAccess Repositories

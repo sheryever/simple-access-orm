@@ -191,7 +191,7 @@
                 <summary> Connection extension. </summary>
                 *
         </member>
-        <member name="M:SimpleAccess.Core.ConnectionExtension.OpenSafely(System.Data.SqlClient.SqlConnection)">
+        <member name="M:SimpleAccess.Core.ConnectionExtension.OpenSafely(System.Data.Common.DbConnection)">
             --------------------------------------------------------------------------------------------------
                     <summary> A SqlConnection extension method that opens a safely. </summary>
             		
@@ -200,7 +200,7 @@
                     <returns> . </returns>
                     *
         </member>
-        <member name="M:SimpleAccess.Core.ConnectionExtension.CloseSafely(System.Data.SqlClient.SqlConnection)">
+        <member name="M:SimpleAccess.Core.ConnectionExtension.CloseSafely(System.Data.Common.DbConnection)">
             --------------------------------------------------------------------------------------------------
                     <summary> A SqlConnection extension method that closes a safely. </summary>
             		
@@ -1181,7 +1181,7 @@
         </member>
         <member name="T:SimpleAccess.Core.Logger.SimpleLogger">
             <summary>
-            Default implementaion of ISimpleLoger, It uses the <see cref="T:System.Diagnostics.Trace"/> to log the <see cref="T:System.Exception"/>.
+            Default implementation of ISimpleLoger, It uses the <see cref="T:System.Diagnostics.Trace"/> to log the <see cref="T:System.Exception"/>.
             </summary>
         </member>
         <member name="M:SimpleAccess.Core.Logger.SimpleLogger.LogException(System.Exception)">
@@ -1243,6 +1243,33 @@
         <member name="P:SimpleAccess.Core.SimpleAccessSettings.DefaultLogger">
             <summary>
             Default <see cref="T:SimpleAccess.Core.Logger.ISimpleLogger"/>.
+            </summary>
+        </member>
+        <member name="T:SimpleAccess.Entity.EntityInfo">
+            <summary>
+            Represents the SimpleAccess Entity information.
+            The <see cref="T:SimpleAccess.Entity.EntityInfo"/> is only used for caching the stored procedure name
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.Entity.EntityInfo.#ctor(System.Type)">
+            <summary>
+            Initialize the new object
+            </summary>
+            <param name="type"> The Entity </param>
+        </member>
+        <member name="P:SimpleAccess.Entity.EntityInfo.Name">
+            <summary>
+            Simple Name of the Entity.
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.Entity.EntityInfo.Type">
+            <summary>
+            The Type of the Entity.
+            </summary>
+        </member>
+        <member name="T:SimpleAccess.IEntity">
+            <summary>
+            Interface is required for Repository Delete methods
             </summary>
         </member>
     </members>
