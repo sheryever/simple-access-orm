@@ -11,7 +11,7 @@ PM > Install-Package SimpleAccess.SqlServer
 ```
 
 ## SqlSimpleAccess
-Sql Server implementaion for SimpleAccess.
+SimpleAccess implementaion for Sql Server.
 
 | Methods | Description |
 |--------------------|--------|
