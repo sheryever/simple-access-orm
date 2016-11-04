@@ -28,7 +28,7 @@ SimpleAccess implementaion for Sql Server.
 | Fill | Execute commant text against connection and add or refresh rows in DataSet or DataTable. |
 | GetNewConnection | Gets the new connection with the SimpleAccess Ojbect ConnectionString.|
 
-** *All Execute and Fill methods have multiple overloads.* **
+***All Execute and Fill methods have multiple overloads.***
 
 ## Using SimpleAccess
 Reading single record from the database as dynamic object
@@ -40,7 +40,7 @@ var person = simpleAccess.ExecuteDynamic("SELECT * FROM dbo.People where id = @i
 Reading records from the database as IEnumerable&lt;dynamic&gt;
 ``` C#
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
-var people = simpleAccess.ExecuteDynamic("SELECT * FROM dbo.People;");
+var people = simpleAccess.ExecuteDynamics("SELECT * FROM dbo.People;");
 ```
 
 Reading single record from the database as Person object
