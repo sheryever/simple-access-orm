@@ -1,7 +1,7 @@
 ***Note: It is recommended to upgrade your SimpleAccess v1 to SimpleAccess v2. SimpleAccess 2, also support version 1 Repository as a separate component. [SimpleAccess v2 Readme](https://github.com/sheryever/simple-access-orm/tree/Development)***
 
 
-# Simple Access
+# Simple Access v1
 Simple Access provides database access helpers as well as repository (CURD).
 
 Simple Access focus on database stored procedures also support other DBCommand types.
