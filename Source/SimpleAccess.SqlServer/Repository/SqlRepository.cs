@@ -5,10 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using SimpleAccess.Core;
 using SimpleAccess.Core.Entity.RepoWrapper;
-using SimpleAccess.Repository;
-using SimpleAccess.SqlServer;
 
 namespace SimpleAccess.SqlServer
 {

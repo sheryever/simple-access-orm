@@ -198,7 +198,7 @@ namespace SimpleAccess.Core
         /// <typeparam name="T"> Generic type parameter. </typeparam>
         /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-        ///  <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The {T} value </returns>
         T ExecuteScalar<T>(TDbTransaction transaction, string commandText
@@ -213,7 +213,7 @@ namespace SimpleAccess.Core
         /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType">    Type of the command. </param>
-        ///  <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The {T} value </returns>
         T ExecuteScalar<T>(TDbTransaction transaction, string commandText, CommandType commandType
@@ -264,6 +264,48 @@ namespace SimpleAccess.Core
         /// <returns> The TDbDataReader </returns>
         TDbDataReader ExecuteReader(string commandText, CommandType commandType, CommandBehavior commandBehavior,
             params TDataParameter[] parameters);
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <returns> The TDbDataReader </returns>
+        TDbDataReader ExecuteReader(string commandText, object paramObject = null);
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        TDbDataReader ExecuteReader(string commandText, CommandType commandType, object paramObject = null);
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        TDbDataReader ExecuteReader(string commandText, CommandBehavior commandBehavior, object paramObject = null);
+
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        TDbDataReader ExecuteReader(string commandText, CommandType commandType, CommandBehavior commandBehavior, object paramObject = null);
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
         /// 
@@ -789,7 +831,7 @@ namespace SimpleAccess.Core
         TDbConnection GetNewConnection();
 
         /// <summary> Close the current open connection. </summary>
-        void CloseCurrentDbConnection();
+        void CloseDbConnection();
 
 
         /// <summary> Close an open database transaction. </summary>

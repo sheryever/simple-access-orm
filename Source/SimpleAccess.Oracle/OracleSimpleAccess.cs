@@ -15,7 +15,7 @@ using SimpleAccess.Core.Logger;
 namespace SimpleAccess.Oracle
 {
     /// <summary>
-    /// Sql Server implementation for SimpleAccess.
+    /// SimpleAccess implementation for Oracle.
     /// </summary>
     public class OracleSimpleAccess : IOracleSimpleAccess
     {
@@ -523,6 +523,60 @@ namespace SimpleAccess.Oracle
                 SimpleLogger.LogException(ex);
                 throw;
             }
+        }
+
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <returns> The TDbDataReader </returns>
+        public OracleDataReader ExecuteReader(string commandText, object paramObject = null)
+        {
+            return ExecuteReader(commandText, BuildOracleParameters(paramObject));
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public OracleDataReader ExecuteReader(string commandText, CommandType commandType, object paramObject = null)
+        {
+            return ExecuteReader(commandText, commandType, BuildOracleParameters(paramObject));
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public OracleDataReader ExecuteReader(string commandText, CommandBehavior commandBehavior, object paramObject = null)
+        {
+            return ExecuteReader(commandText, commandBehavior, BuildOracleParameters(paramObject));
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public OracleDataReader ExecuteReader(string commandText, CommandType commandType, CommandBehavior commandBehavior, object paramObject = null)
+        {
+            return ExecuteReader(commandText, commandType, commandBehavior, BuildOracleParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
@@ -1353,7 +1407,7 @@ namespace SimpleAccess.Oracle
         }
 
         /// <summary> Close the current open connection. </summary>
-        public void CloseCurrentDbConnection()
+        public void CloseDbConnection()
         {
             if (_sqlConnection != null)
                 _sqlConnection.CloseSafely();

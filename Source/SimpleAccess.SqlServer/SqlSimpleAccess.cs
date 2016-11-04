@@ -39,7 +39,7 @@ namespace SimpleAccess.SqlServer
         /// <summary> The SQL connection. </summary>
         private readonly SqlConnection _sqlConnection;
 
-		/// <summary> The SQL transaction. </summary>
+        /// <summary> The SQL transaction. </summary>
 
         private SqlTransaction _sqlTransaction;
 
@@ -54,7 +54,8 @@ namespace SimpleAccess.SqlServer
         {
             DefaultSimpleAccessSettings = new SimpleAccessSettings
             {
-                DefaultCommandType = CommandType.Text, DefaultLogger = new SimpleLogger()
+                DefaultCommandType = CommandType.Text,
+                DefaultLogger = new SimpleLogger()
             };
             _sqlConnection = sqlConnection;
         }
@@ -66,7 +67,7 @@ namespace SimpleAccess.SqlServer
 
         public SqlSimpleAccess(SqlConnection sqlConnection, CommandType defaultCommandType)
         {
-            DefaultSimpleAccessSettings = new SimpleAccessSettings (defaultCommandType );
+            DefaultSimpleAccessSettings = new SimpleAccessSettings(defaultCommandType);
             _sqlConnection = sqlConnection;
         }
 
@@ -230,7 +231,7 @@ namespace SimpleAccess.SqlServer
         /// <returns> Number of rows affected (integer) </returns>
         public int ExecuteNonQuery(SqlTransaction transaction, string commandText, params SqlParameter[] sqlParameters)
         {
-            return ExecuteNonQuery(transaction, commandText,  DefaultSimpleAccessSettings.DefaultCommandType, sqlParameters);
+            return ExecuteNonQuery(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, sqlParameters);
         }
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
@@ -407,7 +408,7 @@ namespace SimpleAccess.SqlServer
                 dbCommand.Connection.OpenSafely();
                 var result = dbCommand.ExecuteScalar();
 
-                return (T) Convert.ChangeType(result, typeof (T));
+                return (T)Convert.ChangeType(result, typeof(T));
             }
             catch (Exception ex)
             {
@@ -525,6 +526,59 @@ namespace SimpleAccess.SqlServer
             }
         }
 
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <returns> The TDbDataReader </returns>
+        public SqlDataReader ExecuteReader(string commandText, object paramObject = null)
+        {
+            return ExecuteReader(commandText, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public SqlDataReader ExecuteReader(string commandText, CommandType commandType, object paramObject = null)
+        {
+            return ExecuteReader(commandText, commandType, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public SqlDataReader ExecuteReader(string commandText, CommandBehavior commandBehavior, object paramObject = null)
+        {
+            return ExecuteReader(commandText, commandBehavior, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public SqlDataReader ExecuteReader(string commandText, CommandType commandType, CommandBehavior commandBehavior, object paramObject = null)
+        {
+            return ExecuteReader(commandText, commandType, commandBehavior, BuildSqlParameters(paramObject));
+        }
+
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
@@ -537,7 +591,7 @@ namespace SimpleAccess.SqlServer
         /// 
         /// <returns> The TEntity value </returns>
         public IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, string fieldsToSkip = null,
-            Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SqlParameter[] sqlParameters) 
+            Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SqlParameter[] sqlParameters)
             where TEntity : new()
         {
             return ExecuteEntities<TEntity>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip
@@ -618,7 +672,7 @@ namespace SimpleAccess.SqlServer
         /// 
         /// <returns> The {TEntity} value </returns>
         public IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, CommandType commandType, object paramObject = null,
-            string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) 
+            string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : new()
         {
             return ExecuteEntities<TEntity>(commandText, commandType, fieldsToSkip
@@ -819,8 +873,8 @@ namespace SimpleAccess.SqlServer
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        public TEntity ExecuteEntity<TEntity>(string commandText, CommandType commandType, object paramObject = null, 
-            string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) 
+        public TEntity ExecuteEntity<TEntity>(string commandText, CommandType commandType, object paramObject = null,
+            string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : class, new()
         {
             return ExecuteEntity<TEntity>(commandText, commandType,
@@ -901,7 +955,7 @@ namespace SimpleAccess.SqlServer
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        public TEntity ExecuteEntity<TEntity>(SqlTransaction sqlTransaction, string commandText, object paramObject = null, 
+        public TEntity ExecuteEntity<TEntity>(SqlTransaction sqlTransaction, string commandText, object paramObject = null,
             string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : class, new()
         {
             return ExecuteEntity<TEntity>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
@@ -921,8 +975,8 @@ namespace SimpleAccess.SqlServer
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        public TEntity ExecuteEntity<TEntity>(SqlTransaction sqlTransaction, string commandText, CommandType commandType, 
-            object paramObject = null, string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) 
+        public TEntity ExecuteEntity<TEntity>(SqlTransaction sqlTransaction, string commandText, CommandType commandType,
+            object paramObject = null, string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : class, new()
         {
             return ExecuteEntity<TEntity>(sqlTransaction, commandText, commandType,
@@ -1074,7 +1128,7 @@ namespace SimpleAccess.SqlServer
         /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
         /// 
         /// <returns> A list of object. </returns>
-        public IEnumerable<dynamic> ExecuteDynamics(SqlTransaction sqlTransaction, string commandText, object paramObject = null, 
+        public IEnumerable<dynamic> ExecuteDynamics(SqlTransaction sqlTransaction, string commandText, object paramObject = null,
             string fieldsToSkip = null)
         {
             return ExecuteDynamics(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
@@ -1353,7 +1407,7 @@ namespace SimpleAccess.SqlServer
         }
 
         /// <summary> Close the current open connection. </summary>
-        public void CloseCurrentDbConnection()
+        public void CloseDbConnection()
         {
             if (_sqlConnection != null)
                 _sqlConnection.CloseSafely();

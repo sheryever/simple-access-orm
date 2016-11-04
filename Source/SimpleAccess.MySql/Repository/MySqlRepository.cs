@@ -10,8 +10,8 @@ using SimpleAccess.Core.Entity.RepoWrapper;
 
 namespace SimpleAccess.MySql
 {
-    /// <summary> Implements SqlRepository base SqlSimpleAccess with command type stored procedures. </summary>
-    public class SqlRepository : ISqlRepository, IDisposable
+    /// <summary> Implements MySqlRepository base SqlSimpleAccess with command type stored procedures. </summary>
+    public class MySqlRepository : IMySqlRepository, IDisposable
     {
 
         /// <summary> The SQL connection. </summary>
@@ -22,7 +22,7 @@ namespace SimpleAccess.MySql
         /// <summary> Constructor. </summary>
         /// 
         /// <param name="sqlSimpleAccess"> The SQL connection. </param>
-        public SqlRepository(IMySqlSimpleAccess sqlSimpleAccess)
+        public MySqlRepository(IMySqlSimpleAccess sqlSimpleAccess)
         {
             SimpleAccess = sqlSimpleAccess;
         }
@@ -30,13 +30,13 @@ namespace SimpleAccess.MySql
         /// <summary> Constructor. </summary>
         /// 
         /// <param name="connection"> The connection string. </param>
-        public SqlRepository(string connection)
+        public MySqlRepository(string connection)
             : this(new MySqlSimpleAccess(connection, CommandType.StoredProcedure))
         {
         }
 
         /// <summary> Default constructor. </summary>
-        public SqlRepository()
+        public MySqlRepository()
             : this(new MySqlSimpleAccess(CommandType.StoredProcedure))
         {
         }

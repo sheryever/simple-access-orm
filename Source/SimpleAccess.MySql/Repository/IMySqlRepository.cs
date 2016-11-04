@@ -7,9 +7,9 @@ using SimpleAccess.MySql;
 namespace SimpleAccess.MySql
 {
     /// <summary>
-    /// Represent the interface of SimpleAccess Repository methods and it's implemented by SqlRepository
+    /// Represent the interface of SimpleAccess Repository methods and it's implemented by MySqlRepository
     /// </summary>
-    public interface ISqlRepository
+    public interface IMySqlRepository
     {
 
         /// <summary>

@@ -15,7 +15,7 @@ using SimpleAccess.Core.Logger;
 namespace SimpleAccess.MySql
 {
     /// <summary>
-    /// MySql implementation for SimpleAccess.
+    /// SimpleAccess implementation for MySql.
     /// </summary>
     public class MySqlSimpleAccess : IMySqlSimpleAccess
     {
@@ -523,6 +523,59 @@ namespace SimpleAccess.MySql
                 SimpleLogger.LogException(ex);
                 throw;
             }
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <returns> The TDbDataReader </returns>
+        public MySqlDataReader ExecuteReader(string commandText, object paramObject = null)
+        {
+            return ExecuteReader(commandText, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public MySqlDataReader ExecuteReader(string commandText, CommandType commandType, object paramObject = null)
+        {
+            return ExecuteReader(commandText, commandType, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public MySqlDataReader ExecuteReader(string commandText, CommandBehavior commandBehavior, object paramObject = null)
+        {
+            return ExecuteReader(commandText, commandBehavior, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public MySqlDataReader ExecuteReader(string commandText, CommandType commandType, CommandBehavior commandBehavior, object paramObject = null)
+        {
+            return ExecuteReader(commandText, commandType, commandBehavior, BuildSqlParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
@@ -1353,7 +1406,7 @@ namespace SimpleAccess.MySql
         }
 
         /// <summary> Close the current open connection. </summary>
-        public void CloseCurrentDbConnection()
+        public void CloseDbConnection()
         {
             if (_sqlConnection != null)
                 _sqlConnection.CloseSafely();

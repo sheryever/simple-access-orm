@@ -7,13 +7,21 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using SimpleAccess;
-using SimpleAccess.Repository;
 using SimpleAccess.SqlServer.ConsoleTest.Entities;
 
 namespace SimpleAccess.SqlServer.ConsoleTest
 {
     class Program
     {
+        public class Person
+        {
+            [Identity]
+            public int Id { get; set; }
+
+            public string Name { get; set; }
+            public string Address { get; set; }
+        }
+
         static void Main(string[] args)
         {
 
@@ -53,6 +61,26 @@ namespace SimpleAccess.SqlServer.ConsoleTest
         {
 
             ConstructorTests();
+            ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
+            SqlTransaction transaction = null;
+            try
+            {
+                using (transaction = simpleAccess.BeginTrasaction())
+                {
+                    var person = new Person() { Name = "Ahmed", Address = "Madina" };
+
+                    var newId = simpleAccess.ExecuteScalar<int>(transaction, "INSERT INTO People values (@name, @Address); SELECT SCOPE_IDENTITY();", person);
+                    
+                    simpleAccess.EndTransaction(transaction);
+                }
+            }
+            catch (Exception)
+            {
+                simpleAccess.EndTransaction(transaction, false);
+                throw;
+            }
+
+
             //TestTextCommandSimpleAccess(GetTextQuerySimpleAccess());
             //TestSotredProcedureCommandSimpleAccess(GetStroedProcedureSimpleAccess());
             TestSotredProcedureCommandSimpleAccessRepository();

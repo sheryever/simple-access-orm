@@ -9,7 +9,7 @@ using SimpleAccess.Core.Logger;
 namespace SimpleAccess.SQLite
 {
     /// <summary>
-    /// Sqlite implementation for SimpleAccess
+    /// SimpleAccess implementation for SQLite
     /// </summary>
     public interface ISQLiteSimpleAccess : 
         ISimpleAccess <SQLiteConnection, SQLiteTransaction, SQLiteCommand, SQLiteParameter, SQLiteDataReader, SQLiteSqlBuilder>

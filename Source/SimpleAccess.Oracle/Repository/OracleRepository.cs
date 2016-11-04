@@ -9,7 +9,7 @@ using SimpleAccess.Core.Entity.RepoWrapper;
 
 namespace SimpleAccess.Oracle
 {
-    /// <summary> Implements OracleRepository base SqlSimpleAccess with command type stored procedures. </summary>
+    /// <summary> Implements OracleRepository based on OracleSimpleAccess with command type stored procedures. </summary>
     public class OracleRepository : IOracleRepository, IDisposable
     {
 

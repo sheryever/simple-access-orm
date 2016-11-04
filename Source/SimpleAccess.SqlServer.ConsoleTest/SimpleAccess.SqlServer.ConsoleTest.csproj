@@ -32,14 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SimpleAccess.Core, Version=2.0.0.92, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SimpleAccess.Core.2.0\lib\net40\SimpleAccess.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SimpleAccess.SqlServer, Version=2.0.0.92, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SimpleAccess.SqlServer.2.0\lib\net40\SimpleAccess.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -57,14 +49,19 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SimpleAccess.Core\SimpleAccess.Core.csproj">
+      <Project>{ca67607f-1d89-47fd-b8bf-8deac4d0ac60}</Project>
+      <Name>SimpleAccess.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimpleAccess.SqlServer.ConsoleTest.Entities\SimpleAccess.SqlServer.ConsoleTest.Entities.csproj">
       <Project>{189b3fdb-65ab-425c-ac30-2f2cead0ab55}</Project>
       <Name>SimpleAccess.SqlServer.ConsoleTest.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleAccess.SqlServer\SimpleAccess.SqlServer.csproj">
+      <Project>{d97deb44-c9bd-4813-ae06-3119ce29214a}</Project>
+      <Name>SimpleAccess.SqlServer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

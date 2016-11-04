@@ -1,5 +1,5 @@
 # Simple Access
-SimpleAccess provides a simplle database access as well as simple repository for CURD and other helper methods.
+SimpleAccess provides a simple database access as well as simple repository for CURD and other helper methods.
 
 SimpleAccess provides excpetion logging.
 
@@ -16,7 +16,7 @@ Sql Server implementaion for SimpleAccess.
 | Methods | Description |
 |--------------------|--------|
 | BeginTrasaction  | Begins a database transaction.|
-| CloseCurrentDbConnection | Close the current open connection.|
+| CloseDbConnection | Close the current open connection.|
 | EndTransaction   | Close an open database transaction.|
 | ExecuteEntity&lt;TEntity&gt; | Sends the CommandText to the Database Connection and builds a TEntity from DataReader. |
 | ExecuteEntities&lt;TEntity&gt; | Sends the CommandText to the Database Connection and builds a IEnumerable&lt;TEntity&gt; from DataReader. |
@@ -29,6 +29,83 @@ Sql Server implementaion for SimpleAccess.
 | GetNewConnection | Gets the new connection with the SimpleAccess Ojbect ConnectionString.|
 
 ** *All Execute and Fill methods have different overloads.* **
+
+## Using SimpleAccess
+Reading single record from the database as dynamic object
+``` C#
+ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
+var people = simpleAccess.ExecuteDynamic("Select * FROM people where id = @id;", new { id  = 12});
+```
+
+Reading records from the database as IEnumerable&lt;dynamic&gt;
+``` C#
+ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
+var people = simpleAccess.ExecuteDynamic("Select * FROM people;");
+```
+
+Reading single record from the database as Person object
+``` C#
+ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
+var person = simpleAccess.ExecuteEntity<Person>("Select * FROM people where id = @id;", new { id  = 12});
+```
+
+Reading records from the database as IEnumerable&lt;Person&gt;
+``` C#
+ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
+var people = simpleAccess.ExecuteEntities<Person>("Select * FROM people;");
+```
+
+Reading records from the database using DataReader
+``` C#
+ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
+var dataReader = simpleAccess.ExecuteReader("Select * FROM people;");
+```
+
+Executing aggregate query using SimpleAccess
+``` C#
+ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
+var totalPeople = simpleAccess.ExecuteScalar<int>("Select COUNT(*) FROM people;");
+```
+
+Executes a SQL statement against the connection and returns the number of rows affected
+``` C#
+public class Person
+{
+    [Identity]
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Address { get; set; }
+}
+
+ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
+
+var person = new Person() {Name = "Ahmed", Address = "Madina"};
+var rowAffected = simpleAccess.ExecuteNonQuery("INSERT INTO People values (@name, @Address);", person);
+
+var rowAffected = simpleAccess.ExecuteNonQuery("UPDATE People SET Name=@name WHERE Id = @id;", new {id = 1, name = "Muhammad"});
+
+```
+
+```C#
+ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
+SqlTransaction transaction = null;
+try
+{
+    using (transaction = simpleAccess.BeginTrasaction())
+    {
+        var person = new Person() { Name = "Ahmed", Address = "Madina" };
+
+        var newId = simpleAccess.ExecuteScalar<int>(transaction, "INSERT INTO People values (@name, @Address); SELECT SCOPE_IDENTITY();", person);
+
+        simpleAccess.EndTransaction(transaction);
+    }
+}
+catch (Exception)
+{
+    simpleAccess.EndTransaction(transaction, false);
+    throw;
+}
+```
 
 ## SqlRepository
 
@@ -254,10 +331,6 @@ namespace SimpleAccess.SqlServer.ConsoleTest
 
 }
 ````
-
-
-## Initial Documents
-[Initial documents link...](/Docs/Demo/_Sidebar.md)
 
 ## Support
 - Simple Access is written in C# and support .net Managed Code langues (C# and VB.net etc)

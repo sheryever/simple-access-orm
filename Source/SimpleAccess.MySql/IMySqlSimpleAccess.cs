@@ -15,7 +15,7 @@ using MySql.Data.MySqlClient;
 namespace SimpleAccess.MySql
 {
     /// <summary>
-    /// Oracle implementation for SimpleAccess
+    /// SimpleAccess implementation for MySql.
     /// </summary>
     public interface IMySqlSimpleAccess : 
         ISimpleAccess <MySqlConnection, MySqlTransaction, MySqlCommand, MySqlParameter, MySqlDataReader, MySqlSqlBuilder>

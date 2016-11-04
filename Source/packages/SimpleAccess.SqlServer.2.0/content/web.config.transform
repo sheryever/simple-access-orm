@@ -1,5 +1,0 @@
-﻿<configuration>
-  <appSettings>
-    <add key="simpleAccess:sqlConnectionStringName" value=" ** Default connection String **"/>
-  </appSettings>
-</configuration>

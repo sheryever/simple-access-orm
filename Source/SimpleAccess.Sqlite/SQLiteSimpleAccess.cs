@@ -528,6 +528,59 @@ namespace SimpleAccess.SQLite
             }
         }
 
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <returns> The TDbDataReader </returns>
+        public SQLiteDataReader ExecuteReader(string commandText, object paramObject = null)
+        {
+            return ExecuteReader(commandText, BuildSQLiteParameters(paramObject));
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public SQLiteDataReader ExecuteReader(string commandText, CommandType commandType, object paramObject = null)
+        {
+            return ExecuteReader(commandText, commandType, BuildSQLiteParameters(paramObject));
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public SQLiteDataReader ExecuteReader(string commandText, CommandBehavior commandBehavior, object paramObject = null)
+        {
+            return ExecuteReader(commandText, commandBehavior, BuildSQLiteParameters(paramObject));
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public SQLiteDataReader ExecuteReader(string commandText, CommandType commandType, CommandBehavior commandBehavior, object paramObject = null)
+        {
+            return ExecuteReader(commandText, commandType, commandBehavior, BuildSQLiteParameters(paramObject));
+        }
+
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
@@ -1356,7 +1409,7 @@ namespace SimpleAccess.SQLite
         }
 
         /// <summary> Close the current open connection. </summary>
-        public void CloseCurrentDbConnection()
+        public void CloseDbConnection()
         {
             if (_sqliteConnection != null)
                 _sqliteConnection.CloseSafely();
