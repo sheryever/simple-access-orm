@@ -1,4 +1,4 @@
-# Simple Access
+# Simple Access ORM
 SimpleAccess provides a simple database access as well as simple repository for CURD and other helper methods.
 
 SimpleAccess provides excpetion logging.
