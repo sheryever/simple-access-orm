@@ -34,7 +34,7 @@ Sql Server implementaion for SimpleAccess.
 Reading single record from the database as dynamic object
 ``` C#
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
-var people = simpleAccess.ExecuteDynamic("Select * FROM people where id = @id;", new { id  = 12});
+var person = simpleAccess.ExecuteDynamic("Select * FROM people where id = @id;", new { id  = 12});
 ```
 
 Reading records from the database as IEnumerable&lt;dynamic&gt;
@@ -69,23 +69,22 @@ var totalPeople = simpleAccess.ExecuteScalar<int>("Select COUNT(*) FROM people;"
 
 Executes a SQL statement against the connection and returns the number of rows affected
 ``` C#
-public class Person
+public class PersonInsertViewModel
 {
-    [Identity]
-    public int Id { get; set; }
     public string Name { get; set; }
     public string Address { get; set; }
 }
 
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
 
-var person = new Person() {Name = "Ahmed", Address = "Madina"};
-var rowAffected = simpleAccess.ExecuteNonQuery("INSERT INTO People values (@name, @Address);", person);
+var person = new PersonInsertViewModel {Name = "Ahmed", Address = "Madina"};
+var rowAffected = simpleAccess.ExecuteNonQuery("INSERT INTO People values (@name, @address);", person);
 
 var rowAffected = simpleAccess.ExecuteNonQuery("UPDATE People SET Name=@name WHERE Id = @id;", new {id = 1, name = "Muhammad"});
 
 ```
 
+Using transactions with SimpleAccess
 ```C#
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
 SqlTransaction transaction = null;
