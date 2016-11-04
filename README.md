@@ -94,7 +94,7 @@ try
     {
         var person = new Person() { Name = "Ahmed", Address = "Madina" };
 
-        var newId = simpleAccess.ExecuteScalar<int>(transaction, "INSERT INTO People values (@name, @Address); SELECT SCOPE_IDENTITY();", person);
+        var newId = simpleAccess.ExecuteScalar<int>(transaction, "INSERT INTO People VALUES (@name, @Address); SELECT SCOPE_IDENTITY();", person);
 
         simpleAccess.EndTransaction(transaction);
     }
