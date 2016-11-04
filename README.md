@@ -28,7 +28,7 @@ Sql Server implementaion for SimpleAccess.
 | Fill | Execute commant text against connection and add or refresh rows in DataSet or DataTable. |
 | GetNewConnection | Gets the new connection with the SimpleAccess Ojbect ConnectionString.|
 
-** *All Execute and Fill methods have different overloads.* **
+** *All Execute and Fill methods have multiple overloads.* **
 
 ## Using SimpleAccess
 Reading single record from the database as dynamic object
