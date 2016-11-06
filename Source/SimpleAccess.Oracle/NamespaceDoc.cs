@@ -6,7 +6,7 @@ using System.Text;
 namespace SimpleAccess.Oracle
 {
     /// <summary>
-    /// The <see cref="SimpleAccess.Oracle"/> namespace contains the SqlServer implementation for SimpleAcces.
+    /// The <see cref="SimpleAccess.Oracle"/> namespace contains the SimpleAcces implementation for Oracle.
     /// </summary>
 
     [System.Runtime.CompilerServices.CompilerGenerated]

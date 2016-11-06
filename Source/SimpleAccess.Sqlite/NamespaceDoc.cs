@@ -6,7 +6,7 @@ using System.Text;
 namespace SimpleAccess.SQLite
 {
     /// <summary>
-    /// The <see cref="SimpleAccess.SQLite"/> namespace contains the SQLite implementation for SimpleAcces.
+    /// The <see cref="SimpleAccess.SQLite"/> namespace contains the SimpleAcces implementation for SQLite.
     /// </summary>
 
     [System.Runtime.CompilerServices.CompilerGenerated]
