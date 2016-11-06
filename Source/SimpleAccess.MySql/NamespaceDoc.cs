@@ -6,7 +6,7 @@ using System.Text;
 namespace SimpleAccess.MySql
 {
     /// <summary>
-    /// The <see cref="SimpleAccess.MySql"/> namespace contains the MySql implementation for SimpleAcces.
+    /// The <see cref="SimpleAccess.MySql"/> namespace contains the SimpleAcces implementation for MySql.
     /// </summary>
 
     [System.Runtime.CompilerServices.CompilerGenerated]
