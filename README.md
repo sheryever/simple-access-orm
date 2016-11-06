@@ -28,43 +28,43 @@ SimpleAccess implementaion for Sql Server.
 | Fill | Execute commant text against connection and add or refresh rows in DataSet or DataTable. |
 | GetNewConnection | Gets the new connection with the SimpleAccess Ojbect ConnectionString.|
 
-** *All Execute and Fill methods have multiple overloads.* **
+***All Execute and Fill methods have multiple overloads.***
 
 ## Using SimpleAccess
 Reading single record from the database as dynamic object
 ``` C#
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
-var person = simpleAccess.ExecuteDynamic("Select * FROM people where id = @id;", new { id  = 12});
+var person = simpleAccess.ExecuteDynamic("SELECT * FROM dbo.People where id = @id;", new { id  = 12});
 ```
 
 Reading records from the database as IEnumerable&lt;dynamic&gt;
 ``` C#
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
-var people = simpleAccess.ExecuteDynamic("Select * FROM people;");
+var people = simpleAccess.ExecuteDynamics("SELECT * FROM dbo.People;");
 ```
 
 Reading single record from the database as Person object
 ``` C#
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
-var person = simpleAccess.ExecuteEntity<Person>("Select * FROM people where id = @id;", new { id  = 12});
+var person = simpleAccess.ExecuteEntity<Person>("SELECT * FROM dbo.People where id = @id;", new { id  = 12});
 ```
 
 Reading records from the database as IEnumerable&lt;Person&gt;
 ``` C#
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
-var people = simpleAccess.ExecuteEntities<Person>("Select * FROM people;");
+var people = simpleAccess.ExecuteEntities<Person>("SELECT * FROM dbo.People;");
 ```
 
 Reading records from the database using DataReader
 ``` C#
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
-var dataReader = simpleAccess.ExecuteReader("Select * FROM people;");
+var dataReader = simpleAccess.ExecuteReader("SELECT * FROM dbo.People;");
 ```
 
 Executing aggregate query using SimpleAccess
 ``` C#
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
-var totalPeople = simpleAccess.ExecuteScalar<int>("Select COUNT(*) FROM people;");
+var totalPeople = simpleAccess.ExecuteScalar<int>("SELECT COUNT(*) FROM dbo.People;");
 ```
 
 Executes a SQL statement against the connection and returns the number of rows affected
@@ -78,9 +78,9 @@ public class PersonInsertViewModel
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnection");
 
 var person = new PersonInsertViewModel {Name = "Ahmed", Address = "Madina"};
-var rowAffected = simpleAccess.ExecuteNonQuery("INSERT INTO People values (@name, @address);", person);
+var rowAffected = simpleAccess.ExecuteNonQuery("INSERT INTO dbo.People values (@name, @address);", person);
 
-var rowAffected = simpleAccess.ExecuteNonQuery("UPDATE People SET Name=@name WHERE Id = @id;", new {id = 1, name = "Muhammad"});
+var rowAffected = simpleAccess.ExecuteNonQuery("UPDATE dbo.People SET Name=@name WHERE Id = @id;", new {id = 1, name = "Muhammad"});
 
 ```
 
@@ -94,7 +94,7 @@ try
     {
         var person = new Person() { Name = "Ahmed", Address = "Madina" };
 
-        var newId = simpleAccess.ExecuteScalar<int>(transaction, "INSERT INTO People values (@name, @Address); SELECT SCOPE_IDENTITY();", person);
+        var newId = simpleAccess.ExecuteScalar<int>(transaction, "INSERT INTO dbo.People VALUES (@name, @Address); SELECT SCOPE_IDENTITY();", person);
 
         simpleAccess.EndTransaction(transaction);
     }

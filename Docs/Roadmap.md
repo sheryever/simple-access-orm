@@ -4,6 +4,7 @@
 - [x] Remove StoredProcedureParameters inheritance from Enity Class to make entity more lighter
 - [x] Add InsertAll\<TEntity\>, UpdateAll\<TEntity\>, DeleteAll\<TEntity\> with support of internal trasaction in Repository
 - [x] Add Find\<TEntity\> and  FindAll\<TEntity\> in Repository
+- [ ] Write unit test
 - [ ] Add StoredProcedure names with repository method mappings in repository settings
 - [ ] Add Sql Generation for Non StoredProcedures command types (Insert,Update,Delete,GetAll and Get)
 - [ ] Fixing methods comments and adding examples 
