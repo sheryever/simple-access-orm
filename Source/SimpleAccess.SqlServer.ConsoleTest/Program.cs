@@ -69,7 +69,7 @@ namespace SimpleAccess.SqlServer.ConsoleTest
                 {
                     var person = new Person() { Name = "Ahmed", Address = "Madina" };
 
-                    var newId = simpleAccess.ExecuteScalar<int>(transaction, "INSERT INTO People values (@name, @Address); SELECT SCOPE_IDENTITY();", person);
+                    var newId = simpleAccess.ExecuteScalar<int>(transaction, "INSERT INTO People Values (@name, @Address); SELECT SCOPE_IDENTITY();", person);
                     
                     simpleAccess.EndTransaction(transaction);
                 }
