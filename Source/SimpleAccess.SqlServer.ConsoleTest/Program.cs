@@ -68,7 +68,7 @@ namespace SimpleAccess.SqlServer.ConsoleTest
                 using (transaction = simpleAccess.BeginTrasaction())
                 {
                     var person = new Person() { Name = "Ahmed", Address = "Madina" };
-
+                    
                     var newId = simpleAccess.ExecuteScalar<int>(transaction, "INSERT INTO People Values (@name, @Address); SELECT SCOPE_IDENTITY();", person);
                     
                     simpleAccess.EndTransaction(transaction);
