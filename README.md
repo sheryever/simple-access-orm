@@ -19,13 +19,13 @@ Creating SimpleAccess object for Sql Server
 // Uses the provided connnection string
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("Data Source=SQLEXPRESS2014;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=whoever;Password=whatever");
 
-// It will load the connectionString from web.config or app.config connection strings
+// Loads the connectionString from web.config or app.config connection strings
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnectionString");
 
-// Empty parameter contructor will load the connection string from the value appSetting/simpleAccess:sqlConnectionStringName key.
+// Loads the connection string name from the value of appSetting/simpleAccess:sqlConnectionStringName key in web.confg or app.config.
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess();
 
-// It will use the provided SqlConnection object.
+// Uses the provided SqlConnection object.
 var sqlConnection = new SqlConnection("Data Source=SQLEXPRESS2014;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=whoever;Password=whatever");
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess(sqlConnection);
 ```
