@@ -51,7 +51,7 @@ Reading records from the database as IEnumerable&lt;Person&gt;
 var people = simpleAccess.ExecuteEntities<Person>("SELECT * FROM dbo.People;");
 ```
 
-Reading records from the database using DataReader
+Get DataReader to read the records from the database
 ``` C#
 var dataReader = simpleAccess.ExecuteReader("SELECT * FROM dbo.People;");
 ```
