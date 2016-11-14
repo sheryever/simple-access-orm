@@ -99,12 +99,7 @@ catch (Exception)
 ```
 ###SimpleAccess interface
 
-#### Properties
-| Property | Description |
-|--------------------|--------|
-| SimpleAccess  | Base SimpleAccess object of repository.|
-
-#### SimpleAccess Methods
+#### Methods
 | Methods | Description |
 |--------------------|--------|
 | BeginTrasaction  | Begins a database transaction.|
@@ -127,8 +122,14 @@ catch (Exception)
 
 SimpleAccess provides ready repository. Each database provide has it's on repository.
 
-All methods are based on stored procedures with its related sotred procedure naming convention.
+#### Properties
+| Property | Description |
+|--------------------|--------|
+| SimpleAccess  | Base SimpleAccess object of repository.|
 
+
+All methods are based on stored procedures with its related sotred procedure naming convention.
+#### Methods
 | Methods            | Sp Name | Description |
 |--------------------|---------|-------------|
 | Get&lt;TEntity&gt; | TEntity_GetById </br> ie. People_GetById | Get TEntity by Id or anyother parameter |
@@ -386,14 +387,13 @@ namespace SimpleAccess.SqlServer.ConsoleTest
                 , CreatedBy = 1 // user id
             };
 
-
 		    repo.Insert<Person>(newPerson);
             Console.Write("New person id: {0}", newPerson.Id);
 
 			//Update
             var personToUpdate = repo.GetById(1);
 
-            personToUpdate.Name = "Muhammad";
+			personToUpdate.Name = "Muhammad";
             personToUpdate.ModifiedOn = DateTime.Now
             personToUpdate.ModifiedBy = 1 // user id
 
