@@ -31,9 +31,9 @@ namespace SimpleAccess.Oracle
 
             /// <summary> Creates a command. </summary>
         /// 
-        /// <param name="commandText">   The query string. </param>
-        /// <param name="commandType">   Type of the command. </param>
-        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// <param name="commandText"> The query string. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="oracleParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> The new command. </returns>
         OracleCommand CreateCommand(string commandText, CommandType commandType, params OracleParameter[] oracleParameters);
@@ -41,9 +41,9 @@ namespace SimpleAccess.Oracle
         /// <summary> Creates a command. </summary>
         /// 
         /// <param name="sqlTransaction"> The SQL transaction. </param>
-        /// <param name="commandText">    The query string. </param>
-        /// <param name="commandType">    Type of the command. </param>
-        /// <param name="oracleParameters">  Options for controlling the SQL. </param>
+        /// <param name="commandText"> The query string. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> The new command. </returns>
         OracleCommand CreateCommand(OracleTransaction sqlTransaction, string commandText, CommandType commandType

@@ -259,7 +259,7 @@ namespace SimpleAccess.SqlServer
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// <param name="sqlParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         public int Insert<TEntity>(params SqlParameter[] sqlParameters)
@@ -408,7 +408,7 @@ namespace SimpleAccess.SqlServer
         /// <summary> Updates the given sqlParameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// <param name="sqlParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         public int Update<TEntity>(params SqlParameter[] sqlParameters)
@@ -590,7 +590,7 @@ namespace SimpleAccess.SqlServer
         /// <summary> Deletes the given ID. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// <param name="sqlParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         public virtual int Delete<TEntity>(params SqlParameter[] sqlParameters)
@@ -625,7 +625,7 @@ namespace SimpleAccess.SqlServer
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sqlTransaction"> The SQL transaction. </param>
-        /// <param name="sqlParameters">  Options for controlling the SQL. </param>
+        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         public virtual int Delete<TEntity>(SqlTransaction sqlTransaction, params SqlParameter[] sqlParameters)

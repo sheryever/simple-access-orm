@@ -14,22 +14,12 @@ Here we are using the SimpleAccess implementation for MS Sql Server.
 ```powershell
 PM > Install-Package SimpleAccess.SqlServer
 ```
+
 Creating SimpleAccess object for Sql Server
 ``` C#
-// Uses the provided connnection string
-ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("Data Source=SQLEXPRESS2014;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=whoever;Password=whatever");
-
-// Loads the connectionString from web.config or app.config connection strings
-ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnectionString");
-
-// Loads the connection string name from the value of appSetting/simpleAccess:sqlConnectionStringName key in web.confg or app.config.
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess();
-
-// Uses the provided SqlConnection object.
-var sqlConnection = new SqlConnection("Data Source=SQLEXPRESS2014;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=whoever;Password=whatever");
-ISqlSimpleAccess simpleAccess = new SqlSimpleAccess(sqlConnection);
 ```
-***There are more constructors to provide the SimpleAccess other configurtion***
+***There are other constructors to configurtion the SimpleAccess***
 
 Reading single record from the database as dynamic object
 ``` C#
@@ -68,7 +58,6 @@ public class PersonInsertViewModel
     public string Name { get; set; }
     public string Address { get; set; }
 }
-
 
 var person = new PersonInsertViewModel {Name = "Ahmed", Address = "Madina"};
 var rowAffected = simpleAccess.ExecuteNonQuery("INSERT INTO dbo.People values (@name, @address);", person);
@@ -117,6 +106,22 @@ catch (Exception)
 
 ***All Execute and Fill methods have multiple overloads.***
 
+Creating SimpleAccess object for Sql Server
+``` C#
+// Uses the provided connnection string
+ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("Data Source=SQLEXPRESS2014;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=whoever;Password=whatever");
+
+// Loads the connectionString from web.config or app.config connection strings
+ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnectionString");
+
+// Loads the connection string name from the value of appSetting/simpleAccess:sqlConnectionStringName key in web.confg or app.config.
+ISqlSimpleAccess simpleAccess = new SqlSimpleAccess();
+
+// Uses the provided SqlConnection object.
+var sqlConnection = new SqlConnection("Data Source=SQLEXPRESS2014;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=whoever;Password=whatever");
+ISqlSimpleAccess simpleAccess = new SqlSimpleAccess(sqlConnection);
+```
+***There are more constructors to configurtion the SimpleAccess***
 
 ## SimpleAccess with Repository pattern
 

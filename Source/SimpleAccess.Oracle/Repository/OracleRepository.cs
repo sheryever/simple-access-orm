@@ -259,7 +259,7 @@ namespace SimpleAccess.Oracle
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// <param name="oracleParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         public int Insert<TEntity>(params OracleParameter[] oracleParameters)
@@ -408,7 +408,7 @@ namespace SimpleAccess.Oracle
         /// <summary> Updates the given oracleParameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// <param name="oracleParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         public int Update<TEntity>(params OracleParameter[] oracleParameters)
@@ -590,7 +590,7 @@ namespace SimpleAccess.Oracle
         /// <summary> Deletes the given ID. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// <param name="oracleParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         public virtual int Delete<TEntity>(params OracleParameter[] oracleParameters)
@@ -625,7 +625,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sqlTransaction"> The SQL transaction. </param>
-        /// <param name="oracleParameters">  Options for controlling the SQL. </param>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         public virtual int Delete<TEntity>(OracleTransaction sqlTransaction, params OracleParameter[] oracleParameters)

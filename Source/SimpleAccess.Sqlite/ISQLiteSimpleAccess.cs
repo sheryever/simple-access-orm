@@ -25,9 +25,9 @@ namespace SimpleAccess.SQLite
 
             /// <summary> Creates a command. </summary>
         /// 
-        /// <param name="commandText">   The query string. </param>
-        /// <param name="commandType">   Type of the command. </param>
-        /// <param name="sqliteParameters"> Options for controlling the SQL. </param>
+        /// <param name="commandText"> The query string. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqliteParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> The new command. </returns>
         SQLiteCommand CreateCommand(string commandText, CommandType commandType, params SQLiteParameter[] sqliteParameters);
@@ -35,9 +35,9 @@ namespace SimpleAccess.SQLite
         /// <summary> Creates a command. </summary>
         /// 
         /// <param name="sqliteTransaction"> The SQL transaction. </param>
-        /// <param name="commandText">    The query string. </param>
-        /// <param name="commandType">    Type of the command. </param>
-        /// <param name="sqliteParameters">  Options for controlling the SQL. </param>
+        /// <param name="commandText"> The query string. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqliteParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> The new command. </returns>
         SQLiteCommand CreateCommand(SQLiteTransaction sqliteTransaction, string commandText, CommandType commandType
