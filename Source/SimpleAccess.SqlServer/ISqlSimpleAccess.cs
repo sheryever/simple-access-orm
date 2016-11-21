@@ -29,11 +29,11 @@ namespace SimpleAccess.SqlServer
         ISimpleLogger SimpleLogger { get; }
         
 
-            /// <summary> Creates a command. </summary>
+        /// <summary> Creates a command. </summary>
         /// 
-        /// <param name="commandText">   The query string. </param>
-        /// <param name="commandType">   Type of the command. </param>
-        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// <param name="commandText"> The query string. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqlParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> The new command. </returns>
         SqlCommand CreateCommand(string commandText, CommandType commandType, params SqlParameter[] sqlParameters);
@@ -41,9 +41,9 @@ namespace SimpleAccess.SqlServer
         /// <summary> Creates a command. </summary>
         /// 
         /// <param name="sqlTransaction"> The SQL transaction. </param>
-        /// <param name="commandText">    The query string. </param>
-        /// <param name="commandType">    Type of the command. </param>
-        /// <param name="sqlParameters">  Options for controlling the SQL. </param>
+        /// <param name="commandText"> The query string. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> The new command. </returns>
         SqlCommand CreateCommand(SqlTransaction sqlTransaction, string commandText, CommandType commandType

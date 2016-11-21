@@ -31,9 +31,9 @@ namespace SimpleAccess.MySql
 
             /// <summary> Creates a command. </summary>
         /// 
-        /// <param name="commandText">   The query string. </param>
-        /// <param name="commandType">   Type of the command. </param>
-        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// <param name="commandText"> The query string. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqlParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> The new command. </returns>
         MySqlCommand CreateCommand(string commandText, CommandType commandType, params MySqlParameter[] sqlParameters);
@@ -41,9 +41,9 @@ namespace SimpleAccess.MySql
         /// <summary> Creates a command. </summary>
         /// 
         /// <param name="sqlTransaction"> The SQL transaction. </param>
-        /// <param name="commandText">    The query string. </param>
-        /// <param name="commandType">    Type of the command. </param>
-        /// <param name="sqlParameters">  Options for controlling the SQL. </param>
+        /// <param name="commandText"> The query string. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> The new command. </returns>
         MySqlCommand CreateCommand(MySqlTransaction sqlTransaction, string commandText, CommandType commandType

@@ -97,7 +97,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="fieldToSkip"> (optional) the field to skip. </param>
-        /// <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="piList">	 (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> An enumerator that allows for each to be used to process get all TEntity in this
         /// collection.</returns>
@@ -118,7 +118,7 @@ namespace SimpleAccess.Oracle
         /// <param name="id">		   The identifier. </param>
         /// <param name="transaction"> (optional) the transaction. </param>
         /// <param name="fieldToSkip"> (optional) the field to skip. </param>
-        /// <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="piList">	 (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> . </returns>
         
@@ -136,7 +136,7 @@ namespace SimpleAccess.Oracle
         /// <param name="oracleParameter"> The SQL parameter. </param>
         /// <param name="transaction">  (optional) the transaction. </param>
         /// <param name="fieldToSkip">  (optional) the field to skip. </param>
-        /// <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="piList">	  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> . </returns>
         
@@ -161,7 +161,7 @@ namespace SimpleAccess.Oracle
         /// <param name="paramObject"> The dynamic object as parameters. </param>
         /// <param name="transaction">  (optional) the transaction. </param>
         /// <param name="fieldToSkip">  (optional) the field to skip. </param>
-        /// <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="piList">	  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> . </returns>
         
@@ -186,7 +186,7 @@ namespace SimpleAccess.Oracle
         /// <param name="sql">		   The SQL. </param>
         /// <param name="id">		   The identifier. </param>
         /// <param name="fieldToSkip"> (optional) the field to skip. </param>
-        /// <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="piList">	 (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> . </returns>
         
@@ -201,7 +201,7 @@ namespace SimpleAccess.Oracle
         /// <param name="sql">		    The SQL. </param>
         /// <param name="oracleParameter"> The SQL parameter. </param>
         /// <param name="fieldToSkip">  (optional) the field to skip. </param>
-        /// <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="piList">	  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> . </returns>
         
@@ -217,7 +217,7 @@ namespace SimpleAccess.Oracle
         /// <param name="sql">		    The SQL. </param>
         /// <param name="paramObject"> The dynamic object as parameters. </param>
         /// <param name="fieldToSkip">  (optional) the field to skip. </param>
-        /// <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="piList">	  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> . </returns>
 
@@ -232,7 +232,7 @@ namespace SimpleAccess.Oracle
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// <param name="oracleParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         
@@ -268,7 +268,7 @@ namespace SimpleAccess.Oracle
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <param name="storedProcedureParameters">Options for controlling the stored procedure. </param>
         /// 
         /// <returns> . </returns>
         
@@ -293,7 +293,7 @@ namespace SimpleAccess.Oracle
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <param name="storedProcedureParameters">Options for controlling the stored procedure. </param>
         /// <param name="sqlTransaction">			 The SQL transaction. </param>
         /// 
         /// <returns> . </returns>
@@ -320,7 +320,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sqlTransaction">			 The SQL transaction. </param>
-        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <param name="storedProcedureParameters">Options for controlling the stored procedure. </param>
         /// 
         /// <returns> . </returns>
         
@@ -345,7 +345,7 @@ namespace SimpleAccess.Oracle
         /// <summary> Updates the given oracleParameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// <param name="oracleParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         
@@ -380,7 +380,7 @@ namespace SimpleAccess.Oracle
         /// <summary> Updates the given oracleParameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <param name="storedProcedureParameters">Options for controlling the stored procedure. </param>
         /// 
         /// <returns> . </returns>
         
@@ -405,7 +405,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sqlTransaction">			 The SQL transaction. </param>
-        /// <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+        /// <param name="storedProcedureParameters">Options for controlling the stored procedure. </param>
         /// 
         /// <returns> . </returns>
         
@@ -452,7 +452,7 @@ namespace SimpleAccess.Oracle
         /// <summary> Deletes the given ID. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// <param name="oracleParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         
@@ -490,7 +490,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sqlTransaction"> The SQL transaction. </param>
-        /// <param name="oracleParameters">  Options for controlling the SQL. </param>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         
@@ -529,7 +529,7 @@ namespace SimpleAccess.Oracle
        ///  
        /// <param name="sqlTransaction"> The SQL transaction. </param>
        /// <param name="sql">			  The SQL. </param>
-       /// <param name="commandType">    Type of the command. </param>
+       /// <param name="commandType"> Type of the command. </param>
        /// <param name="paramObject"> The dynamic object as parameters. </param>
        ///  
        /// <returns> . </returns>
@@ -547,8 +547,8 @@ namespace SimpleAccess.Oracle
         /// 
         /// <param name="sqlTransaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
-        /// <param name="commandType">    Type of the command. </param>
-        /// <param name="oracleParameters">  Options for controlling the SQL. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         
@@ -575,7 +575,7 @@ namespace SimpleAccess.Oracle
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <param name="sql">			 The SQL. </param>
-        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The dynamic object as parameters. </param>        
         /// <returns> . </returns>
         
@@ -591,8 +591,8 @@ namespace SimpleAccess.Oracle
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <param name="sql">			 The SQL. </param>
-        /// <param name="commandType">   Type of the command. </param>
-        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="oracleParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         
@@ -625,7 +625,7 @@ namespace SimpleAccess.Oracle
         /// <typeparam name="T"> Generic type parameter. </typeparam>
         /// <param name="sqlTransaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
-        /// <param name="commandType">    Type of the command. </param>
+        /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The dynamic object as parameters. </param>
         /// 
         /// <returns> . </returns>
@@ -644,8 +644,8 @@ namespace SimpleAccess.Oracle
         /// <typeparam name="T"> Generic type parameter. </typeparam>
         /// <param name="sqlTransaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
-        /// <param name="commandType">    Type of the command. </param>
-        /// <param name="oracleParameters">  Options for controlling the SQL. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         
@@ -673,7 +673,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
         /// <param name="sql">			 The SQL. </param>
-        /// <param name="commandType">   Type of the command. </param>
+        /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The dynamic object as parameters. </param>
         /// 
         /// <returns> . </returns>
@@ -691,8 +691,8 @@ namespace SimpleAccess.Oracle
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
         /// <param name="sql">			 The SQL. </param>
-        /// <param name="commandType">   Type of the command. </param>
-        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="oracleParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         
@@ -724,8 +724,8 @@ namespace SimpleAccess.Oracle
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sql">			 The SQL. </param>
-        /// <param name="commandType">   Type of the command. </param>
-        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
         /// <param name="paramObject"> The dynamic object as parameters. </param>
         /// 
@@ -748,10 +748,10 @@ namespace SimpleAccess.Oracle
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sql">			 The SQL. </param>
-        /// <param name="commandType">   Type of the command. </param>
-        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// <param name="oracleParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         
@@ -790,8 +790,8 @@ namespace SimpleAccess.Oracle
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sqlTransaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
-        /// <param name="commandType">    Type of the command. </param>
-        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// <param name="paramObject"> The dynamic object as parameters. </param>
         /// 
@@ -814,10 +814,10 @@ namespace SimpleAccess.Oracle
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sqlTransaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
-        /// <param name="commandType">    Type of the command. </param>
-        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="oracleParameters">  Options for controlling the SQL. </param>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         
@@ -849,8 +849,8 @@ namespace SimpleAccess.Oracle
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sql">			 The SQL. </param>
-        /// <param name="commandType">   Type of the command. </param>
-        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
         /// <param name="paramObject"> The dynamic object as parameters. </param>
         /// 
@@ -871,10 +871,10 @@ namespace SimpleAccess.Oracle
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sql">			 The SQL. </param>
-        /// <param name="commandType">   Type of the command. </param>
-        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// <param name="oracleParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         
@@ -910,8 +910,8 @@ namespace SimpleAccess.Oracle
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sqlTransaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
-        /// <param name="commandType">    Type of the command. </param>
-        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// <param name="paramObject"> The dynamic object as parameters. </param>
         /// 
@@ -933,10 +933,10 @@ namespace SimpleAccess.Oracle
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sqlTransaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
-        /// <param name="commandType">    Type of the command. </param>
-        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="oracleParameters">  Options for controlling the SQL. </param>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         
@@ -966,8 +966,8 @@ namespace SimpleAccess.Oracle
         /// 
         /// <param name="sqlTransaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
-        /// <param name="commandType">    Type of the command. </param>
-        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// <param name="paramObject"> The dynamic object as parameters. </param>
         /// 
@@ -988,10 +988,10 @@ namespace SimpleAccess.Oracle
         /// 
         /// <param name="sqlTransaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
-        /// <param name="commandType">    Type of the command. </param>
-        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="oracleParameters">  Options for controlling the SQL. </param>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> A list of. </returns>
         
@@ -1015,8 +1015,8 @@ namespace SimpleAccess.Oracle
        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
        ///  
        /// <param name="sql">			 The SQL. </param>
-       /// <param name="commandType">   Type of the command. </param>
-       /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+       /// <param name="commandType"> Type of the command. </param>
+       /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
        /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
        ///   <param name="paramObject"> The dynamic object as parameters. </param>
        ///  
@@ -1036,10 +1036,10 @@ namespace SimpleAccess.Oracle
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <param name="sql">			 The SQL. </param>
-        /// <param name="commandType">   Type of the command. </param>
-        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// <param name="oracleParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> A list of. </returns>
         
@@ -1070,8 +1070,8 @@ namespace SimpleAccess.Oracle
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <param name="sql">			 The SQL. </param>
-        /// <param name="commandType">   Type of the command. </param>
-        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
         /// <param name="paramObject"> The dynamic object as parameters. </param>
         /// 
@@ -1094,10 +1094,10 @@ namespace SimpleAccess.Oracle
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <param name="sql">			 The SQL. </param>
-        /// <param name="commandType">   Type of the command. </param>
-        /// <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// <param name="oracleParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         
@@ -1136,8 +1136,8 @@ namespace SimpleAccess.Oracle
         /// 
         /// <param name="sqlTransaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
-        /// <param name="commandType">    Type of the command. </param>
-        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// <param name="paramObject"> The dynamic object as parameters. </param>
         /// 
@@ -1158,10 +1158,10 @@ namespace SimpleAccess.Oracle
         /// 
         /// <param name="sqlTransaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
-        /// <param name="commandType">    Type of the command. </param>
-        /// <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="oracleParameters">  Options for controlling the SQL. </param>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         
@@ -1210,9 +1210,9 @@ namespace SimpleAccess.Oracle
         
         /// <summary> Creates a command. </summary>
         /// 
-        /// <param name="queryString">   The query string. </param>
-        /// <param name="commandType">   Type of the command. </param>
-        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
+        /// <param name="queryString"> The query string. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="oracleParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> The new command. </returns>
         
@@ -1234,9 +1234,9 @@ namespace SimpleAccess.Oracle
         /// <summary> Creates a command. </summary>
         /// 
         /// <param name="sqlTransaction"> The SQL transaction. </param>
-        /// <param name="queryString">    The query string. </param>
-        /// <param name="commandType">    Type of the command. </param>
-        /// <param name="oracleParameters">  Options for controlling the SQL. </param>
+        /// <param name="queryString"> The query string. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="oracleParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> The new command. </returns>
         

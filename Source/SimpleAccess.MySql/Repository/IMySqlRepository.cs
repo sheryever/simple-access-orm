@@ -139,7 +139,7 @@ namespace SimpleAccess.MySql
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// <param name="sqlParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
         int Insert<TEntity>(params MySqlParameter[] sqlParameters);
@@ -193,7 +193,7 @@ namespace SimpleAccess.MySql
         /// <summary> Updates the given sqlParameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// <param name="sqlParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         int Update<TEntity>(params MySqlParameter[] sqlParameters)
@@ -248,7 +248,7 @@ namespace SimpleAccess.MySql
         /// <summary> Deletes the <typeparamref name="TEntity"/>  by given ID. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// <param name="sqlParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         int Delete<TEntity>(params MySqlParameter[] sqlParameters)
@@ -287,7 +287,7 @@ namespace SimpleAccess.MySql
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="sqlTransaction"> The SQL transaction. </param>
-        /// <param name="sqlParameters">  Options for controlling the SQL. </param>
+        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         int Delete<TEntity>(MySqlTransaction sqlTransaction, params MySqlParameter[] sqlParameters)
