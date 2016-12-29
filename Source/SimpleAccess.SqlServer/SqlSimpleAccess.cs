@@ -415,14 +415,6 @@ namespace SimpleAccess.SqlServer
                 SimpleLogger.LogException(ex);
                 throw;
             }
-            finally
-            {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                    _sqlConnection.CloseSafely();
-
-                dbCommand.ClearDbCommand();
-
-            }
         }
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>

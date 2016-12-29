@@ -417,14 +417,6 @@ namespace SimpleAccess.SQLite
                 SimpleLogger.LogException(ex);
                 throw;
             }
-            finally
-            {
-                if (_sqliteTransaction == null && _sqliteConnection.State != ConnectionState.Closed)
-                    _sqliteConnection.CloseSafely();
-
-                dbCommand.ClearDbCommand();
-
-            }
         }
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
