@@ -133,7 +133,7 @@
         </member>
         <member name="T:SimpleAccess.SqlServer.NamespaceDoc">
             <summary>
-            The <see cref="N:SimpleAccess.SqlServer"/> namespace contains the SqlServer implementation for SimpleAcces.
+            The <see cref="N:SimpleAccess.SqlServer"/> namespace contains the SimpleAcces implementation for SqlServer.
             </summary>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlServerSqlBuilder.CreateEntityParameters(System.Object,System.Boolean)">
@@ -193,7 +193,7 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="fieldToSkip"> (optional) the field to skip. </param>
-            <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="piList">	 (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> An enumerator that allows for each to be used to process get all TEntity in this
             collection.</returns>
@@ -205,7 +205,7 @@
             <param name="sqlParameter"> The SQL parameter. </param>
             <param name="transaction">  (optional) the transaction. </param>
             <param name="fieldToSkip">  (optional) the field to skip. </param>
-            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="piList">	  (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
@@ -216,7 +216,7 @@
             <param name="paramObject"> The dynamic object as parameters. </param>
             <param name="transaction">  (optional) the transaction. </param>
             <param name="fieldToSkip">  (optional) the field to skip. </param>
-            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="piList">	  (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
@@ -227,7 +227,7 @@
             <param name="id">		   The identifier. </param>
             <param name="transaction"> (optional) the transaction. </param>
             <param name="fieldToSkip"> (optional) the field to skip. </param>
-            <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="piList">	 (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
@@ -237,7 +237,7 @@
             <param name="sql">		   The SQL. </param>
             <param name="id">		   The identifier. </param>
             <param name="fieldToSkip"> (optional) the field to skip. </param>
-            <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="piList">	 (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
@@ -247,7 +247,7 @@
             <param name="sql">		    The SQL. </param>
             <param name="sqlParameter"> The SQL parameter. </param>
             <param name="fieldToSkip">  (optional) the field to skip. </param>
-            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="piList">	  (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
@@ -257,7 +257,7 @@
             <param name="sql">		    The SQL. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             <param name="fieldToSkip">  (optional) the field to skip. </param>
-            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="piList">	  (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
@@ -265,7 +265,7 @@
             <summary> Inserts the given SQL parameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -281,7 +281,7 @@
             <summary> Inserts the given SQL parameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            <param name="storedProcedureParameters">Options for controlling the stored procedure. </param>
             
             <returns> . </returns>
         </member>
@@ -289,7 +289,7 @@
             <summary> Inserts the given SQL parameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            <param name="storedProcedureParameters">Options for controlling the stored procedure. </param>
             <param name="sqlTransaction">			 The SQL transaction. </param>
             
             <returns> . </returns>
@@ -299,7 +299,7 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction">			 The SQL transaction. </param>
-            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            <param name="storedProcedureParameters">Options for controlling the stored procedure. </param>
             
             <returns> . </returns>
         </member>
@@ -307,7 +307,7 @@
             <summary> Updates the given sqlParameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -322,7 +322,7 @@
             <summary> Updates the given sqlParameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            <param name="storedProcedureParameters">Options for controlling the stored procedure. </param>
             
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -331,7 +331,7 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction">			 The SQL transaction. </param>
-            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            <param name="storedProcedureParameters">Options for controlling the stored procedure. </param>
             
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -339,7 +339,7 @@
             <summary> Deletes the given ID. </summary>
              
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -365,7 +365,7 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -383,8 +383,8 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -394,7 +394,7 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
             <returns> Number of rows affected (integer) </returns>
@@ -405,8 +405,8 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -416,7 +416,7 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>        
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -427,8 +427,8 @@
             
             <typeparam name="T"> Generic type parameter. </typeparam>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> The T value </returns>
         </member>
@@ -439,7 +439,7 @@
             
             <typeparam name="T"> Generic type parameter. </typeparam>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
             <returns> The T value </returns>
@@ -452,8 +452,8 @@
             <typeparam name="T"> Generic type parameter. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> The T value </returns>
         </member>
@@ -465,7 +465,7 @@
             <typeparam name="T"> Generic type parameter. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
             <returns> The T value </returns>
@@ -477,10 +477,10 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> </returns>
         </member>
@@ -491,8 +491,8 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
@@ -506,10 +506,10 @@
             <typeparam name="TEntity"> Generic type parameter. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> </returns>
         </member>
@@ -521,8 +521,8 @@
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
@@ -535,10 +535,10 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> The value of the entity. </returns>
         </member>
@@ -549,8 +549,8 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
@@ -564,10 +564,10 @@
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> The value of the entity. </returns>
         </member>
@@ -579,8 +579,8 @@
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
@@ -592,10 +592,10 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> A list of dynamic. </returns>
         </member>
@@ -605,8 +605,8 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
              
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
              
@@ -619,10 +619,10 @@
             
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> A list of dynamic. </returns>
         </member>
@@ -633,8 +633,8 @@
             
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
@@ -646,10 +646,10 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> Result in a dynamic object. </returns>
         </member>
@@ -659,8 +659,8 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
@@ -673,10 +673,10 @@
             
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> Result in a dynamic object. </returns>
         </member>
@@ -687,8 +687,8 @@
             
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
@@ -753,7 +753,7 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="fieldToSkip"> (optional) the field to skip. </param>
-            <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="piList">	 (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> An enumerator that allows for each to be used to process get all TEntity in this
             collection.</returns>
@@ -765,7 +765,7 @@
             <param name="id">		   The identifier. </param>
             <param name="transaction"> (optional) the transaction. </param>
             <param name="fieldToSkip"> (optional) the field to skip. </param>
-            <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="piList">	 (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
@@ -776,7 +776,7 @@
             <param name="sqlParameter"> The SQL parameter. </param>
             <param name="transaction">  (optional) the transaction. </param>
             <param name="fieldToSkip">  (optional) the field to skip. </param>
-            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="piList">	  (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
@@ -787,7 +787,7 @@
             <param name="paramObject"> The dynamic object as parameters. </param>
             <param name="transaction">  (optional) the transaction. </param>
             <param name="fieldToSkip">  (optional) the field to skip. </param>
-            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="piList">	  (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
@@ -797,7 +797,7 @@
             <param name="sql">		   The SQL. </param>
             <param name="id">		   The identifier. </param>
             <param name="fieldToSkip"> (optional) the field to skip. </param>
-            <param name="piList">	   (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="piList">	 (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
@@ -807,7 +807,7 @@
             <param name="sql">		    The SQL. </param>
             <param name="sqlParameter"> The SQL parameter. </param>
             <param name="fieldToSkip">  (optional) the field to skip. </param>
-            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="piList">	  (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
@@ -817,7 +817,7 @@
             <param name="sql">		    The SQL. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             <param name="fieldToSkip">  (optional) the field to skip. </param>
-            <param name="piList">	    (optional) dictionary of property name and PropertyInfo object. </param>
+            <param name="piList">	  (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> . </returns>
         </member>
@@ -825,7 +825,7 @@
             <summary> Inserts the given SQL parameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -841,7 +841,7 @@
             <summary> Inserts the given SQL parameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            <param name="storedProcedureParameters">Options for controlling the stored procedure. </param>
             
             <returns> . </returns>
         </member>
@@ -849,7 +849,7 @@
             <summary> Inserts the given SQL parameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            <param name="storedProcedureParameters">Options for controlling the stored procedure. </param>
             <param name="sqlTransaction">			 The SQL transaction. </param>
             
             <returns> . </returns>
@@ -859,7 +859,7 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction">			 The SQL transaction. </param>
-            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            <param name="storedProcedureParameters">Options for controlling the stored procedure. </param>
             
             <returns> . </returns>
         </member>
@@ -867,7 +867,7 @@
             <summary> Updates the given sqlParameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -882,7 +882,7 @@
             <summary> Updates the given sqlParameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            <param name="storedProcedureParameters">Options for controlling the stored procedure. </param>
             
             <returns> . </returns>
         </member>
@@ -891,7 +891,7 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction">			 The SQL transaction. </param>
-            <param name="storedProcedureParameters"> Options for controlling the stored procedure. </param>
+            <param name="storedProcedureParameters">Options for controlling the stored procedure. </param>
             
             <returns> . </returns>
         </member>
@@ -908,7 +908,7 @@
             <summary> Deletes the given ID. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -925,7 +925,7 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -944,7 +944,7 @@
              
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
              
             <returns> . </returns>
@@ -956,8 +956,8 @@
             
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -967,7 +967,7 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>        
             <returns> . </returns>
         </member>
@@ -977,8 +977,8 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -990,7 +990,7 @@
             <typeparam name="T"> Generic type parameter. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
             <returns> . </returns>
@@ -1003,8 +1003,8 @@
             <typeparam name="T"> Generic type parameter. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -1015,7 +1015,7 @@
             
             <typeparam name="T"> Generic type parameter. </typeparam>
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
             <returns> . </returns>
@@ -1027,8 +1027,8 @@
             
             <typeparam name="T"> Generic type parameter. </typeparam>
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -1039,8 +1039,8 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
@@ -1053,10 +1053,10 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -1068,8 +1068,8 @@
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
@@ -1083,10 +1083,10 @@
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -1097,8 +1097,8 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
@@ -1111,10 +1111,10 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -1126,8 +1126,8 @@
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
@@ -1141,10 +1141,10 @@
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -1155,8 +1155,8 @@
             
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
@@ -1169,10 +1169,10 @@
             
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> A list of. </returns>
         </member>
@@ -1182,8 +1182,8 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
              
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
               <param name="paramObject"> The dynamic object as parameters. </param>
              
@@ -1195,10 +1195,10 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> A list of. </returns>
         </member>
@@ -1208,8 +1208,8 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
@@ -1221,10 +1221,10 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sql">			 The SQL. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		 (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -1235,8 +1235,8 @@
             
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="paramObject"> The dynamic object as parameters. </param>
             
@@ -1249,10 +1249,10 @@
             
             <param name="sqlTransaction"> The SQL transaction. </param>
             <param name="sql">			  The SQL. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="piList">		  (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -1266,9 +1266,9 @@
         <member name="M:SimpleAccess.SqlServer.Repository.CreateCommand(System.String,System.Data.CommandType,System.Data.SqlClient.SqlParameter[])">
             <summary> Creates a command. </summary>
             
-            <param name="queryString">   The query string. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="queryString"> The query string. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> The new command. </returns>
         </member>
@@ -1276,9 +1276,9 @@
             <summary> Creates a command. </summary>
             
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="queryString">    The query string. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="queryString"> The query string. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> The new command. </returns>
         </member>
@@ -1449,7 +1449,7 @@
             <summary> Inserts the given SQL parameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -1499,7 +1499,7 @@
             <summary> Updates the given sqlParameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -1548,7 +1548,7 @@
             <summary> Deletes the <typeparamref name="TEntity"/>  by given ID. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -1582,7 +1582,7 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -1761,7 +1761,7 @@
             <summary> Inserts the given SQL parameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -1811,7 +1811,7 @@
             <summary> Updates the given sqlParameters. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -1877,7 +1877,7 @@
             <summary> Deletes the given ID. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -1894,7 +1894,7 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> . </returns>
         </member>
@@ -1963,9 +1963,9 @@
         <member name="M:SimpleAccess.SqlServer.ISqlSimpleAccess.CreateCommand(System.String,System.Data.CommandType,System.Data.SqlClient.SqlParameter[])">
             <summary> Creates a command. </summary>
             
-            <param name="commandText">   The query string. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="commandText"> The query string. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> The new command. </returns>
         </member>
@@ -1973,9 +1973,9 @@
             <summary> Creates a command. </summary>
             
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">    The query string. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="commandText"> The query string. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> The new command. </returns>
         </member>
@@ -2079,8 +2079,8 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -2089,9 +2089,9 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -2100,7 +2100,7 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> Number of rows affected (integer) </returns>
@@ -2110,8 +2110,8 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">    Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> Number of rows affected (integer) </returns>
@@ -2122,7 +2122,7 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             <param name="transaction"> The SQL transaction. </param>
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="sqlParameters"> Parameters required to execute CommandText. </param>
             
             <returns> Number of rows affected (integer) </returns>
@@ -2132,8 +2132,8 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
-            <param name="commandType">   Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+            <param name="commandType"> Type of the command. </param>
             <param name="parameters"> Parameters required to execute CommandText. </param>
             
             <returns> Number of rows affected (integer) </returns>
@@ -2143,7 +2143,7 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
             <param name="paramObject"> The anonymous object as parameters. </param>        
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -2152,8 +2152,8 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
-            <param name="commandType">   Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The anonymous object as parameters. </param>        
             <returns> Number of rows affected (integer) </returns>
         </member>
@@ -2163,7 +2163,7 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <typeparam name="T"> Generic type parameter. </typeparam>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="sqlParameters">  Parameters required to execute CommandText. </param>
             
             <returns> The {TEntity} value </returns>
@@ -2174,8 +2174,8 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <typeparam name="T"> Generic type parameter. </typeparam>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">    Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
             <param name="sqlParameters">  Parameters required to execute CommandText. </param>
             
             <returns> The {T} value </returns>
@@ -2186,7 +2186,7 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <typeparam name="T"> Generic type parameter. </typeparam>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The {T} value </returns>
@@ -2197,8 +2197,8 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <typeparam name="T"> Generic type parameter. </typeparam>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">    Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The {T} value </returns>
@@ -2210,7 +2210,7 @@
             
             <typeparam name="T"> Generic type parameter. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="sqlParameters">  Parameters required to execute CommandText. </param>
             
             <returns> The {T} value </returns>
@@ -2222,8 +2222,8 @@
             
             <typeparam name="T"> Generic type parameter. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">    Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
             <param name="sqlParameters">  Parameters required to execute CommandText. </param>
             
             <returns> The {TEntity} value </returns>
@@ -2235,7 +2235,7 @@
             
             <typeparam name="T"> Generic type parameter. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
              <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The {T} value </returns>
@@ -2247,8 +2247,8 @@
             
             <typeparam name="T"> Generic type parameter. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">    Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
              <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The {T} value </returns>
@@ -2256,7 +2256,7 @@
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteReader(System.String,System.Data.SqlClient.SqlParameter[])">
             <summary> Executes the commandText and return TDbDataReader. </summary>
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="sqlParameters"> Parameters required to execute CommandText. </param>
             <returns> The TDbDataReader </returns>
         </member>
@@ -2265,8 +2265,8 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">   Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
             <param name="sqlParameters"> Parameters required to execute CommandText. </param>
             
             <returns> The TDbDataReader </returns>
@@ -2276,7 +2276,7 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
             <param name="sqlParameters"> Parameters required to execute CommandText. </param>
             
@@ -2287,8 +2287,8 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">   Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
             <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
             <param name="sqlParameters"> Parameters required to execute CommandText. </param>
             
@@ -2297,7 +2297,7 @@
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.ExecuteReader(System.String,System.Object)">
             <summary> Executes the commandText and return TDbDataReader. </summary>
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="paramObject"> The anonymous object as parameters. </param>
             <returns> The TDbDataReader </returns>
         </member>
@@ -2306,8 +2306,8 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">   Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The anonymous object as parameters. </param>
             
             <returns> The TDbDataReader </returns>
@@ -2317,7 +2317,7 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
             <param name="paramObject"> The anonymous object as parameters. </param>
             
@@ -2328,8 +2328,8 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">   Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
             <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
             <param name="paramObject"> The anonymous object as parameters. </param>
             
@@ -2341,8 +2341,8 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="sqlParameters"> Parameters required to execute CommandText. </param>
             
@@ -2354,9 +2354,9 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
                 
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="sqlParameters"> Parameters required to execute CommandText. </param>
             
@@ -2368,9 +2368,9 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
              <param name="paramObject"> The anonymous object as parameters. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> The {TEntity} value </returns>
@@ -2381,10 +2381,10 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
-            <param name="commandType">   Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The anonymous object as parameters. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> The {TEntity} value </returns>
@@ -2396,9 +2396,9 @@
             
             <typeparam name="TEntity"> Generic type parameter. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="sqlParameters">  Parameters required to execute CommandText. </param>
             
             <returns> The {TEntity} value </returns>
@@ -2410,9 +2410,9 @@
             
             <typeparam name="TEntity"> Generic type parameter. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="sqlParameters">  Parameters required to execute CommandText. </param>
             
@@ -2425,9 +2425,9 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="paramObject"> The anonymous object as parameters. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> value </returns>
@@ -2439,10 +2439,10 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">    Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The anonymous object as parameters. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> value </returns>
@@ -2453,8 +2453,8 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="sqlParameters"> Parameters required to execute CommandText. </param>
             
@@ -2466,9 +2466,9 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="sqlParameters"> Parameters required to execute CommandText. </param>
             
@@ -2480,9 +2480,9 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="paramObject"> The anonymous object as parameters. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> The value of the entity. </returns>
@@ -2493,10 +2493,10 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">   Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The anonymous object as parameters. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> The value of the entity. </returns>
@@ -2508,8 +2508,8 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="sqlParameters">  Parameters required to execute CommandText. </param>
             
@@ -2522,9 +2522,9 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="sqlParameters">  Parameters required to execute CommandText. </param>
             
@@ -2537,9 +2537,9 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="paramObject"> The anonymous object as parameters. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> The value of the entity. </returns>
@@ -2551,10 +2551,10 @@
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">    Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The anonymous object as parameters. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
             
             <returns> The value of the entity. </returns>
@@ -2564,8 +2564,8 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="sqlParameters"> Parameters required to execute CommandText. </param>
             
             <returns> A list of object. </returns>
@@ -2575,9 +2575,9 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="sqlParameters"> Parameters required to execute CommandText. </param>
             
             <returns> A list of object. </returns>
@@ -2587,9 +2587,9 @@
              
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
              
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="paramObject"> The anonymous object as parameters. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
              
              <returns> A list of object. </returns>
         </member>
@@ -2598,10 +2598,10 @@
              
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
              
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">   Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The anonymous object as parameters. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
              
              <returns> A list of object. </returns>
         </member>
@@ -2611,8 +2611,8 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="sqlParameters">  Parameters required to execute CommandText. </param>
             
             <returns> A list of object. </returns>
@@ -2623,9 +2623,9 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="sqlParameters">  Parameters required to execute CommandText. </param>
             
             <returns> A list of object. </returns>
@@ -2636,9 +2636,9 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="paramObject"> The anonymous object as parameters. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             
             <returns> A list of object. </returns>
         </member>
@@ -2648,10 +2648,10 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">    Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The anonymous object as parameters. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             
             <returns> A list of object. </returns>
         </member>
@@ -2660,8 +2660,8 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="sqlParameters"> Parameters required to execute CommandText. </param>
             
             <returns> Result in a anonymous object. </returns>
@@ -2671,9 +2671,9 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="sqlParameters"> Parameters required to execute CommandText. </param>
             
             <returns> Result in a anonymous object. </returns>
@@ -2683,9 +2683,9 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
             <param name="paramObject"> The anonymous object as parameters. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             
             <returns> Result in a anonymous object. </returns>
         </member>
@@ -2694,10 +2694,10 @@
             
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
-            <param name="commandText">		The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">   Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The anonymous object as parameters. </param>
-            <param name="fieldsToSkip">  (optional) the fields to skip. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             
             <returns> Result in a anonymous object. </returns>
         </member>
@@ -2707,8 +2707,8 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="sqlParameters">  Parameters required to execute CommandText. </param>
             
             <returns> Result in a anonymous object. </returns>
@@ -2719,9 +2719,9 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="sqlParameters">  Parameters required to execute CommandText. </param>
             
             <returns> Result in a anonymous object. </returns>
@@ -2732,9 +2732,9 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="paramObject"> The anonymous object as parameters. </param>
-            -<param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            -<param name="fieldsToSkip"> (optional) the fields to skip. </param>
             
             <returns> Result in a anonymous object. </returns>
         </member>
@@ -2744,10 +2744,10 @@
             <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
             
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">			The SQL statement, table name or stored procedure to execute at the data source.</param>
-            <param name="commandType">    Type of the command. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
             <param name="paramObject"> The anonymous object as parameters. </param>
-            <param name="fieldsToSkip">   (optional) the fields to skip. </param>
+            <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             
             <returns> Result in a anonymous object. </returns>
         </member>
@@ -2763,7 +2763,7 @@
             <summary>
             Execute the CommandText against connection and add or refresh rows in <see cref="T:System.Data.DataSet"/>
             </summary>
-            <param name="commandText">	The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
             <param name="dataSet"> A <see cref="T:System.Data.DataSet"/> to fill with records and, if necessary, schema  </param>
             <returns></returns>
         </member>
@@ -2788,9 +2788,9 @@
         <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.CreateCommand(System.String,System.Data.CommandType,System.Data.SqlClient.SqlParameter[])">
             <summary> Creates a command. </summary>
             
-            <param name="commandText">   The query string. </param>
-            <param name="commandType">   Type of the command. </param>
-            <param name="sqlParameters"> Options for controlling the SQL. </param>
+            <param name="commandText"> The query string. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="sqlParameters">Options for controlling the SQL. </param>
             
             <returns> The new command. </returns>
         </member>
@@ -2798,9 +2798,9 @@
             <summary> Creates a command. </summary>
             
             <param name="sqlTransaction"> The SQL transaction. </param>
-            <param name="commandText">    The query string. </param>
-            <param name="commandType">    Type of the command. </param>
-            <param name="sqlParameters">  Options for controlling the SQL. </param>
+            <param name="commandText"> The query string. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="sqlParameters"> Options for controlling the SQL. </param>
             
             <returns> The new command. </returns>
         </member>

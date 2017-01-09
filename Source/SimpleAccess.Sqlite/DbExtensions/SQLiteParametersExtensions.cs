@@ -35,7 +35,8 @@ namespace SimpleAccess.SQLite
                     }
                     else if (value != null)
                     {
-                        value = SafeSqlLiteral(value.ToString());
+                        //value = SafeSqlLiteral(value.ToString());
+                        value = value.ToString();
                     }
                     sqliteParameters.Add(new SQLiteParameter("@" + Clean(propInfo.Name), value ?? DBNull.Value));
                 }
