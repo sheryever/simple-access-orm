@@ -51,7 +51,7 @@ Executing aggregate query using SimpleAccess
 var totalPeople = simpleAccess.ExecuteScalar<int>("SELECT COUNT(*) FROM dbo.People;");
 ```
 
-Executes a SQL statement against the connection and returns the number of rows affected
+Executes a Insert or Update SQL statement with a class object and returns the number of rows affected
 ``` C#
 public class PersonInsertViewModel
 {
