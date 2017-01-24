@@ -68,10 +68,9 @@ var rowAffected = simpleAccess.ExecuteNonQuery("UPDATE dbo.People SET Name=@name
 
 Using transactions with SimpleAccess
 ```C#
-SqlTransaction transaction = null;
-try
+using (var transaction = simpleAccess.BeginTrasaction())
 {
-    using (transaction = simpleAccess.BeginTrasaction())
+    try
     {
         var person = new Person() { Name = "Ahmed", Address = "Madina" };
 
@@ -79,11 +78,11 @@ try
 
         simpleAccess.EndTransaction(transaction);
     }
-}
-catch (Exception)
-{
-    simpleAccess.EndTransaction(transaction, false);
-    throw;
+    catch (Exception)
+    {
+        simpleAccess.EndTransaction(transaction, false);
+        throw;
+    }
 }
 ```
 ###SimpleAccess interface
