@@ -4,12 +4,12 @@
 - [x] Remove StoredProcedureParameters inheritance from Enity Class to make entity more lighter
 - [x] Add InsertAll\<TEntity\>, UpdateAll\<TEntity\>, DeleteAll\<TEntity\> with support of internal trasaction in Repository
 - [x] Add Find\<TEntity\> and  FindAll\<TEntity\> in Repository
+- [ ] Add ExecuteValues\<TStrut\> for getting result of a single column query in IEnumerable\<struct\>
 - [ ] Write unit test
-- [ ] Add StoredProcedure names with repository method mappings in repository settings
-- [ ] Add Sql Generation for Non StoredProcedures command types (Insert,Update,Delete,GetAll and Get)
-- [ ] Fixing methods comments and adding examples 
-- [ ] Documentation in reStructuredText on [readthedocs](https://readthedocs.org/)
-- [ ] SimpleAccess Factory, Allow ISimpleAccess to be created on the base of configuration(xml/json)
+- [ ] Configure StoredProcedure naming convention mapping to repository method (Insert, Update, Delete, Get, GetAll, Find, FindAll) methods in repository settings
+- [ ] Add Sql Generation for Non StoredProcedures command types (Insert, Update, Delete, Get, GetAll, Find, FindAll)
+- [ ] Fixing comments, documention and adding examples
+- [ ] SimpleAccess Factory, Allow SimpleAccess to create SimpleAccess object the base of configuration(xml/json)
 ```C#
 ISimpleAccess sqlSimpleAccess = SimpleAccessFactory.Create("SqlServer")
 ISimpleAccess oralceSimpleAccess = SimpleAccessFactory.Create("OracleServer")

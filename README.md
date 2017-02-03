@@ -51,7 +51,7 @@ Executing aggregate query using SimpleAccess
 var totalPeople = simpleAccess.ExecuteScalar<int>("SELECT COUNT(*) FROM dbo.People;");
 ```
 
-Executes a SQL statement against the connection and returns the number of rows affected
+Executes a Insert or Update SQL statement with a class object and returns the number of rows affected
 ``` C#
 public class PersonInsertViewModel
 {
@@ -68,10 +68,9 @@ var rowAffected = simpleAccess.ExecuteNonQuery("UPDATE dbo.People SET Name=@name
 
 Using transactions with SimpleAccess
 ```C#
-SqlTransaction transaction = null;
-try
+using (var transaction = simpleAccess.BeginTrasaction())
 {
-    using (transaction = simpleAccess.BeginTrasaction())
+    try
     {
         var person = new Person() { Name = "Ahmed", Address = "Madina" };
 
@@ -79,11 +78,11 @@ try
 
         simpleAccess.EndTransaction(transaction);
     }
-}
-catch (Exception)
-{
-    simpleAccess.EndTransaction(transaction, false);
-    throw;
+    catch (Exception)
+    {
+        simpleAccess.EndTransaction(transaction, false);
+        throw;
+    }
 }
 ```
 ###SimpleAccess interface
