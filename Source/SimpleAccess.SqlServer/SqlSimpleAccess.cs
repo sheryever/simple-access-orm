@@ -507,6 +507,7 @@ namespace SimpleAccess.SqlServer
             try
             {
                 var dbCommand = CreateCommand(commandText, commandType, sqlParameters);
+                dbCommand.Connection.OpenSafely();
                 var result = dbCommand.ExecuteReader(commandBehavior);
                 dbCommand.Parameters.Clear();
                 return result;
@@ -1395,7 +1396,8 @@ namespace SimpleAccess.SqlServer
         /// <returns> The new connection. </returns>
         public SqlConnection GetNewConnection()
         {
-            return new SqlConnection(DefaultConnectionString);
+            //return new SqlConnection(DefaultConnectionString);
+            return new SqlConnection(_sqlConnection.ConnectionString);
         }
 
         /// <summary> Close the current open connection. </summary>

@@ -509,6 +509,7 @@ namespace SimpleAccess.SQLite
             try
             {
                 var dbCommand = CreateCommand(commandText, commandType, sqliteParameters);
+                dbCommand.Connection.OpenSafely();
                 var result = dbCommand.ExecuteReader(commandBehavior);
                 dbCommand.Parameters.Clear();
                 return result;
@@ -1397,7 +1398,7 @@ namespace SimpleAccess.SQLite
         /// <returns> The new connection. </returns>
         public SQLiteConnection GetNewConnection()
         {
-            return new SQLiteConnection(DefaultConnectionString);
+            return new SQLiteConnection(_sqliteConnection.ConnectionString);
         }
 
         /// <summary> Close the current open connection. </summary>

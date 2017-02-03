@@ -506,6 +506,7 @@ namespace SimpleAccess.Oracle
             try
             {
                 var dbCommand = CreateCommand(commandText, commandType, oracleParameters);
+                dbCommand.Connection.OpenSafely();
                 var result = dbCommand.ExecuteReader(commandBehavior);
                 dbCommand.Parameters.Clear();
                 return result;
@@ -1395,7 +1396,7 @@ namespace SimpleAccess.Oracle
         /// <returns> The new connection. </returns>
         public OracleConnection GetNewConnection()
         {
-            return new OracleConnection(DefaultConnectionString);
+            return new OracleConnection(_sqlConnection.DataSource);
         }
 
         /// <summary> Close the current open connection. </summary>

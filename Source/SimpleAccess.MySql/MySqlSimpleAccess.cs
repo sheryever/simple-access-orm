@@ -506,6 +506,7 @@ namespace SimpleAccess.MySql
             try
             {
                 var dbCommand = CreateCommand(commandText, commandType, sqlParameters);
+                dbCommand.Connection.OpenSafely();
                 var result = dbCommand.ExecuteReader(commandBehavior);
                 dbCommand.Parameters.Clear();
                 return result;
@@ -1394,7 +1395,7 @@ namespace SimpleAccess.MySql
         /// <returns> The new connection. </returns>
         public MySqlConnection GetNewConnection()
         {
-            return new MySqlConnection(DefaultConnectionString);
+            return new MySqlConnection(_sqlConnection.ConnectionString);
         }
 
         /// <summary> Close the current open connection. </summary>
