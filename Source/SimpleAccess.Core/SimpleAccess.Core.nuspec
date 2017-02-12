@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>SimpleAccess.Core</id>
+        <version>2.0.1</version>
+        <title>SimpleAccess Database ORM Core</title>
+        <authors>Abu Ali Muhammad Sharjeel</authors>
+        <owners>Abu Ali Muhammad Sharjeel,Wayzsoft</owners>
+        <projectUrl>https://github.com/sheryever/simple-access-orm</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>It has the core interfaces and classes which are being implement by SimpleAccess ORM</description>
+        <summary>SimpleAccess.Core contains the base interfaces, classes, extensions and helper methods</summary>
+        <releaseNotes />
+        <copyright>Copyright 2015</copyright>
+        <language>en-US</language>
+        <tags>SimpleAccess, DataAccess</tags>
+    </metadata>
+    <files>
+        <file src="lib\net40\SimpleAccess.Core.dll" target="lib\net40\SimpleAccess.Core.dll" />
+        <file src="lib\net40\SimpleAccess.Core.XML" target="lib\net40\SimpleAccess.Core.XML" />
+    </files>
+</package>

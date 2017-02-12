@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>SimpleAccess.SQLite</id>
+        <version>2.0.1</version>
+        <title>SimpleAccess SQLite Database</title>
+        <authors>Abu Ali Muhammad Sharjeel</authors>
+        <owners>Abu Ali Muhammad Sharjeel,Wayzsoft</owners>
+        <projectUrl>https://github.com/sheryever/simple-access-orm/tree/Development</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>SimpleAccess.SQLite intial documentation is available at https://goo.gl/pQzzCr</description>
+        <summary>SimpleAccess.SQLite is the implementaion of SimpleAccess.Core for SQLite</summary>
+        <releaseNotes />
+        <copyright>Copyright 2016</copyright>
+        <language>en-US</language>
+        <tags>SimpleAccess, SQLite, ObjectMapper, ORM, Database Access</tags>
+        <dependencies>
+            <dependency id="SimpleAccess.Core" version="2.0.1" />
+            <dependency id="System.Data.SQLite.Core" version="1.0.103" />
+        </dependencies>
+    </metadata>
+    <files>
+
+    </files>
+</package>
