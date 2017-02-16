@@ -572,6 +572,176 @@ namespace SimpleAccess.Oracle
             return ExecuteReader(commandText, commandType, commandBehavior, BuildOracleParameters(paramObject));
         }
 
+
+
+        
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="oracleParameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        public IEnumerable<T> ExecuteValues<T>(string commandText, params OracleParameter[] oracleParameters)
+        {
+            return ExecuteValues<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildOracleParameters(oracleParameters));
+        }
+
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        public IEnumerable<T> ExecuteValues<T>(string commandText, object paramObject = null)
+        {
+            return ExecuteValues<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType,  BuildOracleParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        public IEnumerable<T> ExecuteValues<T>(string commandText, CommandType commandType, object paramObject = null)
+        {
+            return ExecuteValues<T>(commandText, commandType, BuildOracleParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        ///     
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="oracleParameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        public IEnumerable<T> ExecuteValues<T>(string commandText, CommandType commandType, params OracleParameter[] oracleParameters)
+        {
+            OracleCommand dbCommand = null;
+            try
+            {
+                dbCommand = CreateCommand(commandText, commandType, oracleParameters);
+                dbCommand.Connection.OpenSafely();
+                using (var reader = dbCommand.ExecuteReader())
+                {
+                    return GetValues<T>(reader);
+                }
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+            finally
+            {
+                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                    _sqlConnection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
+            }
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="transaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> value </returns>
+        public IEnumerable<T> ExecuteValues<T>(OracleTransaction transaction, string commandText, object paramObject = null)
+        {
+            return ExecuteValues<T>(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildOracleParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="transaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> value </returns>
+        public IEnumerable<T> ExecuteValues<T>(OracleTransaction transaction, string commandText, CommandType commandType, object paramObject = null)
+        {
+            return ExecuteValues<T>(transaction, commandText, commandType, BuildOracleParameters(paramObject));
+        }
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="DbException"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="transaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="oracleParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        public IEnumerable<T> ExecuteValues<T>(OracleTransaction transaction, string commandText,
+                                             params OracleParameter[] oracleParameters)
+        {
+            return ExecuteValues<T>(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, oracleParameters);
+        }
+
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="oracleTransaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="oracleParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        public IEnumerable<T> ExecuteValues<T>(OracleTransaction oracleTransaction, string commandText, CommandType commandType,
+            params OracleParameter[] oracleParameters)
+        {
+            OracleCommand dbCommand = null;
+            try
+            {
+                dbCommand = CreateCommand(oracleTransaction, commandText, commandType, oracleParameters);
+                dbCommand.Connection.OpenSafely();
+                using (var reader = dbCommand.ExecuteReader())
+                {
+                    return GetValues<T>(reader);
+                }
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+            finally
+            {
+                if (oracleTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                    _sqlConnection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
+
+            }
+        }
+
+
+
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
@@ -1483,6 +1653,22 @@ namespace SimpleAccess.Oracle
                 dbCommand.Transaction = _sqlTransaction;
 
             return dbCommand;
+        }
+
+        /// <summary> Gets a object SQL data. </summary>
+        /// 
+        /// <param name="reader"> The reader. </param>
+        /// 
+        /// <returns> The object SQL data. </returns>
+        public IList<T> GetValues<T>(OracleDataReader reader)
+        {
+            var result = new List<T>();
+
+            while (reader.Read())
+            {
+                result.Add((T)Convert.ChangeType(reader[0], typeof(T)));
+            }
+            return result;
         }
 
         /// <summary> SQL data reader to <see cref="ExpandoObject"/>. </summary>

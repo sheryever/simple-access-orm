@@ -307,6 +307,108 @@ namespace SimpleAccess.Core
         /// <returns> The TDbDataReader </returns>
         TDbDataReader ExecuteReader(string commandText, CommandType commandType, CommandBehavior commandBehavior, object paramObject = null);
 
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="parameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        IEnumerable<T> ExecuteValues<T>(string commandText, params TDataParameter[] parameters);
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        ///     
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="parameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        IEnumerable<T> ExecuteValues<T>(string commandText, CommandType commandType, params TDataParameter[] parameters);
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        IEnumerable<T> ExecuteValues<T>(string commandText, object paramObject = null);
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        IEnumerable<T> ExecuteValues<T>(string commandText, CommandType commandType, object paramObject = null);
+
+
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="DbException"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="transaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="parameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        IEnumerable<T> ExecuteValues<T>(TDbTransaction transaction, string commandText, params TDataParameter[] parameters);
+
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="transaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="parameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        IEnumerable<T> ExecuteValues<T>(TDbTransaction transaction, string commandText, CommandType commandType,
+                                             params TDataParameter[] parameters);
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="transaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> value </returns>
+        IEnumerable<T> ExecuteValues<T>(TDbTransaction transaction, string commandText, object paramObject = null);
+
+
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="transaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> value </returns>
+        IEnumerable<T> ExecuteValues<T>(TDbTransaction transaction, string commandText,
+            CommandType commandType, object paramObject = null);
+
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
@@ -317,7 +419,7 @@ namespace SimpleAccess.Core
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
-        /// <returns> The TEntity value </returns>
+        /// <returns> The <see cref="IEnumerable{TEntity}" /> </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, string fieldsToSkip = null,
                                              Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
                                              params TDataParameter[] parameters)
@@ -334,7 +436,7 @@ namespace SimpleAccess.Core
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
-        /// <returns> The {TEntity} value </returns>
+        /// <returns> The <see cref="IEnumerable{TEntity}" /> </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, CommandType commandType, string fieldsToSkip = null,
                                              Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
                                              params TDataParameter[] parameters)
@@ -350,7 +452,7 @@ namespace SimpleAccess.Core
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
-        /// <returns> The {TEntity} value </returns>
+        /// <returns> The <see cref="IEnumerable{TEntity}" /> </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, object paramObject = null, string fieldsToSkip = null,
                                      Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : new();
@@ -366,7 +468,7 @@ namespace SimpleAccess.Core
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
-        /// <returns> The {TEntity} value </returns>
+        /// <returns> The <see cref="IEnumerable{TEntity}" /> </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, CommandType commandType, object paramObject = null,
                             string fieldsToSkip = null,Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : new();
@@ -383,7 +485,7 @@ namespace SimpleAccess.Core
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
-        /// <returns> The {TEntity} value </returns>
+        /// <returns> The <see cref="IEnumerable{TEntity}" /> </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(TDbTransaction transaction, string commandText, 
                                              string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
                                              params TDataParameter[] parameters)
@@ -401,7 +503,7 @@ namespace SimpleAccess.Core
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
-        /// <returns> The {TEntity} value </returns>
+        /// <returns> The <see cref="IEnumerable{TEntity}" /> </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(TDbTransaction transaction, string commandText, CommandType commandType,
                                              string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
                                              params TDataParameter[] parameters)
@@ -418,7 +520,7 @@ namespace SimpleAccess.Core
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
-        /// <returns> The <see cref="IEnumerable{TEntity}" /> value </returns>
+        /// <returns> The <see cref="IEnumerable{TEntity}" /> </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(TDbTransaction transaction, string commandText, object paramObject = null,
                                      string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : new();
@@ -437,7 +539,7 @@ namespace SimpleAccess.Core
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
-        /// <returns> The <see cref="IEnumerable{TEntity}" /> value </returns>
+        /// <returns> The <see cref="IEnumerable{TEntity}" /> </returns>
         IEnumerable<TEntity> ExecuteEntities<TEntity>(TDbTransaction transaction, string commandText, CommandType commandType,
                                      object paramObject = null, string fieldsToSkip = null, 
                                      Dictionary<string, PropertyInfo> propertyInfoDictionary = null)

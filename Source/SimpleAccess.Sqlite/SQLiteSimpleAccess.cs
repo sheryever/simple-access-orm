@@ -6,14 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Dynamic;
 using System.Reflection;
 using SimpleAccess.Core;
 using SimpleAccess.Core.Logger;
-using SimpleAccess.SQLite;
-using SimpleAccess.SQLite;
 
 namespace SimpleAccess.SQLite
 {
@@ -572,6 +569,168 @@ namespace SimpleAccess.SQLite
         public SQLiteDataReader ExecuteReader(string commandText, CommandType commandType, CommandBehavior commandBehavior, object paramObject = null)
         {
             return ExecuteReader(commandText, commandType, commandBehavior, BuildSQLiteParameters(paramObject));
+        }
+
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="sqliteParameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        public IEnumerable<T> ExecuteValues<T>(string commandText, params SQLiteParameter[] sqliteParameters)
+        {
+            return ExecuteValues<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSQLiteParameters(sqliteParameters));
+        }
+
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        public IEnumerable<T> ExecuteValues<T>(string commandText, object paramObject = null)
+        {
+            return ExecuteValues<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSQLiteParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        public IEnumerable<T> ExecuteValues<T>(string commandText, CommandType commandType, object paramObject = null)
+        {
+            return ExecuteValues<T>(commandText, commandType, BuildSQLiteParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        ///     
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        public IEnumerable<T> ExecuteValues<T>(string commandText, CommandType commandType, params SQLiteParameter[] sqliteParameters)
+        {
+            SQLiteCommand dbCommand = null;
+            try
+            {
+                dbCommand = CreateCommand(commandText, commandType, sqliteParameters);
+                dbCommand.Connection.OpenSafely();
+                using (var reader = dbCommand.ExecuteReader())
+                {
+                    return GetValues<T>(reader);
+                }
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+            finally
+            {
+                if (_sqliteTransaction == null && _sqliteConnection.State != ConnectionState.Closed)
+                    _sqliteConnection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
+            }
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> value </returns>
+        public IEnumerable<T> ExecuteValues<T>(SQLiteTransaction sqliteTransaction, string commandText, object paramObject = null)
+        {
+            return ExecuteValues<T>(sqliteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSQLiteParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> value </returns>
+        public IEnumerable<T> ExecuteValues<T>(SQLiteTransaction sqliteTransaction, string commandText, CommandType commandType, object paramObject = null)
+        {
+            return ExecuteValues<T>(sqliteTransaction, commandText, commandType, BuildSQLiteParameters(paramObject));
+        }
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="DbException"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="sqliteParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        public IEnumerable<T> ExecuteValues<T>(SQLiteTransaction sqliteTransaction, string commandText,
+                                             params SQLiteParameter[] sqliteParameters)
+        {
+            return ExecuteValues<T>(sqliteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, sqliteParameters);
+        }
+
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqliteParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        public IEnumerable<T> ExecuteValues<T>(SQLiteTransaction sqliteTransaction, string commandText, CommandType commandType,
+            params SQLiteParameter[] sqliteParameters)
+        {
+            SQLiteCommand dbCommand = null;
+            try
+            {
+                dbCommand = CreateCommand(sqliteTransaction, commandText, commandType, sqliteParameters);
+                dbCommand.Connection.OpenSafely();
+                using (var reader = dbCommand.ExecuteReader())
+                {
+                    return GetValues<T>(reader);
+                }
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+            finally
+            {
+                dbCommand.ClearDbCommand();
+            }
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
@@ -1485,6 +1644,22 @@ namespace SimpleAccess.SQLite
                 dbCommand.Transaction = _sqliteTransaction;
 
             return dbCommand;
+        }
+
+        /// <summary> Gets a object SQL data. </summary>
+        /// 
+        /// <param name="reader"> The reader. </param>
+        /// 
+        /// <returns> The object SQL data. </returns>
+        public IList<T> GetValues<T>(SQLiteDataReader reader)
+        {
+            var result = new List<T>();
+
+            while (reader.Read())
+            {
+                result.Add((T)Convert.ChangeType(reader[0], typeof(T)));
+            }
+            return result;
         }
 
         /// <summary> SQL data reader to <see cref="ExpandoObject"/>. </summary>
