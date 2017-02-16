@@ -105,7 +105,7 @@ using (var transaction = simpleAccess.BeginTrasaction())
 | ExecuteNonQuery  | Execute CommandText and returns the count of rows affected.|
 | ExecuteReader    | Executes the commandText and returns a DataReader.|
 | ExecuteScalar&lt;T&gt; | Executes the command text, and returns the first column of the first row in the result set returned by the query.Additional columns or rows are ignored. |
-| ExecuteValues&lt;T&gt; | Executes the command text, and returns IEnumerable\<T\> of multiple rows of the first column |
+| ExecuteValues&lt;T&gt; | Executes the command text, and returns rows as IEnumerable\<T\> of the first column |
 | Fill | Execute commant text against connection and add or refresh rows in DataSet or DataTable. |
 | GetNewConnection | Gets the new connection with the SimpleAccess Ojbect ConnectionString.|
 
