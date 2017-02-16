@@ -31,6 +31,11 @@ Reading records from the database as IEnumerable&lt;dynamic&gt;
 var people = simpleAccess.ExecuteDynamics("SELECT * FROM dbo.People;");
 ```
 
+Reading multiple recoreds of a column from the database as value type
+``` C#
+var peopleNames = simpleAccess.ExecuteValues<string>("SELECT Name FROM dbo.People;");
+```
+
 Reading single record from the database as Person object
 ``` C#
 var person = simpleAccess.ExecuteEntity<Person>("SELECT * FROM dbo.People where id = @id;", new { id  = 12});
@@ -100,6 +105,7 @@ using (var transaction = simpleAccess.BeginTrasaction())
 | ExecuteNonQuery  | Execute CommandText and returns the count of rows affected.|
 | ExecuteReader    | Executes the commandText and returns a DataReader.|
 | ExecuteScalar&lt;T&gt; | Executes the command text, and returns the first column of the first row in the result set returned by the query.Additional columns or rows are ignored. |
+| ExecuteValues&lt;T&gt; | Executes the command text, and returns IEnumerable\<T\> of multiple rows of the first column |
 | Fill | Execute commant text against connection and add or refresh rows in DataSet or DataTable. |
 | GetNewConnection | Gets the new connection with the SimpleAccess Ojbect ConnectionString.|
 
