@@ -25,6 +25,34 @@ namespace SimpleAccess.SqlServer.ConsoleTest
         static void Main(string[] args)
         {
 
+            Console.WriteLine("Testing ExecuteValues function");
+
+            ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("sqlDefaultConnection");
+            SqlTransaction transaction = null;
+            try
+            {
+                var data = simpleAccess.ExecuteValues<string>("Select Name from Category;");
+                using (transaction = simpleAccess.BeginTrasaction())
+                {
+                    data = simpleAccess.ExecuteValues<string>(transaction, "Select Name from Category;");
+
+                    simpleAccess.EndTransaction(transaction);
+                }
+            }
+            catch (Exception e)
+            {
+                simpleAccess.EndTransaction(transaction, false);
+                throw;
+            }
+
+
+            Console.WriteLine("Press any key to close.");
+            Console.ReadKey();
+        }
+
+        static void Main3(string[] args)
+        {
+
 
 
             (new FindExpressionTest()).Test();
