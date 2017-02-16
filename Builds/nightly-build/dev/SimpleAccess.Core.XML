@@ -752,6 +752,102 @@
             
             <returns> The TDbDataReader </returns>
         </member>
+        <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteValues``1(System.String,`3[])">
+            <summary> Sends the CommandText to the Connection and builds a <see cref="T:System.Collections.Generic.IEnumerable`1" /> from DataReader. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="T"> Type of the entity. </typeparam>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+            <param name="parameters"> Parameters required to execute CommandText. </param>
+            
+            <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> </returns>
+        </member>
+        <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteValues``1(System.String,System.Data.CommandType,`3[])">
+            <summary> Sends the CommandText to the Connection and builds a <see cref="T:System.Collections.Generic.IEnumerable`1" /> from DataReader. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+                
+            <typeparam name="T"> Type of the entity. </typeparam>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="parameters"> Parameters required to execute CommandText. </param>
+            
+            <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> </returns>
+        </member>
+        <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteValues``1(System.String,System.Object)">
+            <summary> Sends the CommandText to the Connection and builds a <see cref="T:System.Collections.Generic.IEnumerable`1" /> from DataReader. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="T"> Type of the entity. </typeparam>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
+            
+            <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> </returns>
+        </member>
+        <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteValues``1(System.String,System.Data.CommandType,System.Object)">
+            <summary> Sends the CommandText to the Connection and builds a <see cref="T:System.Collections.Generic.IEnumerable`1" /> from DataReader. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="T"> Type of the entity. </typeparam>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
+            
+            <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> </returns>
+        </member>
+        <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteValues``1(`1,System.String,`3[])">
+            <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+            
+            <exception cref="T:System.Data.Common.DbException"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="T"> Generic type parameter. </typeparam>
+            <param name="transaction"> The SQL transaction. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="parameters">  Parameters required to execute CommandText. </param>
+            
+            <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> </returns>
+        </member>
+        <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteValues``1(`1,System.String,System.Data.CommandType,`3[])">
+            <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="T"> Generic type parameter. </typeparam>
+            <param name="transaction"> The SQL transaction. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="parameters">  Parameters required to execute CommandText. </param>
+            
+            <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> </returns>
+        </member>
+        <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteValues``1(`1,System.String,System.Object)">
+            <summary> Sends the CommandText to the Connection and builds a <see cref="T:System.Collections.Generic.IEnumerable`1" /> from DataReader. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="T"> Type of the entity. </typeparam>
+            <param name="transaction"> The SQL transaction. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
+            
+            <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> value </returns>
+        </member>
+        <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteValues``1(`1,System.String,System.Data.CommandType,System.Object)">
+            <summary> Sends the CommandText to the Connection and builds a <see cref="T:System.Collections.Generic.IEnumerable`1" /> from DataReader. </summary>
+            
+            <exception cref="T:System.Exception"> Thrown when an exception error condition occurs. </exception>
+            
+            <typeparam name="T"> Type of the entity. </typeparam>
+            <param name="transaction"> The SQL transaction. </param>
+            <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+            <param name="commandType"> Type of the command. </param>
+            <param name="paramObject"> The anonymous object as parameters. </param>
+            
+            <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> value </returns>
+        </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteEntities``1(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},`3[])">
             <summary> Sends the CommandText to the Connection and builds a <see cref="T:System.Collections.Generic.IEnumerable`1" /> from DataReader. </summary>
             
@@ -763,7 +859,7 @@
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="parameters"> Parameters required to execute CommandText. </param>
             
-            <returns> The TEntity value </returns>
+            <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteEntities``1(System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},`3[])">
             <summary> Sends the CommandText to the Connection and builds a <see cref="T:System.Collections.Generic.IEnumerable`1" /> from DataReader. </summary>
@@ -777,7 +873,7 @@
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="parameters"> Parameters required to execute CommandText. </param>
             
-            <returns> The {TEntity} value </returns>
+            <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteEntities``1(System.String,System.Object,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
             <summary> Sends the CommandText to the Connection and builds a <see cref="T:System.Collections.Generic.IEnumerable`1" /> from DataReader. </summary>
@@ -790,7 +886,7 @@
             <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
             
-            <returns> The {TEntity} value </returns>
+            <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteEntities``1(System.String,System.Data.CommandType,System.Object,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
             <summary> Sends the CommandText to the Connection and builds a <see cref="T:System.Collections.Generic.IEnumerable`1" /> from DataReader. </summary>
@@ -804,7 +900,7 @@
             <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
             
-            <returns> The {TEntity} value </returns>
+            <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteEntities``1(`1,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},`3[])">
             <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -818,7 +914,7 @@
             <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="parameters">  Parameters required to execute CommandText. </param>
             
-            <returns> The {TEntity} value </returns>
+            <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteEntities``1(`1,System.String,System.Data.CommandType,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},`3[])">
             <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -833,7 +929,7 @@
             <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
             <param name="parameters">  Parameters required to execute CommandText. </param>
             
-            <returns> The {TEntity} value </returns>
+            <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteEntities``1(`1,System.String,System.Object,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
             <summary> Sends the CommandText to the Connection and builds a <see cref="T:System.Collections.Generic.IEnumerable`1" /> from DataReader. </summary>
@@ -847,7 +943,7 @@
             <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
             
-            <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> value </returns>
+            <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteEntities``1(`1,System.String,System.Data.CommandType,System.Object,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo})">
             <summary> Sends the CommandText to the Connection and builds a <see cref="T:System.Collections.Generic.IEnumerable`1" /> from DataReader. </summary>
@@ -862,7 +958,7 @@
             <param name="fieldsToSkip"> (optional) the fields to skip. </param>
             <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
             
-            <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> value </returns>
+            <returns> The <see cref="T:System.Collections.Generic.IEnumerable`1" /> </returns>
         </member>
         <member name="M:SimpleAccess.Core.ISimpleAccess`6.ExecuteEntity``1(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.Reflection.PropertyInfo},`3[])">
             <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
