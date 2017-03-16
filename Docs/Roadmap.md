@@ -26,5 +26,5 @@ SimpleAccess.DataMappers.Add(new GeomaryDataMapper());
 
 ### SqlRepository Without SP implementation
 - [x] Add `DefaultView` property in EntityAttribute
-- [ ] DefaultView` property in EntityAttribute support for default select
+- [ ] `DefaultView` property in EntityAttribute support for default select
 - [ ] Add `GetAllFrom(string viewName)` select the data from given view name insead of EntityNmae (Table name) & EntityAttribute (EntityName / DefaultView)
