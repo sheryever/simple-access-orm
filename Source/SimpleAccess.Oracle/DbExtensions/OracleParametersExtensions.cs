@@ -30,6 +30,12 @@ namespace SimpleAccess.Oracle
                 for (int i = 0; i < propCount; i++)
                 {
                     var propInfo = propInfos[i];
+
+                    var getMethodInfo = propInfo.GetGetMethod();
+
+                    if (getMethodInfo.IsVirtual && !getMethodInfo.IsFinal)
+                        continue;
+
                     object value = propInfo.GetValue(otherParameters, new object[] { });
                     if (propInfo.PropertyType.Name.ToLower() != "string")
                     {
