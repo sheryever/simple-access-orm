@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
-        <id>SimpleAccess.SqlServer</id>
-        <version>2.0.4.0</version>
-        <title>SimpleAccess Sql Server ORM</title>
+        <id>SimpleAccess.MySql</id>
+        <version>2.0.2.0</version>
+        <title>SimpleAccess MySql ORM</title>
         <authors>Abu Ali Muhammad Sharjeel</authors>
-        <owners>Abu Ali Muhammad Sharjeel,Wayzsoft</owners>
+        <owners>Abu Ali Muhammad Sharjeel, Wayzsoft</owners>
         <projectUrl>https://github.com/sheryever/simple-access-orm</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Simple Access ORM provides database access in Ado.net methods naming pattern.
 Documentation of using SimpleAccess is available at https://github.com/sheryever/simple-access-orm</description>
-        <summary>SimpleAccess.SqlServer is the implementaion of SimpleAccess.Core for Sql Server</summary>
+        <summary>SimpleAccess.MySql is the implementaion of SimpleAccess.Core for MySql</summary>
         <releaseNotes />
         <copyright>Copyright 2015</copyright>
         <language>en-US</language>
-        <tags>SimpleAccess, Sql Server, ObjectMapper, ORM, Database Access</tags>
+        <tags>SimpleAccess, MySql, ObjectMapper, ORM, Database Access</tags>
         <dependencies>
             <dependency id="SimpleAccess.Core" version="2.0.2" />
         </dependencies>

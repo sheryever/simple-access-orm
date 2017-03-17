@@ -71,6 +71,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="SimpleAccess.Oracle.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SimpleAccess.Core\SimpleAccess.Core.csproj">
