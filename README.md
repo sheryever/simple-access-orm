@@ -11,9 +11,24 @@ SimpleAccess returns data in Entity and dynamic data type but also allow develop
 Here we are using the SimpleAccess implementation for MS Sql Server.
 
 ### Nuget package
+#### Sql Server
 ```powershell
 PM > Install-Package SimpleAccess.SqlServer
 ```
+#### Oralce
+```powershell
+PM > Install-Package SimpleAccess.Oracle
+```
+#### MySql
+```powershell
+PM > Install-Package SimpleAccess.MySql
+```
+#### SQLite
+```powershell
+PM > Install-Package SimpleAccess.SQLite
+```
+
+**_Implementation of Oracle, MySql and SQLite have there own OracleSimpleAccess, MySqlSimpleAccess and SQLiteSimpleAccess and they all implments ISimpleAccess_** 
 
 Creating SimpleAccess object for Sql Server
 ``` C#
