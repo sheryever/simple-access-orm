@@ -8,7 +8,10 @@ SimpleAccess provides excpetion logging.
 SimpleAccess returns data in Entity and dynamic data type but also allow developers to work on direct DataReader or DataSet
 
 ## Using SimpleAccess
-Here we are using the SimpleAccess implementation for MS Sql Server.
+Insall your required SimpleAccess implementaion from nuget
+
+**_We will use the SimpleAccess implementation for Sql Server in our example, The Implementation for Oracle, MySql and SQLite have there own IOracleSimpleAccess with OracleSimpleAccess, IMySqlSimpleAccess with MySqlSimpleAccess and ISQLiteSimpleAccess with SQLiteSimpleAccess.
+They all implement ISimpleAccess_**
 
 ### Nuget package
 #### Sql Server
@@ -27,8 +30,6 @@ PM > Install-Package SimpleAccess.MySql
 ```powershell
 PM > Install-Package SimpleAccess.SQLite
 ```
-
-**_Implementation of Oracle, MySql and SQLite have there own OracleSimpleAccess, MySqlSimpleAccess and SQLiteSimpleAccess and they all implments ISimpleAccess_** 
 
 Creating SimpleAccess object for Sql Server
 ``` C#
