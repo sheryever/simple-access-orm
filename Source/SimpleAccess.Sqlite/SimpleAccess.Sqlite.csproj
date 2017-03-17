@@ -71,6 +71,7 @@
     <Folder Include="Attributes\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="nuget-resources\web.config.transform" />
     <None Include="packages.config" />
     <None Include="SimpleAccess.SQLite.nuspec" />
   </ItemGroup>

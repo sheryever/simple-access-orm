@@ -19,7 +19,7 @@ namespace SimpleAccess.MySql
     /// </summary>
     public class MySqlSimpleAccess : IMySqlSimpleAccess
     {
-        private const string DefaultConnectionStringKey = "simpleAccess:sqlConnectionStringName";
+        private const string DefaultConnectionStringKey = "simpleAccess:mysqlConnectionStringName";
 
         /// <summary>
         /// Default connection string.

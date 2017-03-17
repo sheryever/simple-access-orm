@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="nuget-resources\web.config.transform" />
     <None Include="packages.config" />
     <None Include="SimpleAccess.Oracle.nuspec" />
   </ItemGroup>

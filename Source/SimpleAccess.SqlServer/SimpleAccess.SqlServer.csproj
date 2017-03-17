@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="SimpleAccess.SqlServer.nuspec" />
+    <None Include="nuget-resources\web.config.transform" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

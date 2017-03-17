@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>SimpleAccess.Oracle</id>
-        <version>2.0.1.0</version>
+        <version>2.0.1.1</version>
         <title>SimpleAccess Oracle ORM</title>
         <authors>Abu Ali Muhammad Sharjeel</authors>
         <owners>Abu Ali Muhammad Sharjeel, Wayzsoft</owners>
@@ -16,9 +16,19 @@ Documentation of using SimpleAccess is available at https://github.com/sheryever
         <language>en-US</language>
         <tags>SimpleAccess, Oracle, ObjectMapper, ORM, Database Access</tags>
         <dependencies>
-            <dependency id="SimpleAccess.Core" version="2.0.2" />
+          <dependency id="SimpleAccess.Core" version="2.0.2" />
+          <dependency id="Oracle.ManagedDataAccess" version="12.1.24160719"/>
         </dependencies>
     </metadata>
-    <files>
-    </files>
+  <files>
+    <!-- Component files -->
+
+    <file src="..\..\Builds\nightly-build\deploy\SimpleAccess.Oracle.dll" target="lib\net40" />
+    <file src="..\..\Builds\nightly-build\deploy\SimpleAccess.Oracle.pdb" target="lib\net40" />
+    <file src="..\..\Builds\nightly-build\deploy\SimpleAccess.Oracle.XML" target="lib\net40" />
+
+    <!-- ConnectionString -->
+
+    <file src="nuget-resources\web.config.transform" target="content" />
+  </files>
 </package>

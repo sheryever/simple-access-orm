@@ -1,0 +1,5 @@
+﻿<configuration>
+  <appSettings>
+    <add key="simpleAccess:sqliteConnectionStringName" value=" ** Default connection String **"/>
+  </appSettings>
+</configuration>

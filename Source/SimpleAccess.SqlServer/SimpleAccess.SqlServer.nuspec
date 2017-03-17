@@ -20,5 +20,14 @@ Documentation of using SimpleAccess is available at https://github.com/sheryever
         </dependencies>
     </metadata>
     <files>
+      <!-- Component files -->
+
+      <file src="..\..\Builds\nightly-build\deploy\SimpleAccess.SqlServer.dll" target="lib\net40" />
+      <file src="..\..\Builds\nightly-build\deploy\SimpleAccess.SqlServer.pdb" target="lib\net40" />
+      <file src="..\..\Builds\nightly-build\deploy\SimpleAccess.SqlServer.XML" target="lib\net40" />
+
+      <!-- ConnectionString -->
+
+      <file src="nuget-resources\web.config.transform" target="content" />
     </files>
 </package>

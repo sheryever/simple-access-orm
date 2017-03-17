@@ -16,5 +16,8 @@
         <tags>SimpleAccess, DataAccess</tags>
     </metadata>
     <files>
+      <file src="..\..\Builds\nightly-build\deploy\SimpleAccess.Core.dll" target="lib\net40" />
+      <file src="..\..\Builds\nightly-build\deploy\SimpleAccess.Core.pdb" target="lib\net40" />
+      <file src="..\..\Builds\nightly-build\deploy\SimpleAccess.Core.XML" target="lib\net40" />
     </files>
 </package>
