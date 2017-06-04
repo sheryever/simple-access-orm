@@ -11,7 +11,8 @@ using SimpleAccess.Core;
 namespace SimpleAccess.Core
 {
     /// <summary>
-    /// Represents the SimpleAccess Entity information.
+    /// Represents the SimpleAccess 
+    /// information.
     /// The EntityInfo is create and cache the stored procedure name, quires and parameters
     /// </summary>
     public class EntityParameters<TDbParameter>

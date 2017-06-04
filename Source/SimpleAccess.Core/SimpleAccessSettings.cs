@@ -84,5 +84,10 @@ namespace SimpleAccess.Core
         /// </summary>
         public ISimpleLogger DefaultLogger { get; set; }
 
+        /// <summary>
+        /// Sets the wait time before terminating the attempt to execute a command and generating an error. Default timeout is 30 
+        /// </summary>
+        public int DbCommandTimeout { get; set; } = 30;
+
     }
 }
