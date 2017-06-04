@@ -175,6 +175,7 @@ namespace SimpleAccess.SQLite
                 dbCommand = CreateCommand(commandText, commandType, sqliteParameters);
                 dbCommand.Connection.OpenSafely();
                 result = dbCommand.ExecuteNonQuery();
+                dbCommand.Parameters.Clear();
             }
             catch (Exception ex)
             {
@@ -245,21 +246,22 @@ namespace SimpleAccess.SQLite
         public int ExecuteNonQuery(SQLiteTransaction sqliteTransaction, string commandText,
             CommandType commandType, params SQLiteParameter[] parameters)
         {
-            int result;
-
+            SQLiteCommand dbCommand = null;
             try
             {
-                var dbCommand = CreateCommand(sqliteTransaction, commandText, commandType, parameters);
+                dbCommand = CreateCommand(sqliteTransaction, commandText, commandType, parameters);
                 dbCommand.Connection.OpenSafely();
-                result = dbCommand.ExecuteNonQuery();
+                return dbCommand.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
                 SimpleLogger.LogException(ex);
                 throw;
             }
-            return result;
-
+            finally
+            {
+                dbCommand.Parameters.Clear();
+            }
         }
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
@@ -777,6 +779,7 @@ namespace SimpleAccess.SQLite
                 {
                     return reader.DataReaderToObjectList<TEntity>(fieldsToSkip, propertyInfoDictionary);
                 }
+
                 //return dbCommand.ExecuteReader().DataReaderToObjectList<TEntity>(fieldsToSkip, piList);
             }
             catch (Exception ex)
@@ -1612,6 +1615,7 @@ namespace SimpleAccess.SQLite
         public SQLiteCommand CreateCommand(string commandText, CommandType commandType, params SQLiteParameter[] sqliteParameters)
         {
             var dbCommand = _sqliteConnection.CreateCommand();
+            dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
             dbCommand.CommandType = commandType;
             dbCommand.CommandText = commandText;
             if (sqliteParameters != null)
@@ -1635,6 +1639,8 @@ namespace SimpleAccess.SQLite
             , params SQLiteParameter[] sqliteParameters)
         {
             var dbCommand = _sqliteConnection.CreateCommand();
+            dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
+
             dbCommand.Transaction = sqliteTransaction;
             dbCommand.CommandType = commandType;
             dbCommand.CommandText = commandText;

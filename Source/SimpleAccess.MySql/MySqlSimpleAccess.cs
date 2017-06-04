@@ -1620,6 +1620,7 @@ namespace SimpleAccess.MySql
         public MySqlCommand CreateCommand(string commandText, CommandType commandType, params MySqlParameter[] mySqlParameters)
         {
             var dbCommand = _sqlConnection.CreateCommand();
+            dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
             dbCommand.CommandType = commandType;
             dbCommand.CommandText = commandText;
             if (mySqlParameters != null)
@@ -1643,6 +1644,7 @@ namespace SimpleAccess.MySql
             , params MySqlParameter[] mySqlParameters)
         {
             var dbCommand = _sqlConnection.CreateCommand();
+            dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
             dbCommand.Transaction = sqlTransaction;
             dbCommand.CommandType = commandType;
             dbCommand.CommandText = commandText;

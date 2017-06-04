@@ -176,6 +176,8 @@ namespace SimpleAccess.SqlServer
                 dbCommand = CreateCommand(commandText, commandType, sqlParameters);
                 dbCommand.Connection.OpenSafely();
                 result = dbCommand.ExecuteNonQuery();
+                dbCommand.Parameters.Clear();
+
             }
             catch (Exception ex)
             {
@@ -246,20 +248,23 @@ namespace SimpleAccess.SqlServer
         public int ExecuteNonQuery(SqlTransaction sqlTransaction, string commandText,
             CommandType commandType, params SqlParameter[] parameters)
         {
-            int result;
-
+            SqlCommand dbCommand = null;
             try
             {
-                var dbCommand = CreateCommand(sqlTransaction, commandText, commandType, parameters);
+                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, parameters);
                 dbCommand.Connection.OpenSafely();
-                result = dbCommand.ExecuteNonQuery();
+                return dbCommand.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
                 SimpleLogger.LogException(ex);
                 throw;
             }
-            return result;
+            finally
+            {
+                dbCommand.Parameters.Clear();
+
+            }
 
         }
 
@@ -721,6 +726,8 @@ namespace SimpleAccess.SqlServer
                 {
                     return GetValues<T>(reader);
                 }
+                dbCommand.Parameters.Clear();
+
             }
             catch (Exception ex)
             {
@@ -781,6 +788,8 @@ namespace SimpleAccess.SqlServer
                 {
                     return reader.DataReaderToObjectList<TEntity>(fieldsToSkip, propertyInfoDictionary);
                 }
+                dbCommand.Parameters.Clear();
+
                 //return dbCommand.ExecuteReader().DataReaderToObjectList<TEntity>(fieldsToSkip, piList);
             }
             catch (Exception ex)
@@ -883,6 +892,8 @@ namespace SimpleAccess.SqlServer
                 {
                     return reader.DataReaderToObjectList<TEntity>(fieldsToSkip, propertyInfoDictionary);
                 }
+                dbCommand.Parameters.Clear();
+
                 //return dbCommand.ExecuteReader().DataReaderToObjectList<TEntity>(fieldsToSkip, piList);
             }
             catch (Exception ex)
@@ -983,6 +994,8 @@ namespace SimpleAccess.SqlServer
                 {
                     return reader.HasRows ? reader.DataReaderToObject<TEntity>(fieldsToSkip, propertyInfoDictionary) : null;
                 }
+                dbCommand.Parameters.Clear();
+
                 //return dbCommand.ExecuteReader().DataReaderToObject<TEntity>(fieldsToSkip, piList);
             }
             catch (Exception ex)
@@ -1084,6 +1097,8 @@ namespace SimpleAccess.SqlServer
                 {
                     return reader.HasRows ? reader.DataReaderToObject<TEntity>(fieldsToSkip, propertyInfoDictionary) : null;
                 }
+                dbCommand.Parameters.Clear();
+
                 //return dbCommand.ExecuteReader().DataReaderToObject<TEntity>(fieldsToSkip, piList);
             }
             catch (Exception ex)
@@ -1175,6 +1190,7 @@ namespace SimpleAccess.SqlServer
                 dbCommand = CreateCommand(commandText, commandType, sqlParameters);
                 dbCommand.Connection.OpenSafely();
                 return GetDynamicSqlData(dbCommand.ExecuteReader());
+                 
             }
             catch (Exception ex)
             {
@@ -1617,6 +1633,7 @@ namespace SimpleAccess.SqlServer
         public SqlCommand CreateCommand(string commandText, CommandType commandType, params SqlParameter[] sqlParameters)
         {
             var dbCommand = _sqlConnection.CreateCommand();
+            dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
             dbCommand.CommandType = commandType;
             dbCommand.CommandText = commandText;
             if (sqlParameters != null)
@@ -1641,6 +1658,7 @@ namespace SimpleAccess.SqlServer
         {
             var dbCommand = _sqlConnection.CreateCommand();
             dbCommand.Transaction = sqlTransaction;
+            dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
             dbCommand.CommandType = commandType;
             dbCommand.CommandText = commandText;
             if (sqlParameters != null)

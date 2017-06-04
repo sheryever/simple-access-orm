@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SimpleAccess;
 using SimpleAccess.SqlServer.ConsoleTest.Entities;
+using SimpeAccess.SqlServer.ConsoleTest;
 
 namespace SimpleAccess.SqlServer.ConsoleTest
 {
@@ -23,6 +24,51 @@ namespace SimpleAccess.SqlServer.ConsoleTest
         }
 
         static void Main(string[] args)
+        {
+
+            Console.WriteLine("Testing Incident Transaction function");
+
+            TestFinaly();
+            //ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("sqlDefaultConnection");
+            IncidentsService service = new IncidentsService();
+            try
+            {
+
+                var incident = new Incident { Name = "inci" };
+                service.InsertIncidentSimple(incident);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+
+
+            Console.WriteLine("Press any key to close.");
+            Console.ReadKey();
+        }
+
+        static void TestFinaly()
+        {
+            try
+            {
+
+                Console.WriteLine("Returned");
+                return;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Error");
+                throw;
+            }
+            finally
+            {
+                Console.WriteLine("Finally");
+            }
+
+        }
+
+        static void Main4(string[] args)
         {
 
             Console.WriteLine("Testing ExecuteValues function");

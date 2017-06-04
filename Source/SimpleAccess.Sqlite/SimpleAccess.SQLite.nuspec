@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>SimpleAccess.SQLite</id>
-        <version>2.0.3.0</version>
+        <version>2.0.4.0</version>
         <title>SimpleAccess SQLite Database</title>
         <authors>Abu Ali Muhammad Sharjeel</authors>
         <owners>Abu Ali Muhammad Sharjeel,Wayzsoft</owners>
@@ -15,7 +15,7 @@
         <language>en-US</language>
         <tags>SimpleAccess, SQLite, ObjectMapper, ORM, Database Access</tags>
         <dependencies>
-            <dependency id="SimpleAccess.Core" version="2.0.2" />
+            <dependency id="SimpleAccess.Core" version="2.0.3" />
             <dependency id="System.Data.SQLite.Core" version="1.0.103" />
         </dependencies>
     </metadata>

@@ -349,9 +349,9 @@ namespace SimpleAccess.SqlServer
 
             SqlTransaction sqlTransaction = null;
             int result = 0;
-            try
+            using (sqlTransaction = SimpleAccess.BeginTrasaction())
             {
-                using (sqlTransaction = SimpleAccess.BeginTrasaction())
+                try
                 {
                     var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
                     string commandText = string.Format("[dbo].{0}_Insert", entityInfo.DbObjectName);
@@ -365,17 +365,16 @@ namespace SimpleAccess.SqlServer
 
                         entityParameters.LoadOutParametersProperties(entity);
                     }
+                    SimpleAccess.EndTransaction(sqlTransaction);
+
+                }
+
+                catch (Exception)
+                {
+                    SimpleAccess.EndTransaction(sqlTransaction, false);
+                    throw;
                 }
             }
-            catch (Exception)
-            {
-                SimpleAccess.EndTransaction(sqlTransaction, false);
-            }
-            finally
-            {
-                SimpleAccess.EndTransaction(sqlTransaction);
-            }
-            
             return result;
         }
 
@@ -492,9 +491,10 @@ namespace SimpleAccess.SqlServer
         {
             SqlTransaction sqlTransaction = null;
             int result = 0;
-            try
+            using (sqlTransaction = SimpleAccess.BeginTrasaction())
             {
-                using (sqlTransaction = SimpleAccess.BeginTrasaction())
+
+                try
                 {
                     var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
                     string commandText = string.Format("{0}_Update", entityInfo.DbObjectName);
@@ -508,17 +508,16 @@ namespace SimpleAccess.SqlServer
 
                         entityParameters.LoadOutParametersProperties(entity);
                     }
+                    SimpleAccess.EndTransaction(sqlTransaction);
+
+                }
+
+                catch (Exception)
+                {
+                    SimpleAccess.EndTransaction(sqlTransaction, false);
+                    throw;
                 }
             }
-            catch (Exception)
-            {
-                SimpleAccess.EndTransaction(sqlTransaction, false);
-            }
-            finally
-            {
-                SimpleAccess.EndTransaction(sqlTransaction);
-            }
-
             return result;
         }
 

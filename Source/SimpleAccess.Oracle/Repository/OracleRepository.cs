@@ -15,7 +15,7 @@ namespace SimpleAccess.Oracle
 
         /// <summary> The SQL connection. </summary>
         public IOracleSimpleAccess SimpleAccess { get; set; }
-        
+
         #region Constructor
 
         /// <summary> Constructor. </summary>
@@ -41,7 +41,7 @@ namespace SimpleAccess.Oracle
         }
 
         #endregion
-        
+
         /// <summary> Enumerates get all in this collection. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -54,7 +54,7 @@ namespace SimpleAccess.Oracle
             where TEntity : new()
         {
             //var name = typeof(TEntity).Name;
-            var entityInfo = RepositorySetting.GetEntityInfo(typeof (TEntity));
+            var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
             string commandText = string.Format("{0}_GetAll", entityInfo.Name);
             return SimpleAccess.ExecuteEntities<TEntity>(commandText, CommandType.StoredProcedure, fieldToSkip);
         }
@@ -93,17 +93,17 @@ namespace SimpleAccess.Oracle
         /// <param name="fieldToSkip"> (optional) the field to skip. </param>
         /// 
         /// <returns> . </returns>
-        public TEntity Get<TEntity>(OracleTransaction transaction, long id,  string fieldToSkip = null)
+        public TEntity Get<TEntity>(OracleTransaction transaction, long id, string fieldToSkip = null)
             where TEntity : class, new()
         {
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
 
             var commandText = string.Format("{0}_GetById", entityInfo.Name);
 
-            return SimpleAccess.ExecuteEntity<TEntity>(transaction, commandText, CommandType.StoredProcedure, fieldToSkip, null, 
+            return SimpleAccess.ExecuteEntity<TEntity>(transaction, commandText, CommandType.StoredProcedure, fieldToSkip, null,
                 new OracleParameter("@id", id));
 
-           // return Get<TEntity>(new OracleParameter("@id", id), transaction, fieldToSkip);
+            // return Get<TEntity>(new OracleParameter("@id", id), transaction, fieldToSkip);
         }
 
 
@@ -121,7 +121,7 @@ namespace SimpleAccess.Oracle
 
             var commandText = string.Format("{0}_GetById", entityInfo.Name);
 
-            return SimpleAccess.ExecuteEntity<TEntity>(commandText, CommandType.StoredProcedure, fieldToSkip,  null, new [] {oracleParameter});
+            return SimpleAccess.ExecuteEntity<TEntity>(commandText, CommandType.StoredProcedure, fieldToSkip, null, new[] { oracleParameter });
         }
 
         /// <summary> Gets. </summary>
@@ -231,7 +231,7 @@ namespace SimpleAccess.Oracle
             var commandText = string.Format("{0}_Find", entityInfo.DbObjectName);
 
             return SimpleAccess.ExecuteEntities<TEntity>(commandText, CommandType.StoredProcedure
-                , fieldToSkip, parameters: new OracleParameter("@whereClause",DynamicQuery.GetStoredProcedureWhere(expression, entityInfo) ));
+                , fieldToSkip, parameters: new OracleParameter("@whereClause", DynamicQuery.GetStoredProcedureWhere(expression, entityInfo)));
 
         }
 
@@ -297,7 +297,7 @@ namespace SimpleAccess.Oracle
         public int Insert<TEntity>(TEntity entity)
             where TEntity : class
         {
-            
+
             var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
             var entityParameters = entityInfo.GetInsertParameters(entity);
 
@@ -347,11 +347,12 @@ namespace SimpleAccess.Oracle
             where TEntity : class
         {
 
-            OracleTransaction sqlTransaction = null;
+            OracleTransaction oracleTransaction = null;
             int result = 0;
-            try
+
+            using (oracleTransaction = SimpleAccess.BeginTrasaction())
             {
-                using (sqlTransaction = SimpleAccess.BeginTrasaction())
+                try
                 {
                     var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
                     string commandText = string.Format("[dbo].{0}_Insert", entityInfo.DbObjectName);
@@ -360,22 +361,20 @@ namespace SimpleAccess.Oracle
                     {
                         var entityParameters = entityInfo.GetInsertParameters(entity);
 
-                        result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure
+                        result += SimpleAccess.ExecuteNonQuery(oracleTransaction, commandText, CommandType.StoredProcedure
                             , entityParameters.DataParametersDictionary.Values.ToArray());
 
                         entityParameters.LoadOutParametersProperties(entity);
                     }
+                    SimpleAccess.EndTransaction(oracleTransaction);
                 }
+
+                catch (Exception)
+                {
+                    SimpleAccess.EndTransaction(oracleTransaction, false);
+                }
+
             }
-            catch (Exception)
-            {
-                SimpleAccess.EndTransaction(sqlTransaction, false);
-            }
-            finally
-            {
-                SimpleAccess.EndTransaction(sqlTransaction);
-            }
-            
             return result;
         }
 
@@ -443,7 +442,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <returns> . </returns>
         public int Update<TEntity>(TEntity entity)
-            where TEntity : class 
+            where TEntity : class
         {
             var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
             var entityParameters = entityInfo.GetUpdateParameters(entity);
@@ -492,9 +491,10 @@ namespace SimpleAccess.Oracle
         {
             OracleTransaction sqlTransaction = null;
             int result = 0;
-            try
+
+            using (sqlTransaction = SimpleAccess.BeginTrasaction())
             {
-                using (sqlTransaction = SimpleAccess.BeginTrasaction())
+                try
                 {
                     var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
                     string commandText = string.Format("{0}_Update", entityInfo.DbObjectName);
@@ -508,17 +508,13 @@ namespace SimpleAccess.Oracle
 
                         entityParameters.LoadOutParametersProperties(entity);
                     }
+                    SimpleAccess.EndTransaction(sqlTransaction);
+                }
+                catch (Exception)
+                {
+                    SimpleAccess.EndTransaction(sqlTransaction, false);
                 }
             }
-            catch (Exception)
-            {
-                SimpleAccess.EndTransaction(sqlTransaction, false);
-            }
-            finally
-            {
-                SimpleAccess.EndTransaction(sqlTransaction);
-            }
-
             return result;
         }
 
@@ -563,8 +559,8 @@ namespace SimpleAccess.Oracle
             var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
 
             var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
-			var result = SimpleAccess.ExecuteNonQuery(commandText, CommandType.StoredProcedure, new [] { OracleParametersExtensions.ToDataParam(id, (string) "id")});
-			return result;
+            var result = SimpleAccess.ExecuteNonQuery(commandText, CommandType.StoredProcedure, new[] { OracleParametersExtensions.ToDataParam(id, (string)"id") });
+            return result;
         }
 
 
@@ -582,7 +578,7 @@ namespace SimpleAccess.Oracle
             var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
 
             var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
-            var result = SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, new [] { OracleParametersExtensions.ToDataParam(id, (string) "Id")} );
+            var result = SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, new[] { OracleParametersExtensions.ToDataParam(id, (string)"Id") });
             return result;
         }
 
@@ -677,9 +673,10 @@ namespace SimpleAccess.Oracle
         {
             OracleTransaction sqlTransaction = null;
             int result = 0;
-            try
+
+            using (sqlTransaction = SimpleAccess.BeginTrasaction())
             {
-                using (sqlTransaction = SimpleAccess.BeginTrasaction())
+                try
                 {
                     var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
                     var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
@@ -690,15 +687,15 @@ namespace SimpleAccess.Oracle
                         result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, SimpleAccess.BuildOracleParameters(paramObject));
 
                     }
+                    SimpleAccess.EndTransaction(sqlTransaction);
                 }
-            }
-            catch (Exception)
-            {
-                SimpleAccess.EndTransaction(sqlTransaction, false);
-            }
-            finally
-            {
-                SimpleAccess.EndTransaction(sqlTransaction);
+
+                catch (Exception)
+                {
+                    SimpleAccess.EndTransaction(sqlTransaction, false);
+                }
+
+
             }
 
             return result;
@@ -715,9 +712,10 @@ namespace SimpleAccess.Oracle
         {
             OracleTransaction sqlTransaction = null;
             int result = 0;
-            try
+
+            using (sqlTransaction = SimpleAccess.BeginTrasaction())
             {
-                using (sqlTransaction = SimpleAccess.BeginTrasaction())
+                try
                 {
                     var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
                     var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
@@ -725,18 +723,15 @@ namespace SimpleAccess.Oracle
                     foreach (var id in ids)
                     {
 
-                        result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, new[] { OracleParametersExtensions.ToDataParam(id, (string) "Id") });
+                        result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, new[] { OracleParametersExtensions.ToDataParam(id, (string)"Id") });
 
                     }
                 }
-            }
-            catch (Exception)
-            {
-                SimpleAccess.EndTransaction(sqlTransaction, false);
-            }
-            finally
-            {
-                SimpleAccess.EndTransaction(sqlTransaction);
+
+                catch (Exception)
+                {
+                    SimpleAccess.EndTransaction(sqlTransaction, false);
+                }
             }
 
             return result;
@@ -753,14 +748,14 @@ namespace SimpleAccess.Oracle
             where TEntity : class
         {
             int result = 0;
-  
+
             var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
             var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
 
             foreach (var id in ids)
             {
 
-                result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, new[] { OracleParametersExtensions.ToDataParam(id, (string) "Id") });
+                result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, new[] { OracleParametersExtensions.ToDataParam(id, (string)"Id") });
 
             }
 
@@ -774,20 +769,20 @@ namespace SimpleAccess.Oracle
         /// 
         /// <returns> . </returns>
         public int SoftDelete<TEntity>(long id)
-			where TEntity : class
-		{
-			//var name = typeof(TEntity).Name;
+            where TEntity : class
+        {
+            //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
-			var commandText = string.Format("{0}_MarkDelete", entityInfo.Name);
+            var commandText = string.Format("{0}_MarkDelete", entityInfo.Name);
 
-			return SimpleAccess.ExecuteNonQuery(commandText, CommandType.StoredProcedure, new []{ OracleParametersExtensions.ToDataParam(id, (string) "id")});
-		}
+            return SimpleAccess.ExecuteNonQuery(commandText, CommandType.StoredProcedure, new[] { OracleParametersExtensions.ToDataParam(id, (string)"id") });
+        }
 
         /// <summary> Performs application-defined tasks associated with freeing, releasing, or resetting
         /// unmanaged resources. </summary>
         public void Dispose()
         {
-			if (SimpleAccess != null)
+            if (SimpleAccess != null)
                 SimpleAccess.Dispose();
         }
 

@@ -454,7 +454,8 @@
         </member>
         <member name="T:SimpleAccess.Core.EntityParameters`1">
             <summary>
-            Represents the SimpleAccess Entity information.
+            Represents the SimpleAccess 
+            information.
             The EntityInfo is create and cache the stored procedure name, quires and parameters
             </summary>
         </member>
@@ -1380,6 +1381,11 @@
         <member name="P:SimpleAccess.Core.SimpleAccessSettings.DefaultLogger">
             <summary>
             Default <see cref="T:SimpleAccess.Core.Logger.ISimpleLogger"/>.
+            </summary>
+        </member>
+        <member name="P:SimpleAccess.Core.SimpleAccessSettings.DbCommandTimeout">
+            <summary>
+            Sets the wait time before terminating the attempt to execute a command and generating an error. Default timeout is 30 
             </summary>
         </member>
         <member name="T:SimpleAccess.Entity.EntityInfo">

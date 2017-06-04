@@ -246,10 +246,10 @@ namespace SimpleAccess.Oracle
             CommandType commandType, params OracleParameter[] parameters)
         {
             int result;
-
+            OracleCommand dbCommand = null;
             try
             {
-                var dbCommand = CreateCommand(sqlTransaction, commandText, commandType, parameters);
+                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, parameters);
                 dbCommand.Connection.OpenSafely();
                 result = dbCommand.ExecuteNonQuery();
             }
@@ -257,6 +257,10 @@ namespace SimpleAccess.Oracle
             {
                 SimpleLogger.LogException(ex);
                 throw;
+            }
+            finally
+            {
+                dbCommand.ClearDbCommand();
             }
             return result;
 
@@ -1621,6 +1625,7 @@ namespace SimpleAccess.Oracle
         public OracleCommand CreateCommand(string commandText, CommandType commandType, params OracleParameter[] oracleParameters)
         {
             var dbCommand = _sqlConnection.CreateCommand();
+            dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
             dbCommand.CommandType = commandType;
             dbCommand.CommandText = commandText;
             if (oracleParameters != null)
@@ -1644,6 +1649,7 @@ namespace SimpleAccess.Oracle
             , params OracleParameter[] oracleParameters)
         {
             var dbCommand = _sqlConnection.CreateCommand();
+            dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
             dbCommand.Transaction = sqlTransaction;
             dbCommand.CommandType = commandType;
             dbCommand.CommandText = commandText;
