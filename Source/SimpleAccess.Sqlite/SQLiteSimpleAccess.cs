@@ -891,9 +891,6 @@ namespace SimpleAccess.SQLite
             }
             finally
             {
-                if (_sqliteTransaction == null && _sqliteConnection.State != ConnectionState.Closed)
-                    _sqliteConnection.CloseSafely();
-
                 dbCommand.ClearDbCommand();
 
             }
@@ -1092,9 +1089,6 @@ namespace SimpleAccess.SQLite
             }
             finally
             {
-                if (_sqliteTransaction == null && _sqliteConnection.State != ConnectionState.Closed)
-                    _sqliteConnection.CloseSafely();
-
                 dbCommand.ClearDbCommand();
 
             }
@@ -1267,9 +1261,6 @@ namespace SimpleAccess.SQLite
             }
             finally
             {
-                if (_sqliteTransaction == null && _sqliteConnection.State != ConnectionState.Closed)
-                    _sqliteConnection.CloseSafely();
-
                 dbCommand.ClearDbCommand();
 
             }
@@ -1448,9 +1439,6 @@ namespace SimpleAccess.SQLite
             }
             finally
             {
-                if (_sqliteTransaction == null && _sqliteConnection.State != ConnectionState.Closed)
-                    _sqliteConnection.CloseSafely();
-
                 dbCommand.ClearDbCommand();
 
             }

@@ -731,9 +731,6 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (mySqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                    _sqlConnection.CloseSafely();
-
                 dbCommand.ClearDbCommand();
 
             }
@@ -896,9 +893,6 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                    _sqlConnection.CloseSafely();
-
                 dbCommand.ClearDbCommand();
 
             }
@@ -1097,9 +1091,6 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                    _sqlConnection.CloseSafely();
-
                 dbCommand.ClearDbCommand();
 
             }
@@ -1272,8 +1263,6 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                    _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
 
@@ -1453,8 +1442,6 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                    _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
 

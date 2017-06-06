@@ -736,8 +736,6 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (oracleTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                    _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
 
@@ -901,9 +899,6 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                    _sqlConnection.CloseSafely();
-
                 dbCommand.ClearDbCommand();
 
             }
@@ -1102,9 +1097,6 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                    _sqlConnection.CloseSafely();
-
                 dbCommand.ClearDbCommand();
 
             }
@@ -1277,9 +1269,6 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                    _sqlConnection.CloseSafely();
-
                 dbCommand.ClearDbCommand();
 
             }
@@ -1458,9 +1447,6 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                    _sqlConnection.CloseSafely();
-
                 dbCommand.ClearDbCommand();
 
             }

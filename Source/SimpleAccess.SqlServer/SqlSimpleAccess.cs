@@ -736,8 +736,6 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
-                if (sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                    _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
 
@@ -903,8 +901,6 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                    _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
 
@@ -1097,7 +1093,6 @@ namespace SimpleAccess.SqlServer
                 {
                     return reader.HasRows ? reader.DataReaderToObject<TEntity>(fieldsToSkip, propertyInfoDictionary) : null;
                 }
-                dbCommand.Parameters.Clear();
 
                 //return dbCommand.ExecuteReader().DataReaderToObject<TEntity>(fieldsToSkip, piList);
             }
@@ -1108,8 +1103,6 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                    _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
 
@@ -1284,8 +1277,6 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                    _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
 
@@ -1465,9 +1456,6 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                    _sqlConnection.CloseSafely();
-
                 dbCommand.ClearDbCommand();
 
             }
