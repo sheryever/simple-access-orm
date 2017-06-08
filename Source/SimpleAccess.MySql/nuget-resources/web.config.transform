@@ -1,5 +1,0 @@
-﻿<configuration>
-  <appSettings>
-    <add key="simpleAccess:mysqlConnectionStringName" value=" ** Default connection String **"/>
-  </appSettings>
-</configuration>

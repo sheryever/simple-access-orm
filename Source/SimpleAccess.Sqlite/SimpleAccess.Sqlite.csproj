@@ -70,7 +70,8 @@
     <Folder Include="Attributes\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="nuget-resources\web.config.transform" />
+    <None Include="nuget-resources\app.config.install.xdt" />
+    <None Include="nuget-resources\web.config.install.xdt" />
     <None Include="packages.config" />
     <None Include="SimpleAccess.SQLite.nuspec" />
   </ItemGroup>
