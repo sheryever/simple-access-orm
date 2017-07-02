@@ -106,7 +106,7 @@ using (var transaction = simpleAccess.BeginTrasaction())
     }
 }
 ```
-###SimpleAccess interface
+### SimpleAccess interface
 
 #### Methods
 | Methods | Description |
@@ -443,9 +443,9 @@ namespace SimpleAccess.SqlServer.ConsoleTest
 ````
 
 ## Support
-- Simple Access is written in C# and support .net Managed Code langues (C# and VB.net etc)
+- Simple Access is written in C# and support .net Managed Code languages (C# and VB.net etc)
 - Sql Server 2005 and later
-- Oracle 10g and later (in default Simple Access uese Oracle Data Provider for .NET, to use Oracle Data Access Components (ODAC))
+- Oracle 10g and later (in default Simple Access uses Oracle Data Provider for .NET, to use Oracle Data Access Components (ODAC))
 
 ## Roadmap
 - [x] Separate SimpleCommand and Repositoy
