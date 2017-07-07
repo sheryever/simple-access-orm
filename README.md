@@ -160,8 +160,8 @@ All methods are based on stored procedures with its related sotred procedure nam
 |--------------------|---------|-------------|
 | Get&lt;TEntity&gt; | TEntity_GetById </br> ie. People_GetById | Get TEntity by Id or anyother parameter |
 | GetAll&lt;TEntity&gt; | TEntity_GetAll </br> ie. People_GetAll | Get all TEntity object in an IEnumerable&lt;TEntity&gt;. |
-| FindSingle&lt;TEntity&gt; | TEntity_Find </br> ie. People_Find | Find a single TEntity object based on where expression. |
-| FindAll&lt;TEntity&gt; | TEntity_Find </br> ie. People_Find | Find all TEntity objects based on where expression. |
+| Find&lt;TEntity&gt; | TEntity_Find </br> ie. People_Find | Searches for TEntity that matches the conditions defined by the specified predicate, and returns the first record of the result. |
+| FindAll&lt;TEntity&gt; | TEntity_Find </br> ie. People_Find | Searches for all TEntity that matches the conditions defined by the specified predicate, and returns the result as IEnumerable&lt;TEntity&gt;. |
 | Insert&lt;TEntity&gt; | TEntity_Insert </br> ie. People_Insert  | Inserts the given TEntity |
 | InsertAll&lt;TEntity&gt; | TEntity_Insert </br> ie. People_Insert  | Inserts all the given entities |
 | Update&lt;TEntity&gt; | TEntity_Update </br> ie. People_Update | Updates the given TEntity |
@@ -336,10 +336,10 @@ namespace SimpleAccess.SqlServer.ConsoleTest
             // Retrive data using SimpleAccess SqlRepository
             var people = repo.GetAll<Person>();
             var person = repo.Get<Person>(1);
-            person = repo.FindSingle<Person>(b => b.Id == 1);
-            people = repo.Find<Person>(b => b.Address.EndsWith("Munawwarah")
+            person = repo.Find<Person>(b => b.Id == 1);
+            people = repo.FindAll<Person>(b => b.Address.EndsWith("Munawwarah")
             								&& b.Name == "البيداء"); // EndsWith & StartsWith uses LIKE
-            people = repo.Find<Person>(b => b.Address == null);  // Where Address is null
+            people = repo.FindAll<Person>(b => b.Address == null);  // Where Address is null
 
 			// Insert
 			var newPerson = new Person {
