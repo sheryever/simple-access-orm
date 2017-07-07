@@ -174,11 +174,12 @@ namespace SimpleAccess.Core.Entity
                 if (body.NodeType != ExpressionType.AndAlso && body.NodeType != ExpressionType.OrElse)
                 {
                     string propertyName = GetPropertyName(body);
-                    dynamic propertyValue = body.Right;
+                    object propertyValue = GetExpressionValue(body);
+                    //dynamic propertyValue = GetExpressionValue(body);
                     string opr = GetOperator(body.NodeType);
                     string link = GetOperator(linkingType);
 
-                    queryProperties.Add(new QueryParameter(link, propertyName, propertyValue.Value, opr));
+                    queryProperties.Add(new QueryParameter(link, propertyName, propertyValue, opr));
                 }
                 else
                 {
@@ -248,7 +249,20 @@ namespace SimpleAccess.Core.Entity
                     var compiledExpression = lambda.Compile();
                     return compiledExpression.DynamicInvoke();
                 }
+            }
 
+            private static object GetExpressionValue(BinaryExpression body)
+            {
+                if (body.Right is ConstantExpression)
+                {
+                    return ((dynamic)body.Right).Value;
+                }
+                else
+                {
+                    LambdaExpression lambda = Expression.Lambda(body.Right);
+                    var compiledExpression = lambda.Compile();
+                    return compiledExpression.DynamicInvoke();
+                }
             }
 
             /// <summary>
