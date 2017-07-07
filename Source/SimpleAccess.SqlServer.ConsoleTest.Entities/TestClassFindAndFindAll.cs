@@ -10,13 +10,13 @@ namespace SimpleAccess.SqlServer.ConsoleTest.Entities
     {
         public void Test(string startsWith, string endsWith)
         {
-            ISqlRepository repo = new SqlRepository("sqlDefaultConnection2");
+            ISqlRepository repo = new SqlRepository("sqlDefaultConnection");
 
-            var branches = repo.GetAll<Branche>();
-            var branch = repo.FindSingle<Branche>(b => b.Id == 1);
-            branches = repo.Find<Branche>(b => b.Address2.EndsWith(endsWith) && b.Name == "البيداء");
-            branches = repo.Find<Branche>(b => b.Address2.StartsWith(startsWith));
-            branches = repo.Find<Branche>(b => b.Address2 == null);
+            var branches = repo.GetAll<Branch>();
+            var branch = repo.FindAll<Branch>(b => b.Id == 1);
+            branches = repo.FindAll<Branch>(b => b.Address2.EndsWith(endsWith) && b.Name == "البيداء");
+            branches = repo.FindAll<Branch>(b => b.Address2.StartsWith(startsWith));
+            branches = repo.FindAll<Branch>(b => b.Address2 == null);
 
         }
     }

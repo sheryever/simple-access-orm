@@ -23,12 +23,11 @@ namespace SimpleAccess.SqlServer.ConsoleTest
             public string Address { get; set; }
         }
 
-        static void Main(string[] args)
+        static void Main5(string[] args)
         {
 
             Console.WriteLine("Testing Incident Transaction function");
 
-            TestFinaly();
             //ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("sqlDefaultConnection");
             IncidentsService service = new IncidentsService();
             try
@@ -48,25 +47,6 @@ namespace SimpleAccess.SqlServer.ConsoleTest
             Console.ReadKey();
         }
 
-        static void TestFinaly()
-        {
-            try
-            {
-
-                Console.WriteLine("Returned");
-                return;
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Error");
-                throw;
-            }
-            finally
-            {
-                Console.WriteLine("Finally");
-            }
-
-        }
 
         static void Main4(string[] args)
         {
@@ -96,14 +76,14 @@ namespace SimpleAccess.SqlServer.ConsoleTest
             Console.ReadKey();
         }
 
-        static void Main3(string[] args)
+        static void Main(string[] args)
         {
 
 
 
             (new FindExpressionTest()).Test();
 
-            //branches = repo.Find<Branche>(b => b.Address2.Contains("Munawwarah") && b.Name == "البيداء");
+            //branches = repo.FindAll<Branche>(b => b.Address2.Contains("Munawwarah") && b.Name == "البيداء");
             (new TestClassFindAndFindAll()).Test("Al Madina", "Munawwarah");
 
 
@@ -117,13 +97,14 @@ namespace SimpleAccess.SqlServer.ConsoleTest
             {
                 ISqlRepository repo = new SqlRepository("sqlDefaultConnection");
 
-                var branches = repo.GetAll<Branche>();
-                var branch = repo.FindSingle<Branche>(b => b.Id == 1);
-                branches = repo.Find<Branche>(b => b.Address2.EndsWith("Munawwarah") && b.Name == "البيداء");
-                branches = repo.Find<Branche>(b => b.Address2.StartsWith("Al Madina"));
-                branches = repo.Find<Branche>(b => b.Address2 == null);
-            }
+                var branches = repo.GetAll<Branch>();
+                var branch = repo.FindAll<Branch>(b => b.Id == 1);
+                branches = repo.FindAll<Branch>(b => b.Address2.EndsWith("Munawwarah") && b.Name == "البيداء");
+                branches = repo.FindAll<Branch>(b => b.Address2.StartsWith("Al Madina"));
+                branches = repo.FindAll<Branch>(b => b.Address2 == null);
+                var bs = new List<Branch>();
 
+            }
 
         }
 

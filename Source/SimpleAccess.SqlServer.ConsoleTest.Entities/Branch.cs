@@ -9,7 +9,7 @@ namespace SimpleAccess.SqlServer.ConsoleTest.Entities
 {
 
     [Entity("Branches")]
-    public class Branche
+    public class Branch
     {
         [Identity]
         public int Id { get; set; }
