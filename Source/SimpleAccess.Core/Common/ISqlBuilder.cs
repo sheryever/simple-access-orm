@@ -21,6 +21,8 @@ namespace SimpleAccess.Core
         IDataParameter CreateDataParameter(PropertyInfo propertyInfo, ParametersType parametesType,
             IEnumerable<PropertyInfo> propertyInfos, IList<PropertyInfo> outParameterPropertyInfoCollection , List<IDataParameter> outDataParameters );
 
+        EntityParameters<TDbParameter> CreateEntityParameters(object entity, bool checkForIdentityColumn);
+
         /// <summary>
         /// 
         /// </summary>
@@ -73,7 +75,17 @@ namespace SimpleAccess.Core
 
         string BuildWhereExpression(string propertyName, Type valueType, string @operator, object value);
 
+        /// <summary>
+        /// Clear all DbParamters of both insert and update EntityParameters
+        /// </summary>
         void ClearDbParameters();
-        void LoadOutParametersProperties(object instance);
+
+        /// <summary>
+        /// Load all the properties from DbParameters which were marked as ParameterDirection.Out
+        /// </summary>
+        /// <param name="entityParameters">The EntityParameters object based on TDataParameters in ISimpleAccess</param>
+        /// <param name="instance"> The instance of object </param>
+        void LoadOutParametersProperties(EntityParameters<TDbParameter> entityParameters, object instance);
+
     }
 }

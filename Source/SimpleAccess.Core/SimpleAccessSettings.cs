@@ -3,6 +3,8 @@ using System.Configuration;
 using System.Data;
 using SimpleAccess.Core;
 using SimpleAccess.Core.Logger;
+using System.Collections.Generic;
+using System.Data.Common;
 
 namespace SimpleAccess.Core
 {

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using SimpleAccess;
 using SimpleAccess.SqlServer.ConsoleTest.Entities;
 using SimpeAccess.SqlServer.ConsoleTest;
+using SimpleAccess.Core;
 
 namespace SimpleAccess.SqlServer.ConsoleTest
 {

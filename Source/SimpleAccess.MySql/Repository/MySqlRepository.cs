@@ -315,11 +315,11 @@ namespace SimpleAccess.MySql
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="transaction">			 The SQL transaction. </param>
         /// <param name="entity"> Entity to insert </param>
         /// 
         /// <returns> . </returns>
-        public int Insert<TEntity>(MySqlTransaction sqlTransaction, TEntity entity)
+        public int Insert<TEntity>(MySqlTransaction transaction, TEntity entity)
             where TEntity : class
         {
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
@@ -328,7 +328,7 @@ namespace SimpleAccess.MySql
 
             string commandText = string.Format("{0}_Insert", entityInfo.DbObjectName);
 
-            var result = SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure
+            var result = SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure
                 , entityParameters.DataParametersDictionary.Values.ToArray());
 
             entityParameters.LoadOutParametersProperties(entity);
@@ -348,11 +348,11 @@ namespace SimpleAccess.MySql
             where TEntity : class
         {
 
-            MySqlTransaction sqlTransaction = null;
+            MySqlTransaction transaction = null;
             int result = 0;
             try
             {
-                using (sqlTransaction = SimpleAccess.BeginTrasaction())
+                using (transaction = SimpleAccess.BeginTrasaction())
                 {
                     var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
                     string commandText = string.Format("[dbo].{0}_Insert", entityInfo.DbObjectName);
@@ -361,7 +361,7 @@ namespace SimpleAccess.MySql
                     {
                         var entityParameters = entityInfo.GetInsertParameters(entity);
 
-                        result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure
+                        result += SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure
                             , entityParameters.DataParametersDictionary.Values.ToArray());
 
                         entityParameters.LoadOutParametersProperties(entity);
@@ -370,11 +370,11 @@ namespace SimpleAccess.MySql
             }
             catch (Exception)
             {
-                SimpleAccess.EndTransaction(sqlTransaction, false);
+                SimpleAccess.EndTransaction(transaction, false);
             }
             finally
             {
-                SimpleAccess.EndTransaction(sqlTransaction);
+                SimpleAccess.EndTransaction(transaction);
             }
             
             return result;
@@ -383,11 +383,11 @@ namespace SimpleAccess.MySql
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="transaction">			 The SQL transaction. </param>
         /// <param name="entities"> The <![CDATA[IEnumerable<TEntity>]]> to insert </param>
         ///
         /// <returns> The number of affected records</returns>
-        public int InsertAll<TEntity>(MySqlTransaction sqlTransaction, IEnumerable<TEntity> entities)
+        public int InsertAll<TEntity>(MySqlTransaction transaction, IEnumerable<TEntity> entities)
             where TEntity : class
         {
             int result = 0;
@@ -398,7 +398,7 @@ namespace SimpleAccess.MySql
             {
                 var entityParameters = entityInfo.GetInsertParameters(entity);
 
-                result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure
+                result += SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure
                     , entityParameters.DataParametersDictionary.Values.ToArray());
 
                 entityParameters.LoadOutParametersProperties(entity);
@@ -462,11 +462,11 @@ namespace SimpleAccess.MySql
         /// <summary> Updates the given TEntity. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="transaction">			 The SQL transaction. </param>
         /// <param name="entity"> Entity to insert </param>
         /// 
         /// <returns> . </returns>
-        public int Update<TEntity>(MySqlTransaction sqlTransaction, TEntity entity)
+        public int Update<TEntity>(MySqlTransaction transaction, TEntity entity)
             where TEntity : class
         {
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
@@ -474,7 +474,7 @@ namespace SimpleAccess.MySql
 
             string commandText = string.Format("{0}_Update", entityInfo.DbObjectName);
 
-            var result = SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure
+            var result = SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure
                 , entityParameters.DataParametersDictionary.Values.ToArray());
 
             entityParameters.LoadOutParametersProperties(entity);
@@ -491,11 +491,11 @@ namespace SimpleAccess.MySql
         public int UpdateAll<TEntity>(IEnumerable<TEntity> entities)
             where TEntity : class
         {
-            MySqlTransaction sqlTransaction = null;
+            MySqlTransaction transaction = null;
             int result = 0;
             try
             {
-                using (sqlTransaction = SimpleAccess.BeginTrasaction())
+                using (transaction = SimpleAccess.BeginTrasaction())
                 {
                     var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
                     string commandText = string.Format("{0}_Update", entityInfo.DbObjectName);
@@ -504,7 +504,7 @@ namespace SimpleAccess.MySql
                     {
                         var entityParameters = entityInfo.GetUpdateParameters(entity);
 
-                        result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure
+                        result += SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure
                             , entityParameters.DataParametersDictionary.Values.ToArray());
 
                         entityParameters.LoadOutParametersProperties(entity);
@@ -513,11 +513,11 @@ namespace SimpleAccess.MySql
             }
             catch (Exception)
             {
-                SimpleAccess.EndTransaction(sqlTransaction, false);
+                SimpleAccess.EndTransaction(transaction, false);
             }
             finally
             {
-                SimpleAccess.EndTransaction(sqlTransaction);
+                SimpleAccess.EndTransaction(transaction);
             }
 
             return result;
@@ -526,11 +526,11 @@ namespace SimpleAccess.MySql
         /// <summary> Updates all the given entities. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="entities"> The <![CDATA[IEnumerable<TEntity>]]> to update </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        public int UpdateAll<TEntity>(MySqlTransaction sqlTransaction, IEnumerable<TEntity> entities)
+        public int UpdateAll<TEntity>(MySqlTransaction transaction, IEnumerable<TEntity> entities)
             where TEntity : class
         {
 
@@ -542,7 +542,7 @@ namespace SimpleAccess.MySql
             {
                 var entityParameters = entityInfo.GetUpdateParameters(entity);
 
-                result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure
+                result += SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure
                     , entityParameters.DataParametersDictionary.Values.ToArray());
 
 
@@ -572,18 +572,18 @@ namespace SimpleAccess.MySql
         /// <summary> Deletes the given ID. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="transaction">			 The SQL transaction. </param>
         /// <param name="id"> The identifier. </param>
         /// 
         /// <returns> . </returns>
-        public int Delete<TEntity>(MySqlTransaction sqlTransaction, long id)
+        public int Delete<TEntity>(MySqlTransaction transaction, long id)
             where TEntity : class
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
 
             var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
-            var result = SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, new [] { id.ToDataParam("Id")} );
+            var result = SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure, new [] { id.ToDataParam("Id")} );
             return result;
         }
 
@@ -625,18 +625,18 @@ namespace SimpleAccess.MySql
         /// <summary> Deletes the given ID. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="sqlParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
-        public virtual int Delete<TEntity>(MySqlTransaction sqlTransaction, params MySqlParameter[] sqlParameters)
+        public virtual int Delete<TEntity>(MySqlTransaction transaction, params MySqlParameter[] sqlParameters)
             where TEntity : class
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
             var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
 
-            return SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, sqlParameters);
+            return SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure, sqlParameters);
         }
 
         /// <summary> Delete All records from the table. </summary>
@@ -655,16 +655,16 @@ namespace SimpleAccess.MySql
         /// <summary> Delete All records from the table with a transaction. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
 
-        public int DeleteAll<TEntity>(MySqlTransaction sqlTransaction) where TEntity : class
+        public int DeleteAll<TEntity>(MySqlTransaction transaction) where TEntity : class
         {
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
             var commandText = string.Format("{0}_DeleteAll", entityInfo.DbObjectName);
 
-            return SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure);
+            return SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure);
         }
 
         /// <summary> Deletes all the <typeparamref name="TEntity"/> records by  objects as MySqlParameter names and values. </summary>
@@ -676,11 +676,11 @@ namespace SimpleAccess.MySql
         public int DeleteAll<TEntity>(IEnumerable<object> paramObjects)
             where TEntity : class
         {
-            MySqlTransaction sqlTransaction = null;
+            MySqlTransaction transaction = null;
             int result = 0;
             try
             {
-                using (sqlTransaction = SimpleAccess.BeginTrasaction())
+                using (transaction = SimpleAccess.BeginTrasaction())
                 {
                     var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
                     var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
@@ -688,18 +688,18 @@ namespace SimpleAccess.MySql
                     foreach (var paramObject in paramObjects)
                     {
 
-                        result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, SimpleAccess.BuildSqlParameters(paramObject));
+                        result += SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure, SimpleAccess.BuildSqlParameters(paramObject));
 
                     }
                 }
             }
             catch (Exception)
             {
-                SimpleAccess.EndTransaction(sqlTransaction, false);
+                SimpleAccess.EndTransaction(transaction, false);
             }
             finally
             {
-                SimpleAccess.EndTransaction(sqlTransaction);
+                SimpleAccess.EndTransaction(transaction);
             }
 
             return result;
@@ -714,11 +714,11 @@ namespace SimpleAccess.MySql
         public int DeleteAll<TEntity>(IEnumerable<long> ids)
             where TEntity : class
         {
-            MySqlTransaction sqlTransaction = null;
+            MySqlTransaction transaction = null;
             int result = 0;
             try
             {
-                using (sqlTransaction = SimpleAccess.BeginTrasaction())
+                using (transaction = SimpleAccess.BeginTrasaction())
                 {
                     var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
                     var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
@@ -726,18 +726,18 @@ namespace SimpleAccess.MySql
                     foreach (var id in ids)
                     {
 
-                        result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, new[] { id.ToDataParam("Id") });
+                        result += SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure, new[] { id.ToDataParam("Id") });
 
                     }
                 }
             }
             catch (Exception)
             {
-                SimpleAccess.EndTransaction(sqlTransaction, false);
+                SimpleAccess.EndTransaction(transaction, false);
             }
             finally
             {
-                SimpleAccess.EndTransaction(sqlTransaction);
+                SimpleAccess.EndTransaction(transaction);
             }
 
             return result;
@@ -747,10 +747,10 @@ namespace SimpleAccess.MySql
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="ids"> The identifiers of records. </param>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        public int DeleteAll<TEntity>(MySqlTransaction sqlTransaction, IEnumerable<long> ids)
+        public int DeleteAll<TEntity>(MySqlTransaction transaction, IEnumerable<long> ids)
             where TEntity : class
         {
             int result = 0;
@@ -761,7 +761,7 @@ namespace SimpleAccess.MySql
             foreach (var id in ids)
             {
 
-                result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, new[] { id.ToDataParam("Id") });
+                result += SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure, new[] { id.ToDataParam("Id") });
 
             }
 
@@ -779,10 +779,28 @@ namespace SimpleAccess.MySql
 		{
 			//var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
-			var commandText = string.Format("{0}_MarkDelete", entityInfo.DbObjectName);
+			var commandText = string.Format("{0}_SoftDelete", entityInfo.DbObjectName);
 
 			return SimpleAccess.ExecuteNonQuery(commandText, CommandType.StoredProcedure, new []{ id.ToDataParam("id")});
 		}
+
+
+        /// <summary> Soft delete the <typeparamref name="TEntity"/> record. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="id"> The identifier. </param>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        public int SoftDelete<TEntity>(MySqlTransaction transaction, long id)
+            where TEntity : class
+        {
+            //var name = typeof(TEntity).Name;
+            var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
+            var commandText = string.Format("{0}_SoftDelete", entityInfo.DbObjectName);
+
+            return SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure, new[] { id.ToDataParam("id") });
+        }
 
         /// <summary> Performs application-defined tasks associated with freeing, releasing, or resetting
         /// unmanaged resources. </summary>

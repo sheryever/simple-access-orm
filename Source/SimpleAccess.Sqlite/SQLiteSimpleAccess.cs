@@ -1717,5 +1717,15 @@ namespace SimpleAccess.SQLite
 
             DefaultSimpleAccessSettings = null;
         }
+
+        public SQLiteParameter[] GetInsertParameters<TEntity>(object entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public SQLiteParameter[] GetUpdateParameters<TEntity>(object entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

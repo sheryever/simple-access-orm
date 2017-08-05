@@ -165,11 +165,11 @@ namespace SimpleAccess.Oracle
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="transaction">			 The SQL transaction. </param>
         /// <param name="entity"> Entity to insert </param>
         /// 
         /// <returns> . </returns>
-        int Insert<TEntity>(OracleTransaction sqlTransaction, TEntity entity)
+        int Insert<TEntity>(OracleTransaction transaction, TEntity entity)
             where TEntity : class;
 
         /// <summary> Inserts the given SQL parameters. </summary>
@@ -184,11 +184,11 @@ namespace SimpleAccess.Oracle
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="transaction">			 The SQL transaction. </param>
         /// <param name="entities"> The <![CDATA[IEnumerable<TEntity>]]> to insert </param>
         ///
         /// <returns> The number of affected records</returns>
-        int InsertAll<TEntity>(OracleTransaction sqlTransaction, IEnumerable<TEntity> entities)
+        int InsertAll<TEntity>(OracleTransaction transaction, IEnumerable<TEntity> entities)
             where TEntity : class;
 
         /// <summary> Updates the given oracleParameters. </summary>
@@ -220,11 +220,11 @@ namespace SimpleAccess.Oracle
         /// <summary> Updates the given oracleParameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="transaction">			 The SQL transaction. </param>
         /// <param name="entity"> Entity to insert </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int Update<TEntity>(OracleTransaction sqlTransaction, TEntity entity)
+        int Update<TEntity>(OracleTransaction transaction, TEntity entity)
             where TEntity : class;
 
         /// <summary> Updates all the given entities. </summary>
@@ -239,11 +239,11 @@ namespace SimpleAccess.Oracle
         /// <summary> Updates all the given entities. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="entities"> The <![CDATA[IEnumerable<TEntity>]]> to update </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int UpdateAll<TEntity>(OracleTransaction sqlTransaction, IEnumerable<TEntity> entities)
+        int UpdateAll<TEntity>(OracleTransaction transaction, IEnumerable<TEntity> entities)
             where TEntity : class;
 
         /// <summary> Deletes the <typeparamref name="TEntity"/>  by given ID. </summary>
@@ -277,21 +277,21 @@ namespace SimpleAccess.Oracle
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="id"> The identifier. </param>
-        ///  <param name="sqlTransaction">			 The SQL transaction. </param>
+        ///  <param name="transaction">			 The SQL transaction. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int Delete<TEntity>(OracleTransaction sqlTransaction, long id)
+        int Delete<TEntity>(OracleTransaction transaction, long id)
             where TEntity : class;
 
 
         /// <summary> Deletes the <typeparamref name="TEntity"/>  by given <see cref="OracleParameter"/> array. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="oracleParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int Delete<TEntity>(OracleTransaction sqlTransaction, params OracleParameter[] oracleParameters)
+        int Delete<TEntity>(OracleTransaction transaction, params OracleParameter[] oracleParameters)
             where TEntity : class;
 
 
@@ -306,10 +306,10 @@ namespace SimpleAccess.Oracle
         /// <summary> Delete All the <typeparamref name="TEntity"/> records with a transaction. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int DeleteAll<TEntity>(OracleTransaction sqlTransaction)
+        int DeleteAll<TEntity>(OracleTransaction transaction)
             where TEntity : class;
 
         /// <summary> Deletes all the <typeparamref name="TEntity"/> records by  objects as OracleParameter names and values. </summary>
@@ -334,10 +334,10 @@ namespace SimpleAccess.Oracle
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="ids"> The identifiers of records. </param>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int DeleteAll<TEntity>(OracleTransaction sqlTransaction, IEnumerable<long> ids)
+        int DeleteAll<TEntity>(OracleTransaction transaction, IEnumerable<long> ids)
             where TEntity : class;
 
         /// <summary> Soft delete the <typeparamref name="TEntity"/> record. </summary>
@@ -349,5 +349,14 @@ namespace SimpleAccess.Oracle
         int SoftDelete<TEntity>(long id)
 			where TEntity : class;
 
+        /// <summary> Soft delete the <typeparamref name="TEntity"/> record. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="transaction"> The SQL transaction. </param>
+        /// <param name="id"> The identifier. </param>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        int SoftDelete<TEntity>(OracleTransaction transaction, long id)
+            where TEntity : class;
     }
 }

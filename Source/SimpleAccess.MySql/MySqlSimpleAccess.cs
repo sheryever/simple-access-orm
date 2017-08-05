@@ -41,7 +41,7 @@ namespace SimpleAccess.MySql
 
 		/// <summary> The SQL transaction. </summary>
 
-        private MySqlTransaction _sqlTransaction;
+        private MySqlTransaction _transaction;
 
 
         #region Constructors
@@ -183,7 +183,7 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -236,20 +236,20 @@ namespace SimpleAccess.MySql
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        public int ExecuteNonQuery(MySqlTransaction sqlTransaction, string commandText,
+        public int ExecuteNonQuery(MySqlTransaction transaction, string commandText,
             CommandType commandType, params MySqlParameter[] parameters)
         {
             int result;
 
             try
             {
-                var dbCommand = CreateCommand(sqlTransaction, commandText, commandType, parameters);
+                var dbCommand = CreateCommand(transaction, commandText, commandType, parameters);
                 dbCommand.Connection.OpenSafely();
                 result = dbCommand.ExecuteNonQuery();
             }
@@ -265,27 +265,27 @@ namespace SimpleAccess.MySql
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>        
         /// <returns> Number of rows affected (integer) </returns>
-        public int ExecuteNonQuery(MySqlTransaction sqlTransaction, string commandText, object paramObject = null)
+        public int ExecuteNonQuery(MySqlTransaction transaction, string commandText, object paramObject = null)
         {
-            return ExecuteNonQuery(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSqlParameters(paramObject));
+            return ExecuteNonQuery(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSqlParameters(paramObject));
         }
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>        
         /// <returns> Number of rows affected (integer) </returns>
-        public int ExecuteNonQuery(MySqlTransaction sqlTransaction, string commandText,
+        public int ExecuteNonQuery(MySqlTransaction transaction, string commandText,
             CommandType commandType, object paramObject = null)
         {
-            return ExecuteNonQuery(sqlTransaction, commandText, commandType, BuildSqlParameters(paramObject));
+            return ExecuteNonQuery(transaction, commandText, commandType, BuildSqlParameters(paramObject));
 
         }
 
@@ -332,7 +332,7 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -375,14 +375,14 @@ namespace SimpleAccess.MySql
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="mySqlParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {T} value </returns>
-        public T ExecuteScalar<T>(MySqlTransaction sqlTransaction, string commandText, params MySqlParameter[] mySqlParameters)
+        public T ExecuteScalar<T>(MySqlTransaction transaction, string commandText, params MySqlParameter[] mySqlParameters)
         {
-            return ExecuteScalar<T>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
+            return ExecuteScalar<T>(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
                 , mySqlParameters);
         }
 
@@ -391,19 +391,19 @@ namespace SimpleAccess.MySql
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="mySqlParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
-        public T ExecuteScalar<T>(MySqlTransaction sqlTransaction, string commandText,
+        public T ExecuteScalar<T>(MySqlTransaction transaction, string commandText,
             CommandType commandType, params MySqlParameter[] mySqlParameters)
         {
             MySqlCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, mySqlParameters);
+                dbCommand = CreateCommand(transaction, commandText, commandType, mySqlParameters);
                 dbCommand.Connection.OpenSafely();
                 var result = dbCommand.ExecuteScalar();
 
@@ -421,14 +421,14 @@ namespace SimpleAccess.MySql
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         ///  <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The {T} value </returns>
-        public T ExecuteScalar<T>(MySqlTransaction sqlTransaction, string commandText, object paramObject = null)
+        public T ExecuteScalar<T>(MySqlTransaction transaction, string commandText, object paramObject = null)
         {
-            return ExecuteScalar<T>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
+            return ExecuteScalar<T>(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
                 , BuildSqlParameters(paramObject));
         }
 
@@ -437,16 +437,16 @@ namespace SimpleAccess.MySql
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         ///  <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The {T} value </returns>
-        public T ExecuteScalar<T>(MySqlTransaction sqlTransaction, string commandText,
+        public T ExecuteScalar<T>(MySqlTransaction transaction, string commandText,
             CommandType commandType, object paramObject = null)
         {
-            return ExecuteScalar<T>(sqlTransaction, commandText, commandType
+            return ExecuteScalar<T>(transaction, commandText, commandType
                 , BuildSqlParameters(paramObject));
         }
 
@@ -647,7 +647,7 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -705,19 +705,19 @@ namespace SimpleAccess.MySql
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="mySqlTransaction"> The SQL transaction. </param>
+        /// <param name="MySqlTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="mySqlParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{T}" /> </returns>
-        public IEnumerable<T> ExecuteValues<T>(MySqlTransaction mySqlTransaction, string commandText, CommandType commandType,
+        public IEnumerable<T> ExecuteValues<T>(MySqlTransaction MySqlTransaction, string commandText, CommandType commandType,
             params MySqlParameter[] mySqlParameters)
         {
             MySqlCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(mySqlTransaction, commandText, commandType, mySqlParameters);
+                dbCommand = CreateCommand(MySqlTransaction, commandText, commandType, mySqlParameters);
                 dbCommand.Connection.OpenSafely();
                 using (var reader = dbCommand.ExecuteReader())
                 {
@@ -791,7 +791,7 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -843,18 +843,18 @@ namespace SimpleAccess.MySql
         /// <exception cref="DbException"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="mySqlParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
-        public IEnumerable<TEntity> ExecuteEntities<TEntity>(MySqlTransaction sqlTransaction, string commandText, string fieldsToSkip = null,
+        public IEnumerable<TEntity> ExecuteEntities<TEntity>(MySqlTransaction transaction, string commandText, string fieldsToSkip = null,
             Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params MySqlParameter[] mySqlParameters)
             where TEntity : new()
         {
-            return ExecuteEntities<TEntity>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
+            return ExecuteEntities<TEntity>(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
                 , fieldsToSkip, propertyInfoDictionary, mySqlParameters);
         }
 
@@ -863,7 +863,7 @@ namespace SimpleAccess.MySql
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
@@ -871,14 +871,14 @@ namespace SimpleAccess.MySql
         /// <param name="mySqlParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
-        public IEnumerable<TEntity> ExecuteEntities<TEntity>(MySqlTransaction sqlTransaction, string commandText,
+        public IEnumerable<TEntity> ExecuteEntities<TEntity>(MySqlTransaction transaction, string commandText,
             CommandType commandType, string fieldsToSkip = null,
             Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params MySqlParameter[] mySqlParameters) where TEntity : new()
         {
             MySqlCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, mySqlParameters);
+                dbCommand = CreateCommand(transaction, commandText, commandType, mySqlParameters);
                 dbCommand.Connection.OpenSafely();
                 using (var reader = dbCommand.ExecuteReader())
                 {
@@ -903,17 +903,17 @@ namespace SimpleAccess.MySql
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{TEntity}" /> value </returns>
-        public IEnumerable<TEntity> ExecuteEntities<TEntity>(MySqlTransaction sqlTransaction, string commandText, object paramObject = null
+        public IEnumerable<TEntity> ExecuteEntities<TEntity>(MySqlTransaction transaction, string commandText, object paramObject = null
             , string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : new()
         {
-            return ExecuteEntities<TEntity>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
+            return ExecuteEntities<TEntity>(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
                 , fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
         }
 
@@ -922,7 +922,7 @@ namespace SimpleAccess.MySql
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
@@ -930,11 +930,11 @@ namespace SimpleAccess.MySql
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{TEntity}" /> value </returns>
-        public IEnumerable<TEntity> ExecuteEntities<TEntity>(MySqlTransaction sqlTransaction, string commandText,
+        public IEnumerable<TEntity> ExecuteEntities<TEntity>(MySqlTransaction transaction, string commandText,
             CommandType commandType, object paramObject = null, string fieldsToSkip = null,
             Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : new()
         {
-            return ExecuteEntities<TEntity>(sqlTransaction, commandText, commandType
+            return ExecuteEntities<TEntity>(transaction, commandText, commandType
                 , fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
         }
 
@@ -990,7 +990,7 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1042,17 +1042,17 @@ namespace SimpleAccess.MySql
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// <param name="mySqlParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        public TEntity ExecuteEntity<TEntity>(MySqlTransaction sqlTransaction, string commandText, string fieldsToSkip = null,
+        public TEntity ExecuteEntity<TEntity>(MySqlTransaction transaction, string commandText, string fieldsToSkip = null,
             Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params MySqlParameter[] mySqlParameters) where TEntity : class, new()
         {
-            return ExecuteEntity<TEntity>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
+            return ExecuteEntity<TEntity>(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
                 fieldsToSkip, propertyInfoDictionary, mySqlParameters);
         }
 
@@ -1061,7 +1061,7 @@ namespace SimpleAccess.MySql
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
@@ -1069,14 +1069,14 @@ namespace SimpleAccess.MySql
         /// <param name="mySqlParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        public TEntity ExecuteEntity<TEntity>(MySqlTransaction sqlTransaction, string commandText, CommandType commandType,
+        public TEntity ExecuteEntity<TEntity>(MySqlTransaction transaction, string commandText, CommandType commandType,
             string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null
             , params MySqlParameter[] mySqlParameters) where TEntity : class, new()
         {
             MySqlCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, mySqlParameters);
+                dbCommand = CreateCommand(transaction, commandText, commandType, mySqlParameters);
                 dbCommand.Connection.OpenSafely();
                 using (var reader = dbCommand.ExecuteReader())
                 {
@@ -1101,17 +1101,17 @@ namespace SimpleAccess.MySql
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        public TEntity ExecuteEntity<TEntity>(MySqlTransaction sqlTransaction, string commandText, object paramObject = null, 
+        public TEntity ExecuteEntity<TEntity>(MySqlTransaction transaction, string commandText, object paramObject = null, 
             string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : class, new()
         {
-            return ExecuteEntity<TEntity>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
+            return ExecuteEntity<TEntity>(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
                 fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
         }
 
@@ -1120,7 +1120,7 @@ namespace SimpleAccess.MySql
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
@@ -1128,11 +1128,11 @@ namespace SimpleAccess.MySql
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        public TEntity ExecuteEntity<TEntity>(MySqlTransaction sqlTransaction, string commandText, CommandType commandType, 
+        public TEntity ExecuteEntity<TEntity>(MySqlTransaction transaction, string commandText, CommandType commandType, 
             object paramObject = null, string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) 
             where TEntity : class, new()
         {
-            return ExecuteEntity<TEntity>(sqlTransaction, commandText, commandType,
+            return ExecuteEntity<TEntity>(transaction, commandText, commandType,
                 fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
         }
 
@@ -1178,7 +1178,7 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1222,16 +1222,16 @@ namespace SimpleAccess.MySql
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="mySqlParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> A list of object. </returns>
-        public IEnumerable<dynamic> ExecuteDynamics(MySqlTransaction sqlTransaction, string commandText, string fieldsToSkip = null,
+        public IEnumerable<dynamic> ExecuteDynamics(MySqlTransaction transaction, string commandText, string fieldsToSkip = null,
             params MySqlParameter[] mySqlParameters)
         {
-            return ExecuteDynamics(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
+            return ExecuteDynamics(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
                 mySqlParameters);
         }
 
@@ -1239,20 +1239,20 @@ namespace SimpleAccess.MySql
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="mySqlParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> A list of object. </returns>
-        public IEnumerable<dynamic> ExecuteDynamics(MySqlTransaction sqlTransaction, string commandText, CommandType commandType,
+        public IEnumerable<dynamic> ExecuteDynamics(MySqlTransaction transaction, string commandText, CommandType commandType,
             string fieldsToSkip = null, params MySqlParameter[] mySqlParameters)
         {
             MySqlCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, mySqlParameters);
+                dbCommand = CreateCommand(transaction, commandText, commandType, mySqlParameters);
                 dbCommand.Connection.OpenSafely();
                 return GetDynamicSqlData(dbCommand.ExecuteReader());
             }
@@ -1273,16 +1273,16 @@ namespace SimpleAccess.MySql
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// 
         /// <returns> A list of object. </returns>
-        public IEnumerable<dynamic> ExecuteDynamics(MySqlTransaction sqlTransaction, string commandText, object paramObject = null, 
+        public IEnumerable<dynamic> ExecuteDynamics(MySqlTransaction transaction, string commandText, object paramObject = null, 
             string fieldsToSkip = null)
         {
-            return ExecuteDynamics(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
+            return ExecuteDynamics(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
                 BuildSqlParameters(paramObject));
         }
 
@@ -1290,17 +1290,17 @@ namespace SimpleAccess.MySql
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// 
         /// <returns> A list of object. </returns>
-        public IEnumerable<dynamic> ExecuteDynamics(MySqlTransaction sqlTransaction, string commandText, CommandType commandType,
+        public IEnumerable<dynamic> ExecuteDynamics(MySqlTransaction transaction, string commandText, CommandType commandType,
             object paramObject = null, string fieldsToSkip = null)
         {
-            return ExecuteDynamics(sqlTransaction, commandText, commandType, fieldsToSkip,
+            return ExecuteDynamics(transaction, commandText, commandType, fieldsToSkip,
                 BuildSqlParameters(paramObject));
         }
 
@@ -1354,7 +1354,7 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1397,16 +1397,16 @@ namespace SimpleAccess.MySql
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="mySqlParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        public dynamic ExecuteDynamic(MySqlTransaction sqlTransaction, string commandText, string fieldsToSkip = null,
+        public dynamic ExecuteDynamic(MySqlTransaction transaction, string commandText, string fieldsToSkip = null,
             params MySqlParameter[] mySqlParameters)
         {
-            return ExecuteDynamic(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
+            return ExecuteDynamic(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
                 fieldsToSkip, mySqlParameters);
         }
 
@@ -1414,20 +1414,20 @@ namespace SimpleAccess.MySql
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="mySqlParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        public dynamic ExecuteDynamic(MySqlTransaction sqlTransaction, string commandText, CommandType commandType,
+        public dynamic ExecuteDynamic(MySqlTransaction transaction, string commandText, CommandType commandType,
             string fieldsToSkip = null, params MySqlParameter[] mySqlParameters)
         {
             MySqlCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, mySqlParameters);
+                dbCommand = CreateCommand(transaction, commandText, commandType, mySqlParameters);
                 dbCommand.Connection.OpenSafely();
                 var reader = dbCommand.ExecuteReader();
                 if (reader.Read())
@@ -1452,15 +1452,15 @@ namespace SimpleAccess.MySql
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// -<param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        public dynamic ExecuteDynamic(MySqlTransaction sqlTransaction, string commandText, object paramObject = null, string fieldsToSkip = null)
+        public dynamic ExecuteDynamic(MySqlTransaction transaction, string commandText, object paramObject = null, string fieldsToSkip = null)
         {
-            return ExecuteDynamic(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
+            return ExecuteDynamic(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
                 fieldsToSkip, BuildSqlParameters(paramObject));
         }
 
@@ -1468,17 +1468,17 @@ namespace SimpleAccess.MySql
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        public dynamic ExecuteDynamic(MySqlTransaction sqlTransaction, string commandText, CommandType commandType,
+        public dynamic ExecuteDynamic(MySqlTransaction transaction, string commandText, CommandType commandType,
                 object paramObject = null, string fieldsToSkip = null)
         {
-            return ExecuteDynamic(sqlTransaction, commandText, commandType,
+            return ExecuteDynamic(transaction, commandText, commandType,
                 fieldsToSkip, BuildSqlParameters(paramObject));
         }
         /// <summary>
@@ -1507,7 +1507,7 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1541,7 +1541,7 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1568,26 +1568,26 @@ namespace SimpleAccess.MySql
         {
             if (_sqlConnection.State != ConnectionState.Open)
                 _sqlConnection.Open();
-            //_sqlTransaction = _sqlConnection.BeginTransaction();
+            //_transaction = _sqlConnection.BeginTransaction();
 
-            //return _sqlTransaction;
+            //return _transaction;
             return _sqlConnection.BeginTransaction();
         }
 
         /// <summary> Ends a transaction. </summary>
         /// 
-        /// <param name = "sqlTransaction" > The SQL transaction. </param>
+        /// <param name = "transaction" > The SQL transaction. </param>
         /// <param name = "transactionSucceed" > (optional)the transaction succeed. </param>
         /// <param name = "closeConnection" > (optional)the close connection. </param>
-        public void EndTransaction(MySqlTransaction sqlTransaction, bool transactionSucceed = true, bool closeConnection = true)
+        public void EndTransaction(MySqlTransaction transaction, bool transactionSucceed = true, bool closeConnection = true)
         {
             if (transactionSucceed)
             {
-                sqlTransaction.Commit();
+                transaction.Commit();
             }
             else
             {
-                sqlTransaction.Rollback();
+                transaction.Rollback();
             }
 
             if (closeConnection)
@@ -1613,32 +1613,32 @@ namespace SimpleAccess.MySql
             if (mySqlParameters != null)
                 dbCommand.Parameters.AddRange(mySqlParameters);
 
-            if (_sqlTransaction != null)
-                dbCommand.Transaction = _sqlTransaction;
+            if (_transaction != null)
+                dbCommand.Transaction = _transaction;
 
             return dbCommand;
         }
 
         /// <summary> Creates a command. </summary>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The query string. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="mySqlParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> The new command. </returns>
-        public MySqlCommand CreateCommand(MySqlTransaction sqlTransaction, string commandText, CommandType commandType
+        public MySqlCommand CreateCommand(MySqlTransaction transaction, string commandText, CommandType commandType
             , params MySqlParameter[] mySqlParameters)
         {
             var dbCommand = _sqlConnection.CreateCommand();
             dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
-            dbCommand.Transaction = sqlTransaction;
+            dbCommand.Transaction = transaction;
             dbCommand.CommandType = commandType;
             dbCommand.CommandText = commandText;
             if (mySqlParameters != null)
                 dbCommand.Parameters.AddRange(mySqlParameters);
-            if (_sqlTransaction != null)
-                dbCommand.Transaction = _sqlTransaction;
+            if (_transaction != null)
+                dbCommand.Transaction = _transaction;
 
             return dbCommand;
         }
@@ -1712,8 +1712,8 @@ namespace SimpleAccess.MySql
         /// unmanaged resources. </summary>
         public void Dispose()
         {
-            if (_sqlTransaction != null)
-                _sqlTransaction.Dispose();
+            if (_transaction != null)
+                _transaction.Dispose();
 
             if (_sqlConnection.State != ConnectionState.Closed)
                 _sqlConnection.Close();

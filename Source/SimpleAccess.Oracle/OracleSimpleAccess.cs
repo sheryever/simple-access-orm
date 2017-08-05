@@ -41,7 +41,7 @@ namespace SimpleAccess.Oracle
 
 		/// <summary> The SQL transaction. </summary>
 
-        private OracleTransaction _sqlTransaction;
+        private OracleTransaction _transaction;
 
 
         #region Constructors
@@ -183,7 +183,7 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -236,20 +236,20 @@ namespace SimpleAccess.Oracle
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        public int ExecuteNonQuery(OracleTransaction sqlTransaction, string commandText,
+        public int ExecuteNonQuery(OracleTransaction transaction, string commandText,
             CommandType commandType, params OracleParameter[] parameters)
         {
             int result;
             OracleCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, parameters);
+                dbCommand = CreateCommand(transaction, commandText, commandType, parameters);
                 dbCommand.Connection.OpenSafely();
                 result = dbCommand.ExecuteNonQuery();
             }
@@ -269,27 +269,27 @@ namespace SimpleAccess.Oracle
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>        
         /// <returns> Number of rows affected (integer) </returns>
-        public int ExecuteNonQuery(OracleTransaction sqlTransaction, string commandText, object paramObject = null)
+        public int ExecuteNonQuery(OracleTransaction transaction, string commandText, object paramObject = null)
         {
-            return ExecuteNonQuery(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildOracleParameters(paramObject));
+            return ExecuteNonQuery(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildOracleParameters(paramObject));
         }
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>        
         /// <returns> Number of rows affected (integer) </returns>
-        public int ExecuteNonQuery(OracleTransaction sqlTransaction, string commandText,
+        public int ExecuteNonQuery(OracleTransaction transaction, string commandText,
             CommandType commandType, object paramObject = null)
         {
-            return ExecuteNonQuery(sqlTransaction, commandText, commandType, BuildOracleParameters(paramObject));
+            return ExecuteNonQuery(transaction, commandText, commandType, BuildOracleParameters(paramObject));
 
         }
 
@@ -336,7 +336,7 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -379,14 +379,14 @@ namespace SimpleAccess.Oracle
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="oracleParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {T} value </returns>
-        public T ExecuteScalar<T>(OracleTransaction sqlTransaction, string commandText, params OracleParameter[] oracleParameters)
+        public T ExecuteScalar<T>(OracleTransaction transaction, string commandText, params OracleParameter[] oracleParameters)
         {
-            return ExecuteScalar<T>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
+            return ExecuteScalar<T>(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
                 , oracleParameters);
         }
 
@@ -395,19 +395,19 @@ namespace SimpleAccess.Oracle
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="oracleParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
-        public T ExecuteScalar<T>(OracleTransaction sqlTransaction, string commandText,
+        public T ExecuteScalar<T>(OracleTransaction transaction, string commandText,
             CommandType commandType, params OracleParameter[] oracleParameters)
         {
             OracleCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, oracleParameters);
+                dbCommand = CreateCommand(transaction, commandText, commandType, oracleParameters);
                 dbCommand.Connection.OpenSafely();
                 var result = dbCommand.ExecuteScalar();
 
@@ -425,14 +425,14 @@ namespace SimpleAccess.Oracle
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         ///  <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The {T} value </returns>
-        public T ExecuteScalar<T>(OracleTransaction sqlTransaction, string commandText, object paramObject = null)
+        public T ExecuteScalar<T>(OracleTransaction transaction, string commandText, object paramObject = null)
         {
-            return ExecuteScalar<T>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
+            return ExecuteScalar<T>(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
                 , BuildOracleParameters(paramObject));
         }
 
@@ -441,16 +441,16 @@ namespace SimpleAccess.Oracle
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         ///  <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The {T} value </returns>
-        public T ExecuteScalar<T>(OracleTransaction sqlTransaction, string commandText,
+        public T ExecuteScalar<T>(OracleTransaction transaction, string commandText,
             CommandType commandType, object paramObject = null)
         {
-            return ExecuteScalar<T>(sqlTransaction, commandText, commandType
+            return ExecuteScalar<T>(transaction, commandText, commandType
                 , BuildOracleParameters(paramObject));
         }
 
@@ -652,7 +652,7 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -797,7 +797,7 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -849,18 +849,18 @@ namespace SimpleAccess.Oracle
         /// <exception cref="DbException"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="oracleParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
-        public IEnumerable<TEntity> ExecuteEntities<TEntity>(OracleTransaction sqlTransaction, string commandText, string fieldsToSkip = null,
+        public IEnumerable<TEntity> ExecuteEntities<TEntity>(OracleTransaction transaction, string commandText, string fieldsToSkip = null,
             Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params OracleParameter[] oracleParameters)
             where TEntity : new()
         {
-            return ExecuteEntities<TEntity>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
+            return ExecuteEntities<TEntity>(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
                 , fieldsToSkip, propertyInfoDictionary, oracleParameters);
         }
 
@@ -869,7 +869,7 @@ namespace SimpleAccess.Oracle
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
@@ -877,14 +877,14 @@ namespace SimpleAccess.Oracle
         /// <param name="oracleParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
-        public IEnumerable<TEntity> ExecuteEntities<TEntity>(OracleTransaction sqlTransaction, string commandText,
+        public IEnumerable<TEntity> ExecuteEntities<TEntity>(OracleTransaction transaction, string commandText,
             CommandType commandType, string fieldsToSkip = null,
             Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params OracleParameter[] oracleParameters) where TEntity : new()
         {
             OracleCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, oracleParameters);
+                dbCommand = CreateCommand(transaction, commandText, commandType, oracleParameters);
                 dbCommand.Connection.OpenSafely();
                 using (var reader = dbCommand.ExecuteReader())
                 {
@@ -909,17 +909,17 @@ namespace SimpleAccess.Oracle
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{TEntity}" /> value </returns>
-        public IEnumerable<TEntity> ExecuteEntities<TEntity>(OracleTransaction sqlTransaction, string commandText, object paramObject = null
+        public IEnumerable<TEntity> ExecuteEntities<TEntity>(OracleTransaction transaction, string commandText, object paramObject = null
             , string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : new()
         {
-            return ExecuteEntities<TEntity>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
+            return ExecuteEntities<TEntity>(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
                 , fieldsToSkip, propertyInfoDictionary, BuildOracleParameters(paramObject));
         }
 
@@ -928,7 +928,7 @@ namespace SimpleAccess.Oracle
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
@@ -936,11 +936,11 @@ namespace SimpleAccess.Oracle
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{TEntity}" /> value </returns>
-        public IEnumerable<TEntity> ExecuteEntities<TEntity>(OracleTransaction sqlTransaction, string commandText,
+        public IEnumerable<TEntity> ExecuteEntities<TEntity>(OracleTransaction transaction, string commandText,
             CommandType commandType, object paramObject = null, string fieldsToSkip = null,
             Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : new()
         {
-            return ExecuteEntities<TEntity>(sqlTransaction, commandText, commandType
+            return ExecuteEntities<TEntity>(transaction, commandText, commandType
                 , fieldsToSkip, propertyInfoDictionary, BuildOracleParameters(paramObject));
         }
 
@@ -996,7 +996,7 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1048,17 +1048,17 @@ namespace SimpleAccess.Oracle
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// <param name="oracleParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        public TEntity ExecuteEntity<TEntity>(OracleTransaction sqlTransaction, string commandText, string fieldsToSkip = null,
+        public TEntity ExecuteEntity<TEntity>(OracleTransaction transaction, string commandText, string fieldsToSkip = null,
             Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params OracleParameter[] oracleParameters) where TEntity : class, new()
         {
-            return ExecuteEntity<TEntity>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
+            return ExecuteEntity<TEntity>(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
                 fieldsToSkip, propertyInfoDictionary, oracleParameters);
         }
 
@@ -1067,7 +1067,7 @@ namespace SimpleAccess.Oracle
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
@@ -1075,14 +1075,14 @@ namespace SimpleAccess.Oracle
         /// <param name="oracleParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        public TEntity ExecuteEntity<TEntity>(OracleTransaction sqlTransaction, string commandText, CommandType commandType,
+        public TEntity ExecuteEntity<TEntity>(OracleTransaction transaction, string commandText, CommandType commandType,
             string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null
             , params OracleParameter[] oracleParameters) where TEntity : class, new()
         {
             OracleCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, oracleParameters);
+                dbCommand = CreateCommand(transaction, commandText, commandType, oracleParameters);
                 dbCommand.Connection.OpenSafely();
                 using (var reader = dbCommand.ExecuteReader())
                 {
@@ -1107,17 +1107,17 @@ namespace SimpleAccess.Oracle
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        public TEntity ExecuteEntity<TEntity>(OracleTransaction sqlTransaction, string commandText, object paramObject = null, 
+        public TEntity ExecuteEntity<TEntity>(OracleTransaction transaction, string commandText, object paramObject = null, 
             string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : class, new()
         {
-            return ExecuteEntity<TEntity>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
+            return ExecuteEntity<TEntity>(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
                 fieldsToSkip, propertyInfoDictionary, BuildOracleParameters(paramObject));
         }
 
@@ -1126,7 +1126,7 @@ namespace SimpleAccess.Oracle
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
@@ -1134,11 +1134,11 @@ namespace SimpleAccess.Oracle
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        public TEntity ExecuteEntity<TEntity>(OracleTransaction sqlTransaction, string commandText, CommandType commandType, 
+        public TEntity ExecuteEntity<TEntity>(OracleTransaction transaction, string commandText, CommandType commandType, 
             object paramObject = null, string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) 
             where TEntity : class, new()
         {
-            return ExecuteEntity<TEntity>(sqlTransaction, commandText, commandType,
+            return ExecuteEntity<TEntity>(transaction, commandText, commandType,
                 fieldsToSkip, propertyInfoDictionary, BuildOracleParameters(paramObject));
         }
 
@@ -1184,7 +1184,7 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1228,16 +1228,16 @@ namespace SimpleAccess.Oracle
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="oracleParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> A list of object. </returns>
-        public IEnumerable<dynamic> ExecuteDynamics(OracleTransaction sqlTransaction, string commandText, string fieldsToSkip = null,
+        public IEnumerable<dynamic> ExecuteDynamics(OracleTransaction transaction, string commandText, string fieldsToSkip = null,
             params OracleParameter[] oracleParameters)
         {
-            return ExecuteDynamics(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
+            return ExecuteDynamics(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
                 oracleParameters);
         }
 
@@ -1245,20 +1245,20 @@ namespace SimpleAccess.Oracle
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="oracleParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> A list of object. </returns>
-        public IEnumerable<dynamic> ExecuteDynamics(OracleTransaction sqlTransaction, string commandText, CommandType commandType,
+        public IEnumerable<dynamic> ExecuteDynamics(OracleTransaction transaction, string commandText, CommandType commandType,
             string fieldsToSkip = null, params OracleParameter[] oracleParameters)
         {
             OracleCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, oracleParameters);
+                dbCommand = CreateCommand(transaction, commandText, commandType, oracleParameters);
                 dbCommand.Connection.OpenSafely();
                 return GetDynamicSqlData(dbCommand.ExecuteReader());
             }
@@ -1278,16 +1278,16 @@ namespace SimpleAccess.Oracle
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// 
         /// <returns> A list of object. </returns>
-        public IEnumerable<dynamic> ExecuteDynamics(OracleTransaction sqlTransaction, string commandText, object paramObject = null, 
+        public IEnumerable<dynamic> ExecuteDynamics(OracleTransaction transaction, string commandText, object paramObject = null, 
             string fieldsToSkip = null)
         {
-            return ExecuteDynamics(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
+            return ExecuteDynamics(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
                 BuildOracleParameters(paramObject));
         }
 
@@ -1295,17 +1295,17 @@ namespace SimpleAccess.Oracle
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// 
         /// <returns> A list of object. </returns>
-        public IEnumerable<dynamic> ExecuteDynamics(OracleTransaction sqlTransaction, string commandText, CommandType commandType,
+        public IEnumerable<dynamic> ExecuteDynamics(OracleTransaction transaction, string commandText, CommandType commandType,
             object paramObject = null, string fieldsToSkip = null)
         {
-            return ExecuteDynamics(sqlTransaction, commandText, commandType, fieldsToSkip,
+            return ExecuteDynamics(transaction, commandText, commandType, fieldsToSkip,
                 BuildOracleParameters(paramObject));
         }
 
@@ -1359,7 +1359,7 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1402,16 +1402,16 @@ namespace SimpleAccess.Oracle
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="oracleParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        public dynamic ExecuteDynamic(OracleTransaction sqlTransaction, string commandText, string fieldsToSkip = null,
+        public dynamic ExecuteDynamic(OracleTransaction transaction, string commandText, string fieldsToSkip = null,
             params OracleParameter[] oracleParameters)
         {
-            return ExecuteDynamic(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
+            return ExecuteDynamic(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
                 fieldsToSkip, oracleParameters);
         }
 
@@ -1419,20 +1419,20 @@ namespace SimpleAccess.Oracle
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="oracleParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        public dynamic ExecuteDynamic(OracleTransaction sqlTransaction, string commandText, CommandType commandType,
+        public dynamic ExecuteDynamic(OracleTransaction transaction, string commandText, CommandType commandType,
             string fieldsToSkip = null, params OracleParameter[] oracleParameters)
         {
             OracleCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(sqlTransaction, commandText, commandType, oracleParameters);
+                dbCommand = CreateCommand(transaction, commandText, commandType, oracleParameters);
                 dbCommand.Connection.OpenSafely();
                 var reader = dbCommand.ExecuteReader();
                 if (reader.Read())
@@ -1456,15 +1456,15 @@ namespace SimpleAccess.Oracle
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// -<param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        public dynamic ExecuteDynamic(OracleTransaction sqlTransaction, string commandText, object paramObject = null, string fieldsToSkip = null)
+        public dynamic ExecuteDynamic(OracleTransaction transaction, string commandText, object paramObject = null, string fieldsToSkip = null)
         {
-            return ExecuteDynamic(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
+            return ExecuteDynamic(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
                 fieldsToSkip, BuildOracleParameters(paramObject));
         }
 
@@ -1472,17 +1472,17 @@ namespace SimpleAccess.Oracle
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        public dynamic ExecuteDynamic(OracleTransaction sqlTransaction, string commandText, CommandType commandType,
+        public dynamic ExecuteDynamic(OracleTransaction transaction, string commandText, CommandType commandType,
                 object paramObject = null, string fieldsToSkip = null)
         {
-            return ExecuteDynamic(sqlTransaction, commandText, commandType,
+            return ExecuteDynamic(transaction, commandText, commandType,
                 fieldsToSkip, BuildOracleParameters(paramObject));
         }
         /// <summary>
@@ -1511,7 +1511,7 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1545,7 +1545,7 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1572,26 +1572,26 @@ namespace SimpleAccess.Oracle
         {
             if (_sqlConnection.State != ConnectionState.Open)
                 _sqlConnection.Open();
-            //_sqlTransaction = _sqlConnection.BeginTransaction();
+            //_transaction = _sqlConnection.BeginTransaction();
 
-            //return _sqlTransaction;
+            //return _transaction;
             return _sqlConnection.BeginTransaction();
         }
 
         /// <summary> Ends a transaction. </summary>
         /// 
-        /// <param name = "sqlTransaction" > The SQL transaction. </param>
+        /// <param name = "transaction" > The SQL transaction. </param>
         /// <param name = "transactionSucceed" > (optional)the transaction succeed. </param>
         /// <param name = "closeConnection" > (optional)the close connection. </param>
-        public void EndTransaction(OracleTransaction sqlTransaction, bool transactionSucceed = true, bool closeConnection = true)
+        public void EndTransaction(OracleTransaction transaction, bool transactionSucceed = true, bool closeConnection = true)
         {
             if (transactionSucceed)
             {
-                sqlTransaction.Commit();
+                transaction.Commit();
             }
             else
             {
-                sqlTransaction.Rollback();
+                transaction.Rollback();
             }
 
             if (closeConnection)
@@ -1617,32 +1617,32 @@ namespace SimpleAccess.Oracle
             if (oracleParameters != null)
                 dbCommand.Parameters.AddRange(oracleParameters);
 
-            if (_sqlTransaction != null)
-                dbCommand.Transaction = _sqlTransaction;
+            if (_transaction != null)
+                dbCommand.Transaction = _transaction;
 
             return dbCommand;
         }
 
         /// <summary> Creates a command. </summary>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The query string. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="oracleParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> The new command. </returns>
-        public OracleCommand CreateCommand(OracleTransaction sqlTransaction, string commandText, CommandType commandType
+        public OracleCommand CreateCommand(OracleTransaction transaction, string commandText, CommandType commandType
             , params OracleParameter[] oracleParameters)
         {
             var dbCommand = _sqlConnection.CreateCommand();
             dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
-            dbCommand.Transaction = sqlTransaction;
+            dbCommand.Transaction = transaction;
             dbCommand.CommandType = commandType;
             dbCommand.CommandText = commandText;
             if (oracleParameters != null)
                 dbCommand.Parameters.AddRange(oracleParameters);
-            if (_sqlTransaction != null)
-                dbCommand.Transaction = _sqlTransaction;
+            if (_transaction != null)
+                dbCommand.Transaction = _transaction;
 
             return dbCommand;
         }
@@ -1716,8 +1716,8 @@ namespace SimpleAccess.Oracle
         /// unmanaged resources. </summary>
         public void Dispose()
         {
-            if (_sqlTransaction != null)
-                _sqlTransaction.Dispose();
+            if (_transaction != null)
+                _transaction.Dispose();
 
             if (_sqlConnection.State != ConnectionState.Closed)
                 _sqlConnection.Close();

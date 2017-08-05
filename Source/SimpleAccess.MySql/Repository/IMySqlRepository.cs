@@ -164,11 +164,11 @@ namespace SimpleAccess.MySql
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="transaction">			 The SQL transaction. </param>
         /// <param name="entity"> Entity to insert </param>
         /// 
         /// <returns> . </returns>
-        int Insert<TEntity>(MySqlTransaction sqlTransaction, TEntity entity)
+        int Insert<TEntity>(MySqlTransaction transaction, TEntity entity)
             where TEntity : class;
 
         /// <summary> Inserts the given SQL parameters. </summary>
@@ -183,11 +183,11 @@ namespace SimpleAccess.MySql
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="transaction">			 The SQL transaction. </param>
         /// <param name="entities"> The <![CDATA[IEnumerable<TEntity>]]> to insert </param>
         ///
         /// <returns> The number of affected records</returns>
-        int InsertAll<TEntity>(MySqlTransaction sqlTransaction, IEnumerable<TEntity> entities)
+        int InsertAll<TEntity>(MySqlTransaction transaction, IEnumerable<TEntity> entities)
             where TEntity : class;
 
         /// <summary> Updates the given sqlParameters. </summary>
@@ -219,11 +219,11 @@ namespace SimpleAccess.MySql
         /// <summary> Updates the given sqlParameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="transaction">			 The SQL transaction. </param>
         /// <param name="entity"> Entity to insert </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int Update<TEntity>(MySqlTransaction sqlTransaction, TEntity entity)
+        int Update<TEntity>(MySqlTransaction transaction, TEntity entity)
             where TEntity : class;
 
         /// <summary> Updates all the given entities. </summary>
@@ -238,11 +238,11 @@ namespace SimpleAccess.MySql
         /// <summary> Updates all the given entities. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="entities"> The <![CDATA[IEnumerable<TEntity>]]> to update </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int UpdateAll<TEntity>(MySqlTransaction sqlTransaction, IEnumerable<TEntity> entities)
+        int UpdateAll<TEntity>(MySqlTransaction transaction, IEnumerable<TEntity> entities)
             where TEntity : class;
 
         /// <summary> Deletes the <typeparamref name="TEntity"/>  by given ID. </summary>
@@ -276,21 +276,21 @@ namespace SimpleAccess.MySql
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="id"> The identifier. </param>
-        ///  <param name="sqlTransaction">			 The SQL transaction. </param>
+        ///  <param name="transaction">			 The SQL transaction. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int Delete<TEntity>(MySqlTransaction sqlTransaction, long id)
+        int Delete<TEntity>(MySqlTransaction transaction, long id)
             where TEntity : class;
 
 
         /// <summary> Deletes the <typeparamref name="TEntity"/>  by given <see cref="MySqlParameter"/> array. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="sqlParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int Delete<TEntity>(MySqlTransaction sqlTransaction, params MySqlParameter[] sqlParameters)
+        int Delete<TEntity>(MySqlTransaction transaction, params MySqlParameter[] sqlParameters)
             where TEntity : class;
 
 
@@ -305,10 +305,10 @@ namespace SimpleAccess.MySql
         /// <summary> Delete All the <typeparamref name="TEntity"/> records with a transaction. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int DeleteAll<TEntity>(MySqlTransaction sqlTransaction)
+        int DeleteAll<TEntity>(MySqlTransaction transaction)
             where TEntity : class;
 
         /// <summary> Deletes all the <typeparamref name="TEntity"/> records by  objects as MySqlParameter names and values. </summary>
@@ -333,10 +333,10 @@ namespace SimpleAccess.MySql
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="ids"> The identifiers of records. </param>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int DeleteAll<TEntity>(MySqlTransaction sqlTransaction, IEnumerable<long> ids)
+        int DeleteAll<TEntity>(MySqlTransaction transaction, IEnumerable<long> ids)
             where TEntity : class;
 
         /// <summary> Soft delete the <typeparamref name="TEntity"/> record. </summary>
@@ -348,5 +348,14 @@ namespace SimpleAccess.MySql
         int SoftDelete<TEntity>(long id)
 			where TEntity : class;
 
+        /// <summary> Soft delete the <typeparamref name="TEntity"/> record. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="transaction"> The SQL transaction. </param>
+        /// <param name="id"> The identifier. </param>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        int SoftDelete<TEntity>(MySqlTransaction transaction, long id)
+            where TEntity : class;
     }
 }

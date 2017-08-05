@@ -78,7 +78,9 @@ namespace SimpleAccess.SqlServer
 
         public SqlSimpleAccess(SqlConnection sqlConnection, SimpleAccessSettings defaultSimpleAccessSettings)
         {
-            DefaultSimpleAccessSettings = defaultSimpleAccessSettings;
+            DefaultSimpleAccessSettings = new SimpleAccessSettings (defaultSimpleAccessSettings.DefaultCommandType, defaultSimpleAccessSettings.DefaultLogger);
+            DefaultSimpleAccessSettings.DbCommandTimeout = defaultSimpleAccessSettings.DbCommandTimeout;
+
             _sqlConnection = sqlConnection;
         }
 
@@ -1721,7 +1723,6 @@ namespace SimpleAccess.SqlServer
             return sqlParameters.ToArray();
         }
 
-
         /// <summary> Performs application-defined tasks associated with freeing, releasing, or resetting
         /// unmanaged resources. </summary>
         public void Dispose()
@@ -1734,5 +1735,6 @@ namespace SimpleAccess.SqlServer
 
             DefaultSimpleAccessSettings = null;
         }
+
     }
 }

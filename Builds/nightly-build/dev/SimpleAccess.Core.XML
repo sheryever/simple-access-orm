@@ -171,6 +171,18 @@
             
             </summary>
         </member>
+        <member name="M:SimpleAccess.Core.ISqlBuilder`1.ClearDbParameters">
+            <summary>
+            Clear all DbParamters of both insert and update EntityParameters
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.Core.ISqlBuilder`1.LoadOutParametersProperties(SimpleAccess.Core.EntityParameters{`0},System.Object)">
+            <summary>
+            Load all the properties from DbParameters which were marked as ParameterDirection.Out
+            </summary>
+            <param name="entityParameters">The EntityParameters object based on TDataParameters in ISimpleAccess</param>
+            <param name="instance"> The instance of object </param>
+        </member>
         <member name="T:SimpleAccess.Core.ParametersType">
             <summary>
             Defines the DbParameters type to be generated
@@ -381,12 +393,12 @@
         </member>
         <member name="M:SimpleAccess.Core.Entity.EntityInfo`2.GetInsertParameters(System.Object)">
             <summary>
-            Get the Insert statement or StoredProcedure Parameters based on TDataParameters in ISimple
+            Get the Insert statement or StoredProcedure Parameters based on TDataParameters in ISimpleAccess
             </summary>
         </member>
         <member name="M:SimpleAccess.Core.Entity.EntityInfo`2.GetUpdateParameters(System.Object)">
             <summary>
-            Get the Update statement or StoredProcedure Parameters based on TDataParameters in ISimple
+            Get the Update statement or StoredProcedure Parameters based on TDataParameters in ISimpleAccess
             </summary>
         </member>
         <member name="M:SimpleAccess.Core.Entity.EntityInfo`2.GetSelectAllStatement">
@@ -441,10 +453,11 @@
             Clear all DbParamters
             </summary>
         </member>
-        <member name="M:SimpleAccess.Core.Entity.EntityInfo`2.LoadOutParametersProperties(System.Object)">
+        <member name="M:SimpleAccess.Core.Entity.EntityInfo`2.LoadOutParametersProperties(SimpleAccess.Core.EntityParameters{`1},System.Object)">
             <summary>
             Load all the properties from DbParameters which were marked as ParameterDirection.Out
             </summary>
+            <param name="entityParameters">The EntityParameters object based on TDataParameters in ISimpleAccess</param>
             <param name="instance"> The instance of object </param>
         </member>
         <member name="T:SimpleAccess.Core.Entity.NamespaceDoc">

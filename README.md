@@ -168,7 +168,7 @@ All methods are based on stored procedures with its related sotred procedure nam
 | UpdateAll&lt;TEntity&gt; | TEntity_Update </br> ie. People_Update  | Updates all the given entities |
 | Delete&lt;TEntity&gt; | TEntity_Delete </br> ie. People_Delete | Deletes TEntity by the given Id |
 | DeleteAll&lt;TEntity&gt; | TEntity_Delete </br> ie. People_Delete | Deletes all the TEntity records by the given Ids |
-| SoftDelete&lt;TEntity&gt; | TEntity_MarkDelete </br> ie. People_MarkDelete | Marks  TEntity deleted by the given Id   |
+| SoftDelete&lt;TEntity&gt; | TEntity_SoftDelete </br> ie. People_SoftDelete | Marks TEntity deleted by the given Id   |
 
 ### Using SqlRepository with StoredProcedure
 
@@ -287,9 +287,9 @@ BEGIN
 
 END
 ```
-##### People_MarkDelete
+##### People_SoftDelete
 ```Sql
-CREATE PROC [dbo].[People_MarkDelete]
+CREATE PROC [dbo].[People_SoftDelete]
 	@Id INT
 AS
 BEGIN

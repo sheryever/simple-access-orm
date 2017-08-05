@@ -336,9 +336,14 @@ namespace SimpleAccess.MySql
 
         }
 
-        public void LoadOutParametersProperties(object instance)
+        /// <summary>
+        /// Load all the properties from DbParameters which were marked as ParameterDirection.Out
+        /// </summary>
+        /// <param name="entityParameters">The EntityParameters object based on TDataParameters in ISimpleAccess</param>
+        /// <param name="instance"> The instance of object </param>
+        public void LoadOutParametersProperties(EntityParameters<MySqlParameter> entityParameters, object instance)
         {
-            throw new NotImplementedException();
+            entityParameters.LoadOutParametersProperties(instance);
         }
 
         private string SafeSqlLiteral(string inputSql)

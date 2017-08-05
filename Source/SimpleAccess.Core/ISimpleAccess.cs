@@ -943,5 +943,6 @@ namespace SimpleAccess.Core
         /// <param name="closeConnection">    (optional) the close connection. </param>
 
         void EndTransaction(TDbTransaction transaction, bool transactionSucceed = true, bool closeConnection = true);
+
     }
 }

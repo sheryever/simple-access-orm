@@ -7,7 +7,7 @@ using SimpleAccess.SqlServer;
 namespace SimpleAccess.SqlServer
 {
     /// <summary>
-    /// Represent the interface of SimpleAccess Repository methods and it's implemented by SqlRepository
+    /// Represent the interface of SimpleAccess Repository methods
     /// </summary>
     public interface ISqlRepository
     {
@@ -91,8 +91,6 @@ namespace SimpleAccess.SqlServer
         /// <returns> . </returns>
         TEntity Get<TEntity>(SqlTransaction transaction, long id, string fieldToSkip = null)
             where TEntity : class,new();
-
-
 
         /// <summary> Searches for <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the first record of the result. </summary>
         /// 
@@ -347,5 +345,14 @@ namespace SimpleAccess.SqlServer
         int SoftDelete<TEntity>(long id)
 			where TEntity : class;
 
+        /// <summary> Soft delete the <typeparamref name="TEntity"/> record. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="id"> The identifier. </param>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        int SoftDelete<TEntity>(SqlTransaction sqlTransaction, long id)
+            where TEntity : class;
     }
 }

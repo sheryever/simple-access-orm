@@ -16,7 +16,7 @@ namespace SimpleAccess.SqlServer
         static RepositorySetting()
         {
             EntityInfos = new Dictionary<int, EntityInfo>();
-            Entity2Infos = new Dictionary<int, Core.Entity.EntityInfo<SqlServerSqlBuilder, SqlParameter>>();
+        Entity2Infos = new Dictionary<int, Core.Entity.EntityInfo<SqlServerSqlBuilder, SqlParameter>>();
 
         }
 

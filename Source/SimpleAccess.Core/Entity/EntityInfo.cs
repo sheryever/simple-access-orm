@@ -25,7 +25,7 @@ namespace SimpleAccess.Core.Entity
         public readonly ISqlBuilder<TDbParameter> SqlBuilder;
 
         /// <summary>
-        /// Get the Insert statement or StoredProcedure Parameters based on TDataParameters in ISimple
+        /// Get the Insert statement or StoredProcedure Parameters based on TDataParameters in ISimpleAccess
         /// </summary>
         public EntityParameters<TDbParameter> GetInsertParameters(object entity)
         {
@@ -33,7 +33,7 @@ namespace SimpleAccess.Core.Entity
         }
 
         /// <summary>
-        /// Get the Update statement or StoredProcedure Parameters based on TDataParameters in ISimple
+        /// Get the Update statement or StoredProcedure Parameters based on TDataParameters in ISimpleAccess
         /// </summary>
         public EntityParameters<TDbParameter> GetUpdateParameters(object entity)
         {
@@ -141,11 +141,12 @@ namespace SimpleAccess.Core.Entity
         /// <summary>
         /// Load all the properties from DbParameters which were marked as ParameterDirection.Out
         /// </summary>
+        /// <param name="entityParameters">The EntityParameters object based on TDataParameters in ISimpleAccess</param>
         /// <param name="instance"> The instance of object </param>
-        public void LoadOutParametersProperties(object instance)
+        public void LoadOutParametersProperties(EntityParameters<TDbParameter> entityParameters, object instance)
         {
-
-            SqlBuilder.LoadOutParametersProperties(instance);
+            entityParameters.LoadOutParametersProperties(instance);
+            //SqlBuilder.LoadOutParametersProperties(instance);
         }
     }
 

@@ -138,23 +138,23 @@ namespace SimpleAccess.Oracle
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="storedProcedureParameters">Options for controlling the stored procedure. </param>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="transaction">			 The SQL transaction. </param>
         /// 
         /// <returns> . </returns>
         
-        int Insert<TEntity>(OracleTransaction sqlTransaction, StoredProcedureParameters storedProcedureParameters)
+        int Insert<TEntity>(OracleTransaction transaction, StoredProcedureParameters storedProcedureParameters)
             where TEntity : class;
 
         
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="transaction">			 The SQL transaction. </param>
         /// <param name="storedProcedureParameters">Options for controlling the stored procedure. </param>
         /// 
         /// <returns> . </returns>
         
-        int Insert<TEntity>(StoredProcedureParameters storedProcedureParameters, OracleTransaction sqlTransaction = null)
+        int Insert<TEntity>(StoredProcedureParameters storedProcedureParameters, OracleTransaction transaction = null)
             where TEntity : class;
 
         
@@ -193,12 +193,12 @@ namespace SimpleAccess.Oracle
         /// <summary> Updates the given oracleParameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="transaction">			 The SQL transaction. </param>
         /// <param name="storedProcedureParameters">Options for controlling the stored procedure. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         
-        int Update<TEntity>(OracleTransaction sqlTransaction, StoredProcedureParameters storedProcedureParameters)
+        int Update<TEntity>(OracleTransaction transaction, StoredProcedureParameters storedProcedureParameters)
             where TEntity : class;
 
         
@@ -228,23 +228,23 @@ namespace SimpleAccess.Oracle
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="id"> The identifier. </param>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="transaction">			 The SQL transaction. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         
-        int Delete<TEntity>(long id, OracleTransaction sqlTransaction = null)
+        int Delete<TEntity>(long id, OracleTransaction transaction = null)
             where TEntity : class;
 
         
         /// <summary> Deletes the given ID. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="oracleParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         
-        int Delete<TEntity>(OracleTransaction sqlTransaction, params OracleParameter[] oracleParameters)
+        int Delete<TEntity>(OracleTransaction transaction, params OracleParameter[] oracleParameters)
             where TEntity : class;
 
         
@@ -287,14 +287,14 @@ namespace SimpleAccess.Oracle
         /// <summary> Executes the non query operation. </summary>
         /// 
         /// <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="sql">			 The SQL. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="oracleParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         
-        int ExecuteNonQuery(OracleTransaction sqlTransaction, string sql
+        int ExecuteNonQuery(OracleTransaction transaction, string sql
             , CommandType commandType = CommandType.StoredProcedure
             , params OracleParameter[] oracleParameters);
 
@@ -302,13 +302,13 @@ namespace SimpleAccess.Oracle
         /// <summary> Executes the non query operation. </summary>
         /// 
         /// <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="sql">			 The SQL. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The dynamic object as parameters. </param>        
         /// <returns> Number of rows affected (integer) </returns>
         
-        int ExecuteNonQuery(OracleTransaction sqlTransaction, string sql
+        int ExecuteNonQuery(OracleTransaction transaction, string sql
             , CommandType commandType = CommandType.StoredProcedure, dynamic paramObject = null);
 
         /// <summary> Executes the scalar operation. </summary>
@@ -342,14 +342,14 @@ namespace SimpleAccess.Oracle
         /// <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="oracleParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> The T value </returns>
         
-        T ExecuteScalar<T>(OracleTransaction sqlTransaction, string sql
+        T ExecuteScalar<T>(OracleTransaction transaction, string sql
             , CommandType commandType = CommandType.StoredProcedure
             , params OracleParameter[] oracleParameters);
 
@@ -359,14 +359,14 @@ namespace SimpleAccess.Oracle
         /// <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The dynamic object as parameters. </param>
         /// 
         /// <returns> The T value </returns>
         
-        T ExecuteScalar<T>(OracleTransaction sqlTransaction, string sql, CommandType commandType = CommandType.StoredProcedure, dynamic paramObject = null);
+        T ExecuteScalar<T>(OracleTransaction transaction, string sql, CommandType commandType = CommandType.StoredProcedure, dynamic paramObject = null);
 
         
         /// <summary> Executes the reader operation. </summary>
@@ -413,7 +413,7 @@ namespace SimpleAccess.Oracle
         /// <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
@@ -422,7 +422,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <returns> </returns>
 
-        List<TEntity> ExecuteReader<TEntity>(OracleTransaction sqlTransaction, string sql, CommandType commandType = CommandType.StoredProcedure,
+        List<TEntity> ExecuteReader<TEntity>(OracleTransaction transaction, string sql, CommandType commandType = CommandType.StoredProcedure,
                                              string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null,
                                              params OracleParameter[] oracleParameters)
             where TEntity : new();
@@ -434,7 +434,7 @@ namespace SimpleAccess.Oracle
         /// <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
@@ -443,7 +443,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <returns> </returns>
         
-        List<TEntity> ExecuteReader<TEntity>(OracleTransaction sqlTransaction, string sql, CommandType commandType = CommandType.StoredProcedure,
+        List<TEntity> ExecuteReader<TEntity>(OracleTransaction transaction, string sql, CommandType commandType = CommandType.StoredProcedure,
                                      string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null,
                                      dynamic paramObject = null)
             where TEntity : new();
@@ -493,7 +493,7 @@ namespace SimpleAccess.Oracle
         /// <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
@@ -502,7 +502,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <returns> The value of the entity. </returns>
         
-        TEntity ExecuteReaderSingle<TEntity>(OracleTransaction sqlTransaction, string sql, CommandType commandType,
+        TEntity ExecuteReaderSingle<TEntity>(OracleTransaction transaction, string sql, CommandType commandType,
                                              string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null,
                                              params OracleParameter[] oracleParameters)
             where TEntity : class, new();
@@ -513,7 +513,7 @@ namespace SimpleAccess.Oracle
         /// <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
@@ -522,7 +522,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <returns> The value of the entity. </returns>
         
-        TEntity ExecuteReaderSingle<TEntity>(OracleTransaction sqlTransaction, string sql, CommandType commandType,
+        TEntity ExecuteReaderSingle<TEntity>(OracleTransaction transaction, string sql, CommandType commandType,
                                      string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null,
                                      dynamic paramObject = null)
             where TEntity : class, new();
@@ -566,7 +566,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
@@ -575,7 +575,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <returns> A list of dynamic. </returns>
         
-        IList<dynamic> ExecuteReader(OracleTransaction sqlTransaction, string sql, CommandType commandType = CommandType.StoredProcedure,
+        IList<dynamic> ExecuteReader(OracleTransaction transaction, string sql, CommandType commandType = CommandType.StoredProcedure,
                                      string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null,
                                      params OracleParameter[] oracleParameters);
         
@@ -583,7 +583,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
@@ -592,7 +592,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <returns> A list of dynamic. </returns>
         
-        IList<dynamic> ExecuteReader(OracleTransaction sqlTransaction, string sql, CommandType commandType = CommandType.StoredProcedure,
+        IList<dynamic> ExecuteReader(OracleTransaction transaction, string sql, CommandType commandType = CommandType.StoredProcedure,
                              string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null,
                              dynamic paramObject = null);
 
@@ -636,7 +636,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
@@ -645,7 +645,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <returns> Result in a dynamic object. </returns>
         
-        dynamic ExecuteReaderSingle(OracleTransaction sqlTransaction, string sql, CommandType commandType = CommandType.StoredProcedure,
+        dynamic ExecuteReaderSingle(OracleTransaction transaction, string sql, CommandType commandType = CommandType.StoredProcedure,
                                     string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null,
                                     params OracleParameter[] oracleParameters);
         
@@ -653,7 +653,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <exception cref="System.Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="sql">			  The SQL. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
@@ -662,7 +662,7 @@ namespace SimpleAccess.Oracle
         /// 
         /// <returns> Result in a dynamic object. </returns>
         
-        dynamic ExecuteReaderSingle(OracleTransaction sqlTransaction, string sql, CommandType commandType = CommandType.StoredProcedure,
+        dynamic ExecuteReaderSingle(OracleTransaction transaction, string sql, CommandType commandType = CommandType.StoredProcedure,
                                     string fieldsToSkip = null, Dictionary<string, PropertyInfo> piList = null,
                                     dynamic paramObject = null);
 
@@ -681,10 +681,10 @@ namespace SimpleAccess.Oracle
         
         /// <summary> Ends a transaction. </summary>
         /// 
-        /// <param name="sqlTransaction">	  The SQL transaction. </param>
+        /// <param name="transaction">	  The SQL transaction. </param>
         /// <param name="transactionSucceed"> (optional) the transaction succeed. </param>
         /// <param name="closeConnection">    (optional) the close connection. </param>
         
-        void EndTransaction(OracleTransaction sqlTransaction, bool transactionSucceed = true, bool closeConnection = true);
+        void EndTransaction(OracleTransaction transaction, bool transactionSucceed = true, bool closeConnection = true);
     }
 }

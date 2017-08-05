@@ -136,6 +136,24 @@
             The <see cref="N:SimpleAccess.SqlServer"/> namespace contains the SimpleAcces implementation for SqlServer.
             </summary>
         </member>
+        <member name="T:SimpleAccess.SqlServer.SimpleAccessSqlSettings">
+            <summary>
+            Used for setting up the default setting of SimpleAccess.
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.SqlServer.SimpleAccessSqlSettings.#ctor">
+            <summary>
+            Initialize the new object of SimpleAccessSettings with default properties.
+            </summary>
+        </member>
+        <member name="M:SimpleAccess.SqlServer.SimpleAccessSqlSettings.GetEntityInfo(System.Type)">
+            <summary>
+            Get the <see cref="!:EntityInfo"/> object from the cache.
+            </summary>
+            If the <paramref name="type"/> has no <see cref="!:EntityInfo"/> then it will add the and return the <see cref="!:EntityInfo"/>.
+            <param name="type"></param>
+            <returns></returns>
+        </member>
         <member name="M:SimpleAccess.SqlServer.SqlServerSqlBuilder.CreateEntityParameters(System.Object,System.Boolean)">
             <summary>
             Create parameters from object properties
@@ -184,6 +202,13 @@
             <summary>
             Clear all DbParamters
             </summary>
+        </member>
+        <member name="M:SimpleAccess.SqlServer.SqlServerSqlBuilder.LoadOutParametersProperties(SimpleAccess.Core.EntityParameters{System.Data.SqlClient.SqlParameter},System.Object)">
+            <summary>
+            Load all the properties from DbParameters which were marked as ParameterDirection.Out
+            </summary>
+            <param name="entityParameters">The EntityParameters object based on TDataParameters in ISimpleAccess</param>
+            <param name="instance"> The instance of object </param>
         </member>
         <member name="T:SimpleAccess.SqlServer.IRepository">
             <summary> IRepository. </summary>
@@ -1333,7 +1358,7 @@
         </member>
         <member name="T:SimpleAccess.SqlServer.ISqlRepository">
             <summary>
-            Represent the interface of SimpleAccess Repository methods and it's implemented by SqlRepository
+            Represent the interface of SimpleAccess Repository methods
             </summary>
         </member>
         <member name="P:SimpleAccess.SqlServer.ISqlRepository.SimpleAccess">
@@ -1407,27 +1432,8 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.SqlServer.ISqlRepository.FindSingle``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
-            <summary> Find a single <typeparamref name="TEntity"/>. </summary>
-            
-            <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="expression">The expression.</param>
-            <param name="fieldToSkip"> (optional) the field to skip. </param>
-            
-            <returns> . </returns>
-        </member>
-        <member name="M:SimpleAccess.SqlServer.ISqlRepository.FindSingle``1(System.Data.SqlClient.SqlTransaction,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
-            <summary> Find a single <typeparamref name="TEntity"/>. </summary>
-            
-            <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="transaction"> The transaction. </param>
-            <param name="expression">The expression.</param>
-            <param name="fieldToSkip"> (optional) the field to skip. </param>
-            
-            <returns> . </returns>
-        </member>
         <member name="M:SimpleAccess.SqlServer.ISqlRepository.Find``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
-            <summary> Find a single <typeparamref name="TEntity"/>. </summary>
+            <summary> Searches for <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the first record of the result. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="expression">The expression.</param>
@@ -1436,8 +1442,26 @@
             <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.ISqlRepository.Find``1(System.Data.SqlClient.SqlTransaction,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
-            <summary> Find a single <typeparamref name="TEntity"/>. </summary>
+            <summary> Searches for <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the first record of the result. </summary>
             
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="transaction"> The transaction. </param>
+            <param name="expression">The expression.</param>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            
+            <returns> . </returns>
+        </member>
+        <member name="M:SimpleAccess.SqlServer.ISqlRepository.FindAll``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
+            <summary> Searches for all <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the result as <see cref="T:System.Collections.Generic.IEnumerable`1"/>. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="expression">The expression.</param>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            
+            <returns> . </returns>
+        </member>
+        <member name="M:SimpleAccess.SqlServer.ISqlRepository.FindAll``1(System.Data.SqlClient.SqlTransaction,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
+            <summary> Searches for all <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the result as <see cref="T:System.Collections.Generic.IEnumerable`1"/>. </summary>
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="transaction"> The transaction. </param>
             <param name="expression">The expression.</param>
@@ -1634,6 +1658,15 @@
             
             <returns> Number of rows affected (integer) </returns>
         </member>
+        <member name="M:SimpleAccess.SqlServer.ISqlRepository.SoftDelete``1(System.Data.SqlClient.SqlTransaction,System.Int64)">
+            <summary> Soft delete the <typeparamref name="TEntity"/> record. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="id"> The identifier. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
+        </member>
         <member name="T:SimpleAccess.SqlServer.SqlRepository">
             <summary> Implements SqlRepository base SqlSimpleAccess with command type stored procedures. </summary>
         </member>
@@ -1719,27 +1752,8 @@
             
             <returns> . </returns>
         </member>
-        <member name="M:SimpleAccess.SqlServer.SqlRepository.FindSingle``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
-            <summary> Find a single <typeparamref name="TEntity"/>. </summary>
-            
-            <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="expression">The expression.</param>
-            <param name="fieldToSkip"> (optional) the field to skip. </param>
-            
-            <returns> . </returns>
-        </member>
-        <member name="M:SimpleAccess.SqlServer.SqlRepository.FindSingle``1(System.Data.SqlClient.SqlTransaction,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
-            <summary> Find a single <typeparamref name="TEntity"/>. </summary>
-            
-            <typeparam name="TEntity"> Type of the entity. </typeparam>
-            <param name="transaction"> The transaction. </param>
-            <param name="expression">The expression.</param>
-            <param name="fieldToSkip"> (optional) the field to skip. </param>
-            
-            <returns> . </returns>
-        </member>
         <member name="M:SimpleAccess.SqlServer.SqlRepository.Find``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
-            <summary> Find a single <typeparamref name="TEntity"/>. </summary>
+            <summary> Searches for <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the first record of the result. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="expression">The expression.</param>
@@ -1748,7 +1762,26 @@
             <returns> . </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlRepository.Find``1(System.Data.SqlClient.SqlTransaction,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
-            <summary> Find a single <typeparamref name="TEntity"/>. </summary>
+            <summary> Searches for <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the first record of the result. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="transaction"> The transaction. </param>
+            <param name="expression">The expression.</param>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            
+            <returns> . </returns>
+        </member>
+        <member name="M:SimpleAccess.SqlServer.SqlRepository.FindAll``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
+            <summary> Searches for all <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the result as <see cref="T:System.Collections.Generic.IEnumerable`1"/>. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="expression">The expression.</param>
+            <param name="fieldToSkip"> (optional) the field to skip. </param>
+            
+            <returns> . </returns>
+        </member>
+        <member name="M:SimpleAccess.SqlServer.SqlRepository.FindAll``1(System.Data.SqlClient.SqlTransaction,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.String)">
+            <summary> Searches for all <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the result as <see cref="T:System.Collections.Generic.IEnumerable`1"/>. </summary>
             
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="transaction"> The transaction. </param>
@@ -1944,7 +1977,16 @@
             <typeparam name="TEntity"> Type of the entity. </typeparam>
             <param name="id"> The identifier. </param>
             
-            <returns> . </returns>
+            <returns> Number of rows affected (integer) </returns>
+        </member>
+        <member name="M:SimpleAccess.SqlServer.SqlRepository.SoftDelete``1(System.Data.SqlClient.SqlTransaction,System.Int64)">
+            <summary> Soft delete the <typeparamref name="TEntity"/> record. </summary>
+            
+            <typeparam name="TEntity"> Type of the entity. </typeparam>
+            <param name="sqlTransaction"> The SQL transaction. </param>
+            <param name="id"> The identifier. </param>
+            
+            <returns> Number of rows affected (integer) </returns>
         </member>
         <member name="M:SimpleAccess.SqlServer.SqlRepository.Dispose">
             <summary> Performs application-defined tasks associated with freeing, releasing, or resetting
@@ -1952,7 +1994,7 @@
         </member>
         <member name="T:SimpleAccess.SqlServer.ISqlSimpleAccess">
             <summary>
-            SimpleAccess implementation for SQL Server
+            Represent the SimpleAccess interface for SQL Server
             </summary>
         </member>
         <member name="P:SimpleAccess.SqlServer.ISqlSimpleAccess.SimpleLogger">

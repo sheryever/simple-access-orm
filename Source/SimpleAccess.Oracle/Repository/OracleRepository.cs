@@ -314,11 +314,11 @@ namespace SimpleAccess.Oracle
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="transaction">			 The SQL transaction. </param>
         /// <param name="entity"> Entity to insert </param>
         /// 
         /// <returns> . </returns>
-        public int Insert<TEntity>(OracleTransaction sqlTransaction, TEntity entity)
+        public int Insert<TEntity>(OracleTransaction transaction, TEntity entity)
             where TEntity : class
         {
             var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
@@ -327,7 +327,7 @@ namespace SimpleAccess.Oracle
 
             string commandText = string.Format("{0}_Insert", entityInfo.DbObjectName);
 
-            var result = SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure
+            var result = SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure
                 , entityParameters.DataParametersDictionary.Values.ToArray());
 
             entityParameters.LoadOutParametersProperties(entity);
@@ -381,11 +381,11 @@ namespace SimpleAccess.Oracle
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="transaction">			 The SQL transaction. </param>
         /// <param name="entities"> The <![CDATA[IEnumerable<TEntity>]]> to insert </param>
         ///
         /// <returns> The number of affected records</returns>
-        public int InsertAll<TEntity>(OracleTransaction sqlTransaction, IEnumerable<TEntity> entities)
+        public int InsertAll<TEntity>(OracleTransaction transaction, IEnumerable<TEntity> entities)
             where TEntity : class
         {
             int result = 0;
@@ -396,7 +396,7 @@ namespace SimpleAccess.Oracle
             {
                 var entityParameters = entityInfo.GetInsertParameters(entity);
 
-                result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure
+                result += SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure
                     , entityParameters.DataParametersDictionary.Values.ToArray());
 
                 entityParameters.LoadOutParametersProperties(entity);
@@ -460,11 +460,11 @@ namespace SimpleAccess.Oracle
         /// <summary> Updates the given TEntity. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="transaction">			 The SQL transaction. </param>
         /// <param name="entity"> Entity to insert </param>
         /// 
         /// <returns> . </returns>
-        public int Update<TEntity>(OracleTransaction sqlTransaction, TEntity entity)
+        public int Update<TEntity>(OracleTransaction transaction, TEntity entity)
             where TEntity : class
         {
             var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
@@ -472,7 +472,7 @@ namespace SimpleAccess.Oracle
 
             string commandText = string.Format("{0}_Update", entityInfo.DbObjectName);
 
-            var result = SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure
+            var result = SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure
                 , entityParameters.DataParametersDictionary.Values.ToArray());
 
             entityParameters.LoadOutParametersProperties(entity);
@@ -489,10 +489,10 @@ namespace SimpleAccess.Oracle
         public int UpdateAll<TEntity>(IEnumerable<TEntity> entities)
             where TEntity : class
         {
-            OracleTransaction sqlTransaction = null;
+            OracleTransaction transaction = null;
             int result = 0;
 
-            using (sqlTransaction = SimpleAccess.BeginTrasaction())
+            using (transaction = SimpleAccess.BeginTrasaction())
             {
                 try
                 {
@@ -503,16 +503,16 @@ namespace SimpleAccess.Oracle
                     {
                         var entityParameters = entityInfo.GetUpdateParameters(entity);
 
-                        result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure
+                        result += SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure
                             , entityParameters.DataParametersDictionary.Values.ToArray());
 
                         entityParameters.LoadOutParametersProperties(entity);
                     }
-                    SimpleAccess.EndTransaction(sqlTransaction);
+                    SimpleAccess.EndTransaction(transaction);
                 }
                 catch (Exception)
                 {
-                    SimpleAccess.EndTransaction(sqlTransaction, false);
+                    SimpleAccess.EndTransaction(transaction, false);
                 }
             }
             return result;
@@ -521,11 +521,11 @@ namespace SimpleAccess.Oracle
         /// <summary> Updates all the given entities. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="entities"> The <![CDATA[IEnumerable<TEntity>]]> to update </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        public int UpdateAll<TEntity>(OracleTransaction sqlTransaction, IEnumerable<TEntity> entities)
+        public int UpdateAll<TEntity>(OracleTransaction transaction, IEnumerable<TEntity> entities)
             where TEntity : class
         {
 
@@ -537,7 +537,7 @@ namespace SimpleAccess.Oracle
             {
                 var entityParameters = entityInfo.GetUpdateParameters(entity);
 
-                result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure
+                result += SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure
                     , entityParameters.DataParametersDictionary.Values.ToArray());
 
 
@@ -567,18 +567,18 @@ namespace SimpleAccess.Oracle
         /// <summary> Deletes the given ID. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="transaction">			 The SQL transaction. </param>
         /// <param name="id"> The identifier. </param>
         /// 
         /// <returns> . </returns>
-        public int Delete<TEntity>(OracleTransaction sqlTransaction, long id)
+        public int Delete<TEntity>(OracleTransaction transaction, long id)
             where TEntity : class
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
 
             var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
-            var result = SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, new[] { OracleParametersExtensions.ToDataParam(id, (string)"Id") });
+            var result = SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure, new[] { OracleParametersExtensions.ToDataParam(id, (string)"Id") });
             return result;
         }
 
@@ -620,18 +620,18 @@ namespace SimpleAccess.Oracle
         /// <summary> Deletes the given ID. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="oracleParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
-        public virtual int Delete<TEntity>(OracleTransaction sqlTransaction, params OracleParameter[] oracleParameters)
+        public virtual int Delete<TEntity>(OracleTransaction transaction, params OracleParameter[] oracleParameters)
             where TEntity : class
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
             var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
 
-            return SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, oracleParameters);
+            return SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure, oracleParameters);
         }
 
         /// <summary> Delete All records from the table. </summary>
@@ -650,16 +650,16 @@ namespace SimpleAccess.Oracle
         /// <summary> Delete All records from the table with a transaction. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
 
-        public int DeleteAll<TEntity>(OracleTransaction sqlTransaction) where TEntity : class
+        public int DeleteAll<TEntity>(OracleTransaction transaction) where TEntity : class
         {
             var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
             var commandText = string.Format("{0}_DeleteAll", entityInfo.DbObjectName);
 
-            return SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure);
+            return SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure);
         }
 
         /// <summary> Deletes all the <typeparamref name="TEntity"/> records by  objects as OracleParameter names and values. </summary>
@@ -671,10 +671,10 @@ namespace SimpleAccess.Oracle
         public int DeleteAll<TEntity>(IEnumerable<object> paramObjects)
             where TEntity : class
         {
-            OracleTransaction sqlTransaction = null;
+            OracleTransaction transaction = null;
             int result = 0;
 
-            using (sqlTransaction = SimpleAccess.BeginTrasaction())
+            using (transaction = SimpleAccess.BeginTrasaction())
             {
                 try
                 {
@@ -684,15 +684,15 @@ namespace SimpleAccess.Oracle
                     foreach (var paramObject in paramObjects)
                     {
 
-                        result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, SimpleAccess.BuildOracleParameters(paramObject));
+                        result += SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure, SimpleAccess.BuildOracleParameters(paramObject));
 
                     }
-                    SimpleAccess.EndTransaction(sqlTransaction);
+                    SimpleAccess.EndTransaction(transaction);
                 }
 
                 catch (Exception)
                 {
-                    SimpleAccess.EndTransaction(sqlTransaction, false);
+                    SimpleAccess.EndTransaction(transaction, false);
                 }
 
 
@@ -710,10 +710,10 @@ namespace SimpleAccess.Oracle
         public int DeleteAll<TEntity>(IEnumerable<long> ids)
             where TEntity : class
         {
-            OracleTransaction sqlTransaction = null;
+            OracleTransaction transaction = null;
             int result = 0;
 
-            using (sqlTransaction = SimpleAccess.BeginTrasaction())
+            using (transaction = SimpleAccess.BeginTrasaction())
             {
                 try
                 {
@@ -723,14 +723,14 @@ namespace SimpleAccess.Oracle
                     foreach (var id in ids)
                     {
 
-                        result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, new[] { OracleParametersExtensions.ToDataParam(id, (string)"Id") });
+                        result += SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure, new[] { OracleParametersExtensions.ToDataParam(id, (string)"Id") });
 
                     }
                 }
 
                 catch (Exception)
                 {
-                    SimpleAccess.EndTransaction(sqlTransaction, false);
+                    SimpleAccess.EndTransaction(transaction, false);
                 }
             }
 
@@ -741,10 +741,10 @@ namespace SimpleAccess.Oracle
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="ids"> The identifiers of records. </param>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        public int DeleteAll<TEntity>(OracleTransaction sqlTransaction, IEnumerable<long> ids)
+        public int DeleteAll<TEntity>(OracleTransaction transaction, IEnumerable<long> ids)
             where TEntity : class
         {
             int result = 0;
@@ -755,7 +755,7 @@ namespace SimpleAccess.Oracle
             foreach (var id in ids)
             {
 
-                result += SimpleAccess.ExecuteNonQuery(sqlTransaction, commandText, CommandType.StoredProcedure, new[] { OracleParametersExtensions.ToDataParam(id, (string)"Id") });
+                result += SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure, new[] { OracleParametersExtensions.ToDataParam(id, (string)"Id") });
 
             }
 
@@ -773,9 +773,27 @@ namespace SimpleAccess.Oracle
         {
             //var name = typeof(TEntity).Name;
             var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
-            var commandText = string.Format("{0}_MarkDelete", entityInfo.Name);
+            var commandText = string.Format("{0}_SoftDelete", entityInfo.Name);
 
             return SimpleAccess.ExecuteNonQuery(commandText, CommandType.StoredProcedure, new[] { OracleParametersExtensions.ToDataParam(id, (string)"id") });
+        }
+
+
+        /// <summary> Soft delete the <typeparamref name="TEntity"/> record. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="transaction"> The SQL transaction. </param>
+        /// <param name="id"> The identifier. </param>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        public int SoftDelete<TEntity>(OracleTransaction transaction, long id)
+            where TEntity : class
+        {
+            //var name = typeof(TEntity).Name;
+            var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
+            var commandText = string.Format("{0}_SoftDelete", entityInfo.Name);
+
+            return SimpleAccess.ExecuteNonQuery(transaction, commandText, CommandType.StoredProcedure, new[] { id.ToDataParam("id") });
         }
 
         /// <summary> Performs application-defined tasks associated with freeing, releasing, or resetting
