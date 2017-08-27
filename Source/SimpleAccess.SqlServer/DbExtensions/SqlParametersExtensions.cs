@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -268,5 +269,31 @@ namespace SimpleAccess.SqlServer
             return name;
         }
 
-   }
+        private static string[] GetSpParametersNames(this ISqlSimpleAccess simpleAccess, string spName)
+        {
+            List<string> paramNames = new List<string>();
+            var sqlConnection = simpleAccess.GetNewConnection();
+            SqlCommand cmd = new SqlCommand(spName, sqlConnection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            sqlConnection.Open();
+            SqlCommandBuilder.DeriveParameters(cmd);
+            foreach (SqlParameter p in cmd.Parameters)
+            {
+                paramNames.Add(p.ParameterName);
+            }
+            return paramNames.ToArray();
+        }
+
+        private static string[] GetExtraParameterPropertiesNames(this ISqlSimpleAccess simpleAccess, string spName, SqlParameter[] propertiesParameters)
+        {
+            List<string> paramNames = new List<string>();
+
+            var spParameters = GetSpParametersNames(simpleAccess, spName);
+
+            var missingParameters = propertiesParameters.Select(pp => pp.ParameterName).Except(spParameters);
+
+            return missingParameters.ToArray();
+        }
+
+    }
 }
