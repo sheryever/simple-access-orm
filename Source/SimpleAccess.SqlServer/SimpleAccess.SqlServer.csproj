@@ -66,15 +66,15 @@
     <Folder Include="Attributes\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="nuget-resources\app.config.install.xdt" />
+    <None Include="SimpleAccess.SqlServer.nuspec" />
+    <None Include="nuget-resources\web.config.install.xdt" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\SimpleAccess.Core\SimpleAccess.Core.csproj">
       <Project>{ca67607f-1d89-47fd-b8bf-8deac4d0ac60}</Project>
       <Name>SimpleAccess.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="nuget-resources\app.config.install.xdt" />
-    <None Include="SimpleAccess.SqlServer.nuspec" />
-    <None Include="nuget-resources\web.config.install.xdt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

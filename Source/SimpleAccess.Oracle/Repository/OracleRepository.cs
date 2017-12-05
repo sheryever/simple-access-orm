@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-
 using System.Linq;
 using System.Linq.Expressions;
 using Oracle.ManagedDataAccess.Client;
@@ -216,6 +215,25 @@ namespace SimpleAccess.Oracle
                 , fieldToSkip, parameters: new OracleParameter("@whereClause", DynamicQuery.GetStoredProcedureWhere(expression, entityInfo)));
         }
 
+
+        /// <summary> Searches for all <typeparamref name="TEntity"/> and returns the result as <see cref="IEnumerable{TEntity}"/>. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="fieldToSkip"> (optional) the field to skip. </param>
+        /// 
+        /// <returns> . </returns>
+        public IEnumerable<TEntity> FindAll<TEntity>(string fieldToSkip = null)
+            where TEntity : class, new()
+        {
+            var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
+
+            var commandText = string.Format("{0}_Find", entityInfo.DbObjectName);
+
+            return SimpleAccess.ExecuteEntities<TEntity>(commandText, CommandType.StoredProcedure
+                , fieldToSkip, parameters: new OracleParameter("@whereClause", DBNull.Value));
+
+        }
+
         /// <summary> Searches for all <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the result as <see cref="IEnumerable{TEntity}"/>. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -234,6 +252,25 @@ namespace SimpleAccess.Oracle
                 , fieldToSkip, parameters: new OracleParameter("@whereClause", DynamicQuery.GetStoredProcedureWhere(expression, entityInfo)));
 
         }
+
+        /// <summary> Searches for all <typeparamref name="TEntity"/> and returns the result as <see cref="IEnumerable{TEntity}"/>. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="transaction"> The transaction. </param>
+        /// <param name="fieldToSkip"> (optional) the field to skip. </param>
+        /// 
+        /// <returns> . </returns>
+        public IEnumerable<TEntity> FindAll<TEntity>(OracleTransaction transaction, string fieldToSkip = null)
+            where TEntity : class, new()
+        {
+            var entityInfo = RepositorySetting.GetEntity2Info(typeof(TEntity));
+
+            var commandText = string.Format("{0}_Find", entityInfo.DbObjectName);
+
+            return SimpleAccess.ExecuteEntities<TEntity>(transaction, commandText, CommandType.StoredProcedure
+                    , fieldToSkip, parameters: new OracleParameter("@whereClause", DBNull.Value));
+        }
+
 
         /// <summary> Searches for all <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the result as <see cref="IEnumerable{TEntity}"/>. </summary>
         /// 

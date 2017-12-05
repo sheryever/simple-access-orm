@@ -115,6 +115,15 @@ namespace SimpleAccess.MySql
         TEntity Find<TEntity>(MySqlTransaction transaction, Expression<Func<TEntity, bool>> expression, string fieldToSkip = null)
             where TEntity : class, new();
 
+        /// <summary> Searches for all <typeparamref name="TEntity"/> and returns the result as <see cref="IEnumerable{TEntity}"/>. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="fieldToSkip"> (optional) the field to skip. </param>
+        /// 
+        /// <returns> . </returns>
+        IEnumerable<TEntity> FindAll<TEntity>(string fieldToSkip = null)
+            where TEntity : class, new();
+
         /// <summary> Searches for all <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the result as <see cref="IEnumerable{TEntity}"/>. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -125,8 +134,16 @@ namespace SimpleAccess.MySql
         IEnumerable<TEntity> FindAll<TEntity>(Expression<Func<TEntity, bool>> expression, string fieldToSkip = null)
             where TEntity : class, new();
 
-        /// <summary> Searches for all <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the result as <see cref="IEnumerable{TEntity}"/>. </summary>
+        /// <summary> Searches for all <typeparamref name="TEntity"/> and returns the result as <see cref="IEnumerable{TEntity}"/>. </summary>
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="transaction"> The transaction. </param>
+        /// <param name="fieldToSkip"> (optional) the field to skip. </param>
         /// 
+        /// <returns> . </returns>
+        IEnumerable<TEntity> FindAll<TEntity>(MySqlTransaction transaction, string fieldToSkip = null)
+            where TEntity : class, new();
+
+        /// <summary> Searches for all <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the result as <see cref="IEnumerable{TEntity}"/>. </summary>
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="transaction"> The transaction. </param>
         /// <param name="expression">The expression.</param>
@@ -135,7 +152,6 @@ namespace SimpleAccess.MySql
         /// <returns> . </returns>
         IEnumerable<TEntity> FindAll<TEntity>(MySqlTransaction transaction, Expression<Func<TEntity, bool>> expression, string fieldToSkip = null)
             where TEntity : class, new();
-
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
