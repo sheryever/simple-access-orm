@@ -175,7 +175,7 @@ All methods are based on stored procedures with its related sotred procedure nam
 ##### People Table
 ```Sql
 CREATE TABLE [dbo].[People](
-	[Id] [INT] IDENTITY(1,1) NOT NULL,
+	[Id] [INT] IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[Name] [NVARCHAR](100) NOT NULL,
 	[PhoneNumbers] [NVARCHAR](30) NULL,
 	[Address] [NVARCHAR](300) NULL,
@@ -183,12 +183,8 @@ CREATE TABLE [dbo].[People](
 	[CreatedBy] [BIGINT] NULL,
 	[CreatedOn] [SMALLDATETIME] NULL,
 	[ModifiedBy] [BIGINT] NULL,
-	[ModifiedOn] [SMALLDATETIME] NULL,
- CONSTRAINT [PK_People] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+	[ModifiedOn] [SMALLDATETIME] NULL
+)
 
 GO
 ```
