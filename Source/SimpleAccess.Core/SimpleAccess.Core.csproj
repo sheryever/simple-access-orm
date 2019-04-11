@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net40</TargetFrameworks>
-    <Version>3.0.0</Version>
+    <Version>3.0.0-alpha</Version>
     <Product>SimpleAccess ORM Core</Product>
     <Description>The core and common interfaces and implementation of SimpleAccess ORM</Description>
     <Authors>Abu Ali Muhammad Sharjeel</Authors>
@@ -47,6 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="Microsoft.CSharp">
+      <Version>4.5.0</Version>
+    </PackageReference>
   </ItemGroup>
 
 

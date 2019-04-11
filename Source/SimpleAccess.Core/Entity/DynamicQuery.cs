@@ -28,7 +28,7 @@ using System.Reflection;
 #pragma warning disable CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
 using System.Text;
 #pragma warning restore CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
-#if NET40
+// #if NET40
 namespace SimpleAccess.Core.Entity
 {
 
@@ -428,4 +428,4 @@ namespace SimpleAccess.Core.Entity.RepoWrapper
     }
 }
 
-#endif
+// #endif
