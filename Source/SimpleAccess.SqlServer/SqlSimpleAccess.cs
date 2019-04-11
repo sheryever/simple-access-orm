@@ -135,14 +135,16 @@ namespace SimpleAccess.SqlServer
         /// </summary>
         static SqlSimpleAccess()
         {
+#if NET40
             var connectionStringName = ConfigurationManager.AppSettings[DefaultConnectionStringKey];
             var connectionStringSettings = ConfigurationManager.ConnectionStrings[connectionStringName];
             if (connectionStringSettings != null)
             {
                 DefaultConnectionString = connectionStringSettings.ConnectionString;
             }
+#endif
         }
-        #endregion
+#endregion
 
 
         /// <summary> Executes the non query operation. </summary>
@@ -728,7 +730,6 @@ namespace SimpleAccess.SqlServer
                 {
                     return GetValues<T>(reader);
                 }
-                dbCommand.Parameters.Clear();
 
             }
             catch (Exception ex)
@@ -738,6 +739,7 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
+                dbCommand.Parameters.Clear();
 
                 dbCommand.ClearDbCommand();
 
@@ -788,7 +790,6 @@ namespace SimpleAccess.SqlServer
                 {
                     return reader.DataReaderToObjectList<TEntity>(fieldsToSkip, propertyInfoDictionary);
                 }
-                dbCommand.Parameters.Clear();
 
                 //return dbCommand.ExecuteReader().DataReaderToObjectList<TEntity>(fieldsToSkip, piList);
             }
@@ -801,6 +802,8 @@ namespace SimpleAccess.SqlServer
             {
                 if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
+
+                dbCommand.Parameters.Clear();
 
                 dbCommand.ClearDbCommand();
             }
@@ -892,7 +895,6 @@ namespace SimpleAccess.SqlServer
                 {
                     return reader.DataReaderToObjectList<TEntity>(fieldsToSkip, propertyInfoDictionary);
                 }
-                dbCommand.Parameters.Clear();
 
                 //return dbCommand.ExecuteReader().DataReaderToObjectList<TEntity>(fieldsToSkip, piList);
             }
@@ -903,6 +905,7 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
+                dbCommand.Parameters.Clear();
 
                 dbCommand.ClearDbCommand();
 
@@ -992,7 +995,6 @@ namespace SimpleAccess.SqlServer
                 {
                     return reader.HasRows ? reader.DataReaderToObject<TEntity>(fieldsToSkip, propertyInfoDictionary) : null;
                 }
-                dbCommand.Parameters.Clear();
 
                 //return dbCommand.ExecuteReader().DataReaderToObject<TEntity>(fieldsToSkip, piList);
             }
@@ -1006,6 +1008,7 @@ namespace SimpleAccess.SqlServer
                 if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
+                dbCommand.Parameters.Clear();
                 dbCommand.ClearDbCommand();
 
             }

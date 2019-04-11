@@ -269,6 +269,8 @@ namespace SimpleAccess.SqlServer
             return name;
         }
 
+
+#if NET40
         private static string[] GetSpParametersNames(this ISqlSimpleAccess simpleAccess, string spName)
         {
             List<string> paramNames = new List<string>();
@@ -294,6 +296,7 @@ namespace SimpleAccess.SqlServer
 
             return missingParameters.ToArray();
         }
-
+#endif
     }
+
 }

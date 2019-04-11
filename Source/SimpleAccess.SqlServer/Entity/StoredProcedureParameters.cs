@@ -91,8 +91,6 @@ namespace SimpleAccess.SqlServer
             if (getMethodInfo.IsVirtual && !getMethodInfo.IsFinal)
                 return null;
 
-            if (attrbutes.FirstOrDefault(a => a is NotASpParameterAttribute) != null)
-                return null;
 
             //var dbColumnPropertyAttribute =
             //    attrbutes.FirstOrDefault(a => a is DbColumnPropertyAttribute) as DbColumnPropertyAttribute;
