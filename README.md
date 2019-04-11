@@ -1,5 +1,5 @@
 # Simple Access ORM
-SimpleAccess provides a simple and easy database access as well as a repository for CURD and other helper methods.
+SimpleAccess provides a simple and easy database access as well as a repository for CRUD and other helper methods.
 
 SimpleAccess supports multiple databases. All implement the same interface for each database.
 
