@@ -1,6 +1,4 @@
-﻿#pragma warning disable CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
-using System;
-#pragma warning restore CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
+﻿using System;
 
 namespace SimpleAccess
 {
@@ -21,7 +19,7 @@ namespace SimpleAccess
         /// <param name="dbColumn">Database table column name of the marked property.</param>
         public DbColumnAttribute(string dbColumn)
         {
-            this.DbColumn = dbColumn;
+            DbColumn = dbColumn;
         }
     }
 }

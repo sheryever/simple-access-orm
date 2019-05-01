@@ -13,7 +13,6 @@ using System.Linq;
 #pragma warning disable CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
 using System.Reflection;
 #pragma warning restore CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
-using SimpleAccess.Core.Entity;
 
 namespace SimpleAccess.Core
 {

@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Configuration;
 using System.Data;
+using System.IO;
+#if NETSTANDARD
+using Microsoft.Extensions.Configuration;
+#endif
 using SimpleAccess.Core.Logger;
 
 
@@ -41,7 +45,8 @@ namespace SimpleAccess.Core
 #pragma warning restore CS0246 // The type or namespace name 'ConnectionStringSettings' could not be found (are you missing a using directive or an assembly reference?)
         {
 #if NETSTANDARD
-            var connectionStringSettings = new ConnectionStringSettings();
+            var connectionStringSettings = new ConnectionStringSettings(connectionStringName, Configuration.GetConnectionString(connectionStringName));
+            Console.WriteLine($"ConnectionStringName:{connectionStringName}\nConnectionString:{connectionStringSettings.ConnectionString}");
 #else
             var connectionStringSettings = ConfigurationManager.ConnectionStrings[connectionStringName];
 #endif
@@ -53,6 +58,18 @@ namespace SimpleAccess.Core
 
             return connectionStringSettings;
         }
+#if NETSTANDARD
+
+        static SimpleAccessSettings()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            Configuration = builder.Build();
+        }
+
+        public static IConfigurationRoot Configuration { get; private set; }
+#endif
 
         /// <summary>
         /// Initialize the new object of SimpleAccessSettings with default properties.
@@ -122,7 +139,11 @@ namespace SimpleAccess.Core
         //
         //   connectionString:
         //     The connection string.
-        public ConnectionStringSettings(string name, string connectionString) { }
+        public ConnectionStringSettings(string name, string connectionString)
+        {
+            Name = name;
+            ConnectionString = connectionString;
+        }
         //
         // Summary:
         //     Initializes a new instance of a System.Configuration.ConnectionStringSettings
@@ -137,7 +158,11 @@ namespace SimpleAccess.Core
         //
         //   providerName:
         //     The name of the provider to use with the connection string.
-        public ConnectionStringSettings(string name, string connectionString, string providerName) { }
+        public ConnectionStringSettings(string name, string connectionString, string providerName)
+            : this(name,connectionString)
+        {
+            ProviderName = providerName;
+        }
 
         //
         // Summary:

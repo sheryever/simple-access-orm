@@ -30,14 +30,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SimpleAccess.Core, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SimpleAccess.Core.2.1.0\lib\net40\SimpleAccess.Core.dll</HintPath>
+    <Reference Include="SimpleAccess.Core, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleAccess.Core.3.0.0-alpha\lib\net40\SimpleAccess.Core.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleAccess.SqlServer, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SimpleAccess.SqlServer.2.1.1\lib\net40\SimpleAccess.SqlServer.dll</HintPath>
+    <Reference Include="SimpleAccess.SqlServer, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleAccess.SqlServer.3.0.0-alpha\lib\net40\SimpleAccess.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
