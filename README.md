@@ -10,7 +10,7 @@ SimpleAccess returns data in Entity and dynamic data type but also allow develop
 
 ## Platform support
 
-Simple Access ORM 3.0.0 is built on .Net Standard 2.0, while Simple Access ORM 2.x is built on dotnet full framework 3.5, to support windows applications, which using Simple Access ORM on Windows XP 
+Simple Access ORM 3.x is built on .Net Standard 2.0, while Simple Access ORM 2.x is built on dotnet full framework 3.5, to support windows applications, which are using Simple Access ORM on Windows XP 
 
 ## Using SimpleAccess
 Insall your required SimpleAccess implementaion from nuget
