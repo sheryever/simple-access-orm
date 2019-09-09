@@ -1,4 +1,5 @@
 # Simple Access ORM
+
 SimpleAccess provides a simple and easy database access as well as a repository for CRUD and other helper methods.
 
 SimpleAccess supports multiple databases. All implement the same interface for each database.
@@ -6,6 +7,10 @@ SimpleAccess supports multiple databases. All implement the same interface for e
 SimpleAccess also provides excpetion logging.
 
 SimpleAccess returns data in Entity and dynamic data type but also allow developers to work on direct DataReader or DataSet
+
+## Platform support
+
+Simple Access ORM 3.x is built on .Net Standard 2.0, while Simple Access ORM 2.x is built on dotnet full framework 3.5 to support our clients windows applications which are deployed on 100s of PCs with support of Windows XP and later Windows operating systems
 
 ## Using SimpleAccess
 Insall your required SimpleAccess implementaion from nuget
