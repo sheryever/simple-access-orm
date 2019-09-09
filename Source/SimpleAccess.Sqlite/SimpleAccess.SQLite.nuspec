@@ -9,7 +9,7 @@
         <projectUrl>https://github.com/sheryever/simple-access-orm/tree/Development</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>SimpleAccess.SQLite intial documentation is available at https://goo.gl/pQzzCr</description>
-        <summary>SimpleAccess.SQLite is the implementaion of SimpleAccess.Core for SQLite</summary>
+        <summary>SimpleAccess.SQLite is the implementation of SimpleAccess.Core for SQLite</summary>
         <releaseNotes />
         <copyright>Copyright 2016</copyright>
         <language>en-US</language>

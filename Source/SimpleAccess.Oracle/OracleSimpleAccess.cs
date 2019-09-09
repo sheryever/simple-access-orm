@@ -132,12 +132,14 @@ namespace SimpleAccess.Oracle
         /// </summary>
         static OracleSimpleAccess()
         {
+#if NET40
             var connectionStringName = ConfigurationManager.AppSettings[DefaultConnectionStringKey];
             var connectionStringSettings = ConfigurationManager.ConnectionStrings[connectionStringName];
             if (connectionStringSettings != null)
             {
                 DefaultConnectionString = connectionStringSettings.ConnectionString;
             }
+#endif
         }
         #endregion
 

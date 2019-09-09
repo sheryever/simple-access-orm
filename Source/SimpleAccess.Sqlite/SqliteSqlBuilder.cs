@@ -147,8 +147,8 @@ namespace SimpleAccess.SQLite
             if (propertyInfo.GetGetMethod().IsVirtual)
                 return null;
 
-            if (attrbutes.FirstOrDefault(a => a is NotASpParameterAttribute) != null)
-                return null;
+            //if (attrbutes.FirstOrDefault(a => a is NotASpParameterAttribute) != null)
+            //    return null;
 
             
             var dbColumnAttribute =

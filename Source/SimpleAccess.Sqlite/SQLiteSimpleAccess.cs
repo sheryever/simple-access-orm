@@ -132,12 +132,15 @@ namespace SimpleAccess.SQLite
         /// </summary>
         static SQLiteSimpleAccess()
         {
+#if NET40
+
             var connectionStringName = ConfigurationManager.AppSettings[DefaultConnectionStringKey];
             var connectionStringSettings = ConfigurationManager.ConnectionStrings[connectionStringName];
             if (connectionStringSettings != null)
             {
                 DefaultConnectionString = connectionStringSettings.ConnectionString;
             }
+#endif
         }
         #endregion
 

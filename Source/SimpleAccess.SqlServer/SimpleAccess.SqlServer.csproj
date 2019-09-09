@@ -150,5 +150,4 @@ Documentation of using SimpleAccess is available at https://github.com/sheryever
   <Target Name="AfterBuild">
   </Target>
   -->
-<!--
-</Project>-->
+<!--</Project>-->

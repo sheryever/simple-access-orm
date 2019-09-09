@@ -10,7 +10,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Simple Access ORM provides database access in Ado.net methods naming pattern.
 Documentation of using SimpleAccess is available at https://github.com/sheryever/simple-access-orm</description>
-        <summary>SimpleAccess.SqlServer is the implementaion of SimpleAccess.Core for Sql Server</summary>
+        <summary>SimpleAccess.SqlServer is the implementation of SimpleAccess.Core for Sql Server</summary>
         <releaseNotes />
         <copyright>Copyright 2015</copyright>
         <language>en-US</language>
