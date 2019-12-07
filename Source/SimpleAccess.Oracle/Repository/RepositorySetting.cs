@@ -16,14 +16,14 @@ namespace SimpleAccess.Oracle
     {
         static RepositorySetting()
         {
-            EntityInfos = new Dictionary<int, Core.Entity.EntityInfo<OracleSqlBuilder, OracleParameter>>();
 
         }
 
         /// <summary>
         /// The Dictionary of <see cref="EntityInfos"/> for cache.
         /// </summary>
-        public static Dictionary<int, Core.Entity.EntityInfo<OracleSqlBuilder, OracleParameter>> EntityInfos { get; set; }
+        public static Dictionary<string, Core.Entity.EntityInfo<OracleSqlBuilder, OracleParameter>> EntityInfos { get; }
+            = new Dictionary<string, Core.Entity.EntityInfo<OracleSqlBuilder, OracleParameter>>();
 
 
 
@@ -36,12 +36,16 @@ namespace SimpleAccess.Oracle
         public static SimpleAccess.Core.Entity.EntityInfo<OracleSqlBuilder, OracleParameter> GetEntityInfo(Type type)
         {
             Core.Entity.EntityInfo<OracleSqlBuilder, OracleParameter> entityInfo = null;
-            if (EntityInfos.TryGetValue(type.GetHashCode(), out entityInfo))
+            if (EntityInfos.TryGetValue(type.FullName, out entityInfo))
                 return entityInfo;
 
             entityInfo = new Core.Entity.EntityInfo<OracleSqlBuilder, OracleParameter>(type);
-            EntityInfos.Add(type.GetHashCode(), entityInfo);
+            lock (EntityInfos)
+            {
+                if (!EntityInfos.ContainsKey(type.FullName))
+                    EntityInfos.Add(type.FullName, entityInfo);
 
+            }
             return entityInfo;
         }
     }

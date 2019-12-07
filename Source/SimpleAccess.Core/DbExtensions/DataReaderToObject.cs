@@ -59,7 +59,7 @@ namespace SimpleAccess.Core
             // Create lookup list of property info objects            
             if (piList == null)
             {
-                piList = GetEntityPerpertiesInfoList<TType>(entityFullName);
+                piList = GetEntityPropertiesInfoList<TType>(entityFullName);
             }
 
             if (piListBasedOnDbColumn == null)
@@ -80,10 +80,10 @@ namespace SimpleAccess.Core
         private static Dictionary<string, PropertyInfo> GetEntityDbColumnPropertiesInfoList(string entityFullName, Dictionary<string, PropertyInfo> piList)
         {
 
-            if (EntityDbColumnProperties.ContainsKey(entityFullName))
-                return EntityDbColumnProperties[entityFullName];
+            if (EntityDbColumnProperties.TryGetValue(entityFullName, out var piListBasedOnDbColumn))
+                return piListBasedOnDbColumn;
 
-            var piListBasedOnDbColumn = new Dictionary<string, PropertyInfo>();
+            piListBasedOnDbColumn = new Dictionary<string, PropertyInfo>();
             foreach (var prop in piList.Values)
             {
                 var dbColumnAttribute =
@@ -93,23 +93,31 @@ namespace SimpleAccess.Core
                     piListBasedOnDbColumn.Add(dbColumnAttribute.DbColumn.ToLower(), prop);
             }
 
-            EntityDbColumnProperties.Add(entityFullName, piListBasedOnDbColumn);
+            lock (EntityDbColumnProperties)
+            {
+                if (!EntityDbColumnProperties.ContainsKey(entityFullName))
+                    EntityDbColumnProperties.Add(entityFullName, piListBasedOnDbColumn);
+            }
 
             return piListBasedOnDbColumn;
         }
 
-        private static Dictionary<string, PropertyInfo> GetEntityPerpertiesInfoList<TType>(string entityFullName) where TType : new()
+        private static Dictionary<string, PropertyInfo> GetEntityPropertiesInfoList<TType>(string entityFullName) where TType : new()
         {
-            if (EntityProperties.ContainsKey(entityFullName))
-                return EntityProperties[entityFullName];
+            if (EntityProperties.TryGetValue(entityFullName, out var piList))
+                return piList;
             
-            var piList = new Dictionary<string, PropertyInfo>();
+            piList = new Dictionary<string, PropertyInfo>();
 
             var props = typeof(TType).GetProperties(BindingFlags.Instance | BindingFlags.Public);
             foreach (var prop in props)
                 piList.Add(prop.Name.ToLower(), prop);
 
-            EntityProperties.Add(entityFullName, piList);
+            lock (EntityProperties)
+            {
+                if (!EntityProperties.ContainsKey(entityFullName))
+                    EntityProperties.Add(entityFullName, piList);
+            }
 
             return piList;
         }
@@ -144,7 +152,7 @@ namespace SimpleAccess.Core
             // Create lookup list of property info objects            
             if (piList == null)
             {
-                piList = GetEntityPerpertiesInfoList<TType>(entityFullName);
+                piList = GetEntityPropertiesInfoList<TType>(entityFullName);
             }
 
             if (piListBasedOnDbColumn == null)
@@ -200,7 +208,7 @@ namespace SimpleAccess.Core
             //// Create lookup list of property info objects            
             //if (piList == null)
             //{
-            //    piList = GetEntityPerpertiesInfoList<TType>(entityFullName);
+            //    piList = GetEntityPropertiesInfoList<TType>(entityFullName);
             //}
 
             //if (piListBasedOnDbColumn == null)

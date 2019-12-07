@@ -1634,7 +1634,7 @@ namespace SimpleAccess.SqlServer
 
             if (_sqlTransaction != null)
                 dbCommand.Transaction = _sqlTransaction;
-
+            
             return dbCommand;
         }
 
