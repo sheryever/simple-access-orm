@@ -19,6 +19,9 @@ namespace SimpleAccess.SqlServer
     /// </summary>
     public interface ISqlSimpleAccess :
         ISimpleAccess <SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlServerSqlBuilder>
+#if !NET40
+        , ISimpleAccessAsync<SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlServerSqlBuilder>
+#endif 
         , IDisposable
     {
         

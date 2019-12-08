@@ -923,13 +923,27 @@ namespace SimpleAccess.Core
         /// <summary> Begins a database transaction. </summary>
         /// 
         /// <returns> . </returns>
-        TDbTransaction BeginTrasaction();
-        
+        TDbTransaction BeginTransaction();
+
+        /// <summary> Begins a database transaction. </summary>
+        /// 
+        /// <returns> . </returns>
+        /// 
+        TDbTransaction BeginTransaction(IsolationLevel isolationLevel);
+        /// <summary> Begins a database transaction. </summary>
+        /// 
+        /// <returns> . </returns>
+        /// 
+        TDbTransaction BeginTransaction(string transactionName);
+        /// <summary> Begins a database transaction. </summary>
+        /// 
+        /// <returns> . </returns>
+        TDbTransaction BeginTransaction(IsolationLevel isolationLevel, string transactionName);
 
         /// <summary> Gets the new connection. </summary>
         /// 
         /// <returns>  </returns>
-        
+
         TDbConnection GetNewConnection();
 
         /// <summary> Close the current open connection. </summary>

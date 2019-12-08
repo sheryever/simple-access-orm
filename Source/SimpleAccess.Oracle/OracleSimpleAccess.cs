@@ -1568,17 +1568,37 @@ namespace SimpleAccess.Oracle
                 _sqlConnection.CloseSafely();
         }
 
+
         /// <summary> Begins a transaction. </summary>
         /// <returns> . </returns>
-        public OracleTransaction BeginTrasaction()
+        public OracleTransaction BeginTransaction()
+        {
+            return BeginTransaction(IsolationLevel.ReadCommitted);
+        }
+        /// <summary> Begins a transaction. </summary>
+        /// <returns> . </returns>
+        public OracleTransaction BeginTransaction(IsolationLevel isolationLevel)
         {
             if (_sqlConnection.State != ConnectionState.Open)
                 _sqlConnection.Open();
-            //_transaction = _sqlConnection.BeginTransaction();
 
-            //return _transaction;
-            return _sqlConnection.BeginTransaction();
+            return _sqlConnection.BeginTransaction(isolationLevel);
+
+
         }
+        /// <summary> Begins a transaction. </summary>
+        /// <returns> . </returns>
+        public OracleTransaction BeginTransaction(string transactionName)
+        {
+            throw new NotImplementedException($"the parameter {nameof(transactionName)} is not supported by Oracle Managed Client");
+        }
+        /// <summary> Begins a transaction. </summary>
+        /// <returns> . </returns>
+        public OracleTransaction BeginTransaction(IsolationLevel isolationLevel, string transactionName)
+        {
+            throw new NotImplementedException($"the parameter {nameof(transactionName)} is not supported by Oracle Managed Client");
+        }
+
 
         /// <summary> Ends a transaction. </summary>
         /// 

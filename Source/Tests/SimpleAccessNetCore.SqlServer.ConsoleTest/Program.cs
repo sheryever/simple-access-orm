@@ -55,7 +55,7 @@ namespace SimpleAccessNetCore.SqlServer.ConsoleTest
             try
             {
                 var data = simpleAccess.ExecuteValues<string>("Select Name from Category;");
-                using (transaction = simpleAccess.BeginTrasaction())
+                using (transaction = simpleAccess.BeginTransaction())
                 {
                     data = simpleAccess.ExecuteValues<string>(transaction, "Select Name from Category;");
 
@@ -117,7 +117,7 @@ namespace SimpleAccessNetCore.SqlServer.ConsoleTest
             SqlTransaction transaction = null;
             try
             {
-                using (transaction = simpleAccess.BeginTrasaction())
+                using (transaction = simpleAccess.BeginTransaction())
                 {
                     var person = new Person() { Name = "Ahmed", Address = "Madina" };
 

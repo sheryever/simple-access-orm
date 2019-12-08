@@ -6,10 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SimpleAccess.SqlServer" Version="3.0.0-beta" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\SimpleAccess.Core\SimpleAccess.Core.csproj" />
+    <ProjectReference Include="..\..\SimpleAccess.SqlServer\SimpleAccess.SqlServer.csproj" />
     <ProjectReference Include="..\..\Test\SimpleAccessNetCore.SqlServer.ConsoleTest.Entities\SimpleAccessNetCore.SqlServer.ConsoleTest.Entities.csproj" />
   </ItemGroup>
 

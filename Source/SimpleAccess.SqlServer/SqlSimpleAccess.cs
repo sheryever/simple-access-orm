@@ -17,7 +17,8 @@ namespace SimpleAccess.SqlServer
     /// <summary>
     /// Sql Server implementation for SimpleAccess.
     /// </summary>
-    public class SqlSimpleAccess : ISqlSimpleAccess
+    public partial class SqlSimpleAccess : ISqlSimpleAccess
+
     {
         private const string DefaultConnectionStringKey = "simpleAccess:sqlConnectionStringName";
 
@@ -58,6 +59,7 @@ namespace SimpleAccess.SqlServer
                 DefaultLogger = new SimpleLogger()
             };
             _sqlConnection = sqlConnection;
+
         }
 
         /// <summary> Constructor. </summary>
@@ -1583,14 +1585,36 @@ namespace SimpleAccess.SqlServer
 
         /// <summary> Begins a transaction. </summary>
         /// <returns> . </returns>
-        public SqlTransaction BeginTrasaction()
+        public SqlTransaction BeginTransaction()
+        {
+            return BeginTransaction(IsolationLevel.ReadCommitted, null);
+        }
+        /// <summary> Begins a transaction. </summary>
+        /// <returns> . </returns>
+        public SqlTransaction BeginTransaction(IsolationLevel isolationLevel)
+        {
+            return BeginTransaction(isolationLevel, null);
+
+        }
+        /// <summary> Begins a transaction. </summary>
+        /// <returns> . </returns>
+        public SqlTransaction BeginTransaction(string transactionName)
+        {
+            return BeginTransaction(IsolationLevel.ReadCommitted, transactionName);
+        }
+        /// <summary> Begins a transaction. </summary>
+        /// <returns> . </returns>
+        public SqlTransaction BeginTransaction(IsolationLevel isolationLevel, string transactionName)
         {
             if (_sqlConnection.State != ConnectionState.Open)
                 _sqlConnection.Open();
-            //_sqlTransaction = _sqlConnection.BeginTransaction();
 
-            //return _sqlTransaction;
-            return _sqlConnection.BeginTransaction();
+            if (string.IsNullOrEmpty(transactionName))
+            {
+                return _sqlConnection.BeginTransaction(isolationLevel);
+            }
+
+            return _sqlConnection.BeginTransaction(isolationLevel, transactionName);
         }
 
         /// <summary> Ends a transaction. </summary>

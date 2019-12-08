@@ -7,19 +7,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.SqlServer", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.Core", "SimpleAccess.Core\SimpleAccess.Core.csproj", "{CA67607F-1D89-47FD-B8BF-8DEAC4D0AC60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAccess.SqlServer.ConsoleTest", "SimpleAccess.SqlServer.ConsoleTest\SimpleAccess.SqlServer.ConsoleTest.csproj", "{4A15A6BD-062A-4043-85D9-FDBCCD603D6E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAccess.SqlServer.ConsoleTest.Entities", "SimpleAccess.SqlServer.ConsoleTest.Entities\SimpleAccess.SqlServer.ConsoleTest.Entities.csproj", "{189B3FDB-65AB-425C-AC30-2F2CEAD0AB55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAccess.Sqlite", "SimpleAccess.Sqlite\SimpleAccess.Sqlite.csproj", "{80B19FC2-FFFB-471B-8F26-C38F0FB80E0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.Sqlite", "SimpleAccess.Sqlite\SimpleAccess.Sqlite.csproj", "{80B19FC2-FFFB-471B-8F26-C38F0FB80E0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAccess.Oracle", "SimpleAccess.Oracle\SimpleAccess.Oracle.csproj", "{8B9E00FC-72AC-4151-8326-090D0BF9F153}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.Oracle", "SimpleAccess.Oracle\SimpleAccess.Oracle.csproj", "{8B9E00FC-72AC-4151-8326-090D0BF9F153}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAccess.MySql", "SimpleAccess.MySql\SimpleAccess.MySql.csproj", "{2A7EDC08-9746-4796-8086-B39798042EAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.MySql", "SimpleAccess.MySql\SimpleAccess.MySql.csproj", "{2A7EDC08-9746-4796-8086-B39798042EAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAccessNetCore.SqlServer.ConsoleTest", "Tests\SimpleAccessNetCore.SqlServer.ConsoleTest\SimpleAccessNetCore.SqlServer.ConsoleTest.csproj", "{780B5765-8B3A-42B2-B3C8-4489C05D635D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccessNetCore.SqlServer.ConsoleTest", "Tests\SimpleAccessNetCore.SqlServer.ConsoleTest\SimpleAccessNetCore.SqlServer.ConsoleTest.csproj", "{780B5765-8B3A-42B2-B3C8-4489C05D635D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAccessNetCore.SqlServer.ConsoleTest.Entities", "Test\SimpleAccessNetCore.SqlServer.ConsoleTest.Entities\SimpleAccessNetCore.SqlServer.ConsoleTest.Entities.csproj", "{99909584-B99A-46D8-9279-0BA79F4EB92E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccessNetCore.SqlServer.ConsoleTest.Entities", "Test\SimpleAccessNetCore.SqlServer.ConsoleTest.Entities\SimpleAccessNetCore.SqlServer.ConsoleTest.Entities.csproj", "{99909584-B99A-46D8-9279-0BA79F4EB92E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAccess.SqlServer.ConsoleTest", "SimpleAccess.SqlServer.ConsoleTest\SimpleAccess.SqlServer.ConsoleTest.csproj", "{4A15A6BD-062A-4043-85D9-FDBCCD603D6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,6 @@ Global
 		{CA67607F-1D89-47FD-B8BF-8DEAC4D0AC60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA67607F-1D89-47FD-B8BF-8DEAC4D0AC60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA67607F-1D89-47FD-B8BF-8DEAC4D0AC60}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A15A6BD-062A-4043-85D9-FDBCCD603D6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A15A6BD-062A-4043-85D9-FDBCCD603D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A15A6BD-062A-4043-85D9-FDBCCD603D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A15A6BD-062A-4043-85D9-FDBCCD603D6E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{189B3FDB-65AB-425C-AC30-2F2CEAD0AB55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{189B3FDB-65AB-425C-AC30-2F2CEAD0AB55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{189B3FDB-65AB-425C-AC30-2F2CEAD0AB55}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,6 +59,10 @@ Global
 		{99909584-B99A-46D8-9279-0BA79F4EB92E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99909584-B99A-46D8-9279-0BA79F4EB92E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99909584-B99A-46D8-9279-0BA79F4EB92E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A15A6BD-062A-4043-85D9-FDBCCD603D6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A15A6BD-062A-4043-85D9-FDBCCD603D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A15A6BD-062A-4043-85D9-FDBCCD603D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A15A6BD-062A-4043-85D9-FDBCCD603D6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

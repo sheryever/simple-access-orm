@@ -387,7 +387,7 @@ namespace SimpleAccess.Oracle
             OracleTransaction oracleTransaction = null;
             int result = 0;
 
-            using (oracleTransaction = SimpleAccess.BeginTrasaction())
+            using (oracleTransaction = SimpleAccess.BeginTransaction())
             {
                 try
                 {
@@ -529,7 +529,7 @@ namespace SimpleAccess.Oracle
             OracleTransaction transaction = null;
             int result = 0;
 
-            using (transaction = SimpleAccess.BeginTrasaction())
+            using (transaction = SimpleAccess.BeginTransaction())
             {
                 try
                 {
@@ -711,7 +711,7 @@ namespace SimpleAccess.Oracle
             OracleTransaction transaction = null;
             int result = 0;
 
-            using (transaction = SimpleAccess.BeginTrasaction())
+            using (transaction = SimpleAccess.BeginTransaction())
             {
                 try
                 {
@@ -750,7 +750,7 @@ namespace SimpleAccess.Oracle
             OracleTransaction transaction = null;
             int result = 0;
 
-            using (transaction = SimpleAccess.BeginTrasaction())
+            using (transaction = SimpleAccess.BeginTransaction())
             {
                 try
                 {

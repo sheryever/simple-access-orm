@@ -1562,16 +1562,36 @@ namespace SimpleAccess.MySql
                 _sqlConnection.CloseSafely();
         }
 
+
+
         /// <summary> Begins a transaction. </summary>
         /// <returns> . </returns>
-        public MySqlTransaction BeginTrasaction()
+        public MySqlTransaction BeginTransaction()
+        {
+            return BeginTransaction(IsolationLevel.ReadCommitted);
+        }
+        /// <summary> Begins a transaction. </summary>
+        /// <returns> . </returns>
+        public MySqlTransaction BeginTransaction(IsolationLevel isolationLevel)
         {
             if (_sqlConnection.State != ConnectionState.Open)
                 _sqlConnection.Open();
-            //_transaction = _sqlConnection.BeginTransaction();
 
-            //return _transaction;
-            return _sqlConnection.BeginTransaction();
+            return _sqlConnection.BeginTransaction(isolationLevel);
+
+
+        }
+        /// <summary> Begins a transaction. </summary>
+        /// <returns> . </returns>
+        public MySqlTransaction BeginTransaction(string transactionName)
+        {
+            throw new NotImplementedException($"the parameter {nameof(transactionName)} is not supported by MySql Client");
+        }
+        /// <summary> Begins a transaction. </summary>
+        /// <returns> . </returns>
+        public MySqlTransaction BeginTransaction(IsolationLevel isolationLevel, string transactionName)
+        {
+            throw new NotImplementedException($"the parameter {nameof(transactionName)} is not supported by MySql Client");
         }
 
         /// <summary> Ends a transaction. </summary>

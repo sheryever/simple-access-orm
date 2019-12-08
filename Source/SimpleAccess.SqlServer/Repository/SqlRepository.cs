@@ -386,7 +386,7 @@ namespace SimpleAccess.SqlServer
 
             SqlTransaction sqlTransaction = null;
             int result = 0;
-            using (sqlTransaction = SimpleAccess.BeginTrasaction())
+            using (sqlTransaction = SimpleAccess.BeginTransaction())
             {
                 try
                 {
@@ -528,7 +528,7 @@ namespace SimpleAccess.SqlServer
         {
             SqlTransaction sqlTransaction = null;
             int result = 0;
-            using (sqlTransaction = SimpleAccess.BeginTrasaction())
+            using (sqlTransaction = SimpleAccess.BeginTransaction())
             {
 
                 try
@@ -715,7 +715,7 @@ namespace SimpleAccess.SqlServer
             int result = 0;
             try
             {
-                using (sqlTransaction = SimpleAccess.BeginTrasaction())
+                using (sqlTransaction = SimpleAccess.BeginTransaction())
                 {
                     var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
                     var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
@@ -753,7 +753,7 @@ namespace SimpleAccess.SqlServer
             int result = 0;
             try
             {
-                using (sqlTransaction = SimpleAccess.BeginTrasaction())
+                using (sqlTransaction = SimpleAccess.BeginTransaction())
                 {
                     var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
                     var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);

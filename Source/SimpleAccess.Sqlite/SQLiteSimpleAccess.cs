@@ -1561,16 +1561,36 @@ namespace SimpleAccess.SQLite
                 _sqliteConnection.CloseSafely();
         }
 
+
         /// <summary> Begins a transaction. </summary>
         /// <returns> . </returns>
-        public SQLiteTransaction BeginTrasaction()
+        public SQLiteTransaction BeginTransaction()
+        {
+            return BeginTransaction(IsolationLevel.ReadCommitted);
+        }
+        /// <summary> Begins a transaction. </summary>
+        /// <returns> . </returns>
+        public SQLiteTransaction BeginTransaction(IsolationLevel isolationLevel)
         {
             if (_sqliteConnection.State != ConnectionState.Open)
                 _sqliteConnection.Open();
-            //_sqliteTransaction = _sqliteConnection.BeginTransaction();
 
-            //return _sqliteTransaction;
-            return _sqliteConnection.BeginTransaction();
+            return _sqliteConnection.BeginTransaction(isolationLevel);
+
+
+        }
+        /// <summary> Begins a transaction. </summary>
+        /// <returns> . </returns>
+        public SQLiteTransaction BeginTransaction(string transactionName)
+        {
+            throw new NotImplementedException($"the parameter {nameof(transactionName)} is not supported by Sqlite Client");
+        }
+        /// <summary> Begins a transaction. </summary>
+        /// <returns> . </returns>
+        public SQLiteTransaction BeginTransaction(IsolationLevel isolationLevel, string transactionName)
+        {
+            throw new NotImplementedException($"the parameter {nameof(transactionName)} is not supported by Sqlite Client");
+
         }
 
         /// <summary> Ends a transaction. </summary>

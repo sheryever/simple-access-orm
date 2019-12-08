@@ -388,7 +388,7 @@ namespace SimpleAccess.MySql
             int result = 0;
             try
             {
-                using (transaction = SimpleAccess.BeginTrasaction())
+                using (transaction = SimpleAccess.BeginTransaction())
                 {
                     var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
                     string commandText = string.Format("[dbo].{0}_Insert", entityInfo.DbObjectName);
@@ -531,7 +531,7 @@ namespace SimpleAccess.MySql
             int result = 0;
             try
             {
-                using (transaction = SimpleAccess.BeginTrasaction())
+                using (transaction = SimpleAccess.BeginTransaction())
                 {
                     var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
                     string commandText = string.Format("{0}_Update", entityInfo.DbObjectName);
@@ -716,7 +716,7 @@ namespace SimpleAccess.MySql
             int result = 0;
             try
             {
-                using (transaction = SimpleAccess.BeginTrasaction())
+                using (transaction = SimpleAccess.BeginTransaction())
                 {
                     var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
                     var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
@@ -754,7 +754,7 @@ namespace SimpleAccess.MySql
             int result = 0;
             try
             {
-                using (transaction = SimpleAccess.BeginTrasaction())
+                using (transaction = SimpleAccess.BeginTransaction())
                 {
                     var entityInfo = RepositorySetting.GetEntityInfo(typeof(TEntity));
                     var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);

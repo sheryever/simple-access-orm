@@ -87,7 +87,7 @@ namespace SimpeAccess.SqlServer.ConsoleTest
                 throw new ArgumentNullException(nameof(entity), $"Null {nameof(Incident)} cannot be inserted.");
             }
 
-            using (var transaction = _repo.SimpleAccess.BeginTrasaction())
+            using (var transaction = _repo.SimpleAccess.BeginTransaction())
             {
                 try
                 {
