@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.Common;
 using System.Reflection;
+using System.Threading;
 
 namespace SimpleAccess.Core
 {
+#if !NET40
     /// <summary>
     /// Represent the interface of SimpleAccess methods and it's implemented by SimpleAccess 
     /// </summary>
@@ -22,11 +24,7 @@ namespace SimpleAccess.Core
     {
 
 
-        /// <summary>
-        /// Represent the default settings SimpleAccess <see cref="SimpleAccessSettings" />
-        /// </summary>
-        SimpleAccessSettings DefaultSimpleAccessSettings { get; set; }
-
+        /*
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
@@ -35,7 +33,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int ExecuteNonQueryAsync(string commandText, params TDataParameter[] parameters);
+        Task<int> ExecuteNonQueryAsync(string commandText, params TDataParameter[] parameters);
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
@@ -46,7 +44,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int ExecuteNonQueryAsync(string commandText, CommandType commandType, params TDataParameter[] parameters);
+        Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType, params TDataParameter[] parameters);
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
@@ -56,7 +54,7 @@ namespace SimpleAccess.Core
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int ExecuteNonQueryAsync(string commandText, object paramObject = null);
+        Task<int> ExecuteNonQueryAsync(string commandText, object paramObject = null);
 
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
@@ -68,7 +66,7 @@ namespace SimpleAccess.Core
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int ExecuteNonQueryAsync(string commandText, CommandType commandType, object paramObject = null);
+        Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType, object paramObject = null);
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
@@ -78,7 +76,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int ExecuteNonQueryAsync(TDbTransaction transaction, string commandText
+        Task<int> ExecuteNonQueryAsync(TDbTransaction transaction, string commandText
             , params TDataParameter[] parameters);
 
 
@@ -91,7 +89,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int ExecuteNonQueryAsync(TDbTransaction transaction, string commandText
+        Task<int> ExecuteNonQueryAsync(TDbTransaction transaction, string commandText
             , CommandType commandType
             , params TDataParameter[] parameters);
 
@@ -102,7 +100,7 @@ namespace SimpleAccess.Core
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>        
         /// <returns> Number of rows affected (integer) </returns>
-        int ExecuteNonQueryAsync(TDbTransaction transaction, string commandText
+        Task<int> ExecuteNonQueryAsync(TDbTransaction transaction, string commandText
             , object paramObject = null);
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
@@ -113,7 +111,7 @@ namespace SimpleAccess.Core
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>        
         /// <returns> Number of rows affected (integer) </returns>
-        int ExecuteNonQueryAsync(TDbTransaction transaction, string commandText
+        Task<int> ExecuteNonQueryAsync(TDbTransaction transaction, string commandText
             , CommandType commandType, object paramObject = null);
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -125,7 +123,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
-        T ExecuteScalarAsync<T>(string commandText, params TDataParameter[] parameters);
+        Task<T> ExecuteScalarAsync<T>(string commandText, params TDataParameter[] parameters);
 
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -138,7 +136,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {T} value </returns>
-        T ExecuteScalarAsync<T>(string commandText, CommandType commandType, params TDataParameter[] parameters);
+        Task<T> ExecuteScalarAsync<T>(string commandText, CommandType commandType, params TDataParameter[] parameters);
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
         /// 
@@ -149,7 +147,7 @@ namespace SimpleAccess.Core
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The {T} value </returns>
-        T ExecuteScalarAsync<T>(string commandText, object paramObject = null);
+        Task<T> ExecuteScalarAsync<T>(string commandText, object paramObject = null);
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
         /// 
@@ -161,7 +159,7 @@ namespace SimpleAccess.Core
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The {T} value </returns>
-        T ExecuteScalarAsync<T>(string commandText, CommandType commandType, object paramObject = null);
+        Task<T> ExecuteScalarAsync<T>(string commandText, CommandType commandType, object paramObject = null);
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
         /// 
@@ -173,7 +171,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {T} value </returns>
-        T ExecuteScalarAsync<T>(TDbTransaction transaction, string commandText
+        Task<T> ExecuteScalarAsync<T>(TDbTransaction transaction, string commandText
             , params TDataParameter[] parameters);
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -187,7 +185,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
-        T ExecuteScalarAsync<T>(TDbTransaction transaction, string commandText
+        Task<T> ExecuteScalarAsync<T>(TDbTransaction transaction, string commandText
             , CommandType commandType
             , params TDataParameter[] parameters);
 
@@ -201,7 +199,7 @@ namespace SimpleAccess.Core
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The {T} value </returns>
-        T ExecuteScalarAsync<T>(TDbTransaction transaction, string commandText
+        Task<T> ExecuteScalarAsync<T>(TDbTransaction transaction, string commandText
             , object paramObject = null);
 
 
@@ -216,7 +214,7 @@ namespace SimpleAccess.Core
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The {T} value </returns>
-        T ExecuteScalarAsync<T>(TDbTransaction transaction, string commandText, CommandType commandType
+        Task<T> ExecuteScalarAsync<T>(TDbTransaction transaction, string commandText, CommandType commandType
             , object paramObject = null);
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
@@ -224,7 +222,7 @@ namespace SimpleAccess.Core
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// <returns> The TDbDataReader </returns>
-        TDbDataReader ExecuteReaderAsync(string commandText,
+        Task<TDbDataReader> ExecuteReaderAsync(string commandText,
             params TDataParameter[] parameters);
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
@@ -236,7 +234,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The TDbDataReader </returns>
-        TDbDataReader ExecuteReaderAsync(string commandText, CommandType commandType,
+        Task<TDbDataReader> ExecuteReaderAsync(string commandText, CommandType commandType,
             params TDataParameter[] parameters);
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
@@ -248,7 +246,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The TDbDataReader </returns>
-        TDbDataReader ExecuteReaderAsync(string commandText, CommandBehavior commandBehavior,
+        Task<TDbDataReader> ExecuteReaderAsync(string commandText, CommandBehavior commandBehavior,
             params TDataParameter[] parameters);
 
 
@@ -262,7 +260,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The TDbDataReader </returns>
-        TDbDataReader ExecuteReaderAsync(string commandText, CommandType commandType, CommandBehavior commandBehavior,
+        Task<TDbDataReader> ExecuteReaderAsync(string commandText, CommandType commandType, CommandBehavior commandBehavior,
             params TDataParameter[] parameters);
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
@@ -270,7 +268,7 @@ namespace SimpleAccess.Core
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <returns> The TDbDataReader </returns>
-        TDbDataReader ExecuteReaderAsync(string commandText, object paramObject = null);
+        Task<TDbDataReader> ExecuteReaderAsync(string commandText, object paramObject = null);
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
         /// 
@@ -281,7 +279,7 @@ namespace SimpleAccess.Core
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The TDbDataReader </returns>
-        TDbDataReader ExecuteReaderAsync(string commandText, CommandType commandType, object paramObject = null);
+        Task<TDbDataReader> ExecuteReaderAsync(string commandText, CommandType commandType, object paramObject = null);
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
         /// 
@@ -292,7 +290,7 @@ namespace SimpleAccess.Core
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The TDbDataReader </returns>
-        TDbDataReader ExecuteReaderAsync(string commandText, CommandBehavior commandBehavior, object paramObject = null);
+        Task<TDbDataReader> ExecuteReaderAsync(string commandText, CommandBehavior commandBehavior, object paramObject = null);
 
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
@@ -305,7 +303,7 @@ namespace SimpleAccess.Core
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The TDbDataReader </returns>
-        TDbDataReader ExecuteReaderAsync(string commandText, CommandType commandType, CommandBehavior commandBehavior, object paramObject = null);
+        Task<TDbDataReader> ExecuteReaderAsync(string commandText, CommandType commandType, CommandBehavior commandBehavior, object paramObject = null);
 
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
@@ -317,7 +315,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{T}" /> </returns>
-        IEnumerable<T> ExecuteValuesAsync<T>(string commandText, params TDataParameter[] parameters);
+        Task<IEnumerable<T>> ExecuteValuesAsync<T>(string commandText, params TDataParameter[] parameters);
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
         /// 
@@ -329,7 +327,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{T}" /> </returns>
-        IEnumerable<T> ExecuteValuesAsync<T>(string commandText, CommandType commandType, params TDataParameter[] parameters);
+        Task<IEnumerable<T>> ExecuteValuesAsync<T>(string commandText, CommandType commandType, params TDataParameter[] parameters);
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
         /// 
@@ -340,7 +338,7 @@ namespace SimpleAccess.Core
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{T}" /> </returns>
-        IEnumerable<T> ExecuteValuesAsync<T>(string commandText, object paramObject = null);
+        Task<IEnumerable<T>> ExecuteValuesAsync<T>(string commandText, object paramObject = null);
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
         /// 
@@ -352,7 +350,7 @@ namespace SimpleAccess.Core
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{T}" /> </returns>
-        IEnumerable<T> ExecuteValuesAsync<T>(string commandText, CommandType commandType, object paramObject = null);
+        Task<IEnumerable<T>> ExecuteValuesAsync<T>(string commandText, CommandType commandType, object paramObject = null);
 
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -365,7 +363,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{T}" /> </returns>
-        IEnumerable<T> ExecuteValuesAsync<T>(TDbTransaction transaction, string commandText, params TDataParameter[] parameters);
+        Task<IEnumerable<T>> ExecuteValuesAsync<T>(TDbTransaction transaction, string commandText, params TDataParameter[] parameters);
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
         /// 
@@ -378,7 +376,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{T}" /> </returns>
-        IEnumerable<T> ExecuteValuesAsync<T>(TDbTransaction transaction, string commandText, CommandType commandType,
+        Task<IEnumerable<T>> ExecuteValuesAsync<T>(TDbTransaction transaction, string commandText, CommandType commandType,
                                              params TDataParameter[] parameters);
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
@@ -391,7 +389,7 @@ namespace SimpleAccess.Core
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{T}" /> value </returns>
-        IEnumerable<T> ExecuteValuesAsync<T>(TDbTransaction transaction, string commandText, object paramObject = null);
+        Task<IEnumerable<T>> ExecuteValuesAsync<T>(TDbTransaction transaction, string commandText, object paramObject = null);
 
 
 
@@ -406,7 +404,7 @@ namespace SimpleAccess.Core
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{T}" /> value </returns>
-        IEnumerable<T> ExecuteValuesAsync<T>(TDbTransaction transaction, string commandText,
+        Task<IEnumerable<T>> ExecuteValuesAsync<T>(TDbTransaction transaction, string commandText,
             CommandType commandType, object paramObject = null);
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
@@ -420,7 +418,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{TEntity}" /> </returns>
-        IEnumerable<TEntity> ExecuteEntitiesAsync<TEntity>(string commandText, string fieldsToSkip = null,
+        Task<IEnumerable<TEntity>> ExecuteEntitiesAsync<TEntity>(string commandText, string fieldsToSkip = null,
                                              Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
                                              params TDataParameter[] parameters)
             where TEntity : new();
@@ -437,7 +435,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{TEntity}" /> </returns>
-        IEnumerable<TEntity> ExecuteEntitiesAsync<TEntity>(string commandText, CommandType commandType, string fieldsToSkip = null,
+        Task<IEnumerable<TEntity>> ExecuteEntitiesAsync<TEntity>(string commandText, CommandType commandType, string fieldsToSkip = null,
                                              Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
                                              params TDataParameter[] parameters)
             where TEntity : new();
@@ -453,7 +451,7 @@ namespace SimpleAccess.Core
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{TEntity}" /> </returns>
-        IEnumerable<TEntity> ExecuteEntitiesAsync<TEntity>(string commandText, object paramObject = null, string fieldsToSkip = null,
+        Task<IEnumerable<TEntity>> ExecuteEntitiesAsync<TEntity>(string commandText, object paramObject = null, string fieldsToSkip = null,
                                      Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : new();
 
@@ -469,7 +467,7 @@ namespace SimpleAccess.Core
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{TEntity}" /> </returns>
-        IEnumerable<TEntity> ExecuteEntitiesAsync<TEntity>(string commandText, CommandType commandType, object paramObject = null,
+        Task<IEnumerable<TEntity>> ExecuteEntitiesAsync<TEntity>(string commandText, CommandType commandType, object paramObject = null,
                             string fieldsToSkip = null,Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : new();
 
@@ -486,7 +484,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{TEntity}" /> </returns>
-        IEnumerable<TEntity> ExecuteEntitiesAsync<TEntity>(TDbTransaction transaction, string commandText, 
+        Task<IEnumerable<TEntity>> ExecuteEntitiesAsync<TEntity>(TDbTransaction transaction, string commandText, 
                                              string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
                                              params TDataParameter[] parameters)
             where TEntity : new();
@@ -504,7 +502,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{TEntity}" /> </returns>
-        IEnumerable<TEntity> ExecuteEntitiesAsync<TEntity>(TDbTransaction transaction, string commandText, CommandType commandType,
+        Task<IEnumerable<TEntity>> ExecuteEntitiesAsync<TEntity>(TDbTransaction transaction, string commandText, CommandType commandType,
                                              string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
                                              params TDataParameter[] parameters)
             where TEntity : new();
@@ -521,7 +519,7 @@ namespace SimpleAccess.Core
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{TEntity}" /> </returns>
-        IEnumerable<TEntity> ExecuteEntitiesAsync<TEntity>(TDbTransaction transaction, string commandText, object paramObject = null,
+        Task<IEnumerable<TEntity>> ExecuteEntitiesAsync<TEntity>(TDbTransaction transaction, string commandText, object paramObject = null,
                                      string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : new();
 
@@ -540,7 +538,7 @@ namespace SimpleAccess.Core
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{TEntity}" /> </returns>
-        IEnumerable<TEntity> ExecuteEntitiesAsync<TEntity>(TDbTransaction transaction, string commandText, CommandType commandType,
+        Task<IEnumerable<TEntity>> ExecuteEntitiesAsync<TEntity>(TDbTransaction transaction, string commandText, CommandType commandType,
                                      object paramObject = null, string fieldsToSkip = null, 
                                      Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : new();
@@ -556,7 +554,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        TEntity ExecuteEntityAsync<TEntity>(string commandText, string fieldsToSkip = null,
+        Task<TEntity> ExecuteEntityAsync<TEntity>(string commandText, string fieldsToSkip = null,
                                              Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
                                              params TDataParameter[] parameters)
             where TEntity : class, new();
@@ -573,7 +571,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        TEntity ExecuteEntityAsync<TEntity>(string commandText, CommandType commandType, string fieldsToSkip = null,
+        Task<TEntity> ExecuteEntityAsync<TEntity>(string commandText, CommandType commandType, string fieldsToSkip = null,
                                              Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
                                              params TDataParameter[] parameters)
             where TEntity : class, new();
@@ -589,7 +587,7 @@ namespace SimpleAccess.Core
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        TEntity ExecuteEntityAsync<TEntity>(string commandText, object paramObject = null, string fieldsToSkip = null,
+        Task<TEntity> ExecuteEntityAsync<TEntity>(string commandText, object paramObject = null, string fieldsToSkip = null,
                                              Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : class, new();
 
@@ -605,7 +603,7 @@ namespace SimpleAccess.Core
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        TEntity ExecuteEntityAsync<TEntity>(string commandText, CommandType commandType, object paramObject = null, string fieldsToSkip = null,
+        Task<TEntity> ExecuteEntityAsync<TEntity>(string commandText, CommandType commandType, object paramObject = null, string fieldsToSkip = null,
                                              Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : class, new();
 
@@ -621,7 +619,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        TEntity ExecuteEntityAsync<TEntity>(TDbTransaction transaction, string commandText, string fieldsToSkip = null, 
+        Task<TEntity> ExecuteEntityAsync<TEntity>(TDbTransaction transaction, string commandText, string fieldsToSkip = null, 
                                             Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
                                              params TDataParameter[] parameters)
             where TEntity : class, new();
@@ -639,7 +637,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        TEntity ExecuteEntityAsync<TEntity>(TDbTransaction transaction, string commandText, CommandType commandType,
+        Task<TEntity> ExecuteEntityAsync<TEntity>(TDbTransaction transaction, string commandText, CommandType commandType,
                                              string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
                                              params TDataParameter[] parameters)
             where TEntity : class, new();
@@ -659,7 +657,7 @@ namespace SimpleAccess.Core
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        TEntity ExecuteEntityAsync<TEntity>(TDbTransaction transaction, string commandText, object paramObject = null,
+        Task<TEntity> ExecuteEntityAsync<TEntity>(TDbTransaction transaction, string commandText, object paramObject = null,
                                      string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null
                                      )
             where TEntity : class, new();
@@ -678,7 +676,7 @@ namespace SimpleAccess.Core
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        TEntity ExecuteEntityAsync<TEntity>(TDbTransaction transaction, string commandText, CommandType commandType, object paramObject = null,
+        Task<TEntity> ExecuteEntityAsync<TEntity>(TDbTransaction transaction, string commandText, CommandType commandType, object paramObject = null,
                                      string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : class, new();
 
@@ -691,7 +689,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> A list of dynamic. </returns>
-        IEnumerable<dynamic> ExecuteDynamicsAsync(string commandText
+        Task<IEnumerable<dynamic>> ExecuteDynamicsAsync(string commandText
             , string fieldsToSkip = null, params TDataParameter[] parameters);
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
@@ -704,7 +702,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> A list of dynamic. </returns>
-        IEnumerable<dynamic> ExecuteDynamicsAsync(string commandText, CommandType commandType
+        Task<IEnumerable<dynamic>> ExecuteDynamicsAsync(string commandText, CommandType commandType
             , string fieldsToSkip = null, params TDataParameter[] parameters);
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
@@ -716,7 +714,7 @@ namespace SimpleAccess.Core
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         ///  
         ///  <returns> A list of dynamic. </returns>
-        IEnumerable<dynamic> ExecuteDynamicsAsync(string commandText, object paramObject = null, string fieldsToSkip = null);
+        Task<IEnumerable<dynamic>> ExecuteDynamicsAsync(string commandText, object paramObject = null, string fieldsToSkip = null);
 
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{dynamic} from DataReader. </summary>
@@ -729,7 +727,7 @@ namespace SimpleAccess.Core
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         ///  
         ///  <returns> A list of dynamic. </returns>
-        IEnumerable<dynamic> ExecuteDynamicsAsync(string commandText, CommandType commandType, object paramObject = null
+        Task<IEnumerable<dynamic>> ExecuteDynamicsAsync(string commandText, CommandType commandType, object paramObject = null
             , string fieldsToSkip = null);
 
 
@@ -743,7 +741,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> A list of dynamic. </returns>
-        IEnumerable<dynamic> ExecuteDynamicsAsync(TDbTransaction transaction, string commandText,
+        Task<IEnumerable<dynamic>> ExecuteDynamicsAsync(TDbTransaction transaction, string commandText,
                                      string fieldsToSkip = null, params TDataParameter[] parameters);
 
 
@@ -758,7 +756,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> A list of dynamic. </returns>
-        IEnumerable<dynamic> ExecuteDynamicsAsync(TDbTransaction transaction, string commandText, CommandType commandType,                                     
+        Task<IEnumerable<dynamic>> ExecuteDynamicsAsync(TDbTransaction transaction, string commandText, CommandType commandType,                                     
             string fieldsToSkip = null , params TDataParameter[] parameters);
 
 
@@ -772,7 +770,7 @@ namespace SimpleAccess.Core
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// 
         /// <returns> A list of dynamic. </returns>
-        IEnumerable<dynamic> ExecuteDynamicsAsync(TDbTransaction transaction, string commandText, object paramObject = null,
+        Task<IEnumerable<dynamic>> ExecuteDynamicsAsync(TDbTransaction transaction, string commandText, object paramObject = null,
                              string fieldsToSkip = null);
 
 
@@ -787,7 +785,7 @@ namespace SimpleAccess.Core
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// 
         /// <returns> A list of dynamic. </returns>
-        IEnumerable<dynamic> ExecuteDynamicsAsync(TDbTransaction transaction, string commandText, CommandType commandType,
+        Task<IEnumerable<dynamic>> ExecuteDynamicsAsync(TDbTransaction transaction, string commandText, CommandType commandType,
                              object paramObject = null, string fieldsToSkip = null);
 
 
@@ -800,7 +798,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        dynamic ExecuteDynamicAsync(string commandText 
+        Task<dynamic> ExecuteDynamicAsync(string commandText 
             , string fieldsToSkip = null, params TDataParameter[] parameters);
 
 
@@ -814,7 +812,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        dynamic ExecuteDynamicAsync(string commandText, CommandType commandType
+        Task<dynamic> ExecuteDynamicAsync(string commandText, CommandType commandType
             , string fieldsToSkip = null, params TDataParameter[] parameters);
 
 
@@ -827,7 +825,7 @@ namespace SimpleAccess.Core
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        dynamic ExecuteDynamicAsync(string commandText, object paramObject = null
+        Task<dynamic> ExecuteDynamicAsync(string commandText, object paramObject = null
             , string fieldsToSkip = null);
 
 
@@ -841,7 +839,7 @@ namespace SimpleAccess.Core
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        dynamic ExecuteDynamicAsync(string commandText, CommandType commandType, object paramObject = null,
+        Task<dynamic> ExecuteDynamicAsync(string commandText, CommandType commandType, object paramObject = null,
                 string fieldsToSkip = null);
 
 
@@ -855,7 +853,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        dynamic ExecuteDynamicAsync(TDbTransaction transaction, string commandText,
+        Task<dynamic> ExecuteDynamicAsync(TDbTransaction transaction, string commandText,
                                     string fieldsToSkip = null, params TDataParameter[] parameters);
 
 
@@ -871,7 +869,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        dynamic ExecuteDynamicAsync(TDbTransaction transaction, string commandText, CommandType commandType,
+        Task<dynamic> ExecuteDynamicAsync(TDbTransaction transaction, string commandText, CommandType commandType,
                                     string fieldsToSkip = null, params TDataParameter[] parameters);
 
 
@@ -886,7 +884,7 @@ namespace SimpleAccess.Core
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        dynamic ExecuteDynamicAsync(TDbTransaction transaction, string commandText,
+        Task<dynamic> ExecuteDynamicAsync(TDbTransaction transaction, string commandText,
                                     object paramObject = null, string fieldsToSkip = null);
 
 
@@ -901,40 +899,49 @@ namespace SimpleAccess.Core
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        dynamic ExecuteDynamicAsync(TDbTransaction transaction, string commandText, CommandType commandType,
+        Task<dynamic> ExecuteDynamicAsync(TDbTransaction transaction, string commandText, CommandType commandType,
                                     object paramObject = null, string fieldsToSkip = null );
-
-        /// <summary>
-        /// Execute the CommandText against connection and add or refresh rows in <see cref="DataTable"/>
-        /// </summary>
-        /// <param name="commandText"></param>
-        /// <param name="dataTable">A <see cref="DataTable"/> to fill with records and, if necessary, schema  </param>
-        /// <returns></returns>
-        int Fill(string commandText, DataTable dataTable);
-
-        /// <summary>
-        /// Execute the CommandText against connection and add or refresh rows in <see cref="DataSet"/>
-        /// </summary>
-        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-        /// <param name="dataSet"> A <see cref="DataSet"/> to fill with records and, if necessary, schema  </param>
-        /// <returns></returns>
-        int Fill(string commandText, DataSet dataSet);
+                                    */
 
         /// <summary> Begins a database transaction. </summary>
         /// 
-        /// <returns> . </returns>
-        TDbTransaction BeginTrasaction();
-        
+        /// <returns> IDbTransactionAsyncContext&lt;TDbConnection, TDbTransaction&gt; </returns>
+        Task<IDbTransactionAsyncContext<TDbConnection, TDbTransaction>> BeginTransactionAsync();
 
-        /// <summary> Gets the new connection. </summary>
+        /// <summary> Begins a database transaction. </summary>
         /// 
-        /// <returns>  </returns>
-        
-        TDbConnection GetNewConnectionAsync();
+        /// <returns> IDbTransactionAsyncContext&lt;TDbConnection, TDbTransaction&gt; </returns>
+        Task<IDbTransactionAsyncContext<TDbConnection, TDbTransaction>> BeginTransactionAsync(IsolationLevel isolationLevel);
 
-        /// <summary> Close the current open connection. </summary>
-        void CloseDbConnection();
+        /// <summary> Begins a database transaction. </summary>
+        /// 
+        /// <returns> IDbTransactionAsyncContext&lt;TDbConnection, TDbTransaction&gt; </returns>
+        Task<IDbTransactionAsyncContext<TDbConnection, TDbTransaction>> BeginTransactionAsync(string transactionName);
 
+        /// <summary> Begins a database transaction. </summary>
+        /// 
+        /// <returns> IDbTransactionAsyncContext&lt;TDbConnection, TDbTransaction&gt; </returns>
+        Task<IDbTransactionAsyncContext<TDbConnection, TDbTransaction>> BeginTransactionAsync(IsolationLevel isolationLevel, string transactionName);
+
+        /// <summary> Begins a database transaction. </summary>
+        /// 
+        /// <returns> IDbTransactionAsyncContext&lt;TDbConnection, TDbTransaction&gt; </returns>
+        Task<IDbTransactionAsyncContext<TDbConnection, TDbTransaction>> BeginTransactionAsync(IDbTransactionAsyncContext<TDbConnection, TDbTransaction> context);
+
+        /// <summary> Begins a database transaction. </summary>
+        /// 
+        /// <returns> IDbTransactionAsyncContext&lt;TDbConnection, TDbTransaction&gt; </returns>
+        Task<IDbTransactionAsyncContext<TDbConnection, TDbTransaction>> BeginTransactionAsync(IDbTransactionAsyncContext<TDbConnection, TDbTransaction> context,IsolationLevel isolationLevel);
+
+        /// <summary> Begins a database transaction. </summary>
+        /// 
+        /// <returns> IDbTransactionAsyncContext&lt;TDbConnection, TDbTransaction&gt; </returns>
+        Task<IDbTransactionAsyncContext<TDbConnection, TDbTransaction>> BeginTransactionAsync(IDbTransactionAsyncContext<TDbConnection, TDbTransaction> context, string transactionName);
+
+        /// <summary> Begins a database transaction. </summary>
+        /// 
+        /// <returns> IDbTransactionAsyncContext&lt;TDbConnection, TDbTransaction&gt; </returns>
+        Task<IDbTransactionAsyncContext<TDbConnection, TDbTransaction>> BeginTransactionAsync(IDbTransactionAsyncContext<TDbConnection, TDbTransaction> context, IsolationLevel isolationLevel, string transactionName);
 
         /// <summary> Close an open database transaction. </summary>
         /// 
@@ -942,7 +949,7 @@ namespace SimpleAccess.Core
         /// <param name="transactionSucceed"> (optional) the transaction succeed. </param>
         /// <param name="closeConnection">    (optional) the close connection. </param>
 
-        void EndTransaction(TDbTransaction transaction, bool transactionSucceed = true, bool closeConnection = true);
-
+        void EndTransaction(IDbTransactionAsyncContext<TDbConnection, TDbTransaction> transaction, bool transactionSucceed = true, bool closeConnection = true);
     }
+#endif
 }
