@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccessNetCore.SqlServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAccess.SqlServer.ConsoleTest", "SimpleAccess.SqlServer.ConsoleTest\SimpleAccess.SqlServer.ConsoleTest.csproj", "{4A15A6BD-062A-4043-85D9-FDBCCD603D6E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAccess.SqlServerTestNetCore2.2", "SimpleAccess.SqlServerTest\SimpleAccess.SqlServerTestNetCore2.2.csproj", "{A88C693A-771A-43D2-BFFA-3DB74E867ED8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{4A15A6BD-062A-4043-85D9-FDBCCD603D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A15A6BD-062A-4043-85D9-FDBCCD603D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A15A6BD-062A-4043-85D9-FDBCCD603D6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A88C693A-771A-43D2-BFFA-3DB74E867ED8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A88C693A-771A-43D2-BFFA-3DB74E867ED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A88C693A-771A-43D2-BFFA-3DB74E867ED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A88C693A-771A-43D2-BFFA-3DB74E867ED8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
