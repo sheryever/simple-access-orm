@@ -113,7 +113,7 @@ namespace SimpleAccess.Core
         /// <returns> Number of rows affected (integer) </returns>
         Task<int> ExecuteNonQueryAsync(TDbTransaction transaction, string commandText
             , CommandType commandType, object paramObject = null);
-
+*/
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
@@ -160,7 +160,8 @@ namespace SimpleAccess.Core
         /// 
         /// <returns> The {T} value </returns>
         Task<T> ExecuteScalarAsync<T>(string commandText, CommandType commandType, object paramObject = null);
-
+        
+        /*
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
@@ -171,7 +172,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {T} value </returns>
-        Task<T> ExecuteScalarAsync<T>(TDbTransaction transaction, string commandText
+        Task<T> ExecuteScalarAsync<T>(IDbTransactionAsyncContext<IDbConnection, IDbTransaction> transactionContext, string commandText
             , params TDataParameter[] parameters);
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -185,7 +186,7 @@ namespace SimpleAccess.Core
         /// <param name="parameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
-        Task<T> ExecuteScalarAsync<T>(TDbTransaction transaction, string commandText
+        Task<T> ExecuteScalarAsync<T>(IDbTransactionAsyncContext<IDbConnection, IDbTransaction> transactionContext, string commandText
             , CommandType commandType
             , params TDataParameter[] parameters);
 
@@ -199,7 +200,7 @@ namespace SimpleAccess.Core
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The {T} value </returns>
-        Task<T> ExecuteScalarAsync<T>(TDbTransaction transaction, string commandText
+        Task<T> ExecuteScalarAsync<T>(IDbTransactionAsyncContext<IDbConnection, IDbTransaction> transactionContext, string commandText
             , object paramObject = null);
 
 
@@ -214,9 +215,9 @@ namespace SimpleAccess.Core
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The {T} value </returns>
-        Task<T> ExecuteScalarAsync<T>(TDbTransaction transaction, string commandText, CommandType commandType
+        Task<T> ExecuteScalarAsync<T>(IDbTransactionAsyncContext<IDbConnection, IDbTransaction> transactionContext, string commandText, CommandType commandType
             , object paramObject = null);
-
+        /*(
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
@@ -224,7 +225,7 @@ namespace SimpleAccess.Core
         /// <returns> The TDbDataReader </returns>
         Task<TDbDataReader> ExecuteReaderAsync(string commandText,
             params TDataParameter[] parameters);
-
+            /*
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>

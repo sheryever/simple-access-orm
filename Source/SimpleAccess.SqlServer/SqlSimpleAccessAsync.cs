@@ -9,6 +9,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Dynamic;
 using System.Reflection;
+using System.Threading;
 using SimpleAccess.Core;
 using SimpleAccess.Core.Logger;
 
@@ -299,168 +300,179 @@ namespace SimpleAccess.SqlServer
                     return ExecuteNonQuery(sqlTransaction, commandText, commandType, BuildSqlParameters(paramObject));
 
                 }
+                */
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The {TEntity} value </returns>
+        public Task<T> ExecuteScalarAsync<T>(string commandText, params SqlParameter[] sqlParameters)
+        {
+            return ExecuteScalarAsync<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType
+                , sqlParameters);
+        }
 
-                /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="T"> Generic type parameter. </typeparam>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The {TEntity} value </returns>
-                public T ExecuteScalar<T>(string commandText, params SqlParameter[] sqlParameters)
-                {
-                    return ExecuteScalar<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType
-                        , sqlParameters);
-                }
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The {T} value </returns>
+        public async Task<T> ExecuteScalarAsync<T>(string commandText, CommandType commandType, params SqlParameter[] sqlParameters)
+        {
+            SqlCommand dbCommand = null;
+            try
+            {
+                dbCommand = CreateCommand(commandText, commandType, sqlParameters);
+                var cancellationTokenSource = new CancellationTokenSource();
 
-                /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="T"> Generic type parameter. </typeparam>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The {T} value </returns>
-                public T ExecuteScalar<T>(string commandText, CommandType commandType, params SqlParameter[] sqlParameters)
-                {
-                    SqlCommand dbCommand = null;
-                    try
-                    {
-                        dbCommand = CreateCommand(commandText, commandType, sqlParameters);
-                        dbCommand.Connection.Open();
-                        var result = dbCommand.ExecuteScalar();
+                var cancellationToken = cancellationTokenSource.Token;
 
-                        return (T)Convert.ChangeType(result, typeof(T));
-                    }
-                    catch (Exception ex)
-                    {
-                        SimpleLogger.LogException(ex);
-                        throw;
-                    }
-                    finally
-                    {
-                        if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                            _sqlConnection.CloseSafely();
 
-                        dbCommand.ClearDbCommand();
-                    }
-                }
+                await dbCommand.Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
 
-                /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="T"> Generic type parameter. </typeparam>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// 
-                /// <returns> The {T} value </returns>
-                public T ExecuteScalar<T>(string commandText, object paramObject = null)
-                {
-                    return ExecuteScalar<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType
-                        , BuildSqlParameters(paramObject));
-                }
 
-                /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="T"> Generic type parameter. </typeparam>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// 
-                /// <returns> The {T} value </returns>
-                public T ExecuteScalar<T>(string commandText, CommandType commandType, object paramObject = null)
-                {
-                    return ExecuteScalar<T>(commandText, commandType
-                        , BuildSqlParameters(paramObject));
-                }
+                var result = await dbCommand.ExecuteScalarAsync(cancellationToken).ConfigureAwait(false);
 
-                /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="T"> Generic type parameter. </typeparam>
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The {T} value </returns>
-                public T ExecuteScalar<T>(SqlTransaction sqlTransaction, string commandText, params SqlParameter[] sqlParameters)
-                {
-                    return ExecuteScalar<T>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
-                        , sqlParameters);
-                }
+                return (T)Convert.ChangeType(result, typeof(T));
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+            finally
+            {
+                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                    _sqlConnection.CloseSafely();
 
-                /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="T"> Generic type parameter. </typeparam>
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The {TEntity} value </returns>
-                public T ExecuteScalar<T>(SqlTransaction sqlTransaction, string commandText,
+                dbCommand.ClearDbCommand();
+            }
+        }
+
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The {T} value </returns>
+        public Task<T> ExecuteScalarAsync<T>(string commandText, object paramObject = null)
+        {
+            return ExecuteScalarAsync<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType
+                , BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The {T} value </returns>
+        public Task<T> ExecuteScalarAsync<T>(string commandText, CommandType commandType, object paramObject = null)
+        {
+            return ExecuteScalarAsync<T>(commandText, commandType
+                , BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The {T} value </returns>
+        public Task<T> ExecuteScalarAsync<T>(SqlTransactionAsyncContext transactionContext, string commandText, params SqlParameter[] sqlParameters)
+        {
+            return ExecuteScalarAsync<T>(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType
+                , sqlParameters);
+        }
+
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The {TEntity} value </returns>
+        public async Task<T> ExecuteScalarAsync<T>(SqlTransactionAsyncContext transactionContext, string commandText,
                     CommandType commandType, params SqlParameter[] sqlParameters)
-                {
-                    SqlCommand dbCommand = null;
-                    try
-                    {
-                        dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
-                        dbCommand.Connection.OpenSafely();
-                        var result = dbCommand.ExecuteScalar();
+        {
+            SqlCommand dbCommand = null;
+            try
+            {
 
-                        return (T)Convert.ChangeType(result, typeof(T));
-                    }
-                    catch (Exception ex)
-                    {
-                        SimpleLogger.LogException(ex);
-                        throw;
-                    }
-                }
+                var cancellationTokenSource = new CancellationTokenSource();
+                var cancellationToken = cancellationTokenSource.Token;
 
-                /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="T"> Generic type parameter. </typeparam>
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                ///  <param name="paramObject"> The anonymous object as parameters. </param>
-                /// 
-                /// <returns> The {T} value </returns>
-                public T ExecuteScalar<T>(SqlTransaction sqlTransaction, string commandText, object paramObject = null)
-                {
-                    return ExecuteScalar<T>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
-                        , BuildSqlParameters(paramObject));
-                }
+                dbCommand = CreateCommand(transactionContext, commandText, commandType, sqlParameters);
 
-                /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="T"> Generic type parameter. </typeparam>
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                ///  <param name="paramObject"> The anonymous object as parameters. </param>
-                /// 
-                /// <returns> The {T} value </returns>
-                public T ExecuteScalar<T>(SqlTransaction sqlTransaction, string commandText,
+                var result = await dbCommand.ExecuteScalarAsync(cancellationToken).ConfigureAwait(false);
+
+                return (T)Convert.ChangeType(result, typeof(T));
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        ///  <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The {T} value </returns>
+        public Task<T> ExecuteScalarAsync<T>(SqlTransactionAsyncContext transactionContext, string commandText, object paramObject = null)
+        {
+            return ExecuteScalarAsync<T>(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType
+                , BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        ///  <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The {T} value </returns>
+        public Task<T> ExecuteScalarAsync<T>(SqlTransactionAsyncContext transactionContext, string commandText,
                     CommandType commandType, object paramObject = null)
-                {
-                    return ExecuteScalar<T>(sqlTransaction, commandText, commandType
-                        , BuildSqlParameters(paramObject));
-                }
-
+        {
+            return ExecuteScalarAsync<T>(transactionContext, commandText, commandType
+                , BuildSqlParameters(paramObject));
+        }
+        /*
                 /// <summary> Executes the commandText and return TDbDataReader. </summary>
                 /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
                 /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
@@ -1739,6 +1751,30 @@ namespace SimpleAccess.SqlServer
                     DefaultSimpleAccessSettings = null;
                 }
         */
+
+        /// <summary> Creates a command. </summary>
+        /// 
+        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The query string. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> The new command. </returns>
+        public SqlCommand CreateCommand(SqlTransactionAsyncContext transctionContext, string commandText, CommandType commandType
+            , params SqlParameter[] sqlParameters)
+        {
+            var dbCommand = transctionContext.Connection.CreateCommand();
+            dbCommand.Transaction = transctionContext.Transaction;
+            dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
+            dbCommand.CommandType = commandType;
+            dbCommand.CommandText = commandText;
+            if (sqlParameters != null)
+                dbCommand.Parameters.AddRange(sqlParameters);
+            if (_sqlTransaction != null)
+                dbCommand.Transaction = _sqlTransaction;
+
+            return dbCommand;
+        }
 
         /// <summary> Begins a database transaction. </summary>
         /// 
