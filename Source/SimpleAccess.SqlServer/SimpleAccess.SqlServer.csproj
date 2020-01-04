@@ -20,6 +20,7 @@ Documentation of using SimpleAccess is available at https://github.com/sheryever
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
     <ProjectGuid>{D97DEB44-C9BD-4813-AE06-3119CE26214A}</ProjectGuid>
+    <PackageReleaseNotes>Async support added for Dotnet Framwork 4.5 and Dotnet Standard 2.0</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
     <DefineConstants>NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
