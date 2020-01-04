@@ -21,286 +21,165 @@ namespace SimpleAccess.SqlServer
     /// </summary>
     public partial class SqlSimpleAccess
     {
-        //private const string DefaultConnectionStringKey = "simpleAccess:sqlConnectionStringName";
-
-        ///// <summary>
-        ///// Default connection string.
-        ///// </summary>
-        //public static string DefaultConnectionString { get; set; }
-
-        ///// <summary>
-        ///// SimpleLogger to log exception
-        ///// </summary>
-        //public ISimpleLogger SimpleLogger { get { return DefaultSimpleAccessSettings.DefaultLogger; } }
-
-        ///// <summary>
-        ///// Default settings for simple access
-        ///// </summary>
-        //public SimpleAccessSettings DefaultSimpleAccessSettings { get; set; }
-
-        ///// <summary> The SQL connection. </summary>
-        //private readonly SqlConnection _sqlConnection;
-
-        ///// <summary> The SQL transaction. </summary>
-
-        //private SqlTransaction _sqlTransaction;
 
 
-        //        #region Constructors
-
-        //        /// <summary> Constructor. </summary>
-        //        /// 
-        //        /// <param name="sqlConnection"> The SQL connection. </param>
-
-        //        public SqlSimpleAccess(SqlConnection sqlConnection)
-        //        {
-        //            DefaultSimpleAccessSettings = new SimpleAccessSettings
-        //            {
-        //                DefaultCommandType = CommandType.Text,
-        //                DefaultLogger = new SimpleLogger()
-        //            };
-        //            _sqlConnection = sqlConnection;
-        //        }
-
-        //        /// <summary> Constructor. </summary>
-        //        /// 
-        //        /// <param name="sqlConnection"> The SQL connection. </param>
-        //        /// <param name="defaultCommandType"> The default command type for all queries </param>
-
-        //        public SqlSimpleAccess(SqlConnection sqlConnection, CommandType defaultCommandType)
-        //        {
-        //            DefaultSimpleAccessSettings = new SimpleAccessSettings(defaultCommandType);
-        //            _sqlConnection = sqlConnection;
-        //        }
-
-        //        /// <summary> Constructor. </summary>
-        //        /// 
-        //        /// <param name="sqlConnection"> The SQL connection. </param>
-        //        /// <param name="defaultSimpleAccessSettings"> The default settings for simple access </param>
-
-        //        public SqlSimpleAccess(SqlConnection sqlConnection, SimpleAccessSettings defaultSimpleAccessSettings)
-        //        {
-        //            DefaultSimpleAccessSettings = new SimpleAccessSettings (defaultSimpleAccessSettings.DefaultCommandType, defaultSimpleAccessSettings.DefaultLogger);
-        //            DefaultSimpleAccessSettings.DbCommandTimeout = defaultSimpleAccessSettings.DbCommandTimeout;
-
-        //            _sqlConnection = sqlConnection;
-        //        }
-
-        //        /// <summary> Constructor. </summary>
-        //        /// 
-        //        /// <param name="connection"> The ConnectionString Name from the config file or a complete ConnectionString . </param>
-        //        public SqlSimpleAccess(string connection)
-        //            : this(new SqlConnection(SimpleAccessSettings.GetProperConnectionString(connection)))
-        //        {
-        //        }
-
-        //        /// <summary> Constructor. </summary>
-        //        /// 
-        //        /// <param name="connection"> The ConnectionString Name from the config file or a complete ConnectionString . </param>
-        //        /// <param name="defaultCommandType"> The default command type for all queries </param>
-        //        public SqlSimpleAccess(string connection, CommandType defaultCommandType)
-        //            : this(new SqlConnection(SimpleAccessSettings.GetProperConnectionString(connection)), defaultCommandType)
-        //        {
-        //        }
-
-        //        /// <summary> Constructor. </summary>
-        //        /// 
-        //        /// <param name="connection"> The ConnectionString Name from the config file or a complete ConnectionString . </param>
-        //        /// <param name="defaultSimpleAccessSettings"> The default settings for simple access </param>
-        //        public SqlSimpleAccess(string connection, SimpleAccessSettings defaultSimpleAccessSettings)
-        //            : this(new SqlConnection(SimpleAccessSettings.GetProperConnectionString(connection)), defaultSimpleAccessSettings)
-        //        {
-        //        }
-
-        //        /// <summary> Default constructor. </summary>
-        //        public SqlSimpleAccess()
-        //            : this(new SqlConnection(DefaultConnectionString))
-        //        {
-        //        }
-
-        //        /// <summary> Default constructor. </summary>
-        //        /// <param name="defaultCommandType"> The default command type for all queries </param>
-        //        public SqlSimpleAccess(CommandType defaultCommandType)
-        //            : this(new SqlConnection(DefaultConnectionString), defaultCommandType)
-        //        {
-        //        }
+        /// <summary> Executes the non query operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        public Task<int> ExecuteNonQueryAsync(string commandText, params SqlParameter[] sqlParameters)
+        {
+            return ExecuteNonQueryAsync(commandText, DefaultSimpleAccessSettings.DefaultCommandType, sqlParameters);
+        }
 
 
-        //        /// <summary> Default constructor. </summary>
-        //        /// <param name="defaultSimpleAccessSettings"> The default settings for simple access </param>
-        //        public SqlSimpleAccess(SimpleAccessSettings defaultSimpleAccessSettings)
-        //            : this(new SqlConnection(DefaultConnectionString), defaultSimpleAccessSettings)
-        //        {
-        //        }
-        //        /// <summary>
-        //        /// Static constructor to load default connection string from default configuration file
-        //        /// </summary>
-        //        static SqlSimpleAccess()
-        //        {
-        //#if NET40
-        //            var connectionStringName = ConfigurationManager.AppSettings[DefaultConnectionStringKey];
-        //            var connectionStringSettings = ConfigurationManager.ConnectionStrings[connectionStringName];
-        //            if (connectionStringSettings != null)
-        //            {
-        //                DefaultConnectionString = connectionStringSettings.ConnectionString;
-        //            }
-        //#endif
-        //        }
-        //#endregion
-        /*
+        /// <summary> Executes the non query operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        public Task<int> ExecuteNonQueryAsync(string commandText, object paramObject = null)
+        {
+            return ExecuteNonQueryAsync(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSqlParameters(paramObject));
+        }
 
-                /// <summary> Executes the non query operation. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="sqlParameters"> Options for controlling the SQL. </param>
-                /// 
-                /// <returns> Number of rows affected (integer) </returns>
-                public int ExecuteNonQueryAsync(string commandText, params SqlParameter[] sqlParameters)
-                {
-                    return ExecuteNonQueryAsync(commandText, DefaultSimpleAccessSettings.DefaultCommandType, sqlParameters);
+        /// <summary> Executes the non query operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        public Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType,
+            object paramObject = null)
+        {
+            return ExecuteNonQueryAsync(commandText, commandType, BuildSqlParameters(paramObject));
+        }
 
-                }
+        /// <summary> Executes the non query operation. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        public async Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType,
+            params SqlParameter[] sqlParameters)
+        {
+            int result;
+            SqlCommand dbCommand = null;
+            try
+            {
+                dbCommand = CreateCommandForAsync(commandText, commandType, sqlParameters);
+                var cancellationTokenSource = new CancellationTokenSource();
 
-                /// <summary> Executes the non query operation. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="sqlParameters"> Options for controlling the SQL. </param>
-                /// 
-                /// <returns> Number of rows affected (integer) </returns>
-                public int ExecuteNonQueryAsync(string commandText, CommandType commandType,
-                    params SqlParameter[] sqlParameters)
-                {
-                    int result;
-                    SqlCommand dbCommand = null;
-                    try
-                    {
-                        dbCommand = CreateCommand(commandText, commandType, sqlParameters);
-                        dbCommand.Connection.OpenSafely();
-                        result = dbCommand.ExecuteNonQuery();
-                        dbCommand.Parameters.Clear();
+                var cancellationToken = cancellationTokenSource.Token;
 
-                    }
-                    catch (Exception ex)
-                    {
-                        SimpleLogger.LogException(ex);
-                        throw;
-                    }
-                    finally
-                    {
-                        if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                            _sqlConnection.CloseSafely();
+                await dbCommand.Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
 
-                        dbCommand.ClearDbCommand();
-                    }
-                    return result;
-                }
+                result = await dbCommand.ExecuteNonQueryAsync(cancellationToken);
+                dbCommand.Parameters.Clear();
 
-                /// <summary> Executes the non query operation. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// 
-                /// <returns> Number of rows affected (integer) </returns>
-                public int ExecuteNonQueryAsync(string commandText, object paramObject = null)
-                {
-                    return ExecuteNonQueryAsync(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSqlParameters(paramObject));
-                }
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+            finally
+            {
+                if (dbCommand != null && dbCommand.Connection.State != ConnectionState.Closed)
+                    dbCommand.Connection.CloseSafely();
 
-                /// <summary> Executes the non query operation. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// 
-                /// <returns> Number of rows affected (integer) </returns>
-                public int ExecuteNonQueryAsync(string commandText, CommandType commandType,
-                    object paramObject = null)
-                {
-                    return ExecuteNonQueryAsync(commandText, commandType, BuildSqlParameters(paramObject));
-                }
+                dbCommand.ClearDbCommand();
+            }
+            return result;
+        }
 
-                /// <summary> Executes a command text against the connection and returns the number of rows affected. 
-                /// </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// <param name="transaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> Number of rows affected (integer) </returns>
-                public int ExecuteNonQueryAsync(SqlTransaction transaction, string commandText, params SqlParameter[] sqlParameters)
-                {
-                    return ExecuteNonQueryAsync(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, sqlParameters);
-                }
+        /// <summary> Executes a command text against the connection and returns the number of rows affected. 
+        /// </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        public Task<int> ExecuteNonQueryAsync(SqlTransactionAsyncContext transactionContext, string commandText, params SqlParameter[] sqlParameters)
+        {
+            return ExecuteNonQueryAsync(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType, sqlParameters);
+        }
 
-                /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="parameters"> Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> Number of rows affected (integer) </returns>
-                public int ExecuteNonQueryAsync(SqlTransaction sqlTransaction, string commandText,
-                    CommandType commandType, params SqlParameter[] parameters)
-                {
-                    SqlCommand dbCommand = null;
-                    try
-                    {
-                        dbCommand = CreateCommand(sqlTransaction, commandText, commandType, parameters);
-                        dbCommand.Connection.OpenSafely();
-                        return dbCommand.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        SimpleLogger.LogException(ex);
-                        throw;
-                    }
-                    finally
-                    {
-                        dbCommand.Parameters.Clear();
+        /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>        
+        /// <returns> Number of rows affected (integer) </returns>
+        public Task<int> ExecuteNonQueryAsync(SqlTransactionAsyncContext transactionContext, string commandText, object paramObject = null)
+        {
+            return ExecuteNonQueryAsync(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSqlParameters(paramObject));
+        }
 
-                    }
+        /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>        
+        /// <returns> Number of rows affected (integer) </returns>
+        public Task<int> ExecuteNonQueryAsync(SqlTransactionAsyncContext transactionContext, string commandText,
+            CommandType commandType, object paramObject = null)
+        {
+            return ExecuteNonQueryAsync(transactionContext, commandText, commandType, BuildSqlParameters(paramObject));
 
-                }
+        }
 
-                /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>        
-                /// <returns> Number of rows affected (integer) </returns>
-                public int ExecuteNonQueryAsync(SqlTransaction sqlTransaction, string commandText, object paramObject = null)
-                {
-                    return ExecuteNonQuery(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSqlParameters(paramObject));
-                }
+        /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="parameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        public async Task<int> ExecuteNonQueryAsync(SqlTransactionAsyncContext transactionContext, string commandText,
+            CommandType commandType, params SqlParameter[] parameters)
+        {
+            SqlCommand dbCommand = null;
+            try
+            {
+                dbCommand = CreateCommand(transactionContext, commandText, commandType, parameters);
 
-                /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>        
-                /// <returns> Number of rows affected (integer) </returns>
-                public int ExecuteNonQueryAsync(SqlTransaction sqlTransaction, string commandText,
-                    CommandType commandType, object paramObject = null)
-                {
-                    return ExecuteNonQuery(sqlTransaction, commandText, commandType, BuildSqlParameters(paramObject));
+                return await dbCommand.ExecuteNonQueryAsync(transactionContext.CancellationToken);
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+            finally
+            {
+                dbCommand?.Parameters.Clear();
 
-                }
-                */
+            }
+
+        }
+
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
@@ -314,48 +193,6 @@ namespace SimpleAccess.SqlServer
         {
             return ExecuteScalarAsync<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType
                 , sqlParameters);
-        }
-
-        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
-        /// 
-        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-        /// 
-        /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-        /// <param name="commandType"> Type of the command. </param>
-        /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
-        /// 
-        /// <returns> The {T} value </returns>
-        public async Task<T> ExecuteScalarAsync<T>(string commandText, CommandType commandType, params SqlParameter[] sqlParameters)
-        {
-            SqlCommand dbCommand = null;
-            try
-            {
-                dbCommand = CreateCommand(commandText, commandType, sqlParameters);
-                var cancellationTokenSource = new CancellationTokenSource();
-
-                var cancellationToken = cancellationTokenSource.Token;
-
-
-                await dbCommand.Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
-
-
-                var result = await dbCommand.ExecuteScalarAsync(cancellationToken).ConfigureAwait(false);
-
-                return (T)Convert.ChangeType(result, typeof(T));
-            }
-            catch (Exception ex)
-            {
-                SimpleLogger.LogException(ex);
-                throw;
-            }
-            finally
-            {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                    _sqlConnection.CloseSafely();
-
-                dbCommand.ClearDbCommand();
-            }
         }
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -394,7 +231,49 @@ namespace SimpleAccess.SqlServer
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The {T} value </returns>
+        public async Task<T> ExecuteScalarAsync<T>(string commandText, CommandType commandType, params SqlParameter[] sqlParameters)
+        {
+            SqlCommand dbCommand = null;
+            try
+            {
+                dbCommand = CreateCommandForAsync(commandText, commandType, sqlParameters);
+                var cancellationTokenSource = new CancellationTokenSource();
+
+                var cancellationToken = cancellationTokenSource.Token;
+
+
+                await dbCommand.Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
+
+
+                var result = await dbCommand.ExecuteScalarAsync(cancellationToken).ConfigureAwait(false);
+
+                return (T)Convert.ChangeType(result, typeof(T));
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+            finally
+            {
+                if (dbCommand != null && dbCommand.Connection.State != ConnectionState.Closed)
+                    dbCommand.Connection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
+            }
+        }
+
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
         /// 
@@ -410,41 +289,7 @@ namespace SimpleAccess.SqlServer
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
-        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-        /// <param name="commandType"> Type of the command. </param>
-        /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
-        /// 
-        /// <returns> The {TEntity} value </returns>
-        public async Task<T> ExecuteScalarAsync<T>(SqlTransactionAsyncContext transactionContext, string commandText,
-                    CommandType commandType, params SqlParameter[] sqlParameters)
-        {
-            SqlCommand dbCommand = null;
-            try
-            {
-
-                var cancellationTokenSource = new CancellationTokenSource();
-                var cancellationToken = cancellationTokenSource.Token;
-
-                dbCommand = CreateCommand(transactionContext, commandText, commandType, sqlParameters);
-
-                var result = await dbCommand.ExecuteScalarAsync(cancellationToken).ConfigureAwait(false);
-
-                return (T)Convert.ChangeType(result, typeof(T));
-            }
-            catch (Exception ex)
-            {
-                SimpleLogger.LogException(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
-        /// 
-        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-        /// 
-        /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         ///  <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
@@ -460,7 +305,7 @@ namespace SimpleAccess.SqlServer
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         ///  <param name="paramObject"> The anonymous object as parameters. </param>
@@ -472,1289 +317,1154 @@ namespace SimpleAccess.SqlServer
             return ExecuteScalarAsync<T>(transactionContext, commandText, commandType
                 , BuildSqlParameters(paramObject));
         }
-        /*
-                /// <summary> Executes the commandText and return TDbDataReader. </summary>
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
-                /// <returns> The TDbDataReader </returns>
-                public SqlDataReader ExecuteReader(string commandText, params SqlParameter[] sqlParameters)
+
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The {TEntity} value </returns>
+        public async Task<T> ExecuteScalarAsync<T>(SqlTransactionAsyncContext transactionContext, string commandText,
+            CommandType commandType, params SqlParameter[] sqlParameters)
+        {
+            SqlCommand dbCommand = null;
+            try
+            {
+
+                dbCommand = CreateCommand(transactionContext, commandText, commandType, sqlParameters);
+
+                var result = await dbCommand.ExecuteScalarAsync(transactionContext.CancellationToken).ConfigureAwait(false);
+
+                return (T)Convert.ChangeType(result, typeof(T));
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
+        /// <returns> The TDbDataReader </returns>
+        public Task<SqlDataReader> ExecuteReaderAsync(string commandText, params SqlParameter[] sqlParameters)
+        {
+            return ExecuteReaderAsync(commandText, DefaultSimpleAccessSettings.DefaultCommandType, sqlParameters);
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public Task<SqlDataReader> ExecuteReaderAsync(string commandText, CommandType commandType,
+            params SqlParameter[] sqlParameters)
+        {
+            return ExecuteReaderAsync(commandText, commandType, CommandBehavior.Default, sqlParameters);
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+        /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public Task<SqlDataReader> ExecuteReaderAsync(string commandText, CommandBehavior commandBehavior,
+            params SqlParameter[] sqlParameters)
+        {
+            return ExecuteReaderAsync(commandText, DefaultSimpleAccessSettings.DefaultCommandType, commandBehavior, sqlParameters);
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <returns> The TDbDataReader </returns>
+        public Task<SqlDataReader> ExecuteReaderAsync(string commandText, object paramObject = null)
+        {
+            return ExecuteReaderAsync(commandText, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public Task<SqlDataReader> ExecuteReaderAsync(string commandText, CommandType commandType, object paramObject = null)
+        {
+            return ExecuteReaderAsync(commandText, commandType, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public Task<SqlDataReader> ExecuteReaderAsync(string commandText, CommandBehavior commandBehavior, object paramObject = null)
+        {
+            return ExecuteReaderAsync(commandText, commandBehavior, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public Task<SqlDataReader> ExecuteReaderAsync(string commandText, CommandType commandType, CommandBehavior commandBehavior, object paramObject = null)
+        {
+            return ExecuteReaderAsync(commandText, commandType, commandBehavior, BuildSqlParameters(paramObject));
+        }
+
+
+        /// <summary> Executes the commandText and return TDbDataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
+        /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The TDbDataReader </returns>
+        public async Task<SqlDataReader> ExecuteReaderAsync(string commandText, CommandType commandType, CommandBehavior commandBehavior,
+            params SqlParameter[] sqlParameters)
+        {
+            try
+            {
+                var dbCommand = CreateCommandForAsync(commandText, commandType, sqlParameters);
+                var cancellationTokenSource = new CancellationTokenSource();
+
+                var cancellationToken = cancellationTokenSource.Token;
+
+
+                await dbCommand.Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
+
+                var result = await dbCommand.ExecuteReaderAsync(commandBehavior, cancellationToken);
+                dbCommand.Parameters.Clear();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+        }
+
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        public Task<IEnumerable<T>> ExecuteValuesAsync<T>(string commandText, params SqlParameter[] sqlParameters)
+        {
+            return ExecuteValuesAsync<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSqlParameters(sqlParameters));
+        }
+
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        public Task<IEnumerable<T>> ExecuteValuesAsync<T>(string commandText, object paramObject = null)
+        {
+            return ExecuteValuesAsync<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        public Task<IEnumerable<T>> ExecuteValuesAsync<T>(string commandText, CommandType commandType, object paramObject = null)
+        {
+            return ExecuteValuesAsync<T>(commandText, commandType, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        ///     
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        public async Task<IEnumerable<T>> ExecuteValuesAsync<T>(string commandText, CommandType commandType, params SqlParameter[] sqlParameters)
+        {
+            SqlCommand dbCommand = null;
+            try
+            {
+                dbCommand = CreateCommandForAsync(commandText, commandType, sqlParameters);
+                var cancellationTokenSource = new CancellationTokenSource();
+
+                var cancellationToken = cancellationTokenSource.Token;
+
+                await dbCommand.Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
+
+                using (var reader = await dbCommand.ExecuteReaderAsync(cancellationToken))
                 {
-                    return ExecuteReader(commandText, DefaultSimpleAccessSettings.DefaultCommandType, sqlParameters);
+                    return GetValues<T>(reader);
+                }
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+            finally
+            {
+                if (dbCommand != null && dbCommand.Connection.State != ConnectionState.Closed)
+                    dbCommand.Connection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
+            }
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> value </returns>
+        public Task<IEnumerable<T>> ExecuteValuesAsync<T>(SqlTransactionAsyncContext transactionContext, string commandText, object paramObject = null)
+        {
+            return ExecuteValuesAsync<T>(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Type of the entity. </typeparam>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> value </returns>
+        public Task<IEnumerable<T>> ExecuteValuesAsync<T>(SqlTransactionAsyncContext transactionContext, string commandText, CommandType commandType, object paramObject = null)
+        {
+            return ExecuteValuesAsync<T>(transactionContext, commandText, commandType, BuildSqlParameters(paramObject));
+        }
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="DbException"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        public Task<IEnumerable<T>> ExecuteValuesAsync<T>(SqlTransactionAsyncContext transactionContext, string commandText,
+                                             params SqlParameter[] sqlParameters)
+        {
+            return ExecuteValuesAsync<T>(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType, sqlParameters);
+        }
+
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="T"> Generic type parameter. </typeparam>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{T}" /> </returns>
+        public async Task<IEnumerable<T>> ExecuteValuesAsync<T>(SqlTransactionAsyncContext transactionContext, string commandText, CommandType commandType,
+            params SqlParameter[] sqlParameters)
+        {
+            SqlCommand dbCommand = null;
+            try
+            {
+
+                dbCommand = CreateCommand(transactionContext, commandText, commandType, sqlParameters);
+
+                using (var reader = await dbCommand.ExecuteReaderAsync(transactionContext.CancellationToken).ConfigureAwait(false))
+                {
+                    return GetValues<T>(reader);
                 }
 
-                /// <summary> Executes the commandText and return TDbDataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The TDbDataReader </returns>
-                public SqlDataReader ExecuteReader(string commandText, CommandType commandType,
-                    params SqlParameter[] sqlParameters)
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+            finally
+            {
+                if (dbCommand != null)
                 {
-                    return ExecuteReader(commandText, commandType, CommandBehavior.Default, sqlParameters);
+                    dbCommand.Parameters.Clear();
+
+                    dbCommand.ClearDbCommand();
                 }
 
-                /// <summary> Executes the commandText and return TDbDataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
-                /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The TDbDataReader </returns>
-                public SqlDataReader ExecuteReader(string commandText, CommandBehavior commandBehavior,
-                    params SqlParameter[] sqlParameters)
+            }
+        }
+
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The TEntity value </returns>
+        public Task<IEnumerable<TEntity>> ExecuteEntitiesAsync<TEntity>(string commandText, string fieldsToSkip = null,
+            Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SqlParameter[] sqlParameters)
+            where TEntity : new()
+        {
+            return ExecuteEntitiesAsync<TEntity>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip
+                , propertyInfoDictionary, sqlParameters);
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        ///  <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> The {TEntity} value </returns>
+
+        public Task<IEnumerable<TEntity>> ExecuteEntitiesAsync<TEntity>(string commandText, object paramObject = null, string fieldsToSkip = null,
+            Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
+            where TEntity : new()
+        {
+            return ExecuteEntitiesAsync<TEntity>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip
+                , propertyInfoDictionary, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> The {TEntity} value </returns>
+        public Task<IEnumerable<TEntity>> ExecuteEntitiesAsync<TEntity>(string commandText, CommandType commandType, object paramObject = null,
+            string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
+            where TEntity : new()
+        {
+            return ExecuteEntitiesAsync<TEntity>(commandText, commandType, fieldsToSkip
+                , propertyInfoDictionary, BuildSqlParameters(paramObject));
+        }
+
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        ///     
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The {TEntity} value </returns>
+        public async Task<IEnumerable<TEntity>> ExecuteEntitiesAsync<TEntity>(string commandText, CommandType commandType,
+            string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null
+            , params SqlParameter[] sqlParameters) where TEntity : new()
+        {
+            SqlCommand dbCommand = null;
+            try
+            {
+
+                dbCommand = CreateCommandForAsync(commandText, commandType, sqlParameters);
+                var cancellationTokenSource = new CancellationTokenSource();
+
+                var cancellationToken = cancellationTokenSource.Token;
+
+                await dbCommand.Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
+                using (var reader = await dbCommand.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    return ExecuteReader(commandText, DefaultSimpleAccessSettings.DefaultCommandType, commandBehavior, sqlParameters);
+                    return reader.DataReaderToObjectList<TEntity>(fieldsToSkip, propertyInfoDictionary);
                 }
 
-                /// <summary> Executes the commandText and return TDbDataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
-                /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The TDbDataReader </returns>
-                public SqlDataReader ExecuteReader(string commandText, CommandType commandType, CommandBehavior commandBehavior,
-                    params SqlParameter[] sqlParameters)
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+            finally
+            {
+                if (dbCommand != null && dbCommand.Connection.State != ConnectionState.Closed)
+                    dbCommand.Connection.CloseSafely();
+
+                if (dbCommand != null)
                 {
-                    try
-                    {
-                        var dbCommand = CreateCommand(commandText, commandType, sqlParameters);
-                        dbCommand.Connection.OpenSafely();
-                        var result = dbCommand.ExecuteReader(commandBehavior);
-                        dbCommand.Parameters.Clear();
-                        return result;
-                    }
-                    catch (Exception ex)
-                    {
-                        SimpleLogger.LogException(ex);
-                        throw;
-                    }
+                    dbCommand.Parameters.Clear();
+
+                    dbCommand.ClearDbCommand();
                 }
 
-                /// <summary> Executes the commandText and return TDbDataReader. </summary>
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// <returns> The TDbDataReader </returns>
-                public SqlDataReader ExecuteReader(string commandText, object paramObject = null)
+            }
+        }
+
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="DbException"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Generic type parameter. </typeparam>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The {TEntity} value </returns>
+        public Task<IEnumerable<TEntity>> ExecuteEntitiesAsync<TEntity>(SqlTransactionAsyncContext transactionContext, string commandText, string fieldsToSkip = null,
+            Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SqlParameter[] sqlParameters)
+            where TEntity : new()
+        {
+            return ExecuteEntitiesAsync<TEntity>(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType
+                , fieldsToSkip, propertyInfoDictionary, sqlParameters);
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{TEntity}" /> value </returns>
+        public Task<IEnumerable<TEntity>> ExecuteEntitiesAsync<TEntity>(SqlTransactionAsyncContext transactionContext, string commandText, object paramObject = null
+            , string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : new()
+        {
+            return ExecuteEntitiesAsync<TEntity>(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType
+                , fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> The <see cref="IEnumerable{TEntity}" /> value </returns>
+        public Task<IEnumerable<TEntity>> ExecuteEntitiesAsync<TEntity>(SqlTransactionAsyncContext transactionContext, string commandText,
+            CommandType commandType, object paramObject = null, string fieldsToSkip = null,
+            Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : new()
+        {
+            return ExecuteEntitiesAsync<TEntity>(transactionContext, commandText, commandType
+                , fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Generic type parameter. </typeparam>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The {TEntity} value </returns>
+        public async Task<IEnumerable<TEntity>> ExecuteEntitiesAsync<TEntity>(SqlTransactionAsyncContext transactionContext, string commandText,
+            CommandType commandType, string fieldsToSkip = null,
+            Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SqlParameter[] sqlParameters) where TEntity : new()
+        {
+            SqlCommand dbCommand = null;
+            try
+            {
+                dbCommand = CreateCommand(transactionContext, commandText, commandType, sqlParameters);
+
+                using (var reader = await dbCommand
+                    .ExecuteReaderAsync(transactionContext.CancellationToken).ConfigureAwait(false))
                 {
-                    return ExecuteReader(commandText, BuildSqlParameters(paramObject));
+                    return reader.DataReaderToObjectList<TEntity>(fieldsToSkip, propertyInfoDictionary);
                 }
 
-                /// <summary> Executes the commandText and return TDbDataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// 
-                /// <returns> The TDbDataReader </returns>
-                public SqlDataReader ExecuteReader(string commandText, CommandType commandType, object paramObject = null)
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+            finally
+            {
+                if (dbCommand != null)
                 {
-                    return ExecuteReader(commandText, commandType, BuildSqlParameters(paramObject));
+                    dbCommand.Parameters.Clear();
+                    dbCommand.ClearDbCommand();
                 }
 
-                /// <summary> Executes the commandText and return TDbDataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// 
-                /// <returns> The TDbDataReader </returns>
-                public SqlDataReader ExecuteReader(string commandText, CommandBehavior commandBehavior, object paramObject = null)
+            }
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The value of the entity. </returns>
+        public Task<TEntity> ExecuteEntityAsync<TEntity>(string commandText, string fieldsToSkip = null
+            , Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
+            params SqlParameter[] sqlParameters) where TEntity : class, new()
+        {
+            return ExecuteEntityAsync<TEntity>(commandText, DefaultSimpleAccessSettings.DefaultCommandType,
+                fieldsToSkip, propertyInfoDictionary, sqlParameters);
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> The value of the entity. </returns>
+        public Task<TEntity> ExecuteEntityAsync<TEntity>(string commandText, object paramObject = null, string fieldsToSkip = null
+            , Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
+            where TEntity : class, new()
+        {
+            return ExecuteEntityAsync<TEntity>(commandText, DefaultSimpleAccessSettings.DefaultCommandType,
+                fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> The value of the entity. </returns>
+        public Task<TEntity> ExecuteEntityAsync<TEntity>(string commandText, CommandType commandType, object paramObject = null,
+            string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
+            where TEntity : class, new()
+        {
+            return ExecuteEntityAsync<TEntity>(commandText, commandType,
+                fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The value of the entity. </returns>
+        public async Task<TEntity> ExecuteEntityAsync<TEntity>(string commandText, CommandType commandType, string fieldsToSkip = null,
+            Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SqlParameter[] sqlParameters) where TEntity : class, new()
+        {
+            SqlCommand dbCommand = null;
+            try
+            {
+                dbCommand = CreateCommandForAsync(commandText, commandType, sqlParameters);
+                var cancellationTokenSource = new CancellationTokenSource();
+                var cancellationToken = cancellationTokenSource.Token;
+
+                await dbCommand.Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
+
+                using (var reader = await dbCommand
+                    .ExecuteReaderAsync(CommandBehavior.SingleRow, cancellationToken).ConfigureAwait(false))
                 {
-                    return ExecuteReader(commandText, commandBehavior, BuildSqlParameters(paramObject));
+                    return reader.HasRows ? reader.DataReaderToObject<TEntity>(fieldsToSkip, propertyInfoDictionary) : null;
                 }
 
-                /// <summary> Executes the commandText and return TDbDataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// 
-                /// <returns> The TDbDataReader </returns>
-                public SqlDataReader ExecuteReader(string commandText, CommandType commandType, CommandBehavior commandBehavior, object paramObject = null)
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+            finally
+            {
+                if (dbCommand != null && dbCommand.Connection.State != ConnectionState.Closed)
+                    dbCommand.Connection.CloseSafely();
+
+                if (dbCommand != null)
                 {
-                    return ExecuteReader(commandText, commandType, commandBehavior, BuildSqlParameters(paramObject));
+                    dbCommand.Parameters.Clear();
+                    dbCommand.ClearDbCommand();
                 }
 
-                /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="T"> Type of the entity. </typeparam>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
-                /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The <see cref="IEnumerable{T}" /> </returns>
-                public IEnumerable<T> ExecuteValues<T>(string commandText, params SqlParameter[] sqlParameters)
+            }
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The value of the entity. </returns>
+        public Task<TEntity> ExecuteEntityAsync<TEntity>(SqlTransactionAsyncContext transactionContext, string commandText, string fieldsToSkip = null,
+            Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SqlParameter[] sqlParameters) where TEntity : class, new()
+        {
+            return ExecuteEntityAsync<TEntity>(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
+                fieldsToSkip, propertyInfoDictionary, sqlParameters);
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> The value of the entity. </returns>
+        public Task<TEntity> ExecuteEntityAsync<TEntity>(SqlTransactionAsyncContext transactionContext, string commandText, object paramObject = null,
+            string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : class, new()
+        {
+            return ExecuteEntityAsync<TEntity>(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
+                fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// 
+        /// <returns> The value of the entity. </returns>
+        public Task<TEntity> ExecuteEntityAsync<TEntity>(SqlTransactionAsyncContext transactionContext, string commandText, CommandType commandType,
+            object paramObject = null, string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
+            where TEntity : class, new()
+        {
+            return ExecuteEntityAsync<TEntity>(transactionContext, commandText, commandType,
+                fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
+        /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> The value of the entity. </returns>
+        public async Task<TEntity> ExecuteEntityAsync<TEntity>(SqlTransactionAsyncContext transactionContext, string commandText, CommandType commandType,
+            string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null
+            , params SqlParameter[] sqlParameters) where TEntity : class, new()
+        {
+            SqlCommand dbCommand = null;
+            try
+            {
+                dbCommand = CreateCommand(transactionContext, commandText, commandType, sqlParameters);
+
+                using (var reader = await dbCommand.ExecuteReaderAsync(transactionContext.CancellationToken).ConfigureAwait(false))
                 {
-                    return ExecuteValues<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSqlParameters(sqlParameters));
+                    return reader.HasRows ? reader.DataReaderToObject<TEntity>(fieldsToSkip, propertyInfoDictionary) : null;
+                }
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+            finally
+            {
+
+                if (dbCommand != null)
+                {
+                    dbCommand.Parameters.Clear();
+                    dbCommand.ClearDbCommand();
                 }
 
+            }
+        }
 
-                /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="T"> Type of the entity. </typeparam>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// 
-                /// <returns> The <see cref="IEnumerable{T}" /> </returns>
-                public IEnumerable<T> ExecuteValues<T>(string commandText, object paramObject = null)
+        /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> A list of object. </returns>
+        public Task<IEnumerable<dynamic>> ExecuteDynamicsAsync(string commandText, string fieldsToSkip = null, params SqlParameter[] sqlParameters)
+        {
+            return ExecuteDynamicsAsync(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
+                sqlParameters);
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
+        ///  
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        ///  
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        ///  
+        ///  <returns> A list of object. </returns>
+        public Task<IEnumerable<dynamic>> ExecuteDynamicsAsync(string commandText, object paramObject = null, string fieldsToSkip = null)
+        {
+            return ExecuteDynamicsAsync(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
+                BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
+        ///  
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        ///  
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        ///  
+        ///  <returns> A list of object. </returns>
+        public Task<IEnumerable<dynamic>> ExecuteDynamicsAsync(string commandText, CommandType commandType, object paramObject = null,
+            string fieldsToSkip = null)
+        {
+            return ExecuteDynamicsAsync(commandText, commandType, fieldsToSkip,
+                BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> A list of object. </returns>
+        public async Task<IEnumerable<dynamic>> ExecuteDynamicsAsync(string commandText, CommandType commandType, string fieldsToSkip = null,
+            params SqlParameter[] sqlParameters)
+        {
+            SqlCommand dbCommand = null;
+
+            try
+            {
+                dbCommand = CreateCommandForAsync(commandText, commandType, sqlParameters);
+                var cancellationTokenSource = new CancellationTokenSource();
+                var cancellationToken = cancellationTokenSource.Token;
+
+                await dbCommand.Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
+                return GetDynamicSqlData(await dbCommand.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false));
+
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+            finally
+            {
+                if (dbCommand != null && dbCommand.Connection.State != ConnectionState.Closed)
+                    dbCommand.Connection.CloseSafely();
+
+                dbCommand.ClearDbCommand();
+
+            }
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> A list of object. </returns>
+        public Task<IEnumerable<dynamic>> ExecuteDynamicsAsync(SqlTransactionAsyncContext transactionContext, string commandText, string fieldsToSkip = null,
+            params SqlParameter[] sqlParameters)
+        {
+            return ExecuteDynamicsAsync(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
+                sqlParameters);
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// 
+        /// <returns> A list of object. </returns>
+        public Task<IEnumerable<dynamic>> ExecuteDynamicsAsync(SqlTransactionAsyncContext transactionContext, string commandText, object paramObject = null,
+            string fieldsToSkip = null)
+        {
+            return ExecuteDynamicsAsync(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
+                BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// 
+        /// <returns> A list of object. </returns>
+        public Task<IEnumerable<dynamic>> ExecuteDynamicsAsync(SqlTransactionAsyncContext transactionContext, string commandText, CommandType commandType,
+            object paramObject = null, string fieldsToSkip = null)
+        {
+            return ExecuteDynamicsAsync(transactionContext, commandText, commandType, fieldsToSkip,
+                BuildSqlParameters(paramObject));
+        }
+
+
+
+        /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> A list of object. </returns>
+        public async Task<IEnumerable<dynamic>> ExecuteDynamicsAsync(SqlTransactionAsyncContext transactionContext, string commandText, CommandType commandType,
+            string fieldsToSkip = null, params SqlParameter[] sqlParameters)
+        {
+            SqlCommand dbCommand = null;
+            try
+            {
+                dbCommand = CreateCommand(transactionContext, commandText, commandType, sqlParameters);
+
+                return GetDynamicSqlData(await dbCommand
+                    .ExecuteReaderAsync(transactionContext.CancellationToken).ConfigureAwait(false));
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+            finally
+            {
+
+                dbCommand.ClearDbCommand();
+            }
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> Result in a anonymous object. </returns>
+        public Task<dynamic> ExecuteDynamicAsync(string commandText, string fieldsToSkip = null, params SqlParameter[] sqlParameters)
+        {
+            return ExecuteDynamicAsync(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
+                sqlParameters);
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// 
+        /// <returns> Result in a anonymous object. </returns>
+        public Task<dynamic> ExecuteDynamicAsync(string commandText, object paramObject = null, string fieldsToSkip = null)
+        {
+            return ExecuteDynamicAsync(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
+                BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// 
+        /// <returns> Result in a anonymous object. </returns>
+        public Task<dynamic> ExecuteDynamicAsync(string commandText, CommandType commandType, object paramObject = null, string fieldsToSkip = null)
+        {
+            return ExecuteDynamicAsync(commandText, commandType, fieldsToSkip,
+                BuildSqlParameters(paramObject));
+        }
+
+        /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> Result in a anonymous object. </returns>
+        public async Task<dynamic> ExecuteDynamicAsync(string commandText, CommandType commandType, string fieldsToSkip = null,
+            params SqlParameter[] sqlParameters)
+        {
+            SqlCommand dbCommand = null;
+            try
+            {
+                dbCommand = CreateCommand(commandText, commandType, sqlParameters);
+                var cancellationTokenSource = new CancellationTokenSource();
+                var cancellationToken = cancellationTokenSource.Token;
+
+                await dbCommand.Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
+                var reader = await dbCommand.ExecuteReaderAsync(CommandBehavior.SingleRow, cancellationToken).ConfigureAwait(false);
+                if (reader.Read())
                 {
-                    return ExecuteValues<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType,  BuildSqlParameters(paramObject));
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="T"> Type of the entity. </typeparam>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// 
-                /// <returns> The <see cref="IEnumerable{T}" /> </returns>
-                public IEnumerable<T> ExecuteValues<T>(string commandText, CommandType commandType, object paramObject = null)
-                {
-                    return ExecuteValues<T>(commandText, commandType, BuildSqlParameters(paramObject));
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                ///     
-                /// <typeparam name="T"> Type of the entity. </typeparam>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The <see cref="IEnumerable{T}" /> </returns>
-                public IEnumerable<T> ExecuteValues<T>(string commandText, CommandType commandType, params SqlParameter[] sqlParameters)
-                {
-                    SqlCommand dbCommand = null;
-                    try
-                    {
-                        dbCommand = CreateCommand(commandText, commandType, sqlParameters);
-                        dbCommand.Connection.OpenSafely();
-                        using (var reader = dbCommand.ExecuteReader())
-                        {
-                            return GetValues<T>(reader);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        SimpleLogger.LogException(ex);
-                        throw;
-                    }
-                    finally
-                    {
-                        if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                            _sqlConnection.CloseSafely();
-
-                        dbCommand.ClearDbCommand();
-                    }
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="T"> Type of the entity. </typeparam>
-                /// <param name="transaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// 
-                /// <returns> The <see cref="IEnumerable{T}" /> value </returns>
-                public IEnumerable<T> ExecuteValues<T>(SqlTransaction transaction, string commandText, object paramObject = null)
-                {
-                    return ExecuteValues<T>(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSqlParameters(paramObject));
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="T"> Type of the entity. </typeparam>
-                /// <param name="transaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// 
-                /// <returns> The <see cref="IEnumerable{T}" /> value </returns>
-                public IEnumerable<T> ExecuteValues<T>(SqlTransaction transaction, string commandText, CommandType commandType, object paramObject = null)
-                {
-                    return ExecuteValues<T>(transaction, commandText, commandType, BuildSqlParameters(paramObject));
-                }
-                /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
-                /// 
-                /// <exception cref="DbException"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="T"> Generic type parameter. </typeparam>
-                /// <param name="transaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The <see cref="IEnumerable{T}" /> </returns>
-                public IEnumerable<T> ExecuteValues<T>(SqlTransaction transaction, string commandText,
-                                                     params SqlParameter[] sqlParameters)
-                {
-                    return ExecuteValues<T>(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, sqlParameters);
-                }
-
-                /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="T"> Generic type parameter. </typeparam>
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The <see cref="IEnumerable{T}" /> </returns>
-                public IEnumerable<T> ExecuteValues<T>(SqlTransaction sqlTransaction, string commandText, CommandType commandType,
-                    params SqlParameter[] sqlParameters)
-                {
-                    SqlCommand dbCommand = null;
-                    try
-                    {
-                        dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
-                        dbCommand.Connection.OpenSafely();
-                        using (var reader = dbCommand.ExecuteReader())
-                        {
-                            return GetValues<T>(reader);
-                        }
-
-                    }
-                    catch (Exception ex)
-                    {
-                        SimpleLogger.LogException(ex);
-                        throw;
-                    }
-                    finally
-                    {
-                        dbCommand.Parameters.Clear();
-
-                        dbCommand.ClearDbCommand();
-
-                    }
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The TEntity value </returns>
-                public IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, string fieldsToSkip = null,
-                    Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SqlParameter[] sqlParameters)
-                    where TEntity : new()
-                {
-                    return ExecuteEntities<TEntity>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip
-                        , propertyInfoDictionary, sqlParameters);
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                ///     
-                /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The {TEntity} value </returns>
-                public IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, CommandType commandType,
-                    string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null
-                    , params SqlParameter[] sqlParameters) where TEntity : new()
-                {
-                    SqlCommand dbCommand = null;
-                    try
-                    {
-                        dbCommand = CreateCommand(commandText, commandType, sqlParameters);
-                        dbCommand.Connection.OpenSafely();
-                        using (var reader = dbCommand.ExecuteReader())
-                        {
-                            return reader.DataReaderToObjectList<TEntity>(fieldsToSkip, propertyInfoDictionary);
-                        }
-
-                        //return dbCommand.ExecuteReader().DataReaderToObjectList<TEntity>(fieldsToSkip, piList);
-                    }
-                    catch (Exception ex)
-                    {
-                        SimpleLogger.LogException(ex);
-                        throw;
-                    }
-                    finally
-                    {
-                        if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                            _sqlConnection.CloseSafely();
-
-                        dbCommand.Parameters.Clear();
-
-                        dbCommand.ClearDbCommand();
-                    }
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
-                ///  <param name="paramObject"> The anonymous object as parameters. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                /// 
-                /// <returns> The {TEntity} value </returns>
-
-                public IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, object paramObject = null, string fieldsToSkip = null,
-                    Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
-                    where TEntity : new()
-                {
-                    return ExecuteEntities<TEntity>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip
-                        , propertyInfoDictionary, BuildSqlParameters(paramObject));
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                /// 
-                /// <returns> The {TEntity} value </returns>
-                public IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, CommandType commandType, object paramObject = null,
-                    string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
-                    where TEntity : new()
-                {
-                    return ExecuteEntities<TEntity>(commandText, commandType, fieldsToSkip
-                        , propertyInfoDictionary, BuildSqlParameters(paramObject));
-                }
-
-                /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
-                /// 
-                /// <exception cref="DbException"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="TEntity"> Generic type parameter. </typeparam>
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The {TEntity} value </returns>
-                public IEnumerable<TEntity> ExecuteEntities<TEntity>(SqlTransaction sqlTransaction, string commandText, string fieldsToSkip = null,
-                    Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SqlParameter[] sqlParameters)
-                    where TEntity : new()
-                {
-                    return ExecuteEntities<TEntity>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
-                        , fieldsToSkip, propertyInfoDictionary, sqlParameters);
-                }
-
-                /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="TEntity"> Generic type parameter. </typeparam>
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The {TEntity} value </returns>
-                public IEnumerable<TEntity> ExecuteEntities<TEntity>(SqlTransaction sqlTransaction, string commandText,
-                    CommandType commandType, string fieldsToSkip = null,
-                    Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SqlParameter[] sqlParameters) where TEntity : new()
-                {
-                    SqlCommand dbCommand = null;
-                    try
-                    {
-                        dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
-                        dbCommand.Connection.OpenSafely();
-                        using (var reader = dbCommand.ExecuteReader())
-                        {
-                            return reader.DataReaderToObjectList<TEntity>(fieldsToSkip, propertyInfoDictionary);
-                        }
-
-                        //return dbCommand.ExecuteReader().DataReaderToObjectList<TEntity>(fieldsToSkip, piList);
-                    }
-                    catch (Exception ex)
-                    {
-                        SimpleLogger.LogException(ex);
-                        throw;
-                    }
-                    finally
-                    {
-                        dbCommand.Parameters.Clear();
-
-                        dbCommand.ClearDbCommand();
-
-                    }
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                /// 
-                /// <returns> The <see cref="IEnumerable{TEntity}" /> value </returns>
-                public IEnumerable<TEntity> ExecuteEntities<TEntity>(SqlTransaction sqlTransaction, string commandText, object paramObject = null
-                    , string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : new()
-                {
-                    return ExecuteEntities<TEntity>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
-                        , fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                /// 
-                /// <returns> The <see cref="IEnumerable{TEntity}" /> value </returns>
-                public IEnumerable<TEntity> ExecuteEntities<TEntity>(SqlTransaction sqlTransaction, string commandText,
-                    CommandType commandType, object paramObject = null, string fieldsToSkip = null,
-                    Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : new()
-                {
-                    return ExecuteEntities<TEntity>(sqlTransaction, commandText, commandType
-                        , fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The value of the entity. </returns>
-                public TEntity ExecuteEntity<TEntity>(string commandText, string fieldsToSkip = null
-                    , Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
-                    params SqlParameter[] sqlParameters) where TEntity : class, new()
-                {
-                    return ExecuteEntity<TEntity>(commandText, DefaultSimpleAccessSettings.DefaultCommandType,
-                        fieldsToSkip, propertyInfoDictionary, sqlParameters);
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The value of the entity. </returns>
-                public TEntity ExecuteEntity<TEntity>(string commandText, CommandType commandType, string fieldsToSkip = null,
-                    Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SqlParameter[] sqlParameters) where TEntity : class, new()
-                {
-                    SqlCommand dbCommand = null;
-                    try
-                    {
-                        dbCommand = CreateCommand(commandText, commandType, sqlParameters);
-                        dbCommand.Connection.OpenSafely();
-                        using (var reader = dbCommand.ExecuteReader(CommandBehavior.SingleRow))
-                        {
-                            return reader.HasRows ? reader.DataReaderToObject<TEntity>(fieldsToSkip, propertyInfoDictionary) : null;
-                        }
-
-                        //return dbCommand.ExecuteReader().DataReaderToObject<TEntity>(fieldsToSkip, piList);
-                    }
-                    catch (Exception ex)
-                    {
-                        SimpleLogger.LogException(ex);
-                        throw;
-                    }
-                    finally
-                    {
-                        if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                            _sqlConnection.CloseSafely();
-
-                        dbCommand.Parameters.Clear();
-                        dbCommand.ClearDbCommand();
-
-                    }
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                /// 
-                /// <returns> The value of the entity. </returns>
-                public TEntity ExecuteEntity<TEntity>(string commandText, object paramObject = null, string fieldsToSkip = null
-                    , Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
-                    where TEntity : class, new()
-                {
-                    return ExecuteEntity<TEntity>(commandText, DefaultSimpleAccessSettings.DefaultCommandType,
-                        fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-                /// 
-                /// <returns> The value of the entity. </returns>
-                public TEntity ExecuteEntity<TEntity>(string commandText, CommandType commandType, object paramObject = null,
-                    string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
-                    where TEntity : class, new()
-                {
-                    return ExecuteEntity<TEntity>(commandText, commandType,
-                        fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The value of the entity. </returns>
-                public TEntity ExecuteEntity<TEntity>(SqlTransaction sqlTransaction, string commandText, string fieldsToSkip = null,
-                    Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SqlParameter[] sqlParameters) where TEntity : class, new()
-                {
-                    return ExecuteEntity<TEntity>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
-                        fieldsToSkip, propertyInfoDictionary, sqlParameters);
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> The value of the entity. </returns>
-                public TEntity ExecuteEntity<TEntity>(SqlTransaction sqlTransaction, string commandText, CommandType commandType,
-                    string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null
-                    , params SqlParameter[] sqlParameters) where TEntity : class, new()
-                {
-                    SqlCommand dbCommand = null;
-                    try
-                    {
-                        dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
-                        dbCommand.Connection.OpenSafely();
-                        using (var reader = dbCommand.ExecuteReader())
-                        {
-                            return reader.HasRows ? reader.DataReaderToObject<TEntity>(fieldsToSkip, propertyInfoDictionary) : null;
-                        }
-
-                        //return dbCommand.ExecuteReader().DataReaderToObject<TEntity>(fieldsToSkip, piList);
-                    }
-                    catch (Exception ex)
-                    {
-                        SimpleLogger.LogException(ex);
-                        throw;
-                    }
-                    finally
-                    {
-
-                        dbCommand.ClearDbCommand();
-
-                    }
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                /// 
-                /// <returns> The value of the entity. </returns>
-                public TEntity ExecuteEntity<TEntity>(SqlTransaction sqlTransaction, string commandText, object paramObject = null,
-                    string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : class, new()
-                {
-                    return ExecuteEntity<TEntity>(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
-                        fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-                /// 
-                /// <returns> The value of the entity. </returns>
-                public TEntity ExecuteEntity<TEntity>(SqlTransaction sqlTransaction, string commandText, CommandType commandType,
-                    object paramObject = null, string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
-                    where TEntity : class, new()
-                {
-                    return ExecuteEntity<TEntity>(sqlTransaction, commandText, commandType,
-                        fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> A list of object. </returns>
-                public IEnumerable<dynamic> ExecuteDynamics(string commandText, string fieldsToSkip = null, params SqlParameter[] sqlParameters)
-                {
-                    return ExecuteDynamics(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
-                        sqlParameters);
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> A list of object. </returns>
-                public IEnumerable<dynamic> ExecuteDynamics(string commandText, CommandType commandType, string fieldsToSkip = null,
-                    params SqlParameter[] sqlParameters)
-                {
-                    SqlCommand dbCommand = null;
-                    try
-                    {
-                        dbCommand = CreateCommand(commandText, commandType, sqlParameters);
-                        dbCommand.Connection.OpenSafely();
-                        return GetDynamicSqlData(dbCommand.ExecuteReader());
-
-                    }
-                    catch (Exception ex)
-                    {
-                        SimpleLogger.LogException(ex);
-                        throw;
-                    }
-                    finally
-                    {
-                        if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                            _sqlConnection.CloseSafely();
-
-                        dbCommand.ClearDbCommand();
-
-                    }
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
-                ///  
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                ///  
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                ///  
-                ///  <returns> A list of object. </returns>
-                public IEnumerable<dynamic> ExecuteDynamics(string commandText, object paramObject = null, string fieldsToSkip = null)
-                {
-                    return ExecuteDynamics(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
-                        BuildSqlParameters(paramObject));
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
-                ///  
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                ///  
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                ///  
-                ///  <returns> A list of object. </returns>
-                public IEnumerable<dynamic> ExecuteDynamics(string commandText, CommandType commandType, object paramObject = null,
-                    string fieldsToSkip = null)
-                {
-                    return ExecuteDynamics(commandText, commandType, fieldsToSkip,
-                        BuildSqlParameters(paramObject));
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> A list of object. </returns>
-                public IEnumerable<dynamic> ExecuteDynamics(SqlTransaction sqlTransaction, string commandText, string fieldsToSkip = null,
-                    params SqlParameter[] sqlParameters)
-                {
-                    return ExecuteDynamics(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
-                        sqlParameters);
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> A list of object. </returns>
-                public IEnumerable<dynamic> ExecuteDynamics(SqlTransaction sqlTransaction, string commandText, CommandType commandType,
-                    string fieldsToSkip = null, params SqlParameter[] sqlParameters)
-                {
-                    SqlCommand dbCommand = null;
-                    try
-                    {
-                        dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
-                        dbCommand.Connection.OpenSafely();
-                        return GetDynamicSqlData(dbCommand.ExecuteReader());
-                    }
-                    catch (Exception ex)
-                    {
-                        SimpleLogger.LogException(ex);
-                        throw;
-                    }
-                    finally
-                    {
-
-                        dbCommand.ClearDbCommand();
-
-                    }
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// 
-                /// <returns> A list of object. </returns>
-                public IEnumerable<dynamic> ExecuteDynamics(SqlTransaction sqlTransaction, string commandText, object paramObject = null,
-                    string fieldsToSkip = null)
-                {
-                    return ExecuteDynamics(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
-                        BuildSqlParameters(paramObject));
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// 
-                /// <returns> A list of object. </returns>
-                public IEnumerable<dynamic> ExecuteDynamics(SqlTransaction sqlTransaction, string commandText, CommandType commandType,
-                    object paramObject = null, string fieldsToSkip = null)
-                {
-                    return ExecuteDynamics(sqlTransaction, commandText, commandType, fieldsToSkip,
-                        BuildSqlParameters(paramObject));
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> Result in a anonymous object. </returns>
-                public dynamic ExecuteDynamic(string commandText, string fieldsToSkip = null, params SqlParameter[] sqlParameters)
-                {
-                    return ExecuteDynamic(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
-                        sqlParameters);
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> Result in a anonymous object. </returns>
-                public dynamic ExecuteDynamic(string commandText, CommandType commandType, string fieldsToSkip = null,
-                    params SqlParameter[] sqlParameters)
-                {
-                    SqlCommand dbCommand = null;
-                    try
-                    {
-                        dbCommand = CreateCommand(commandText, commandType, sqlParameters);
-                        dbCommand.Connection.OpenSafely();
-                        var reader = dbCommand.ExecuteReader(CommandBehavior.SingleRow);
-                        if (reader.Read())
-                        {
-                            var result = SqlDataReaderToExpando(reader);
-                            reader.Close();
-                            return result;
-                        }
-
-                        return null;
-                    }
-                    catch (Exception ex)
-                    {
-                        SimpleLogger.LogException(ex);
-                        throw;
-                    }
-                    finally
-                    {
-                        if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                            _sqlConnection.CloseSafely();
-
-                        dbCommand.ClearDbCommand();
-
-                    }
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// 
-                /// <returns> Result in a anonymous object. </returns>
-                public dynamic ExecuteDynamic(string commandText, object paramObject = null, string fieldsToSkip = null)
-                {
-                    return ExecuteDynamic(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
-                        BuildSqlParameters(paramObject));
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// 
-                /// <returns> Result in a anonymous object. </returns>
-                public dynamic ExecuteDynamic(string commandText, CommandType commandType, object paramObject = null, string fieldsToSkip = null)
-                {
-                    return ExecuteDynamic(commandText, commandType, fieldsToSkip,
-                        BuildSqlParameters(paramObject));
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> Result in a anonymous object. </returns>
-                public dynamic ExecuteDynamic(SqlTransaction sqlTransaction, string commandText, string fieldsToSkip = null,
-                    params SqlParameter[] sqlParameters)
-                {
-                    return ExecuteDynamic(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
-                        fieldsToSkip, sqlParameters);
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
-                /// 
-                /// <returns> Result in a anonymous object. </returns>
-                public dynamic ExecuteDynamic(SqlTransaction sqlTransaction, string commandText, CommandType commandType,
-                    string fieldsToSkip = null, params SqlParameter[] sqlParameters)
-                {
-                    SqlCommand dbCommand = null;
-                    try
-                    {
-                        dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
-                        dbCommand.Connection.OpenSafely();
-                        var reader = dbCommand.ExecuteReader();
-                        if (reader.Read())
-                            return SqlDataReaderToExpando(reader);
-
-                        return null;
-                    }
-                    catch (Exception ex)
-                    {
-                        SimpleLogger.LogException(ex);
-                        throw;
-                    }
-                    finally
-                    {
-                        dbCommand.ClearDbCommand();
-
-                    }
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// -<param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// 
-                /// <returns> Result in a anonymous object. </returns>
-                public dynamic ExecuteDynamic(SqlTransaction sqlTransaction, string commandText, object paramObject = null, string fieldsToSkip = null)
-                {
-                    return ExecuteDynamic(sqlTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
-                        fieldsToSkip, BuildSqlParameters(paramObject));
-                }
-
-                /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
-                /// 
-                /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-                /// 
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="paramObject"> The anonymous object as parameters. </param>
-                /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-                /// 
-                /// <returns> Result in a anonymous object. </returns>
-                public dynamic ExecuteDynamic(SqlTransaction sqlTransaction, string commandText, CommandType commandType,
-                        object paramObject = null, string fieldsToSkip = null)
-                {
-                    return ExecuteDynamic(sqlTransaction, commandText, commandType,
-                        fieldsToSkip, BuildSqlParameters(paramObject));
-                }
-                /// <summary>
-                /// Execute the CommandText against connection and add or refresh rows in <see cref="DataTable"/>
-                /// </summary>
-                /// <param name="commandText"></param>
-                /// <param name="dataTable">A <see cref="DataTable"/> to fill with records and, if necessary, schema  </param>
-                /// <returns></returns>
-                public int Fill(string commandText, DataTable dataTable)
-                {
-                    SqlCommand dbCommand = null;
-                    try
-                    {
-                        if (dataTable == null)
-                            dataTable = new DataTable();
-                        dbCommand = new SqlCommand(commandText);
-                        var sqlDataAdapter = new SqlDataAdapter(dbCommand);
-                        return sqlDataAdapter.Fill(dataTable);
-                    }
-                    catch (Exception ex)
-                    {
-                        SimpleLogger.LogException(ex);
-
-                        throw;
-                    }
-                    finally
-                    {
-                        if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                            _sqlConnection.CloseSafely();
-
-                        dbCommand.ClearDbCommand();
-                    }
-                }
-
-                /// <summary>
-                /// Execute the CommandText against connection and add or refresh rows in <see cref="DataSet"/>
-                /// </summary>
-                /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-                /// <param name="dataSet"> A <see cref="DataSet"/> to fill with records and, if necessary, schema  </param>
-                /// <returns></returns>
-                public int Fill(string commandText, DataSet dataSet)
-                {
-                    SqlCommand dbCommand = null;
-                    try
-                    {
-                        if (dataSet == null)
-                            dataSet = new DataSet();
-
-                        dbCommand = new SqlCommand(commandText);
-
-                        SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(dbCommand);
-                        return sqlDataAdapter.Fill(dataSet);
-                    }
-                    catch (Exception ex)
-                    {
-                        SimpleLogger.LogException(ex);
-
-                        throw;
-                    }
-                    finally
-                    {
-                        if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
-                            _sqlConnection.CloseSafely();
-
-                        dbCommand.ClearDbCommand();
-                    }
-                }
-
-                /// <summary> Gets the new connection. </summary>
-                /// <returns> The new connection. </returns>
-                public SqlConnection GetNewConnection()
-                {
-                    //return new SqlConnection(DefaultConnectionString);
-                    return new SqlConnection(_sqlConnection.ConnectionString);
-                }
-
-                /// <summary> Close the current open connection. </summary>
-                public void CloseDbConnection()
-                {
-                    if (_sqlConnection != null)
-                        _sqlConnection.CloseSafely();
-                }
-
-                /// <summary> Begins a transaction. </summary>
-                /// <returns> . </returns>
-                public SqlTransaction BeginTransaction()
-                {
-                    if (_sqlConnection.State != ConnectionState.Open)
-                        _sqlConnection.Open();
-                    //_sqlTransaction = _sqlConnection.BeginTransaction();
-
-                    //return _sqlTransaction;
-                    return _sqlConnection.BeginTransaction();
-                }
-
-                /// <summary> Ends a transaction. </summary>
-                /// 
-                /// <param name = "sqlTransaction" > The SQL transaction. </param>
-                /// <param name = "transactionSucceed" > (optional)the transaction succeed. </param>
-                /// <param name = "closeConnection" > (optional)the close connection. </param>
-                public void EndTransaction(SqlTransaction sqlTransaction, bool transactionSucceed = true, bool closeConnection = true)
-                {
-                    if (transactionSucceed)
-                    {
-                        sqlTransaction.Commit();
-                    }
-                    else
-                    {
-                        sqlTransaction.Rollback();
-                    }
-
-                    if (closeConnection)
-                    {
-                        _sqlConnection.CloseSafely();
-                    }
-                }
-
-
-                /// <summary> Creates a command. </summary>
-                /// 
-                /// <param name="commandText"> The query string. </param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="sqlParameters">Options for controlling the SQL. </param>
-                /// 
-                /// <returns> The new command. </returns>
-                public SqlCommand CreateCommand(string commandText, CommandType commandType, params SqlParameter[] sqlParameters)
-                {
-                    var dbCommand = _sqlConnection.CreateCommand();
-                    dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
-                    dbCommand.CommandType = commandType;
-                    dbCommand.CommandText = commandText;
-                    if (sqlParameters != null)
-                        dbCommand.Parameters.AddRange(sqlParameters);
-
-                    if (_sqlTransaction != null)
-                        dbCommand.Transaction = _sqlTransaction;
-
-                    return dbCommand;
-                }
-
-                /// <summary> Creates a command. </summary>
-                /// 
-                /// <param name="sqlTransaction"> The SQL transaction. </param>
-                /// <param name="commandText"> The query string. </param>
-                /// <param name="commandType"> Type of the command. </param>
-                /// <param name="sqlParameters"> Options for controlling the SQL. </param>
-                /// 
-                /// <returns> The new command. </returns>
-                public SqlCommand CreateCommand(SqlTransaction sqlTransaction, string commandText, CommandType commandType
-                    , params SqlParameter[] sqlParameters)
-                {
-                    var dbCommand = _sqlConnection.CreateCommand();
-                    dbCommand.Transaction = sqlTransaction;
-                    dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
-                    dbCommand.CommandType = commandType;
-                    dbCommand.CommandText = commandText;
-                    if (sqlParameters != null)
-                        dbCommand.Parameters.AddRange(sqlParameters);
-                    if (_sqlTransaction != null)
-                        dbCommand.Transaction = _sqlTransaction;
-
-                    return dbCommand;
-                }
-
-                /// <summary> SQL data reader to <see cref="ExpandoObject"/>. </summary>
-                /// 
-                /// <param name="reader"> The reader. </param>
-                /// 
-                /// <returns> . </returns>
-                public dynamic SqlDataReaderToExpando(SqlDataReader reader)
-                {
-                    var expandoObject = new ExpandoObject() as IDictionary<string, object>;
-
-                    for (var i = 0; i < reader.FieldCount; i++)
-                    {
-                        var value = reader[i];
-                        expandoObject.Add(reader.GetName(i), value == DBNull.Value ? null : value);
-                    }
-
-
-                    return expandoObject;
-                }
-
-                /// <summary> Gets a object SQL data. </summary>
-                /// 
-                /// <param name="reader"> The reader. </param>
-                /// 
-                /// <returns> The object SQL data. </returns>
-                public IList<dynamic> GetDynamicSqlData(SqlDataReader reader)
-                {
-                    var result = new List<dynamic>();
-
-                    while (reader.Read())
-                    {
-                        result.Add(SqlDataReaderToExpando(reader));
-                    }
+                    var result = SqlDataReaderToExpando(reader);
+                    reader.Close();
                     return result;
                 }
 
-                /// <summary> Gets a object SQL data. </summary>
-                /// 
-                /// <param name="reader"> The reader. </param>
-                /// 
-                /// <returns> The object SQL data. </returns>
-                public IList<T> GetValues<T>(SqlDataReader reader)
-                {
-                    var result = new List<T>();
+                return null;
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+            finally
+            {
+                if (dbCommand != null && dbCommand.Connection.State != ConnectionState.Closed)
+                    dbCommand.Connection.CloseSafely();
 
-                    while (reader.Read())
-                    {
-                        result.Add((T)Convert.ChangeType(reader[0], typeof(T)));
-                    }
-                    return result;
-                }
+                dbCommand.ClearDbCommand();
 
-                /// <summary> Build SqlParameter Array from anonymous object. </summary>
-                ///  <param name="paramObject"> The anonymous object as parameters. </param>
-                /// <returns> SqlParameter[] object and if paramObject is null then return null </returns>
-                public SqlParameter[] BuildSqlParameters(object paramObject)
-                {
-                    if (paramObject == null)
-                        return null;
-                    var sqlParameters = new List<SqlParameter>();
-                    sqlParameters.CreateSqlParametersFromObject(paramObject);
+            }
+        }
 
-                    return sqlParameters.ToArray();
-                }
+        /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> Result in a anonymous object. </returns>
+        public Task<dynamic> ExecuteDynamicAsync(SqlTransactionAsyncContext transactionContext, string commandText, string fieldsToSkip = null,
+            params SqlParameter[] sqlParameters)
+        {
+            return ExecuteDynamicAsync(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
+                fieldsToSkip, sqlParameters);
+        }
 
-                /// <summary> Performs application-defined tasks associated with freeing, releasing, or resetting
-                /// unmanaged resources. </summary>
-                public void Dispose()
-                {
-                    if (_sqlTransaction != null)
-                        _sqlTransaction.Dispose();
+        /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// -<param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// 
+        /// <returns> Result in a anonymous object. </returns>
+        public Task<dynamic> ExecuteDynamicAsync(SqlTransactionAsyncContext transactionContext, string commandText, object paramObject = null, string fieldsToSkip = null)
+        {
+            return ExecuteDynamicAsync(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
+                fieldsToSkip, BuildSqlParameters(paramObject));
+        }
 
-                    if (_sqlConnection.State != ConnectionState.Closed)
-                        _sqlConnection.Close();
+        /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="paramObject"> The anonymous object as parameters. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// 
+        /// <returns> Result in a anonymous object. </returns>
+        public Task<dynamic> ExecuteDynamicAsync(SqlTransactionAsyncContext transactionContext, string commandText, CommandType commandType,
+                object paramObject = null, string fieldsToSkip = null)
+        {
+            return ExecuteDynamicAsync(transactionContext, commandText, commandType,
+                fieldsToSkip, BuildSqlParameters(paramObject));
+        }
 
-                    DefaultSimpleAccessSettings = null;
-                }
-        */
+
+        /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
+        /// 
+        /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
+        /// 
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
+        /// <param name="sqlParameters">  Parameters required to execute CommandText. </param>
+        /// 
+        /// <returns> Result in a anonymous object. </returns>
+        public async Task<dynamic> ExecuteDynamicAsync(SqlTransactionAsyncContext transactionContext, string commandText, CommandType commandType,
+            string fieldsToSkip = null, params SqlParameter[] sqlParameters)
+        {
+            SqlCommand dbCommand = null;
+            SqlDataReader reader = null;
+            try
+            {
+                dbCommand = CreateCommand(transactionContext, commandText, commandType, sqlParameters);
+
+                reader = await dbCommand.ExecuteReaderAsync(transactionContext.CancellationToken).ConfigureAwait(false);
+                if (reader.Read())
+                    return SqlDataReaderToExpando(reader);
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                SimpleLogger.LogException(ex);
+                throw;
+            }
+            finally
+            {
+                reader?.Close();
+                dbCommand.ClearDbCommand();
+
+            }
+        }
 
         /// <summary> Creates a command. </summary>
         /// 
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="commandText"> The query string. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqlParameters">Options for controlling the SQL. </param>
+        /// 
+        /// <returns> The new command. </returns>
+        public SqlCommand CreateCommandForAsync(string commandText, CommandType commandType, params SqlParameter[] sqlParameters)
+        {
+            var connection = new SqlConnection(_sqlConnection.ConnectionString);
+            var dbCommand = connection.CreateCommand();
+            dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
+            dbCommand.CommandType = commandType;
+            dbCommand.CommandText = commandText;
+            if (sqlParameters != null)
+                dbCommand.Parameters.AddRange(sqlParameters);
+
+            if (_sqlTransaction != null)
+                dbCommand.Transaction = _sqlTransaction;
+
+            return dbCommand;
+        }
+
+        /// <summary> Creates a command. </summary>
+        /// 
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
         /// <param name="commandText"> The query string. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="sqlParameters"> Options for controlling the SQL. </param>
@@ -1779,7 +1489,7 @@ namespace SimpleAccess.SqlServer
         /// <summary> Begins a database transaction. </summary>
         /// 
         /// <returns> IDbTransactionAsyncContext&lt;TDbConnection, TDbTransaction&gt; </returns>
-        public Task<IDbTransactionAsyncContext<SqlConnection, SqlTransaction>> BeginTransactionAsync()
+        public Task<SqlTransactionAsyncContext> BeginTransactionAsync()
         {
             return BeginTransactionAsync(IsolationLevel.ReadCommitted, null);
         }
@@ -1787,7 +1497,7 @@ namespace SimpleAccess.SqlServer
         /// <summary> Begins a database transaction. </summary>
         /// 
         /// <returns> IDbTransactionAsyncContext&lt;TDbConnection, TDbTransaction&gt; </returns>
-        public async Task<IDbTransactionAsyncContext<SqlConnection, SqlTransaction>> BeginTransactionAsync(
+        public async Task<SqlTransactionAsyncContext> BeginTransactionAsync(
             IsolationLevel isolationLevel)
         {
             return await BeginTransactionAsync(isolationLevel, null);
@@ -1796,7 +1506,7 @@ namespace SimpleAccess.SqlServer
         /// <summary> Begins a database transaction. </summary>
         /// 
         /// <returns> IDbTransactionAsyncContext&lt;TDbConnection, TDbTransaction&gt; </returns>
-        public async Task<IDbTransactionAsyncContext<SqlConnection, SqlTransaction>> BeginTransactionAsync(
+        public async Task<SqlTransactionAsyncContext> BeginTransactionAsync(
             string transactionName)
         {
             return await BeginTransactionAsync(IsolationLevel.ReadCommitted, transactionName);
@@ -1805,9 +1515,12 @@ namespace SimpleAccess.SqlServer
         /// <summary> Begins a database transaction. </summary>
         /// 
         /// <returns> IDbTransactionAsyncContext&lt;TDbConnection, TDbTransaction&gt; </returns>
-        public async Task<IDbTransactionAsyncContext<SqlConnection, SqlTransaction>> BeginTransactionAsync(IsolationLevel isolationLevel, string transactionName)
+        public async Task<SqlTransactionAsyncContext> BeginTransactionAsync(IsolationLevel isolationLevel, string transactionName)
         {
-            var tranContext = new SqlTransactionAsyncContext(GetNewConnection());
+            var tokenSource = new CancellationTokenSource();
+
+
+            var tranContext = new SqlTransactionAsyncContext(GetNewConnection(), tokenSource.Token);
             if (string.IsNullOrEmpty(transactionName))
             {
                 await tranContext.BeginTransactionAsync(isolationLevel);
@@ -1822,7 +1535,7 @@ namespace SimpleAccess.SqlServer
         /// <summary> Begins a database transaction. </summary>
         /// 
         /// <returns> IDbTransactionAsyncContext&lt;TDbConnection, TDbTransaction&gt; </returns>
-        public async Task<IDbTransactionAsyncContext<SqlConnection, SqlTransaction>> BeginTransactionAsync(IDbTransactionAsyncContext<SqlConnection, SqlTransaction> context)
+        public async Task<SqlTransactionAsyncContext> BeginTransactionAsync(SqlTransactionAsyncContext context)
         {
             return await BeginTransactionAsync(context, IsolationLevel.ReadCommitted, null);
 
@@ -1831,8 +1544,8 @@ namespace SimpleAccess.SqlServer
         /// <summary> Begins a database transaction. </summary>
         /// 
         /// <returns> IDbTransactionAsyncContext&lt;TDbConnection, TDbTransaction&gt; </returns>
-        public async Task<IDbTransactionAsyncContext<SqlConnection, SqlTransaction>> BeginTransactionAsync(
-            IDbTransactionAsyncContext<SqlConnection, SqlTransaction> context, IsolationLevel isolationLevel)
+        public async Task<SqlTransactionAsyncContext> BeginTransactionAsync(
+            SqlTransactionAsyncContext context, IsolationLevel isolationLevel)
         {
             return await BeginTransactionAsync(context, isolationLevel, null);
         }
@@ -1840,8 +1553,8 @@ namespace SimpleAccess.SqlServer
         /// <summary> Begins a database transaction. </summary>
         /// 
         /// <returns> IDbTransactionAsyncContext&lt;TDbConnection, TDbTransaction&gt; </returns>
-        public async Task<IDbTransactionAsyncContext<SqlConnection, SqlTransaction>> BeginTransactionAsync(
-            IDbTransactionAsyncContext<SqlConnection, SqlTransaction> context, string transactionName)
+        public async Task<SqlTransactionAsyncContext> BeginTransactionAsync(
+            SqlTransactionAsyncContext context, string transactionName)
         {
             return await BeginTransactionAsync(context, IsolationLevel.ReadCommitted, transactionName);
         }
@@ -1849,11 +1562,11 @@ namespace SimpleAccess.SqlServer
         /// <summary> Begins a database transaction. </summary>
         /// 
         /// <returns> IDbTransactionAsyncContext&lt;TDbConnection, TDbTransaction&gt; </returns>
-        public async Task<IDbTransactionAsyncContext<SqlConnection, SqlTransaction>> BeginTransactionAsync(
-            IDbTransactionAsyncContext<SqlConnection, SqlTransaction> context, IsolationLevel isolationLevel,
+        public async Task<SqlTransactionAsyncContext> BeginTransactionAsync(
+            SqlTransactionAsyncContext context, IsolationLevel isolationLevel,
             string transactionName)
         {
-            var tranContext = new SqlTransactionAsyncContext(context.Connection);
+            var tranContext = new SqlTransactionAsyncContext(context.Connection, context.CancellationToken);
             if (string.IsNullOrEmpty(transactionName))
             {
                 await tranContext.BeginTransactionAsync(isolationLevel);
@@ -1871,7 +1584,7 @@ namespace SimpleAccess.SqlServer
         /// <param name="transactionSucceed"> (optional) the transaction succeed. </param>
         /// <param name="closeConnection">    (optional) the close connection. </param>
 
-        public void EndTransaction(IDbTransactionAsyncContext<SqlConnection, SqlTransaction> transaction,
+        public void EndTransaction(SqlTransactionAsyncContext transaction,
             bool transactionSucceed = true, bool closeConnection = true)
         {
             if (transactionSucceed)

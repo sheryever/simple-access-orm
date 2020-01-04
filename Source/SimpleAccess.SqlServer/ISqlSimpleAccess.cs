@@ -20,7 +20,7 @@ namespace SimpleAccess.SqlServer
     public interface ISqlSimpleAccess :
         ISimpleAccess <SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlServerSqlBuilder>
 #if !NET40
-        , ISimpleAccessAsync<SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlServerSqlBuilder>
+        , ISimpleAccessAsync<SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlServerSqlBuilder, SqlTransactionAsyncContext>
 #endif 
         , IDisposable
     {

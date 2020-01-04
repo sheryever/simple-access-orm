@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net40;net45</TargetFrameworks>
-    <Version>3.0.7</Version>
+    <Version>3.1.0-beta</Version>
     <Product>SimpleAccess ORM Core</Product>
     <Description>The core and common interfaces and implementation of SimpleAccess ORM</Description>
     <Authors>Abu Ali Muhammad Sharjeel</Authors>

@@ -741,10 +741,13 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
-                dbCommand.Parameters.Clear();
+                if (dbCommand != null)
+                {
+                    dbCommand.Parameters.Clear();
 
-                dbCommand.ClearDbCommand();
+                    dbCommand.ClearDbCommand();
 
+                }
             }
         }
 
@@ -802,7 +805,7 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.Parameters.Clear();
@@ -1284,9 +1287,11 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
-
-                dbCommand.ClearDbCommand();
-
+                if (dbCommand != null)
+                {
+                    dbCommand.Parameters.Clear();
+                    dbCommand.ClearDbCommand();
+                }
             }
         }
 
@@ -1450,9 +1455,11 @@ namespace SimpleAccess.SqlServer
             {
                 dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
                 dbCommand.Connection.OpenSafely();
-                var reader = dbCommand.ExecuteReader();
-                if (reader.Read())
-                    return SqlDataReaderToExpando(reader);
+                using (var reader = dbCommand.ExecuteReader())
+                {
+                    if (reader.Read())
+                        return SqlDataReaderToExpando(reader);
+                }
 
                 return null;
             }
@@ -1463,6 +1470,7 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
+
                 dbCommand.ClearDbCommand();
 
             }
@@ -1617,6 +1625,29 @@ namespace SimpleAccess.SqlServer
             return _sqlConnection.BeginTransaction(isolationLevel, transactionName);
         }
 
+
+        /// <summary> Creates a command. </summary>
+        /// 
+        /// <param name="commandText"> The query string. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="sqlParameters">Options for controlling the SQL. </param>
+        /// 
+        /// <returns> The new command. </returns>
+        public SqlCommand CreateCommand(string commandText, CommandType commandType, params SqlParameter[] sqlParameters)
+        {
+            var dbCommand = _sqlConnection.CreateCommand();
+            dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
+            dbCommand.CommandType = commandType;
+            dbCommand.CommandText = commandText;
+            if (sqlParameters != null)
+                dbCommand.Parameters.AddRange(sqlParameters);
+
+            if (_sqlTransaction != null)
+                dbCommand.Transaction = _sqlTransaction;
+
+            return dbCommand;
+        }
+
         /// <summary> Ends a transaction. </summary>
         /// 
         /// <param name = "sqlTransaction" > The SQL transaction. </param>
@@ -1640,27 +1671,6 @@ namespace SimpleAccess.SqlServer
         }
 
 
-        /// <summary> Creates a command. </summary>
-        /// 
-        /// <param name="commandText"> The query string. </param>
-        /// <param name="commandType"> Type of the command. </param>
-        /// <param name="sqlParameters">Options for controlling the SQL. </param>
-        /// 
-        /// <returns> The new command. </returns>
-        public SqlCommand CreateCommand(string commandText, CommandType commandType, params SqlParameter[] sqlParameters)
-        {
-            var dbCommand = _sqlConnection.CreateCommand();
-            dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
-            dbCommand.CommandType = commandType;
-            dbCommand.CommandText = commandText;
-            if (sqlParameters != null)
-                dbCommand.Parameters.AddRange(sqlParameters);
-
-            if (_sqlTransaction != null)
-                dbCommand.Transaction = _sqlTransaction;
-            
-            return dbCommand;
-        }
 
         /// <summary> Creates a command. </summary>
         /// 
@@ -1718,6 +1728,7 @@ namespace SimpleAccess.SqlServer
             {
                 result.Add(SqlDataReaderToExpando(reader));
             }
+            reader.Close();
             return result;
         }
 

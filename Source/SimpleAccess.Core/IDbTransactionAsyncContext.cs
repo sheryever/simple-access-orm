@@ -19,10 +19,13 @@ namespace SimpleAccess.Core
         where TDbTransaction: IDbTransaction
     {
         string Name { get; }
+        CancellationToken CancellationToken { get; }
         TDbConnection Connection { get; }
         TDbTransaction Transaction { get; }
 
         void SetConnectionDisposable();
     }
+
+
 #endif
 }
