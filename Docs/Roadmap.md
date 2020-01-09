@@ -5,7 +5,7 @@
 - [x] Add InsertAll\<TEntity\>, UpdateAll\<TEntity\>, DeleteAll\<TEntity\> with support of internal trasaction in Repository
 - [x] Add Find\<TEntity\> and  FindAll\<TEntity\> in Repository
 - [X] Add ExecuteValues\<T\> for getting result of a single column query in IEnumerable\<T\>
-- [ ] Write unit test
+- [X] Write unit test
 - [ ] Configure StoredProcedure naming convention mapping to repository method (Insert, Update, Delete, Get, GetAll, Find, FindAll) methods in repository settings
 - [ ] Add Sql Generation for Non StoredProcedures command types (Insert, Update, Delete, Get, GetAll, Find, FindAll)
 - [ ] Fixing comments, documention and adding examples
