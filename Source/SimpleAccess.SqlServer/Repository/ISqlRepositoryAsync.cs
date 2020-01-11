@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+#if !NETSTANDARD2_1
 using System.Data.SqlClient;
+#endif
+#if NETSTANDARD2_1
+using Microsoft.Data.SqlClient;
+#endif
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using SimpleAccess.SqlServer;

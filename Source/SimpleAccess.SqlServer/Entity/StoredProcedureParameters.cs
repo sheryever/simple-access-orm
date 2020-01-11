@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+//using System.ComponentModel.DataAnnotations;
 using System.Data;
+#if !NETSTANDARD2_1
 using System.Data.SqlClient;
+#endif
+#if NETSTANDARD2_1
+using Microsoft.Data.SqlClient;
+#endif
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -33,7 +38,7 @@ namespace SimpleAccess.SqlServer
         }
 
         /// <summary>
-        /// Create paramters from object properties
+        /// Create parameters from object properties
         /// </summary>
         /// <param name="parametersType"></param>
         /// <returns></returns>
@@ -158,7 +163,7 @@ namespace SimpleAccess.SqlServer
         }
 
         /// <summary>
-        /// Clear all DbParamters
+        /// Clear all DbParameters
         /// </summary>
         public void ClearSpParameters()
         {
@@ -184,17 +189,17 @@ namespace SimpleAccess.SqlServer
         }
 
 
-        /// <summary>
-        /// Validate the object and get the result if any.
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<ValidationResult> Validate()
-        {
-            IList<ValidationResult> result = new List<ValidationResult>();
-            Validator.TryValidateObject(this, new ValidationContext(this, null, null), result, true);
+        ///// <summary>
+        ///// Validate the object and get the result if any.
+        ///// </summary>
+        ///// <returns></returns>
+        //public IEnumerable<ValidationResult> Validate()
+        //{
+        //    IList<ValidationResult> result = new List<ValidationResult>();
+        //    Validator.TryValidateObject(this, new ValidationContext(this, null, null), result, true);
 
-            return result;
-        }
+        //    return result;
+        //}
 
         private string SafeSqlLiteral(string inputSql)
         {

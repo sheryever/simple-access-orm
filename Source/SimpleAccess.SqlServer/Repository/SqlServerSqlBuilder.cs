@@ -1,35 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
+#if !NETSTANDARD2_1
 using System.Data.SqlClient;
+#endif
+#if NETSTANDARD2_1
+using Microsoft.Data.SqlClient;
+#endif
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using SimpleAccess.Core;
+using SimpleAccess.Core.Entity;
+using SimpleAccess.Core.Extensions;
 
 namespace SimpleAccess.SqlServer
 {
 
-    public class SqlServerSqlBuilder : ISqlBuilder<SqlParameter>
+    public abstract class SqlServerSqlBuilder : ISqlBuilder<SqlParameter>
     {
-        public IDataParameter[] CreateSqlParametersFromProperties(ParametersType parametersType)
-        {
-            throw new NotImplementedException();
-        }
 
+        protected EntityParameters<SqlParameter> EntityInsertParameters { get; set; }
+        protected EntityParameters<SqlParameter> EntityUpdateParameters { get; set; }
         public List<PropertyInfo> OutParameterPropertyInfoCollection { get; set; }
 
-        private EntityParameters<SqlParameter> EntityInsertParameters { get; set; }
-        private EntityParameters<SqlParameter> EntityUpdateParameters { get; set; }
 
         //public List<IDataParameter> DataParameters { get; set; }
 
+        public abstract void InitSqlBuilder(object entityInfo);
+        public abstract IDataParameter[] CreateSqlParametersFromProperties(ParametersType parametersType);
         /// <summary>
         /// Create parameters from object properties
         /// </summary>
-        /// <param name="parametersType"></param>
         /// <returns></returns>
         public EntityParameters<SqlParameter> CreateEntityParameters(object entity, bool checkForIdentityColumn)
         {
@@ -97,7 +102,7 @@ namespace SimpleAccess.SqlServer
 
 
         ///// <summary>
-        ///// Create paramters from object properties
+        ///// Create parameters from object properties
         ///// </summary>
         ///// <param name="parametersType"></param>
         ///// <returns></returns>
@@ -120,10 +125,10 @@ namespace SimpleAccess.SqlServer
         /// 
         /// </summary>
         /// <param name="propertyInfo"></param>
-        /// <param name="parametesType"></param>
+        /// <param name="parametersType"></param>
         /// <param name="propertyInfos"></param>
         /// <returns></returns>
-        public IDataParameter CreateDataParameter(PropertyInfo propertyInfo, ParametersType parametesType,
+        public IDataParameter CreateDataParameter(PropertyInfo propertyInfo, ParametersType parametersType,
             IEnumerable<PropertyInfo> propertyInfos, IList<PropertyInfo> outParameterPropertyInfoCollection, List<IDataParameter> outDataParameters)
         {
             object value = propertyInfo.GetValue(this, new object[] { });
@@ -161,7 +166,7 @@ namespace SimpleAccess.SqlServer
 
 
 
-            if (parametesType == ParametersType.Insert)
+            if (parametersType == ParametersType.Insert)
             {
                 //var propertyDataType = propertyInfo.DeclaringType;
 
@@ -184,25 +189,14 @@ namespace SimpleAccess.SqlServer
             return sqlParam;
         }
 
-        public string GetSelectAllStatement()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract string GetSelectStatement();
 
-        public string GetInsertStatement()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract string GetInsertStatement();
 
-        public string GetUpdateSatetment()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract string GetUpdateStatement();
 
-        public string GetDeleteStatment()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract string GetDeleteStatement();
+        public abstract string GetSoftDeleteStatement();
 
         public EntityParameters<SqlParameter> GetInsertParameters(object entity)
         {
@@ -247,13 +241,12 @@ namespace SimpleAccess.SqlServer
 
         public EntityParameters<SqlParameter> GetUpdateParameters(object entity)
         {
-            EntityUpdateParameters = EntityUpdateParameters ?? CreateEntityParameters(entity, false);
+            EntityUpdateParameters = EntityUpdateParameters ??  CreateEntityParameters(entity, false);
 
             EntityUpdateParameters.FillParameters(entity, FillInsertParameters);
 
             return EntityUpdateParameters;
         }
-
 
         public string BuildWhereExpression(string propertyName, Type valueType, string @operator, object value)
         {
@@ -278,12 +271,12 @@ namespace SimpleAccess.SqlServer
             {
                 result = string.Format(" {0} {1} {2} ", propertyName, @operator, (bool)value ? "1" : "0");
             }
-            else if (In(valueType, typeof(string), typeof(TimeSpan), typeof(TimeSpan?), typeof(DateTime),
+            else if (valueType.In(typeof(string), typeof(TimeSpan), typeof(TimeSpan?), typeof(DateTime),
                 typeof(DateTime?)))
             {
                 result = string.Format("{0} {1} '{2}' ", propertyName, @operator, SafeSqlLiteral(value.ToString()));
             }
-            else if (In(valueType, typeof(Int16), typeof(Int16?), typeof(int), typeof(int?), typeof(Int32), typeof(Int32?), typeof(Int64), typeof(Int64?), typeof(Single), typeof(Single?),
+            else if (valueType.In(typeof(Int16), typeof(Int16?), typeof(int), typeof(int?), typeof(Int32), typeof(Int32?), typeof(Int64), typeof(Int64?), typeof(Single), typeof(Single?),
                                 typeof(float), typeof(float?), typeof(decimal), typeof(decimal?), typeof(double), typeof(double?)))
             {
                 result = string.Format("{0} {1} {2} ", propertyName, @operator, value.ToString());
@@ -297,36 +290,7 @@ namespace SimpleAccess.SqlServer
         }
 
         /// <summary>
-        /// Compare the value with multiple value.
-        /// </summary>
-        /// <typeparam name="T">Type of the value</typeparam>
-        /// <param name="source">Any type</param>
-        /// <param name="list">Multiple values or array of the same type</param>
-        /// <returns>Returns a bool value indicates criteria matched or not</returns>
-        /// <example>
-        /// Example shows how to use In function
-        /// <code>
-        /// <![CDATA[
-        ///     var names = new [] { "Salman", "Jameel", "Kareem", "Kashif" };
-        ///     if ("Kareem".In(names))
-        ///     {
-        ///         Console.Write("Kareem is in names");
-        ///     }
-        /// ]]>
-        /// </code>
-        /// </example>
-        public static bool In<T>(T source, params T[] list)
-        {
-            if (null == source)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-
-            return list.Contains(source);
-        }
-
-        /// <summary>
-        /// Clear all DbParamters
+        /// Clear all DbParameters
         /// </summary>
         public void ClearDbParameters()
         {

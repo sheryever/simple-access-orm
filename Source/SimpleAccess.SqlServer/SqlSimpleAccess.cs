@@ -6,7 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.Common;
+#if !NETSTANDARD2_1
 using System.Data.SqlClient;
+#endif
+#if NETSTANDARD2_1
+using Microsoft.Data.SqlClient;
+#endif
 using System.Dynamic;
 using System.Reflection;
 using SimpleAccess.Core;
@@ -484,7 +489,7 @@ namespace SimpleAccess.SqlServer
         public SqlDataReader ExecuteReader(string commandText, CommandType commandType,
             params SqlParameter[] sqlParameters)
         {
-            return ExecuteReader(commandText, commandType, CommandBehavior.Default, sqlParameters);
+            return ExecuteReader(commandText, commandType, CommandBehavior.CloseConnection, sqlParameters);
         }
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
@@ -496,7 +501,7 @@ namespace SimpleAccess.SqlServer
         /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The TDbDataReader </returns>
-        public SqlDataReader ExecuteReader(string commandText, CommandBehavior commandBehavior,
+        public SqlDataReader ExecuteReader(string commandText, CommandBehavior commandBehavior = CommandBehavior.CloseConnection,
             params SqlParameter[] sqlParameters)
         {
             return ExecuteReader(commandText, DefaultSimpleAccessSettings.DefaultCommandType, commandBehavior, sqlParameters);
@@ -512,7 +517,7 @@ namespace SimpleAccess.SqlServer
         /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The TDbDataReader </returns>
-        public SqlDataReader ExecuteReader(string commandText, CommandType commandType, CommandBehavior commandBehavior,
+        public SqlDataReader ExecuteReader(string commandText, CommandType commandType, CommandBehavior commandBehavior = CommandBehavior.CloseConnection,
             params SqlParameter[] sqlParameters)
         {
             try
@@ -656,7 +661,7 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (dbCommand != null && _sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1192,8 +1197,11 @@ namespace SimpleAccess.SqlServer
             {
                 dbCommand = CreateCommand(commandText, commandType, sqlParameters);
                 dbCommand.Connection.OpenSafely();
-                return GetDynamicSqlData(dbCommand.ExecuteReader());
-                 
+                using (var reader = dbCommand.ExecuteReader())
+                {
+                    return GetDynamicSqlData(reader);
+                }
+
             }
             catch (Exception ex)
             {
@@ -1642,8 +1650,6 @@ namespace SimpleAccess.SqlServer
             if (sqlParameters != null)
                 dbCommand.Parameters.AddRange(sqlParameters);
 
-            if (_sqlTransaction != null)
-                dbCommand.Transaction = _sqlTransaction;
 
             return dbCommand;
         }
@@ -1728,7 +1734,6 @@ namespace SimpleAccess.SqlServer
             {
                 result.Add(SqlDataReaderToExpando(reader));
             }
-            reader.Close();
             return result;
         }
 

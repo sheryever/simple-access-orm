@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+#if !NETSTANDARD2_1
 using System.Data.SqlClient;
+#endif
+#if NETSTANDARD2_1
+using Microsoft.Data.SqlClient;
+#endif
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +16,9 @@ namespace SimpleAccess.SqlServer
     /// <summary>
     /// Hold the default settings of SimpleAccess Repositories
     /// </summary>
-    public static class RepositorySetting
+    public static class SqlEntityRepositorySetting
     {
-        static RepositorySetting()
+        static SqlEntityRepositorySetting()
         {
        
 
@@ -22,8 +27,8 @@ namespace SimpleAccess.SqlServer
         /// <summary>
         /// The Dictionary of <see cref="EntityInfos"/> for cache.
         /// </summary>
-        public static Dictionary<string, Core.Entity.EntityInfo<SqlServerSqlBuilder, SqlParameter>> EntityInfos { get; } =
-             new Dictionary<string, Core.Entity.EntityInfo<SqlServerSqlBuilder, SqlParameter>>();
+        public static Dictionary<string, Core.Entity.EntityInfo<SqlServerSpSqlBuilder, SqlParameter>> EntityInfos { get; } =
+             new Dictionary<string, Core.Entity.EntityInfo<SqlServerSpSqlBuilder, SqlParameter>>();
 
 
         /// <summary>
@@ -33,13 +38,13 @@ namespace SimpleAccess.SqlServer
         /// cref="EntityInfo"/> then it will add the and return the <see cref="EntityInfo"/>.
         /// <param name="type"></param>
         /// <returns></returns>
-        public static EntityInfo<SqlServerSqlBuilder, SqlParameter> GetEntityInfo(Type type)
+        public static EntityInfo<SqlServerSpSqlBuilder, SqlParameter> GetEntityInfo(Type type)
         {
-            Core.Entity.EntityInfo<SqlServerSqlBuilder, SqlParameter> entityInfo = null;
+            Core.Entity.EntityInfo<SqlServerSpSqlBuilder, SqlParameter> entityInfo = null;
             if (EntityInfos.TryGetValue(type.FullName, out entityInfo))
                 return entityInfo;
 
-            entityInfo = new Core.Entity.EntityInfo<SqlServerSqlBuilder, SqlParameter>(type);
+            entityInfo = new Core.Entity.EntityInfo<SqlServerSpSqlBuilder, SqlParameter>(type);
 
             lock (EntityInfos)
             {

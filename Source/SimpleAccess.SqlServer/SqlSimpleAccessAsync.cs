@@ -6,7 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.Common;
+#if !NETSTANDARD2_1
 using System.Data.SqlClient;
+#endif
+#if NETSTANDARD2_1
+using Microsoft.Data.SqlClient;
+#endif
 using System.Dynamic;
 using System.Reflection;
 using System.Threading;
@@ -371,7 +376,7 @@ namespace SimpleAccess.SqlServer
         public Task<SqlDataReader> ExecuteReaderAsync(string commandText, CommandType commandType,
             params SqlParameter[] sqlParameters)
         {
-            return ExecuteReaderAsync(commandText, commandType, CommandBehavior.Default, sqlParameters);
+            return ExecuteReaderAsync(commandText, commandType, CommandBehavior.CloseConnection, sqlParameters);
         }
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
@@ -383,7 +388,7 @@ namespace SimpleAccess.SqlServer
         /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The TDbDataReader </returns>
-        public Task<SqlDataReader> ExecuteReaderAsync(string commandText, CommandBehavior commandBehavior,
+        public Task<SqlDataReader> ExecuteReaderAsync(string commandText, CommandBehavior commandBehavior = CommandBehavior.CloseConnection,
             params SqlParameter[] sqlParameters)
         {
             return ExecuteReaderAsync(commandText, DefaultSimpleAccessSettings.DefaultCommandType, commandBehavior, sqlParameters);
@@ -422,7 +427,7 @@ namespace SimpleAccess.SqlServer
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The TDbDataReader </returns>
-        public Task<SqlDataReader> ExecuteReaderAsync(string commandText, CommandBehavior commandBehavior, object paramObject = null)
+        public Task<SqlDataReader> ExecuteReaderAsync(string commandText, CommandBehavior commandBehavior = CommandBehavior.CloseConnection, object paramObject = null)
         {
             return ExecuteReaderAsync(commandText, commandBehavior, BuildSqlParameters(paramObject));
         }
@@ -437,7 +442,7 @@ namespace SimpleAccess.SqlServer
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The TDbDataReader </returns>
-        public Task<SqlDataReader> ExecuteReaderAsync(string commandText, CommandType commandType, CommandBehavior commandBehavior, object paramObject = null)
+        public Task<SqlDataReader> ExecuteReaderAsync(string commandText, CommandType commandType, CommandBehavior commandBehavior = CommandBehavior.CloseConnection, object paramObject = null)
         {
             return ExecuteReaderAsync(commandText, commandType, commandBehavior, BuildSqlParameters(paramObject));
         }
@@ -453,7 +458,7 @@ namespace SimpleAccess.SqlServer
         /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The TDbDataReader </returns>
-        public async Task<SqlDataReader> ExecuteReaderAsync(string commandText, CommandType commandType, CommandBehavior commandBehavior,
+        public async Task<SqlDataReader> ExecuteReaderAsync(string commandText, CommandType commandType, CommandBehavior commandBehavior = CommandBehavior.CloseConnection,
             params SqlParameter[] sqlParameters)
         {
             try
@@ -467,6 +472,7 @@ namespace SimpleAccess.SqlServer
                 await dbCommand.Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
 
                 var result = await dbCommand.ExecuteReaderAsync(commandBehavior, cancellationToken);
+
                 dbCommand.Parameters.Clear();
                 return result;
             }
@@ -1455,9 +1461,6 @@ namespace SimpleAccess.SqlServer
             dbCommand.CommandText = commandText;
             if (sqlParameters != null)
                 dbCommand.Parameters.AddRange(sqlParameters);
-
-            if (_sqlTransaction != null)
-                dbCommand.Transaction = _sqlTransaction;
 
             return dbCommand;
         }

@@ -6,7 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.Common;
+#if !NETSTANDARD2_1
 using System.Data.SqlClient;
+#endif
+#if NETSTANDARD2_1
+using Microsoft.Data.SqlClient;
+#endif
 using System.Dynamic;
 using System.Reflection;
 using SimpleAccess.Core;
@@ -17,15 +22,20 @@ namespace SimpleAccess.SqlServer
     /// <summary>
     /// Represent the SimpleAccess interface for SQL Server
     /// </summary>
+    //    public interface ISqlSimpleAccess :
+    //        ISimpleAccess <SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlServerSqlBuilder>
+    //#if !NET40
+    //        , ISimpleAccessAsync<SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlServerSqlBuilder, SqlTransactionAsyncContext>
+    //#endif 
+    //        , IDisposable
+    //    {
     public interface ISqlSimpleAccess :
-        ISimpleAccess <SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlServerSqlBuilder>
+        ISimpleAccess<SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader>
 #if !NET40
-        , ISimpleAccessAsync<SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlServerSqlBuilder, SqlTransactionAsyncContext>
-#endif 
+        , ISimpleAccessAsync<SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlTransactionAsyncContext>
+#endif
         , IDisposable
     {
-        
-
         /// <summary>
         /// SimpleLogger to log exception
         /// </summary>
