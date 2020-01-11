@@ -5,9 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 #pragma warning restore CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
 #pragma warning disable CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
-using System.Data.SqlClient;
-#pragma warning restore CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
-#pragma warning disable CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
 using System.Linq;
 #pragma warning restore CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
 #pragma warning disable CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
@@ -29,7 +26,7 @@ namespace SimpleAccess.Core
 
         //    return database.SqlQuery<TResult>(format, parameters.Cast<object>().ToArray());
         //}
-
+        /*
         private static List<SqlParameter> CreateSqlParametersFromProperties<TResult>(IStoredProcedure<TResult> procedure)
         {
             var procedureType = procedure.GetType();
@@ -52,7 +49,7 @@ namespace SimpleAccess.Core
 
             return queryString.TrimEnd(',');
         }
-
+        */
         /// <summary>
         /// Only Exist for idea
         /// </summary>
