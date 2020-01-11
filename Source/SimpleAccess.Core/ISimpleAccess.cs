@@ -12,20 +12,26 @@ namespace SimpleAccess.Core
     /// <summary>
     /// Represent the interface of SimpleAccess methods and it's implemented by SimpleAccess 
     /// </summary>
-    public interface ISimpleAccess<TDbConnection, TDbTransaction, TDbCommand, TDataParameter, TDbDataReader, TSqlBuilder>
-            where TDbConnection : IDbConnection, new()
-            where TDbTransaction : IDbTransaction
-            where TDbCommand : IDbCommand, new()
-            where TDataParameter : IDataParameter, new()
-            where TDbDataReader : IDataReader
-            where TSqlBuilder : ISqlBuilder<TDataParameter>, new()
+//public interface ISimpleAccess<TDbConnection, TDbTransaction, TDbCommand, TDataParameter, TDbDataReader, TSqlBuilder>
+//        where TDbConnection : IDbConnection, new()
+//        where TDbTransaction : IDbTransaction
+//        where TDbCommand : IDbCommand, new()
+//        where TDataParameter : IDataParameter, new()
+//        where TDbDataReader : IDataReader
+//        where TSqlBuilder : ISqlBuilder<TDataParameter>, new()
+//{
+
+    public interface ISimpleAccess<TDbConnection, TDbTransaction, TDbCommand, TDataParameter, TDbDataReader>
+        where TDbConnection : IDbConnection, new()
+        where TDbTransaction : IDbTransaction
+        where TDbCommand : IDbCommand, new()
+        where TDataParameter : IDataParameter, new()
+        where TDbDataReader : IDataReader
     {
-
-
-        /// <summary>
-        /// Represent the default settings SimpleAccess <see cref="SimpleAccessSettings" />
-        /// </summary>
-        SimpleAccessSettings DefaultSimpleAccessSettings { get; set; }
+            /// <summary>
+            /// Represent the default settings SimpleAccess <see cref="SimpleAccessSettings" />
+            /// </summary>
+            SimpleAccessSettings DefaultSimpleAccessSettings { get; set; }
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 

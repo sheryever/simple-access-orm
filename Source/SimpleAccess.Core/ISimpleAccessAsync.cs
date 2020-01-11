@@ -14,18 +14,25 @@ namespace SimpleAccess.Core
     /// <summary>
     /// Represent the interface of SimpleAccess methods and it's implemented by SimpleAccess 
     /// </summary>
-    public interface ISimpleAccessAsync<TDbConnection, TDbTransaction, TDbCommand, TDataParameter, TDbDataReader, TSqlBuilder, TDbTransactionAsyncContext>
-            where TDbConnection : IDbConnection, new()
-            where TDbTransaction : IDbTransaction
-            where TDbCommand : IDbCommand, new()
-            where TDataParameter : IDataParameter, new()
-            where TDbDataReader : IDataReader
-            where TSqlBuilder : ISqlBuilder<TDataParameter>, new()
-            where TDbTransactionAsyncContext : IDbTransactionAsyncContext<TDbConnection, TDbTransaction>
+    //public interface ISimpleAccessAsync<TDbConnection, TDbTransaction, TDbCommand, TDataParameter, TDbDataReader, TSqlBuilder, TDbTransactionAsyncContext>
+    //        where TDbConnection : IDbConnection, new()
+    //        where TDbTransaction : IDbTransaction
+    //        where TDbCommand : IDbCommand, new()
+    //        where TDataParameter : IDataParameter, new()
+    //        where TDbDataReader : IDataReader
+    //        where TSqlBuilder : ISqlBuilder<TDataParameter>, new()
+    //        where TDbTransactionAsyncContext : IDbTransactionAsyncContext<TDbConnection, TDbTransaction>
+    //{
+
+    public interface ISimpleAccessAsync<TDbConnection, TDbTransaction, TDbCommand, TDataParameter, TDbDataReader, TDbTransactionAsyncContext>
+        where TDbConnection : IDbConnection, new()
+        where TDbTransaction : IDbTransaction
+        where TDbCommand : IDbCommand, new()
+        where TDataParameter : IDataParameter, new()
+        where TDbDataReader : IDataReader
+        where TDbTransactionAsyncContext : IDbTransactionAsyncContext<TDbConnection, TDbTransaction>
     {
 
-
-        
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
