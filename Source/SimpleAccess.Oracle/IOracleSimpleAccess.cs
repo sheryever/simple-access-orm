@@ -17,11 +17,15 @@ namespace SimpleAccess.Oracle
     /// <summary>
     /// SimpleAccess implementation for Oracle.
     /// </summary>
-    public interface IOracleSimpleAccess : 
-        ISimpleAccess <OracleConnection, OracleTransaction, OracleCommand, OracleParameter, OracleDataReader, OracleSqlBuilder>
+    //public interface IOracleSimpleAccess : 
+    //    ISimpleAccess <OracleConnection, OracleTransaction, OracleCommand, OracleParameter, OracleDataReader, OracleSqlBuilder>
+    //    , IDisposable
+    //{
+    public interface IOracleSimpleAccess :
+        ISimpleAccess<OracleConnection, OracleTransaction, OracleCommand, OracleParameter, OracleDataReader>
         , IDisposable
     {
-        
+
 
         /// <summary>
         /// SimpleLogger to log exception

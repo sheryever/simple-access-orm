@@ -17,11 +17,15 @@ namespace SimpleAccess.MySql
     /// <summary>
     /// SimpleAccess implementation for MySql.
     /// </summary>
-    public interface IMySqlSimpleAccess : 
-        ISimpleAccess <MySqlConnection, MySqlTransaction, MySqlCommand, MySqlParameter, MySqlDataReader, MySqlSqlBuilder>
+    //public interface IMySqlSimpleAccess : 
+    //    ISimpleAccess <MySqlConnection, MySqlTransaction, MySqlCommand, MySqlParameter, MySqlDataReader, MySqlSqlBuilder>
+    //    , IDisposable
+    //{
+    public interface IMySqlSimpleAccess :
+        ISimpleAccess<MySqlConnection, MySqlTransaction, MySqlCommand, MySqlParameter, MySqlDataReader>
         , IDisposable
     {
-        
+
 
         /// <summary>
         /// SimpleLogger to log exception

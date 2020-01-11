@@ -34,7 +34,7 @@ namespace SimpleAccess.Oracle
         }
 
         /// <summary>
-        /// Create paramters from object properties
+        /// Create parameters from object properties
         /// </summary>
         /// <param name="parametersType"></param>
         /// <returns></returns>
@@ -159,7 +159,7 @@ namespace SimpleAccess.Oracle
         }
 
         /// <summary>
-        /// Clear all DbParamters
+        /// Clear all DbParameters
         /// </summary>
         public void ClearSpParameters()
         {

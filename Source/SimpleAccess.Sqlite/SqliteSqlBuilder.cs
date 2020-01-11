@@ -8,12 +8,15 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using SimpleAccess.Core;
+using SimpleAccess.Core.Entity;
 
 namespace SimpleAccess.SQLite
 {
 
     public class SQLiteSqlBuilder : ISqlBuilder<SQLiteParameter>
     {
+        private EntityInfo<SQLiteSqlBuilder, SQLiteParameter> _entityInfo;
+
         public IDataParameter[] CreateSqlParametersFromProperties(ParametersType parametersType)
         {
             throw new NotImplementedException();
@@ -25,6 +28,12 @@ namespace SimpleAccess.SQLite
         private EntityParameters<SQLiteParameter> EntityUpdateParameters { get; set; }
 
         //public List<IDataParameter> DataParameters { get; set; }
+
+
+        public void InitSqlBuilder(object entityInfo)
+        {
+            _entityInfo = entityInfo as EntityInfo<SQLiteSqlBuilder, SQLiteParameter>;
+        }
 
         /// <summary>
         /// Create parameters from object properties
@@ -97,7 +106,7 @@ namespace SimpleAccess.SQLite
 
 
         ///// <summary>
-        ///// Create paramters from object properties
+        ///// Create parameters from object properties
         ///// </summary>
         ///// <param name="parametersType"></param>
         ///// <returns></returns>
@@ -184,7 +193,7 @@ namespace SimpleAccess.SQLite
             return sqlParam;
         }
 
-        public string GetSelectAllStatement()
+        public string GetSelectStatement()
         {
             throw new NotImplementedException();
         }
@@ -194,12 +203,16 @@ namespace SimpleAccess.SQLite
             throw new NotImplementedException();
         }
 
-        public string GetUpdateSatetment()
+        public string GetUpdateStatement()
         {
             throw new NotImplementedException();
         }
 
-        public string GetDeleteStatment()
+        public string GetDeleteStatement()
+        {
+            throw new NotImplementedException();
+        }
+        public string GetSoftDeleteStatement()
         {
             throw new NotImplementedException();
         }
@@ -326,7 +339,7 @@ namespace SimpleAccess.SQLite
         }
 
         /// <summary>
-        /// Clear all DbParamters
+        /// Clear all DbParameters
         /// </summary>
         public void ClearDbParameters()
         {

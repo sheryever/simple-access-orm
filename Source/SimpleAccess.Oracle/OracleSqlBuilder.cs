@@ -8,12 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Oracle.ManagedDataAccess.Client;
 using SimpleAccess.Core;
+using SimpleAccess.Core.Entity;
 
 namespace SimpleAccess.Oracle
 {
 
     public class OracleSqlBuilder : ISqlBuilder<OracleParameter>
     {
+        private EntityInfo<OracleSqlBuilder, OracleParameter> _entityInfo;
+
         public IDataParameter[] CreateSqlParametersFromProperties(ParametersType parametersType)
         {
             throw new NotImplementedException();
@@ -25,7 +28,10 @@ namespace SimpleAccess.Oracle
         private EntityParameters<OracleParameter> EntityUpdateParameters { get; set; }
 
         //public List<IDataParameter> DataParameters { get; set; }
-
+        public void InitSqlBuilder(object entityInfo)
+        {
+            _entityInfo = entityInfo as EntityInfo<OracleSqlBuilder, OracleParameter>;
+        }
         /// <summary>
         /// Create parameters from object properties
         /// </summary>
@@ -97,7 +103,7 @@ namespace SimpleAccess.Oracle
 
 
         ///// <summary>
-        ///// Create paramters from object properties
+        ///// Create parameters from object properties
         ///// </summary>
         ///// <param name="parametersType"></param>
         ///// <returns></returns>
@@ -184,7 +190,7 @@ namespace SimpleAccess.Oracle
             return sqlParam;
         }
 
-        public string GetSelectAllStatement()
+        public string GetSelectStatement()
         {
             throw new NotImplementedException();
         }
@@ -194,15 +200,20 @@ namespace SimpleAccess.Oracle
             throw new NotImplementedException();
         }
 
-        public string GetUpdateSatetment()
+        public string GetUpdateStatement()
         {
             throw new NotImplementedException();
         }
 
-        public string GetDeleteStatment()
+        public string GetDeleteStatement()
         {
             throw new NotImplementedException();
         }
+        public string GetSoftDeleteStatement()
+        {
+            throw new NotImplementedException();
+        }
+
 
         public EntityParameters<OracleParameter> GetInsertParameters(object entity)
         {
@@ -326,7 +337,7 @@ namespace SimpleAccess.Oracle
         }
 
         /// <summary>
-        /// Clear all DbParamters
+        /// Clear all DbParameters
         /// </summary>
         public void ClearDbParameters()
         {

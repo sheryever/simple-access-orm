@@ -8,12 +8,15 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using SimpleAccess.Core;
+using SimpleAccess.Core.Entity;
 
 namespace SimpleAccess.MySql
 {
 
     public class MySqlSqlBuilder : ISqlBuilder<MySqlParameter>
     {
+        private EntityInfo<MySqlSqlBuilder, MySqlParameter> _entityInfo;
+
         public IDataParameter[] CreateSqlParametersFromProperties(ParametersType parametersType)
         {
             throw new NotImplementedException();
@@ -25,6 +28,11 @@ namespace SimpleAccess.MySql
         private EntityParameters<MySqlParameter> EntityUpdateParameters { get; set; }
 
         //public List<IDataParameter> DataParameters { get; set; }
+
+        public void InitSqlBuilder(object entityInfo)
+        {
+            _entityInfo = entityInfo as EntityInfo<MySqlSqlBuilder, MySqlParameter>;
+        }
 
         /// <summary>
         /// Create parameters from object properties
@@ -97,7 +105,7 @@ namespace SimpleAccess.MySql
 
 
         ///// <summary>
-        ///// Create paramters from object properties
+        ///// Create parameters from object properties
         ///// </summary>
         ///// <param name="parametersType"></param>
         ///// <returns></returns>
@@ -184,7 +192,7 @@ namespace SimpleAccess.MySql
             return sqlParam;
         }
 
-        public string GetSelectAllStatement()
+        public string GetSelectStatement()
         {
             throw new NotImplementedException();
         }
@@ -194,12 +202,16 @@ namespace SimpleAccess.MySql
             throw new NotImplementedException();
         }
 
-        public string GetUpdateSatetment()
+        public string GetUpdateStatement()
         {
             throw new NotImplementedException();
         }
 
-        public string GetDeleteStatment()
+        public string GetDeleteStatement()
+        {
+            throw new NotImplementedException();
+        }
+        public string GetSoftDeleteStatement()
         {
             throw new NotImplementedException();
         }
@@ -211,7 +223,6 @@ namespace SimpleAccess.MySql
             EntityInsertParameters.FillParameters(entity, FillInsertParameters);
 
             return EntityInsertParameters;
-
         }
 
         public void FillInsertParameters(object entity, IDictionary<PropertyInfo, MySqlParameter> parameters)
@@ -326,7 +337,7 @@ namespace SimpleAccess.MySql
         }
 
         /// <summary>
-        /// Clear all DbParamters
+        /// Clear all DbParameters
         /// </summary>
         public void ClearDbParameters()
         {

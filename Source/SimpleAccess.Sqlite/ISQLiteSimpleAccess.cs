@@ -11,11 +11,15 @@ namespace SimpleAccess.SQLite
     /// <summary>
     /// SimpleAccess implementation for SQLite
     /// </summary>
-    public interface ISQLiteSimpleAccess : 
-        ISimpleAccess <SQLiteConnection, SQLiteTransaction, SQLiteCommand, SQLiteParameter, SQLiteDataReader, SQLiteSqlBuilder>
+    //public interface ISQLiteSimpleAccess : 
+    //    ISimpleAccess <SQLiteConnection, SQLiteTransaction, SQLiteCommand, SQLiteParameter, SQLiteDataReader, SQLiteSqlBuilder>
+    //    , IDisposable
+    //{
+    public interface ISQLiteSimpleAccess :
+        ISimpleAccess<SQLiteConnection, SQLiteTransaction, SQLiteCommand, SQLiteParameter, SQLiteDataReader>
         , IDisposable
     {
-        
+
 
         /// <summary>
         /// SimpleLogger to log exception
