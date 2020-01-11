@@ -41,9 +41,9 @@ namespace SimpleAccess.Core.Entity
         /// <summary>
         /// Default select statement with all columns of the entity
         /// </summary>
-        public string GetSelectAllStatement()
+        public string GetSelectStatement()
         {
-            return SqlBuilder.GetSelectAllStatement();
+            return SqlBuilder.GetSelectStatement();
         }
 
         /// <summary>
@@ -59,17 +59,17 @@ namespace SimpleAccess.Core.Entity
         /// <summary>
         /// Default update statement with all columns and parameters of the entity
         /// </summary>
-        public string GetUpdateSatetment()
+        public string GetUpdateStatement()
         {
-            return SqlBuilder.GetUpdateSatetment();
+            return SqlBuilder.GetUpdateStatement();
         }
 
         /// <summary>
         /// Default delete statement with id parameter of the entity
         /// </summary>
-        public string GetDeleteStatment()
+        public string GetDeleteStatement()
         {
-            return SqlBuilder.GetDeleteStatment();
+            return SqlBuilder.GetDeleteStatement();
         }
 
         /// <summary>
@@ -81,12 +81,16 @@ namespace SimpleAccess.Core.Entity
             EntityType = type;
             LoadEntityInformation();
             SqlBuilder = new TISqlBuilder();
+            SqlBuilder.InitSqlBuilder(this);
         }
 
         /// <summary>
         /// Table/View Name of the Entity extracted from the <see cref="EntityAttribute"/> if the Entity is marked with it, otherwise the same name of Entity
         /// </summary>
         public string DbObjectName { get; private set; }
+
+        public string DbObjectViewName { get; private set; }
+
 
         /// <summary>
         /// Stored procedure prefix of the Entity extracted from the <see cref="StoredProcedureNameKeyWordAttribute"/> 
@@ -107,11 +111,13 @@ namespace SimpleAccess.Core.Entity
             var entityAttribute = EntityType.GetCustomAttributes(true).FirstOrDefault(c => c is EntityAttribute);
             if (entityAttribute != null)
             {
-                DbObjectName = ((EntityAttribute)entityAttribute).EntityName;
+                var entityAttr = ((EntityAttribute) entityAttribute);
+                DbObjectName = entityAttr.EntityName;
+                DbObjectViewName = entityAttr.DefaultView ?? entityAttr.EntityName;
             }
             else
             {
-                DbObjectName = EntityType.Name;
+                DbObjectViewName = DbObjectName = EntityType.Name;
             }
 
             var storedProcedureNameKeywordAttribute = EntityType.GetCustomAttributes(true).FirstOrDefault(c => c is StoredProcedureNameKeyWordAttribute);
@@ -129,7 +135,7 @@ namespace SimpleAccess.Core.Entity
        
 
         /// <summary>
-        /// Clear all DbParamters
+        /// Clear all DbParameters
         /// </summary>
         public void ClearDbParameters()
         {

@@ -1,4 +1,5 @@
-﻿#pragma warning disable CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
+﻿
+#pragma warning disable CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
 using System;
 #pragma warning restore CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
 #pragma warning disable CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
@@ -20,19 +21,28 @@ namespace SimpleAccess.Core
         /// 
         /// </summary>
         /// <param name="propertyInfo"></param>
-        /// <param name="parametesType"></param>
+        /// <param name="parametersType"></param>
         /// <param name="propertyInfos"></param>
+        /// <param name="outParameterPropertyInfoCollection"></param>
+        /// <param name="outDataParameters"></param>
         /// <returns></returns>
-        IDataParameter CreateDataParameter(PropertyInfo propertyInfo, ParametersType parametesType,
+        IDataParameter CreateDataParameter(PropertyInfo propertyInfo, ParametersType parametersType,
             IEnumerable<PropertyInfo> propertyInfos, IList<PropertyInfo> outParameterPropertyInfoCollection , List<IDataParameter> outDataParameters );
 
         EntityParameters<TDbParameter> CreateEntityParameters(object entity, bool checkForIdentityColumn);
+
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        string GetSelectAllStatement();
+        void InitSqlBuilder(object entityInfo);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        string GetSelectStatement();
 
         /// <summary>
         /// 
@@ -44,13 +54,19 @@ namespace SimpleAccess.Core
         /// 
         /// </summary>
         /// <returns></returns>
-        string GetUpdateSatetment();
+        string GetUpdateStatement();
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        string GetDeleteStatment();
+        string GetDeleteStatement();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        string GetSoftDeleteStatement();
 
         /// <summary>
         /// 
@@ -81,7 +97,7 @@ namespace SimpleAccess.Core
         string BuildWhereExpression(string propertyName, Type valueType, string @operator, object value);
 
         /// <summary>
-        /// Clear all DbParamters of both insert and update EntityParameters
+        /// Clear all DbParameters of both insert and update EntityParameters
         /// </summary>
         void ClearDbParameters();
 
