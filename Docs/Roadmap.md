@@ -7,8 +7,7 @@
 - [X] Add ExecuteValues\<T\> for getting result of a single column query in IEnumerable\<T\>
 - [X] NetStandard 2.0 support
 - [X] Write unit test
-- [X] NetStandard 2.1 support
-- [X] NetStandard 2.0 support
+- [X] NetStandard 2.1 support with Microsoft.Data.SqlClient
 - [ ] Configure StoredProcedure naming convention mapping to repository method (Insert, Update, Delete, Get, GetAll, Find, FindAll) methods in repository settings
 - [ ] Add Sql Generation for Non StoredProcedures command types (Insert, Update, Delete, Get, GetAll, Find, FindAll)
 ### SqlRepository Without SP implementation
