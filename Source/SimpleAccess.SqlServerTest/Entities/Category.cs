@@ -8,7 +8,7 @@ using SimpleAccess;
 namespace SimpleAccess.SqlServerTestNetCore2.Entities
 {
 
-    [Entity("Category")]
+    [Entity("Categories")]
     public class Category
     {
         [Identity]

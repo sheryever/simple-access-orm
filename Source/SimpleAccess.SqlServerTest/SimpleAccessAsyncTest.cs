@@ -10,18 +10,19 @@ namespace SimpleAccess.SqlServerTest
     [TestClass]
     public class SimpleAccessAsyncTest
     {
-        private ISqlSimpleAccess SimpleAccess { get; set; }
+        private static ISqlSimpleAccess SimpleAccess { get; set; }
 
-        [TestInitialize]
-        public void SetupSimpleAccess()
+        [ClassInitialize]
+        public static void SetupSimpleAccess(TestContext context)
         {
             SimpleAccess = new SqlSimpleAccess("sqlDefaultConnection");
+            SimpleAccess.ExecuteNonQuery(DbConfiguration.DbInitialScript);
         }
 
         [TestMethod]
         public void ExecuteScalarAsyncTest()
         {
-            var categoriesCount = SimpleAccess.ExecuteScalarAsync<int>("Select Count(*) FROM Category").Result;
+            var categoriesCount = SimpleAccess.ExecuteScalarAsync<int>("Select Count(*) FROM Categories").Result;
 
             Assert.AreEqual(categoriesCount, 3);
         }
@@ -33,18 +34,18 @@ namespace SimpleAccess.SqlServerTest
         {
             using (var transContext = SimpleAccess.BeginTransactionAsync().Result)
             {
-                var rowCount = SimpleAccess.ExecuteScalarAsync<int>(transContext, "Select Count(*) FROM Category").Result;
+                var rowCount = SimpleAccess.ExecuteScalarAsync<int>(transContext, "Select Count(*) FROM Categories").Result;
 
                 Assert.AreEqual(rowCount, 3);
 
                 rowCount = SimpleAccess.ExecuteScalarAsync<int>(transContext, "Select Count(*) FROM [Branches]").Result;
 
-                Assert.AreEqual(rowCount, 2);
+                Assert.AreEqual(rowCount, 3);
 
                 rowCount = SimpleAccess.ExecuteScalarAsync<int>(transContext, "Select Count(*) FROM [Attachments]").Result;
 
 
-                Assert.AreEqual(rowCount, 5);
+                Assert.AreEqual(rowCount, 3);
 
 
                 SimpleAccess.EndTransaction(transContext);
@@ -58,7 +59,7 @@ namespace SimpleAccess.SqlServerTest
         {
             var categoriesCount = 0;
                 
-            var reader = SimpleAccess.ExecuteReaderAsync("Select * FROM Category").Result;
+            var reader = SimpleAccess.ExecuteReaderAsync("Select * FROM Categories").Result;
 
             while (reader.Read())
             {
@@ -72,7 +73,7 @@ namespace SimpleAccess.SqlServerTest
         [TestMethod]
         public void ExecuteValuesAsyncTest()
         {
-            var categoryIds = SimpleAccess.ExecuteValuesAsync<int>("Select Id FROM Category").Result;
+            var categoryIds = SimpleAccess.ExecuteValuesAsync<int>("Select Id FROM Categories").Result;
 
             Assert.AreEqual(categoryIds.Count(), 3);
         }
@@ -84,17 +85,17 @@ namespace SimpleAccess.SqlServerTest
         {
             using (var transContext = SimpleAccess.BeginTransactionAsync().Result)
             {
-                var values = SimpleAccess.ExecuteValuesAsync<int>(transContext, "Select Id FROM Category").Result;
+                var values = SimpleAccess.ExecuteValuesAsync<int>(transContext, "Select Id FROM Categories").Result;
 
                 Assert.AreEqual(values.Count(), 3);
 
                 values = SimpleAccess.ExecuteValuesAsync<int>(transContext, "Select Id FROM [Branches]").Result;
 
-                Assert.AreEqual(values.Count(), 2);
+                Assert.AreEqual(values.Count(), 3);
 
                 values = SimpleAccess.ExecuteValuesAsync<int>(transContext, "Select Id FROM [Attachments]").Result;
 
-                Assert.AreEqual(values.Count(), 5);
+                Assert.AreEqual(values.Count(), 3);
 
                 SimpleAccess.EndTransaction(transContext);
 
@@ -104,7 +105,7 @@ namespace SimpleAccess.SqlServerTest
         [TestMethod]
         public void ExecuteEntitiesAsyncTest()
         {
-            var categoriesCount = SimpleAccess.ExecuteEntitiesAsync<Category>("Select Id, Name, Description FROM Category").Result;
+            var categoriesCount = SimpleAccess.ExecuteEntitiesAsync<Category>("Select Id, Name, Description FROM Categories").Result;
 
             Assert.AreEqual(categoriesCount.Count(), 3);
         }
@@ -116,17 +117,17 @@ namespace SimpleAccess.SqlServerTest
         {
             using (var transContext = SimpleAccess.BeginTransactionAsync().Result)
             {
-                var categories = SimpleAccess.ExecuteEntitiesAsync<Category>(transContext, "Select Id, Name, Description FROM Category").Result;
+                var categories = SimpleAccess.ExecuteEntitiesAsync<Category>(transContext, "Select Id, Name, Description FROM Categories").Result;
 
                 Assert.AreEqual(categories.Count(), 3);
 
                 var branches = SimpleAccess.ExecuteEntitiesAsync<Branch>(transContext, "Select Id, CityId, Name, [PhoneNumbers], [Address], [Address2] FROM [Branches]").Result;
 
-                Assert.AreEqual(branches.Count(), 2);
+                Assert.AreEqual(branches.Count(), 3);
 
                 var attachments = SimpleAccess.ExecuteEntitiesAsync<Attachment>(transContext, "Select Id, [IncidentId], [OtherName] FROM [Attachments]").Result;
 
-                Assert.AreEqual(attachments.Count(), 5);
+                Assert.AreEqual(attachments.Count(), 3);
 
                 SimpleAccess.EndTransaction(transContext);
 
@@ -136,10 +137,10 @@ namespace SimpleAccess.SqlServerTest
         [TestMethod]
         public void ExecuteEntityAsyncTest()
         {
-            var category = SimpleAccess.ExecuteEntityAsync<Category>("Select Top 1 Id, Name, Description FROM Category").Result;
+            var category = SimpleAccess.ExecuteEntityAsync<Category>("Select Top 1 Id, Name, Description FROM Categories").Result;
 
             Assert.IsNotNull(category);
-            Assert.AreEqual(category.Id, 2);
+            Assert.AreEqual(category.Id, 1);
         }
 
 
@@ -149,10 +150,10 @@ namespace SimpleAccess.SqlServerTest
         {
             using (var transContext = SimpleAccess.BeginTransactionAsync().Result)
             {
-                var category = SimpleAccess.ExecuteEntityAsync<Category>(transContext, "Select Top 1 Id, Name, Description FROM Category").Result;
+                var category = SimpleAccess.ExecuteEntityAsync<Category>(transContext, "Select Top 1 Id, Name, Description FROM Categories").Result;
 
                 Assert.IsNotNull(category);
-                Assert.AreEqual(category.Id, 2);
+                Assert.AreEqual(category.Id, 1);
 
                 var branch = SimpleAccess.ExecuteEntityAsync<Branch>(transContext, "Select TOP 1 Id, CityId, Name, [PhoneNumbers], [Address], [Address2] FROM [Branches]").Result;
 
@@ -162,7 +163,7 @@ namespace SimpleAccess.SqlServerTest
                 var attachment = SimpleAccess.ExecuteEntityAsync<Attachment>(transContext, "Select TOP 1 Id, [IncidentId], [OtherName] FROM [Attachments]").Result;
 
                 Assert.IsNotNull(attachment);
-                Assert.AreEqual(attachment.Id, 5);
+                Assert.AreEqual(attachment.Id, 1);
 
                 SimpleAccess.EndTransaction(transContext);
 
@@ -174,10 +175,10 @@ namespace SimpleAccess.SqlServerTest
         [TestMethod]
         public void ExecuteDynamicAsyncTest()
         {
-            var category = SimpleAccess.ExecuteDynamicAsync("Select Top 1 Id, Name, Description FROM Category").Result;
+            var category = SimpleAccess.ExecuteDynamicAsync("Select Top 1 Id, Name, Description FROM Categories").Result;
 
             Assert.IsNotNull(category);
-            Assert.AreEqual(category.Id, 2);
+            Assert.AreEqual(category.Id, 1);
         }
 
 
@@ -187,10 +188,10 @@ namespace SimpleAccess.SqlServerTest
         {
             using (var transContext = SimpleAccess.BeginTransactionAsync().Result)
             {
-                var category = SimpleAccess.ExecuteDynamicAsync(transContext, "Select Top 1 Id, Name, Description FROM Category").Result;
+                var category = SimpleAccess.ExecuteDynamicAsync(transContext, "Select Top 1 Id, Name, Description FROM Categories").Result;
 
                 Assert.IsNotNull(category);
-                Assert.AreEqual(category.Id, 2);
+                Assert.AreEqual(category.Id, 1);
 
                 var branch = SimpleAccess.ExecuteDynamicAsync(transContext, "Select TOP 1 Id, CityId, Name, [PhoneNumbers], [Address], [Address2] FROM [Branches]").Result;
 
@@ -200,7 +201,7 @@ namespace SimpleAccess.SqlServerTest
                 var attachment = SimpleAccess.ExecuteDynamicAsync(transContext, "Select TOP 1 Id, [IncidentId], [OtherName] FROM [Attachments]").Result;
 
                 Assert.IsNotNull(attachment);
-                Assert.AreEqual(attachment.Id, 5);
+                Assert.AreEqual(attachment.Id, 1);
 
                 SimpleAccess.EndTransaction(transContext);
 
@@ -210,7 +211,7 @@ namespace SimpleAccess.SqlServerTest
         [TestMethod]
         public void ExecuteDynamicsAsyncTest()
         {
-            var rowAffected = SimpleAccess.ExecuteNonQueryAsync("UPDATE Category SET Description = @description WHERE Id = @id", 
+            var rowAffected = SimpleAccess.ExecuteNonQueryAsync("UPDATE Categories SET Description = @description WHERE Id = @id", 
                 new { id = 2, description = "Updated description"}).Result;
 
             Assert.AreEqual(rowAffected, 1);
@@ -222,19 +223,19 @@ namespace SimpleAccess.SqlServerTest
         {
             using (var transContext = SimpleAccess.BeginTransactionAsync().Result)
             {
-                var rowAffected = SimpleAccess.ExecuteNonQueryAsync(transContext, "UPDATE Category SET Description = @description WHERE Id = @id",
-                    new { id = 2, description = "Updated description with transaction" }).Result;
+                var rowAffected = SimpleAccess.ExecuteNonQueryAsync(transContext, "UPDATE Categories SET Description = @description WHERE Id = @id",
+                    new { id = 1, description = "Updated description with transaction" }).Result;
 
                 Assert.AreEqual(rowAffected, 1);
 
                 rowAffected = SimpleAccess.ExecuteNonQueryAsync(transContext, "UPDATE [Branches] SET [Address2] = @address2 WHERE Id = @id",
-                    new { id = 2, address2 = "Updated Address2 with transaction" }).Result;
+                    new { id = 1, address2 = "Updated Address2 with transaction" }).Result;
 
 
                 Assert.AreEqual(rowAffected, 1);
 
                 rowAffected = SimpleAccess.ExecuteNonQueryAsync(transContext, "UPDATE Attachments SET [OtherName] = @otherName WHERE Id = @id",
-                    new { id = 6, otherName = "Updated OtherName with transaction" }).Result;
+                    new { id = 1, otherName = "Updated OtherName with transaction" }).Result;
 
 
                 Assert.AreEqual(rowAffected, 1);

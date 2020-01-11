@@ -1,5 +1,7 @@
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SimpleAccess.Core;
 using SimpleAccess.SqlServer;
@@ -10,14 +12,66 @@ namespace SimpleAccess.SqlServerTest
     [TestClass]
     public class SqlRepositoryAsyncTest
     {
-        private ISqlSimpleAccess SimpleAccess { get; set; }
-        private ISqlRepository SqlRepository{ get; set; }
+        private static ISqlSimpleAccess SimpleAccess { get; set; }
+        private static ISqlRepository SqlRepository{ get; set; }
 
-        [TestInitialize]
-        public void SetupSimpleAccess()
+        [ClassInitialize]
+        public static void SetupSimpleAccess(TestContext context)
         {
             SimpleAccess = new SqlSimpleAccess("sqlDefaultConnection");
             SqlRepository = new SqlRepository(SimpleAccess);
+            SimpleAccess.ExecuteNonQuery(DbConfiguration.DbInitialScript);
+        }
+
+        [TestMethod]
+        public void InsertAsyncTest()
+        {
+            var person = new Person
+            {
+                FullName = "Muhammad Abdul Rehman Khan",
+                Phone = "1112182123"
+            };
+            var rowAffected = SqlRepository.InsertAsync<Person>(person).Result;
+            //var rowAffected = SqlRepository.Insert<Person>(person);
+
+            Assert.AreEqual(rowAffected, 1);
+        }
+
+        [TestMethod]
+        public void InsertAllAsyncWithTransactionContextTest()
+        {
+            using (var transContext = SqlRepository.SimpleAccess.BeginTransactionAsync().Result)
+            {
+                var people = new[] {
+                    new Person
+                    {
+                        FullName = "Muhammad Abdul Rehman Khan",
+                        Phone = "1112182123"
+                    },
+                    new Person
+                    {
+                        FullName = "Muhammad Sharjeel",
+                        Phone = "0599065644"
+                    },
+                    new Person
+                    {
+                        FullName = "Muhammad Affan",
+                        Phone = "1112182123"
+                    },
+                    new Person
+                    {
+                        FullName = "Muhammad Usman",
+                        Phone = "1112182123"
+                    },
+                };
+                var rowAffected = SqlRepository.InsertAllAsync<Person>(people).Result;
+
+                Assert.AreEqual(rowAffected, 4);
+
+
+                SqlRepository.SimpleAccess.EndTransaction(transContext);
+
+            }
         }
 
         [TestMethod]
@@ -50,7 +104,7 @@ namespace SimpleAccess.SqlServerTest
 
                 Assert.IsNotNull(branch);
 
-                var attachment = SqlRepository.GetAsync<Attachment>(transContext, 6).Result;
+                var attachment = SqlRepository.GetAsync<Attachment>(transContext, 3).Result;
 
                 Assert.IsNotNull(attachment);
 
@@ -81,7 +135,7 @@ namespace SimpleAccess.SqlServerTest
 
                 Assert.IsNotNull(branch);
 
-                var attachment = SqlRepository.FindAsync<Attachment>(transContext, c => c.Id == 6).Result;
+                var attachment = SqlRepository.FindAsync<Attachment>(transContext, c => c.Id == 2).Result;
 
                 Assert.IsNotNull(attachment);
 
@@ -112,61 +166,8 @@ namespace SimpleAccess.SqlServerTest
                 Assert.AreEqual(branches.Count(), 2);
 
 
-                var attachments = SqlRepository.FindAllAsync<Attachment>(transContext, c => c.IncidentId == 5).Result;
-                Assert.AreEqual(attachments.Count(), 5);
-
-                SqlRepository.SimpleAccess.EndTransaction(transContext);
-
-            }
-        }
-
-        [TestMethod]
-        public void InsertAsyncTest()
-        {
-
-            var person = new Person
-            {
-                FullName = "Muhammad Abdul Rehman Khan",
-                Phone = "1112182123"
-            };
-            var rowAffected = SqlRepository.InsertAsync<Person>(person).Result;
-            //var rowAffected = SqlRepository.Insert<Person>(person);
-
-            Assert.AreEqual(rowAffected, 1);
-        }
-
-        [TestMethod]
-
-        public void InsertAllAsyncWithTransactionContextTest()
-        {
-            using (var transContext = SqlRepository.SimpleAccess.BeginTransactionAsync().Result)
-            {
-                var people = new [] {
-                    new Person
-                    {
-                        FullName = "Muhammad Abdul Rehman Khan",
-                        Phone = "1112182123"
-                    },
-                    new Person
-                    {
-                        FullName = "Muhammad Sharjeel",
-                        Phone = "0599065644"
-                    },
-                    new Person
-                    {
-                        FullName = "Muhammad Affan",
-                        Phone = "1112182123"
-                    },
-                    new Person
-                    {
-                        FullName = "Muhammad Usman",
-                        Phone = "1112182123"
-                    },
-                };
-                var rowAffected = SqlRepository.InsertAllAsync<Person>(people).Result;
-
-                Assert.AreEqual(rowAffected, 4);
-
+                var attachments = SqlRepository.FindAllAsync<Attachment>(transContext, c => c.IncidentId == 3).Result;
+                Assert.AreEqual(attachments.Count(), 1);
 
                 SqlRepository.SimpleAccess.EndTransaction(transContext);
 
@@ -243,7 +244,7 @@ namespace SimpleAccess.SqlServerTest
         //{
         //    var categoriesCount = 0;
 
-        //    var reader = SimpleAccess.ExecuteReaderAsync("Select * FROM Category").Result;
+        //    var reader = SimpleAccess.ExecuteReaderAsync("Select * FROM Categories").Result;
 
         //    while (reader.Read())
         //    {
@@ -257,7 +258,7 @@ namespace SimpleAccess.SqlServerTest
         //[TestMethod]
         //public void ExecuteValuesAsyncTest()
         //{
-        //    var categoryIds = SimpleAccess.ExecuteValuesAsync<int>("Select Id FROM Category").Result;
+        //    var categoryIds = SimpleAccess.ExecuteValuesAsync<int>("Select Id FROM Categories").Result;
 
         //    Assert.AreEqual(categoryIds.Count(), 3);
         //}
@@ -269,7 +270,7 @@ namespace SimpleAccess.SqlServerTest
         //{
         //    using (var transContext = SimpleAccess.BeginTransactionAsync().Result)
         //    {
-        //        var values = SimpleAccess.ExecuteValuesAsync<int>(transContext, "Select Id FROM Category").Result;
+        //        var values = SimpleAccess.ExecuteValuesAsync<int>(transContext, "Select Id FROM Categories").Result;
 
         //        Assert.AreEqual(values.Count(), 3);
 
@@ -289,7 +290,7 @@ namespace SimpleAccess.SqlServerTest
         //[TestMethod]
         //public void ExecuteEntitiesAsyncTest()
         //{
-        //    var categoriesCount = SimpleAccess.ExecuteEntitiesAsync<Category>("Select Id, Name, Description FROM Category").Result;
+        //    var categoriesCount = SimpleAccess.ExecuteEntitiesAsync<Category>("Select Id, Name, Description FROM Categories").Result;
 
         //    Assert.AreEqual(categoriesCount.Count(), 3);
         //}
@@ -301,7 +302,7 @@ namespace SimpleAccess.SqlServerTest
         //{
         //    using (var transContext = SimpleAccess.BeginTransactionAsync().Result)
         //    {
-        //        var categories = SimpleAccess.ExecuteEntitiesAsync<Category>(transContext, "Select Id, Name, Description FROM Category").Result;
+        //        var categories = SimpleAccess.ExecuteEntitiesAsync<Category>(transContext, "Select Id, Name, Description FROM Categories").Result;
 
         //        Assert.AreEqual(categories.Count(), 3);
 
@@ -321,7 +322,7 @@ namespace SimpleAccess.SqlServerTest
         //[TestMethod]
         //public void ExecuteEntityAsyncTest()
         //{
-        //    var category = SimpleAccess.ExecuteEntityAsync<Category>("Select Top 1 Id, Name, Description FROM Category").Result;
+        //    var category = SimpleAccess.ExecuteEntityAsync<Category>("Select Top 1 Id, Name, Description FROM Categories").Result;
 
         //    Assert.IsNotNull(category);
         //    Assert.AreEqual(category.Id, 2);
@@ -334,7 +335,7 @@ namespace SimpleAccess.SqlServerTest
         //{
         //    using (var transContext = SimpleAccess.BeginTransactionAsync().Result)
         //    {
-        //        var category = SimpleAccess.ExecuteEntityAsync<Category>(transContext, "Select Top 1 Id, Name, Description FROM Category").Result;
+        //        var category = SimpleAccess.ExecuteEntityAsync<Category>(transContext, "Select Top 1 Id, Name, Description FROM Categories").Result;
 
         //        Assert.IsNotNull(category);
         //        Assert.AreEqual(category.Id, 2);
@@ -359,7 +360,7 @@ namespace SimpleAccess.SqlServerTest
         //[TestMethod]
         //public void ExecuteDynamicAsyncTest()
         //{
-        //    var category = SimpleAccess.ExecuteDynamicAsync("Select Top 1 Id, Name, Description FROM Category").Result;
+        //    var category = SimpleAccess.ExecuteDynamicAsync("Select Top 1 Id, Name, Description FROM Categories").Result;
 
         //    Assert.IsNotNull(category);
         //    Assert.AreEqual(category.Id, 2);
@@ -372,7 +373,7 @@ namespace SimpleAccess.SqlServerTest
         //{
         //    using (var transContext = SimpleAccess.BeginTransactionAsync().Result)
         //    {
-        //        var category = SimpleAccess.ExecuteDynamicAsync(transContext, "Select Top 1 Id, Name, Description FROM Category").Result;
+        //        var category = SimpleAccess.ExecuteDynamicAsync(transContext, "Select Top 1 Id, Name, Description FROM Categories").Result;
 
         //        Assert.IsNotNull(category);
         //        Assert.AreEqual(category.Id, 2);
@@ -395,7 +396,7 @@ namespace SimpleAccess.SqlServerTest
         //[TestMethod]
         //public void ExecuteDynamicsAsyncTest()
         //{
-        //    var rowAffected = SimpleAccess.ExecuteNonQueryAsync("UPDATE Category SET Description = @description WHERE Id = @id", 
+        //    var rowAffected = SimpleAccess.ExecuteNonQueryAsync("UPDATE Categories SET Description = @description WHERE Id = @id", 
         //        new { id = 2, description = "Updated description"}).Result;
 
         //    Assert.AreEqual(rowAffected, 1);
@@ -407,7 +408,7 @@ namespace SimpleAccess.SqlServerTest
         //{
         //    using (var transContext = SimpleAccess.BeginTransactionAsync().Result)
         //    {
-        //        var rowAffected = SimpleAccess.ExecuteNonQueryAsync(transContext, "UPDATE Category SET Description = @description WHERE Id = @id",
+        //        var rowAffected = SimpleAccess.ExecuteNonQueryAsync(transContext, "UPDATE Categories SET Description = @description WHERE Id = @id",
         //            new { id = 2, description = "Updated description with transaction" }).Result;
 
         //        Assert.AreEqual(rowAffected, 1);
