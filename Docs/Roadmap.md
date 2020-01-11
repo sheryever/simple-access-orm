@@ -5,9 +5,16 @@
 - [x] Add InsertAll\<TEntity\>, UpdateAll\<TEntity\>, DeleteAll\<TEntity\> with support of internal trasaction in Repository
 - [x] Add Find\<TEntity\> and  FindAll\<TEntity\> in Repository
 - [X] Add ExecuteValues\<T\> for getting result of a single column query in IEnumerable\<T\>
+- [X] NetStandard 2.0 support
 - [X] Write unit test
+- [X] NetStandard 2.1 support
+- [X] NetStandard 2.0 support
 - [ ] Configure StoredProcedure naming convention mapping to repository method (Insert, Update, Delete, Get, GetAll, Find, FindAll) methods in repository settings
 - [ ] Add Sql Generation for Non StoredProcedures command types (Insert, Update, Delete, Get, GetAll, Find, FindAll)
+### SqlRepository Without SP implementation
+- [x] Add `DefaultView` property in EntityAttribute
+- [ ] `DefaultView` property in EntityAttribute support for default select
+- [ ] Add `GetAllFrom(string viewName)` select the data from given view name insead of EntityNmae (Table name) & EntityAttribute (EntityName / DefaultView)
 - [ ] Fixing comments, documention and adding examples
 - [ ] SimpleAccess Factory, Allow SimpleAccess to create SimpleAccess object the base of configuration(xml/json)
 ```C#
@@ -23,8 +30,3 @@ SimpleAccess.DataMappers.Add(new GeomaryDataMapper());
 - [ ] Rewrite code generation application
  - [ ] Allow developer to add more T4 Templates
  - [ ] Allow developer to edit T4 Templates directly inside the application
-
-### SqlRepository Without SP implementation
-- [x] Add `DefaultView` property in EntityAttribute
-- [ ] `DefaultView` property in EntityAttribute support for default select
-- [ ] Add `GetAllFrom(string viewName)` select the data from given view name insead of EntityNmae (Table name) & EntityAttribute (EntityName / DefaultView)
