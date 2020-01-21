@@ -195,24 +195,21 @@ namespace SimpleAccess.Oracle
             throw new NotImplementedException();
         }
 
-        public string GetInsertStatement()
-        {
-            throw new NotImplementedException();
-        }
+        public string GetGetAllStatement() => string.Format(RepositorySetting.SpGetAllPattern, _entityInfo.DbObjectName);
 
-        public string GetUpdateStatement()
-        {
-            throw new NotImplementedException();
-        }
+        public string GetGetByIdStatement() => string.Format(RepositorySetting.SpGetByIdPattern, _entityInfo.DbObjectName);
 
-        public string GetDeleteStatement()
-        {
-            throw new NotImplementedException();
-        }
-        public string GetSoftDeleteStatement()
-        {
-            throw new NotImplementedException();
-        }
+        public string GetFindStatement() => string.Format(RepositorySetting.SpFindPattern, _entityInfo.DbObjectName);
+
+        public string GetInsertStatement() => string.Format(RepositorySetting.SpInsertPattern, _entityInfo.DbObjectName);
+
+        public string GetUpdateStatement() => string.Format(RepositorySetting.SpUpdatePattern, _entityInfo.DbObjectName);
+
+        public string GetDeleteStatement() => string.Format(RepositorySetting.SpDeletePattern, _entityInfo.DbObjectName);
+
+        public string GetDeleteAllStatement() => string.Format(RepositorySetting.SpDeleteAllPattern, _entityInfo.DbObjectName);
+
+        public string GetSoftDeleteStatement() => string.Format(RepositorySetting.SpSoftDeletePattern, _entityInfo.DbObjectName);
 
 
         public EntityParameters<OracleParameter> GetInsertParameters(object entity)

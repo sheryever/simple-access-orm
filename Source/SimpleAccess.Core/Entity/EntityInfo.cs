@@ -38,39 +38,39 @@ namespace SimpleAccess.Core.Entity
             return SqlBuilder.GetUpdateParameters(entity);
         }
 
-        /// <summary>
-        /// Default select statement with all columns of the entity
-        /// </summary>
-        public string GetSelectStatement()
-        {
-            return SqlBuilder.GetSelectStatement();
-        }
+        ///// <summary>
+        ///// Default select statement with all columns of the entity
+        ///// </summary>
+        //public string GetSelectStatement()
+        //{
+        //    return SqlBuilder.get();
+        //}
 
-        /// <summary>
-        /// Default insert statement with all columns and parameters of the entity
-        /// </summary>
-        public string GetInsertStatement()
-        {
-            return SqlBuilder.GetInsertStatement();
+        ///// <summary>
+        ///// Default insert statement with all columns and parameters of the entity
+        ///// </summary>
+        //public string GetInsertStatement()
+        //{
+        //    return SqlBuilder.GetInsertStatement();
 
 
-        }
+        //}
 
-        /// <summary>
-        /// Default update statement with all columns and parameters of the entity
-        /// </summary>
-        public string GetUpdateStatement()
-        {
-            return SqlBuilder.GetUpdateStatement();
-        }
+        ///// <summary>
+        ///// Default update statement with all columns and parameters of the entity
+        ///// </summary>
+        //public string GetUpdateStatement()
+        //{
+        //    return SqlBuilder.GetUpdateStatement();
+        //}
 
-        /// <summary>
-        /// Default delete statement with id parameter of the entity
-        /// </summary>
-        public string GetDeleteStatement()
-        {
-            return SqlBuilder.GetDeleteStatement();
-        }
+        ///// <summary>
+        ///// Default delete statement with id parameter of the entity
+        ///// </summary>
+        //public string GetDeleteStatement()
+        //{
+        //    return SqlBuilder.GetDeleteStatement();
+        //}
 
         /// <summary>
         /// Initialize the new object

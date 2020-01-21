@@ -59,69 +59,21 @@ namespace SimpleAccess.SqlServer
         //    return DataParameters.ToArray();
         //}
         
-        public string GetSpGetAllStatement()
-        {
-            return string.Format(SqlSpRepositorySetting.SpGetAllPattern, _entityInfo.DbObjectName);
-        }
+        public override string GetGetAllStatement() => string.Format(SqlSpRepositorySetting.SpGetAllPattern, _entityInfo.DbObjectName);
 
-        public string GetSpGetByIdStatement()
-        {
-            return string.Format(SqlSpRepositorySetting.SpGetByIdPattern, _entityInfo.DbObjectName);
-        }
+        public override string GetGetByIdStatement() => string.Format(SqlSpRepositorySetting.SpGetByIdPattern, _entityInfo.DbObjectName);
 
-        public string GetSpFindStatement()
-        {
-            return string.Format(SqlSpRepositorySetting.SpFindPattern, _entityInfo.DbObjectName);
-        }
+        public override string GetFindStatement() => string.Format(SqlSpRepositorySetting.SpFindPattern, _entityInfo.DbObjectName);
 
-        public string GetSpInsertStatement()
-        {
-            return string.Format(SqlSpRepositorySetting.SpInsertPattern, _entityInfo.DbObjectName);
-        }
+        public override string GetInsertStatement() => string.Format(SqlSpRepositorySetting.SpInsertPattern, _entityInfo.DbObjectName);
 
-        public string GetSpUpdateStatement()
-        {
-            return string.Format(SqlSpRepositorySetting.SpUpdatePattern, _entityInfo.DbObjectName);
-        }
+        public override string GetUpdateStatement() => string.Format(SqlSpRepositorySetting.SpUpdatePattern, _entityInfo.DbObjectName);
 
-        public string GetSpDeleteStatement()
-        {
-            return string.Format(SqlSpRepositorySetting.SpDeletePattern, _entityInfo.DbObjectName);
-        }
+        public override string GetDeleteStatement() => string.Format(SqlSpRepositorySetting.SpDeletePattern, _entityInfo.DbObjectName);
 
-        public string GetSpDeleteAllStatement()
-        {
-            return string.Format(SqlSpRepositorySetting.SpDeleteAllPattern, _entityInfo.DbObjectName);
-        }
+        public override string GetDeleteAllStatement() => string.Format(SqlSpRepositorySetting.SpDeleteAllPattern, _entityInfo.DbObjectName);
 
-        public string GetSpSoftDeleteStatement()
-        {
-            return string.Format(SqlSpRepositorySetting.SpSoftDeletePattern, _entityInfo.DbObjectName);
-        }
+        public override string GetSoftDeleteStatement() => string.Format(SqlSpRepositorySetting.SpSoftDeletePattern, _entityInfo.DbObjectName);
 
-        public override string GetSelectStatement()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override string GetInsertStatement()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override string GetUpdateStatement()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override string GetDeleteStatement()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override string GetSoftDeleteStatement()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -46,5 +46,14 @@ namespace SimpleAccess.MySql
             }
             return entityInfo;
         }
+
+        public static string SpGetAllPattern { get; set; } = "{0}_GetAll";
+        public static string SpGetByIdPattern { get; set; } = "{0}_GetById";
+        public static string SpFindPattern { get; set; } = "{0}_Find";
+        public static string SpInsertPattern { get; set; } = "{0}_Insert";
+        public static string SpUpdatePattern { get; set; } = "{0}_Update";
+        public static string SpDeletePattern { get; set; } = "{0}_Delete";
+        public static string SpDeleteAllPattern { get; set; } = "{0}_DeleteAll";
+        public static string SpSoftDeletePattern { get; set; } = "{0}_SoftDelete";
     }
 }

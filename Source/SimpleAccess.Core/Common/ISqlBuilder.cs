@@ -38,11 +38,6 @@ namespace SimpleAccess.Core
         /// <returns></returns>
         void InitSqlBuilder(object entityInfo);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        string GetSelectStatement();
 
         /// <summary>
         /// 
@@ -61,12 +56,34 @@ namespace SimpleAccess.Core
         /// </summary>
         /// <returns></returns>
         string GetDeleteStatement();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        string GetDeleteAllStatement();
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         string GetSoftDeleteStatement();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        string GetGetAllStatement();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        string GetGetByIdStatement();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        string GetFindStatement();
+
+
 
         /// <summary>
         /// 

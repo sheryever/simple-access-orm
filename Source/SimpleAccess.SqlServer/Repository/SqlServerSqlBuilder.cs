@@ -188,8 +188,14 @@ namespace SimpleAccess.SqlServer
             Debug.WriteLine(sqlParam.ParameterName);
             return sqlParam;
         }
+        
 
-        public abstract string GetSelectStatement();
+        public abstract string GetGetAllStatement();
+
+        public abstract string GetGetByIdStatement();
+
+        public abstract string GetFindStatement();
+        public abstract string GetDeleteAllStatement();
 
         public abstract string GetInsertStatement();
 

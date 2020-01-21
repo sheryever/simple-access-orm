@@ -78,7 +78,7 @@ namespace SimpleAccess.SqlServer
             return $"SELECT {String.Join("\n\t, ", columns)}\n\t FROM {entityInfo.DbObjectViewName}";
         }
 
-        public override string GetSelectStatement()
+        public string GetSelectStatement()
         {
             SelectAllStatement  = SelectAllStatement ??
                                   CreateSelectAllStatement(_entityInfo);
@@ -99,6 +99,11 @@ namespace SimpleAccess.SqlServer
             return $"SELECT {String.Join("\n\t, ", columns)}\n\t FROM {entityInfo.DbObjectViewName}";
         }
 
+        public override string GetDeleteAllStatement()
+        {
+            throw new NotImplementedException();
+        }
+
         public override string GetInsertStatement()
         {
             throw new NotImplementedException();
@@ -115,6 +120,21 @@ namespace SimpleAccess.SqlServer
         }
 
         public override string GetSoftDeleteStatement()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string GetGetAllStatement()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string GetGetByIdStatement()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string GetFindStatement()
         {
             throw new NotImplementedException();
         }
