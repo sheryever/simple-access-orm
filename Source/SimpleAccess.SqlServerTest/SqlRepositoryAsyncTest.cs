@@ -19,7 +19,7 @@ namespace SimpleAccess.SqlServerTest
         public static void SetupSimpleAccess(TestContext context)
         {
             SimpleAccess = new SqlSimpleAccess("sqlDefaultConnection");
-            SqlRepository = new SqlRepository(SimpleAccess);
+            SqlRepository = new SqlSpRepository(SimpleAccess);
             SimpleAccess.ExecuteNonQuery(DbConfiguration.DbInitialScript);
         }
 

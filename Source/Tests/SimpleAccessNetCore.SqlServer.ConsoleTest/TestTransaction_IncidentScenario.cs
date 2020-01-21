@@ -20,7 +20,7 @@ namespace SimpleAccessNetCore.SqlServer.ConsoleTest
         private readonly ISqlRepository _repo;
 
         public IncidentsService() :
-            this(new SqlRepository())
+            this(new SqlSpRepository())
         {
 
         }
@@ -154,7 +154,7 @@ namespace SimpleAccessNetCore.SqlServer.ConsoleTest
         private readonly ISqlRepository _repo;
 
         public AttachmentsService() :
-            this(new SqlRepository())
+            this(new SqlSpRepository())
         {
 
         }

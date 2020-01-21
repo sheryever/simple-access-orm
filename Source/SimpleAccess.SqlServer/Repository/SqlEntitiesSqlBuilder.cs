@@ -19,16 +19,16 @@ using SimpleAccess.Core.Entity;
 namespace SimpleAccess.SqlServer
 {
 
-    public class SqlServerEntitiesSqlBuilder : SqlServerSqlBuilder, ISqlBuilder<SqlParameter>
+    public class SqlEntitiesSqlBuilder : SqlServerSqlBuilder, ISqlBuilder<SqlParameter>
     {
 
-        private EntityInfo<SqlServerEntitiesSqlBuilder, SqlParameter> _entityInfo;
+        private EntityInfo<SqlEntitiesSqlBuilder, SqlParameter> _entityInfo;
 
         //public List<IDataParameter> DataParameters { get; set; }
 
         public override void InitSqlBuilder(object entityInfo)
         {
-            _entityInfo = entityInfo as EntityInfo<SqlServerEntitiesSqlBuilder, SqlParameter>;
+            _entityInfo = entityInfo as EntityInfo<SqlEntitiesSqlBuilder, SqlParameter>;
 
             if (_entityInfo == null)
             {
@@ -65,7 +65,7 @@ namespace SimpleAccess.SqlServer
         public string UpdateStatement { get; private set; }
         public string DeleteStatement { get; private set; }
 
-        public string CreateSelectAllStatement(EntityInfo<SqlServerEntitiesSqlBuilder, SqlParameter> entityInfo)
+        public string CreateSelectAllStatement(EntityInfo<SqlEntitiesSqlBuilder, SqlParameter> entityInfo)
         {
             var properties = entityInfo.EntityType.GetProperties();
             string[] columns = new string[properties.Length];
@@ -86,7 +86,7 @@ namespace SimpleAccess.SqlServer
             return SelectAllStatement;
         }
 
-        public string CreateInsertStatement(EntityInfo<SqlServerEntitiesSqlBuilder, SqlParameter> entityInfo)
+        public string CreateInsertStatement(EntityInfo<SqlEntitiesSqlBuilder, SqlParameter> entityInfo)
         {
             var properties = entityInfo.EntityType.GetProperties();
             string[] columns = new string[properties.Length];

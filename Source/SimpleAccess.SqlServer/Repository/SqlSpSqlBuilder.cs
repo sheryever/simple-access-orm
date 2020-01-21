@@ -19,16 +19,16 @@ using SimpleAccess.Core.Entity;
 namespace SimpleAccess.SqlServer
 {
 
-    public class SqlServerSpSqlBuilder : SqlServerSqlBuilder, ISqlBuilder<SqlParameter>
+    public class SqlSpSqlBuilder : SqlServerSqlBuilder, ISqlBuilder<SqlParameter>
     {
 
-        private EntityInfo<SqlServerSpSqlBuilder, SqlParameter> _entityInfo;
+        private EntityInfo<SqlSpSqlBuilder, SqlParameter> _entityInfo;
 
         //public List<IDataParameter> DataParameters { get; set; }
 
         public override void InitSqlBuilder(object entityInfo)
         {
-            _entityInfo = entityInfo as EntityInfo<SqlServerSpSqlBuilder, SqlParameter>;
+            _entityInfo = entityInfo as EntityInfo<SqlSpSqlBuilder, SqlParameter>;
 
             if (_entityInfo == null)
             {

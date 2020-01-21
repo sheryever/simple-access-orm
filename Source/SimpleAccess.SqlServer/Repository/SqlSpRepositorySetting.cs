@@ -26,8 +26,8 @@ namespace SimpleAccess.SqlServer
         /// <summary>
         /// The Dictionary of <see cref="EntityInfos"/> for cache.
         /// </summary>
-        public static Dictionary<string, Core.Entity.EntityInfo<SqlServerSpSqlBuilder, SqlParameter>> EntityInfos { get; } =
-             new Dictionary<string, Core.Entity.EntityInfo<SqlServerSpSqlBuilder, SqlParameter>>();
+        public static Dictionary<string, Core.Entity.EntityInfo<SqlSpSqlBuilder, SqlParameter>> EntityInfos { get; } =
+             new Dictionary<string, Core.Entity.EntityInfo<SqlSpSqlBuilder, SqlParameter>>();
 
 
         /// <summary>
@@ -37,13 +37,13 @@ namespace SimpleAccess.SqlServer
         /// cref="EntityInfo"/> then it will add the and return the <see cref="EntityInfo"/>.
         /// <param name="type"></param>
         /// <returns></returns>
-        public static EntityInfo<SqlServerSpSqlBuilder, SqlParameter> GetEntityInfo(Type type)
+        public static EntityInfo<SqlSpSqlBuilder, SqlParameter> GetEntityInfo(Type type)
         {
-            Core.Entity.EntityInfo<SqlServerSpSqlBuilder, SqlParameter> entityInfo = null;
+            Core.Entity.EntityInfo<SqlSpSqlBuilder, SqlParameter> entityInfo = null;
             if (EntityInfos.TryGetValue(type.FullName, out entityInfo))
                 return entityInfo;
 
-            entityInfo = new Core.Entity.EntityInfo<SqlServerSpSqlBuilder, SqlParameter>(type);
+            entityInfo = new Core.Entity.EntityInfo<SqlSpSqlBuilder, SqlParameter>(type);
 
             lock (EntityInfos)
             {

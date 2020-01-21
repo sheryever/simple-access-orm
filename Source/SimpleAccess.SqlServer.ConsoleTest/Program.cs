@@ -96,7 +96,7 @@ namespace SimpleAccess.SqlServer.ConsoleTest
         {
             public void Test()
             {
-                ISqlRepository repo = new SqlRepository("sqlDefaultConnection");
+                ISqlRepository repo = new SqlSpRepository("sqlDefaultConnection");
 
                 var branches = repo.GetAll<Branch>();
                 var branch = repo.FindAll<Branch>(b => b.Id == 1);
@@ -238,7 +238,7 @@ namespace SimpleAccess.SqlServer.ConsoleTest
 
         public static void TestSotredProcedureCommandSimpleAccessRepository()
         {
-            ISqlRepository sqlRepo = new SqlRepository();
+            ISqlRepository sqlRepo = new SqlSpRepository();
             Console.WriteLine("Test StoredProcedure Command with SimpleAccess SQL Repository");
 
             
