@@ -20,7 +20,6 @@ namespace SimpleAccess.SqlServer
     /// </summary>
     public class StoredProcedureParameters
     {
-        private string _entityName;
         private List<PropertyInfo> _outParameterPropertyInfoCollection;
         private List<SqlParameter> _spOutParameters;
         private List<SqlParameter> _sqlParameters;
