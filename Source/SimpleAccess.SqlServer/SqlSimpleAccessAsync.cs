@@ -1473,18 +1473,16 @@ namespace SimpleAccess.SqlServer
         /// <param name="sqlParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> The new command. </returns>
-        public SqlCommand CreateCommand(SqlTransactionAsyncContext transctionContext, string commandText, CommandType commandType
+        public SqlCommand CreateCommand(SqlTransactionAsyncContext transactionContext, string commandText, CommandType commandType
             , params SqlParameter[] sqlParameters)
         {
-            var dbCommand = transctionContext.Connection.CreateCommand();
-            dbCommand.Transaction = transctionContext.Transaction;
+            var dbCommand = transactionContext.Connection.CreateCommand();
+            dbCommand.Transaction = transactionContext.Transaction;
             dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
             dbCommand.CommandType = commandType;
             dbCommand.CommandText = commandText;
             if (sqlParameters != null)
                 dbCommand.Parameters.AddRange(sqlParameters);
-            if (_sqlTransaction != null)
-                dbCommand.Transaction = _sqlTransaction;
 
             return dbCommand;
         }

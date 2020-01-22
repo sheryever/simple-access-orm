@@ -47,7 +47,7 @@ namespace SimpleAccess.SqlServer
 
         /// <summary> The SQL transaction. </summary>
 
-        private SqlTransaction _sqlTransaction;
+        //private SqlTransaction _sqlTransaction;
 
 
         #region Constructors
@@ -197,7 +197,7 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -349,7 +349,7 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1015,7 +1015,7 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.Parameters.Clear();
@@ -1210,7 +1210,7 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1388,7 +1388,7 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1543,7 +1543,7 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1577,7 +1577,7 @@ namespace SimpleAccess.SqlServer
             }
             finally
             {
-                if (_sqlTransaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1696,8 +1696,7 @@ namespace SimpleAccess.SqlServer
             dbCommand.CommandText = commandText;
             if (sqlParameters != null)
                 dbCommand.Parameters.AddRange(sqlParameters);
-            if (_sqlTransaction != null)
-                dbCommand.Transaction = _sqlTransaction;
+           
 
             return dbCommand;
         }
@@ -1770,8 +1769,6 @@ namespace SimpleAccess.SqlServer
         /// unmanaged resources. </summary>
         public void Dispose()
         {
-            if (_sqlTransaction != null)
-                _sqlTransaction.Dispose();
 
             if (_sqlConnection.State != ConnectionState.Closed)
                 _sqlConnection.Close();
