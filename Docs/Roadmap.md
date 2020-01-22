@@ -8,12 +8,13 @@
 - [X] NetStandard 2.0 support
 - [X] Write unit test
 - [X] NetStandard 2.1 support with Microsoft.Data.SqlClient
-- [ ] Configure StoredProcedure naming convention mapping to repository method (Insert, Update, Delete, Get, GetAll, Find, FindAll) methods in repository settings
-- [ ] Add Sql Generation for Non StoredProcedures command types (Insert, Update, Delete, Get, GetAll, Find, FindAll)
+- [X] Configure StoredProcedure naming convention mapping to repository method (Insert, Update, Delete, Get, GetAll, Find, FindAll) methods in repository settings
+- [X] Add Sql Generation for Non StoredProcedures command types (Insert, Update, Delete, Get, GetAll, Find, FindAll) (90%)
 ### SqlEntityRepository Without SP implementation
+- [X] SqlEntityRepository implementation (90%)
 - [x] Add `DefaultView` property in EntityAttribute
 - [x] Add `KeyAttribute` for decorating primary key of an entity
-- [ ] `DefaultView` property in EntityAttribute support for default select
+- [X] `DefaultView` property in EntityAttribute support for default select
 - [ ] Column selection with `Find`, `FindAll`, `Get`, `GetAll`
 - [ ] Add `GetAllFrom(string viewName)` select the data from given view name insead of EntityNmae (Table name) & EntityAttribute (EntityName / DefaultView)
 - [ ] Fixing comments, documention and adding examples
