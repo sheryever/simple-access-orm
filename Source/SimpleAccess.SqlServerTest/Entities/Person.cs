@@ -11,7 +11,8 @@ namespace SimpleAccess.SqlServerTestNetCore2.Entities
     [Entity("People")]
     public class Person
     {
-        [Identity]
+        //[Identity]
+        [Key("[dbo].[Seq_People]")]
         public int Id { get; set; }
 
         public string FullName { get; set; }

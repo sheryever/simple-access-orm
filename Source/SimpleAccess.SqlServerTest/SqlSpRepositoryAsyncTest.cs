@@ -10,7 +10,7 @@ using SimpleAccess.SqlServerTestNetCore2.Entities;
 namespace SimpleAccess.SqlServerTest
 {
     [TestClass]
-    public class SqlRepositoryAsyncTest
+    public class SqlSpRepositoryAsyncTest
     {
         private static ISqlSimpleAccess SimpleAccess { get; set; }
         private static ISqlRepository SqlRepository{ get; set; }
@@ -64,7 +64,7 @@ namespace SimpleAccess.SqlServerTest
                         Phone = "1112182123"
                     },
                 };
-                var rowAffected = SqlRepository.InsertAllAsync<Person>(people).Result;
+                var rowAffected = SqlRepository.InsertAllAsync<Person>(transContext, people).Result;
 
                 Assert.AreEqual(rowAffected, 4);
 
@@ -214,8 +214,6 @@ namespace SimpleAccess.SqlServerTest
         public void DeleteAsyncTest()
         {
             var person = SqlRepository.GetAll<Person>().First();
-
-            person.FullName = "Full Name updated";
 
             var rowAffected = SqlRepository.DeleteAsync<Person>(person.Id).Result;
 
