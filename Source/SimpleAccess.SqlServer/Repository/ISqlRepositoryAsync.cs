@@ -115,15 +115,6 @@ namespace SimpleAccess.SqlServer
         Task<TEntity> FindAsync<TEntity>(SqlTransactionAsyncContext transactionContext, Expression<Func<TEntity, bool>> expression, string fieldToSkip = null)
             where TEntity : class, new();
 
-        /// <summary> Searches for all <typeparamref name="TEntity"/> and returns the result as <see cref="IEnumerable{TEntity}"/>. </summary>
-        /// 
-        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="fieldToSkip"> (optional) the field to skip. </param>
-        /// 
-        /// <returns> . </returns>
-        Task<IEnumerable<TEntity>> FindAllAsync<TEntity>(string fieldToSkip = null)
-            where TEntity : class, new();
-
         /// <summary> Searches for all <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the result as <see cref="IEnumerable{TEntity}"/>. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -132,15 +123,6 @@ namespace SimpleAccess.SqlServer
         /// 
         /// <returns> . </returns>
         Task<IEnumerable<TEntity>> FindAllAsync<TEntity>(Expression<Func<TEntity, bool>> expression, string fieldToSkip = null)
-            where TEntity : class, new();
-
-        /// <summary> Searches for all <typeparamref name="TEntity"/> and returns the result as <see cref="IEnumerable{TEntity}"/>. </summary>
-        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
-        /// <param name="fieldToSkip"> (optional) the field to skip. </param>
-        /// 
-        /// <returns> . </returns>
-        Task<IEnumerable<TEntity>> FindAllAsync<TEntity>(SqlTransactionAsyncContext transactionContext, string fieldToSkip = null)
             where TEntity : class, new();
 
         /// <summary> Searches for all <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the result as <see cref="IEnumerable{TEntity}"/>. </summary>
