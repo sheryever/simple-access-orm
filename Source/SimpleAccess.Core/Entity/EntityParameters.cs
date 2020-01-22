@@ -51,12 +51,12 @@ namespace SimpleAccess.Core
         /// <param name="createAction"></param>
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
-        public static EntityParameters<TDbParameter> Create<TEntity>(TEntity entity
-            , Action<TEntity, IDictionary<PropertyInfo, TDbParameter>, IDictionary<PropertyInfo, TDbParameter>, bool> createAction
+        public static EntityParameters<TDbParameter> Create(
+             Action<IDictionary<PropertyInfo, TDbParameter>, IDictionary<PropertyInfo, TDbParameter>, bool> createAction
             , bool checkForIdentity)
         {
             var entityParameters = new EntityParameters<TDbParameter>();
-            createAction.Invoke(entity, entityParameters.DataParametersDictionary, entityParameters.OutParametersDictionary, checkForIdentity);
+            createAction.Invoke(entityParameters.DataParametersDictionary, entityParameters.OutParametersDictionary, checkForIdentity);
 
             return entityParameters;
         }

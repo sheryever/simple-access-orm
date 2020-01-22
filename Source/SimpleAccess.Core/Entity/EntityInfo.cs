@@ -7,18 +7,27 @@ using System.Reflection;
 
 namespace SimpleAccess.Core.Entity
 {
+
+    public interface IEntityInfo
+    {
+        Type EntityType { get; }
+        PropertyInfo[] GetPropertyInfos();
+        string DbObjectName { get;  }
+        string DbObjectViewName { get;  }
+    }
+
     /// <summary>
     /// Represents the SimpleAccess Entity information.
     /// The EntityInfo is create and cache the stored procedure name, quires and parameters
     /// </summary>
-    public class EntityInfo<TISqlBuilder, TDbParameter>
+    public class EntityInfo<TISqlBuilder, TDbParameter> : IEntityInfo
         where TISqlBuilder : ISqlBuilder<TDbParameter>, new()
         where TDbParameter : IDataParameter
     {
-        private List<PropertyInfo> OutParameterPropertyInfoCollection
-        {
-            get { return SqlBuilder.OutParameterPropertyInfoCollection; }
-        }
+        //private List<PropertyInfo> OutParameterPropertyInfoCollection
+        //{
+        //    get { return SqlBuilder.OutParameterPropertyInfoCollection; }
+        //}
 
         public readonly ISqlBuilder<TDbParameter> SqlBuilder;
 
@@ -38,39 +47,6 @@ namespace SimpleAccess.Core.Entity
             return SqlBuilder.GetUpdateParameters(entity);
         }
 
-        ///// <summary>
-        ///// Default select statement with all columns of the entity
-        ///// </summary>
-        //public string GetSelectStatement()
-        //{
-        //    return SqlBuilder.get();
-        //}
-
-        ///// <summary>
-        ///// Default insert statement with all columns and parameters of the entity
-        ///// </summary>
-        //public string GetInsertStatement()
-        //{
-        //    return SqlBuilder.GetInsertStatement();
-
-
-        //}
-
-        ///// <summary>
-        ///// Default update statement with all columns and parameters of the entity
-        ///// </summary>
-        //public string GetUpdateStatement()
-        //{
-        //    return SqlBuilder.GetUpdateStatement();
-        //}
-
-        ///// <summary>
-        ///// Default delete statement with id parameter of the entity
-        ///// </summary>
-        //public string GetDeleteStatement()
-        //{
-        //    return SqlBuilder.GetDeleteStatement();
-        //}
 
         /// <summary>
         /// Initialize the new object
@@ -90,6 +66,15 @@ namespace SimpleAccess.Core.Entity
         public string DbObjectName { get; private set; }
 
         public string DbObjectViewName { get; private set; }
+
+        private PropertyInfo[] PropertyInfos { get; set; }
+
+        public PropertyInfo[] GetPropertyInfos()
+        {
+            PropertyInfos = PropertyInfos ?? (PropertyInfos = EntityType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Default));
+
+            return PropertyInfos;
+        }
 
 
         /// <summary>

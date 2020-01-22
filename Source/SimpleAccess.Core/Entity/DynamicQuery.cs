@@ -105,7 +105,7 @@ namespace SimpleAccess.Core.Entity
             /// <param name="tableName">Name of the table.</param>
             /// <param name="expression">The expression.</param>
             /// <returns>A result object with the generated sql and dynamic params.</returns>
-            public static string GetStoredProcedureWhere<TISqlBuilder, TDbParameter, TEntitiy>(Expression<Func<TEntitiy, bool>> expression, EntityInfo<TISqlBuilder, TDbParameter> entityInfo)
+            public static string CreateDbParametersFormWhereExpression<TISqlBuilder, TDbParameter, TEntitiy>(Expression<Func<TEntitiy, bool>> expression, EntityInfo<TISqlBuilder, TDbParameter> entityInfo)
                 where TISqlBuilder : ISqlBuilder<TDbParameter>, new()
                 where TDbParameter : IDataParameter
             {
