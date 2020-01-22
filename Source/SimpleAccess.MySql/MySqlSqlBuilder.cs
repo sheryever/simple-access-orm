@@ -15,7 +15,7 @@ namespace SimpleAccess.MySql
 
     public class MySqlSqlBuilder : ISqlBuilder<MySqlParameter>
     {
-        private EntityInfo<MySqlSqlBuilder, MySqlParameter> _entityInfo;
+        public IEntityInfo EntityInfo { get; set; }
 
         public IDataParameter[] CreateSqlParametersFromProperties(ParametersType parametersType)
         {
@@ -29,9 +29,9 @@ namespace SimpleAccess.MySql
 
         //public List<IDataParameter> DataParameters { get; set; }
 
-        public void InitSqlBuilder(object entityInfo)
+        public void InitSqlBuilder(IEntityInfo entityInfo)
         {
-            _entityInfo = entityInfo as EntityInfo<MySqlSqlBuilder, MySqlParameter>;
+            EntityInfo = entityInfo; // as EntityInfo<MySqlSqlBuilder, MySqlParameter>;
         }
 
         /// <summary>
@@ -39,13 +39,12 @@ namespace SimpleAccess.MySql
         /// </summary>
         /// <param name="parametersType"></param>
         /// <returns></returns>
-        public EntityParameters<MySqlParameter> CreateEntityParameters(object entity, bool checkForIdentityColumn)
+        public EntityParameters<MySqlParameter> CreateEntityParameters(bool checkForIdentityColumn)
         {
 
-            var entityParameters = EntityParameters<MySqlParameter>.Create(entity, (o, dataParameters, outParamsDictionary, checkForIdentity) =>
+            var entityParameters = EntityParameters<MySqlParameter>.Create((dataParameters, outParamsDictionary, checkForIdentity) =>
             {
-                var entityType = entity.GetType();
-                var propertiesForDataParams = entityType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Default);
+                var propertiesForDataParams = EntityInfo.GetPropertyInfos();
 
                 foreach (var propertyInfo in propertiesForDataParams)
                 {
@@ -192,25 +191,25 @@ namespace SimpleAccess.MySql
             return sqlParam;
         }
 
-        public  string GetGetAllStatement() => string.Format(RepositorySetting.SpGetAllPattern, _entityInfo.DbObjectName);
+        public  string GetGetAllStatement() => string.Format(RepositorySetting.SpGetAllPattern, EntityInfo.DbObjectName);
 
-        public  string GetGetByIdStatement() => string.Format(RepositorySetting.SpGetByIdPattern, _entityInfo.DbObjectName);
+        public  string GetGetByIdStatement() => string.Format(RepositorySetting.SpGetByIdPattern, EntityInfo.DbObjectName);
 
-        public  string GetFindStatement() => string.Format(RepositorySetting.SpFindPattern, _entityInfo.DbObjectName);
+        public  string GetFindStatement() => string.Format(RepositorySetting.SpFindPattern, EntityInfo.DbObjectName);
 
-        public  string GetInsertStatement() => string.Format(RepositorySetting.SpInsertPattern, _entityInfo.DbObjectName);
+        public  string GetInsertStatement() => string.Format(RepositorySetting.SpInsertPattern, EntityInfo.DbObjectName);
 
-        public  string GetUpdateStatement() => string.Format(RepositorySetting.SpUpdatePattern, _entityInfo.DbObjectName);
+        public  string GetUpdateStatement() => string.Format(RepositorySetting.SpUpdatePattern, EntityInfo.DbObjectName);
 
-        public  string GetDeleteStatement() => string.Format(RepositorySetting.SpDeletePattern, _entityInfo.DbObjectName);
+        public  string GetDeleteStatement() => string.Format(RepositorySetting.SpDeletePattern, EntityInfo.DbObjectName);
 
-        public  string GetDeleteAllStatement() => string.Format(RepositorySetting.SpDeleteAllPattern, _entityInfo.DbObjectName);
+        public  string GetDeleteAllStatement() => string.Format(RepositorySetting.SpDeleteAllPattern, EntityInfo.DbObjectName);
 
-        public  string GetSoftDeleteStatement() => string.Format(RepositorySetting.SpSoftDeletePattern, _entityInfo.DbObjectName);
+        public  string GetSoftDeleteStatement() => string.Format(RepositorySetting.SpSoftDeletePattern, EntityInfo.DbObjectName);
 
         public EntityParameters<MySqlParameter> GetInsertParameters(object entity)
         {
-            EntityInsertParameters = EntityInsertParameters ?? CreateEntityParameters(entity, true);
+            EntityInsertParameters = EntityInsertParameters ?? CreateEntityParameters( true);
 
             EntityInsertParameters.FillParameters(entity, FillInsertParameters);
 
@@ -250,7 +249,7 @@ namespace SimpleAccess.MySql
 
         public EntityParameters<MySqlParameter> GetUpdateParameters(object entity)
         {
-            EntityUpdateParameters = EntityUpdateParameters ?? CreateEntityParameters(entity, false);
+            EntityUpdateParameters = EntityUpdateParameters ?? CreateEntityParameters( false);
 
             EntityUpdateParameters.FillParameters(entity, FillInsertParameters);
 
