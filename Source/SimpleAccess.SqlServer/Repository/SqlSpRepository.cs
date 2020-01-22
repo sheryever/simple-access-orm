@@ -204,7 +204,7 @@ namespace SimpleAccess.SqlServer
 
 
             return SimpleAccess.ExecuteEntity<TEntity>(commandText, CommandType.StoredProcedure
-                    , fieldToSkip, parameters: new SqlParameter("@whereClause", DynamicQuery.GetStoredProcedureWhere(expression, entityInfo)));
+                    , fieldToSkip, parameters: new SqlParameter("@whereClause", DynamicQuery.CreateDbParametersFormWhereExpression(expression, entityInfo)));
         }
 
         /// <summary> Searches for <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the first record of the result. </summary>
@@ -224,7 +224,7 @@ namespace SimpleAccess.SqlServer
             string commandText = entityInfo.SqlBuilder.GetFindStatement();
 
             return SimpleAccess.ExecuteEntity<TEntity>(transaction, commandText, CommandType.StoredProcedure
-                , fieldToSkip, parameters: new SqlParameter("@whereClause", DynamicQuery.GetStoredProcedureWhere(expression, entityInfo)));
+                , fieldToSkip, parameters: new SqlParameter("@whereClause", DynamicQuery.CreateDbParametersFormWhereExpression(expression, entityInfo)));
         }
 
         /// <summary> Searches for all <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the result as <see cref="IEnumerable{TEntity}"/>. </summary>
@@ -262,7 +262,7 @@ namespace SimpleAccess.SqlServer
             string commandText = entityInfo.SqlBuilder.GetFindStatement();
 
             return SimpleAccess.ExecuteEntities<TEntity>(commandText, CommandType.StoredProcedure
-                , fieldToSkip, parameters: new SqlParameter("@whereClause", DynamicQuery.GetStoredProcedureWhere(expression, entityInfo)));
+                , fieldToSkip, parameters: new SqlParameter("@whereClause", DynamicQuery.CreateDbParametersFormWhereExpression(expression, entityInfo)));
 
         }
 
@@ -303,7 +303,7 @@ namespace SimpleAccess.SqlServer
             string commandText = entityInfo.SqlBuilder.GetFindStatement();
 
             return SimpleAccess.ExecuteEntities<TEntity>(transaction, commandText, CommandType.StoredProcedure
-                    , fieldToSkip, parameters: new SqlParameter("@whereClause", DynamicQuery.GetStoredProcedureWhere(expression, entityInfo)));
+                    , fieldToSkip, parameters: new SqlParameter("@whereClause", DynamicQuery.CreateDbParametersFormWhereExpression(expression, entityInfo)));
         }
 
 

@@ -26,23 +26,43 @@ namespace SimpleAccess.SqlServer
         protected EntityParameters<SqlParameter> EntityInsertParameters { get; set; }
         protected EntityParameters<SqlParameter> EntityUpdateParameters { get; set; }
         public List<PropertyInfo> OutParameterPropertyInfoCollection { get; set; }
+        public IEntityInfo EntityInfo { get; set; }
 
+        public abstract string GetGetAllStatement();
 
-        //public List<IDataParameter> DataParameters { get; set; }
+        public abstract string GetGetByIdStatement();
 
-        public abstract void InitSqlBuilder(object entityInfo);
+        public abstract string GetFindStatement();
+        public abstract string GetDeleteAllStatement();
+
+        public abstract string GetInsertStatement();
+
+        public abstract string GetUpdateStatement();
+
+        public abstract string GetDeleteStatement();
+        public abstract string GetSoftDeleteStatement();
+
+        public void InitSqlBuilder(IEntityInfo entityInfo)
+        {
+            if (entityInfo == null)
+            {
+                throw new NullReferenceException("Invalid entityInfo parameter");
+            }
+
+            EntityInfo = entityInfo;// as EntityInfo<SqlEntitiesSqlBuilder, SqlParameter>;
+
+        }
         public abstract IDataParameter[] CreateSqlParametersFromProperties(ParametersType parametersType);
         /// <summary>
         /// Create parameters from object properties
         /// </summary>
         /// <returns></returns>
-        public EntityParameters<SqlParameter> CreateEntityParameters(object entity, bool checkForIdentityColumn)
+        public EntityParameters<SqlParameter> CreateEntityParameters(bool checkForIdentityColumn)
         {
 
-            var entityParameters = EntityParameters<SqlParameter>.Create(entity, (o, dataParameters, outParamsDictionary, checkForIdentity) =>
+            var entityParameters = EntityParameters<SqlParameter>.Create((dataParameters, outParamsDictionary, checkForIdentity) =>
             {
-                var entityType = entity.GetType();
-                var propertiesForDataParams = entityType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Default);
+                var propertiesForDataParams = EntityInfo.GetPropertyInfos();
 
                 foreach (var propertyInfo in propertiesForDataParams)
                 {
@@ -89,11 +109,16 @@ namespace SimpleAccess.SqlServer
                 outParamsDictionary.Add(propertyInfo, sqlParam);
             }
 
-
-            if ((checkForIdentity)  && attrbutes.FirstOrDefault(a => a is IdentityAttribute) != null)
+            if (checkForIdentity)
             {
-                sqlParam.Direction = ParameterDirection.InputOutput;
-                outParamsDictionary.Add(propertyInfo, sqlParam);
+                var keyAttribute = attrbutes.FirstOrDefault(a => a is KeyAttribute) as KeyAttribute;
+
+                if ((keyAttribute != null) && (keyAttribute.IsIdentity || keyAttribute.DbSequence != null))
+                {
+                    sqlParam.Direction = ParameterDirection.InputOutput;
+                    outParamsDictionary.Add(propertyInfo, sqlParam);
+                }
+
             }
 
             Debug.WriteLine(sqlParam.ParameterName);
@@ -188,30 +213,20 @@ namespace SimpleAccess.SqlServer
             Debug.WriteLine(sqlParam.ParameterName);
             return sqlParam;
         }
-        
 
-        public abstract string GetGetAllStatement();
+        public void BuildEntityInsertParameters()
+        {
+            EntityInsertParameters = EntityInsertParameters ?? CreateEntityParameters(true);
+        }
 
-        public abstract string GetGetByIdStatement();
-
-        public abstract string GetFindStatement();
-        public abstract string GetDeleteAllStatement();
-
-        public abstract string GetInsertStatement();
-
-        public abstract string GetUpdateStatement();
-
-        public abstract string GetDeleteStatement();
-        public abstract string GetSoftDeleteStatement();
 
         public EntityParameters<SqlParameter> GetInsertParameters(object entity)
         {
-            EntityInsertParameters = EntityInsertParameters ?? CreateEntityParameters(entity, true);
+            BuildEntityInsertParameters();
 
             EntityInsertParameters.FillParameters(entity, FillInsertParameters);
 
             return EntityInsertParameters;
-
         }
 
         public void FillInsertParameters(object entity, IDictionary<PropertyInfo, SqlParameter> parameters)
@@ -245,9 +260,15 @@ namespace SimpleAccess.SqlServer
 
         }
 
+        public void BuildEntityUpdateParameters()
+        {
+            EntityUpdateParameters = EntityUpdateParameters ?? CreateEntityParameters(false);
+        }
+
+
         public EntityParameters<SqlParameter> GetUpdateParameters(object entity)
         {
-            EntityUpdateParameters = EntityUpdateParameters ??  CreateEntityParameters(entity, false);
+            BuildEntityUpdateParameters();
 
             EntityUpdateParameters.FillParameters(entity, FillInsertParameters);
 

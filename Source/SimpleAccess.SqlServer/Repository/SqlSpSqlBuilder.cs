@@ -22,19 +22,8 @@ namespace SimpleAccess.SqlServer
     public class SqlSpSqlBuilder : SqlServerSqlBuilder, ISqlBuilder<SqlParameter>
     {
 
-        private EntityInfo<SqlSpSqlBuilder, SqlParameter> _entityInfo;
-
         //public List<IDataParameter> DataParameters { get; set; }
 
-        public override void InitSqlBuilder(object entityInfo)
-        {
-            _entityInfo = entityInfo as EntityInfo<SqlSpSqlBuilder, SqlParameter>;
-
-            if (_entityInfo == null)
-            {
-                throw new InvalidOperationException("Invalid entityInfo parameter, while 'EntityInfo<SqlServerSqlBuilder, SqlParameter>' is required.");
-            }
-        }
         public override IDataParameter[] CreateSqlParametersFromProperties(ParametersType parametersType)
         {
             throw new NotImplementedException();
@@ -59,21 +48,21 @@ namespace SimpleAccess.SqlServer
         //    return DataParameters.ToArray();
         //}
         
-        public override string GetGetAllStatement() => string.Format(SqlSpRepositorySetting.SpGetAllPattern, _entityInfo.DbObjectName);
+        public override string GetGetAllStatement() => string.Format(SqlSpRepositorySetting.SpGetAllPattern, EntityInfo.DbObjectName);
 
-        public override string GetGetByIdStatement() => string.Format(SqlSpRepositorySetting.SpGetByIdPattern, _entityInfo.DbObjectName);
+        public override string GetGetByIdStatement() => string.Format(SqlSpRepositorySetting.SpGetByIdPattern, EntityInfo.DbObjectName);
 
-        public override string GetFindStatement() => string.Format(SqlSpRepositorySetting.SpFindPattern, _entityInfo.DbObjectName);
+        public override string GetFindStatement() => string.Format(SqlSpRepositorySetting.SpFindPattern, EntityInfo.DbObjectName);
 
-        public override string GetInsertStatement() => string.Format(SqlSpRepositorySetting.SpInsertPattern, _entityInfo.DbObjectName);
+        public override string GetInsertStatement() => string.Format(SqlSpRepositorySetting.SpInsertPattern, EntityInfo.DbObjectName);
 
-        public override string GetUpdateStatement() => string.Format(SqlSpRepositorySetting.SpUpdatePattern, _entityInfo.DbObjectName);
+        public override string GetUpdateStatement() => string.Format(SqlSpRepositorySetting.SpUpdatePattern, EntityInfo.DbObjectName);
 
-        public override string GetDeleteStatement() => string.Format(SqlSpRepositorySetting.SpDeletePattern, _entityInfo.DbObjectName);
+        public override string GetDeleteStatement() => string.Format(SqlSpRepositorySetting.SpDeletePattern, EntityInfo.DbObjectName);
 
-        public override string GetDeleteAllStatement() => string.Format(SqlSpRepositorySetting.SpDeleteAllPattern, _entityInfo.DbObjectName);
+        public override string GetDeleteAllStatement() => string.Format(SqlSpRepositorySetting.SpDeleteAllPattern, EntityInfo.DbObjectName);
 
-        public override string GetSoftDeleteStatement() => string.Format(SqlSpRepositorySetting.SpSoftDeletePattern, _entityInfo.DbObjectName);
+        public override string GetSoftDeleteStatement() => string.Format(SqlSpRepositorySetting.SpSoftDeletePattern, EntityInfo.DbObjectName);
 
     }
 }
