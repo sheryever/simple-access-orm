@@ -8,13 +8,9 @@ namespace SimpleAccess
     [AttributeUsage(AttributeTargets.Property)]
     public class IdentityAttribute : KeyAttribute
     {
-        public string DbSequence { get; }
-
-        public IdentityAttribute() { }
-
-        public IdentityAttribute(string dbSequence)
+        public IdentityAttribute()
         {
-            DbSequence = dbSequence;
+            base.IsIdentity = true;
         }
     }
 }
