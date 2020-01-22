@@ -13,7 +13,10 @@
     <RepositoryType>Git</RepositoryType>
     <PackageTags>SimpleAccess, Database, ORM</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageReleaseNotes>Support added for Dotnet Standard 2.1
+    <PackageReleaseNotes>Changes:
+- .Net Standard 2.1 support added
+- Database Sequence support added with KeyAttribute implementation
+- EntityInfo performance improved
 </PackageReleaseNotes>
   </PropertyGroup>
 

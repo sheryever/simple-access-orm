@@ -20,8 +20,12 @@ Documentation of using SimpleAccess is available at https://github.com/sheryever
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
     <ProjectGuid>{D97DEB44-C9BD-4813-AE06-3119CE26214A}</ProjectGuid>
-    <PackageReleaseNotes>Async support added for Dotnet Framwork 4.5 and Dotnet Standard 2.0
-Dotnet Starndard 2.1 supported now</PackageReleaseNotes>
+    <PackageReleaseNotes>Changes:
+- SqlEntityRepository Implemented (90%)
+- .Net Starndard 2.1 with Microsoft.Data.SqlClient supported
+- Repository Performace improvement
+- SqlRepository is renamed to SqlSpRepository and SqlRepository is marked as Obsolete
+-</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
