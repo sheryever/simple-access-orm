@@ -74,6 +74,13 @@ namespace SimpleAccess.Core
         /// </summary>
         /// <returns></returns>
         string GetGetAllStatement();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        string GetGetPagedListStatement();
+
         /// <summary>
         /// 
         /// </summary>

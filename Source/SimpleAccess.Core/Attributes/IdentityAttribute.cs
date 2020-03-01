@@ -6,7 +6,7 @@ namespace SimpleAccess
     /// Mark a Entity property as Identity columns
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class IdentityAttribute : KeyAttribute
+    public class IdentityAttribute : PrimaryKeyAttribute
     {
         public IdentityAttribute()
         {

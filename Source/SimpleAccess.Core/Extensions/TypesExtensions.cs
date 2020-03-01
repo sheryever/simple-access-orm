@@ -35,5 +35,6 @@ namespace SimpleAccess.Core.Extensions
 
             return ((IList) list).Contains(source);
         }
+
     }
 }

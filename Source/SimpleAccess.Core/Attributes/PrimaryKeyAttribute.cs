@@ -6,14 +6,14 @@ namespace SimpleAccess
     /// Mark a Entity property as Identity columns
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class KeyAttribute : Attribute
+    public class PrimaryKeyAttribute : Attribute
     {
         public string DbSequence { get; }
         public bool IsIdentity { get; set; }
 
-        public KeyAttribute() { }
+        public PrimaryKeyAttribute() { }
 
-        public KeyAttribute(string dbSequence)
+        public PrimaryKeyAttribute(string dbSequence)
         {
             DbSequence = dbSequence;
         }
