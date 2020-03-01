@@ -196,6 +196,8 @@ namespace SimpleAccess.Oracle
 
         public string GetGetAllStatement() => string.Format(RepositorySetting.SpGetAllPattern, EntityInfo.DbObjectName);
 
+        public string GetGetPagedListStatement() => string.Format(RepositorySetting.SpGetAllPattern, EntityInfo.DbObjectName);
+
         public string GetGetByIdStatement() => string.Format(RepositorySetting.SpGetByIdPattern, EntityInfo.DbObjectName);
 
         public string GetFindStatement() => string.Format(RepositorySetting.SpFindPattern, EntityInfo.DbObjectName);

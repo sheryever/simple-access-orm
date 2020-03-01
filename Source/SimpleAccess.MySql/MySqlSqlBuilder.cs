@@ -192,6 +192,7 @@ namespace SimpleAccess.MySql
         }
 
         public  string GetGetAllStatement() => string.Format(RepositorySetting.SpGetAllPattern, EntityInfo.DbObjectName);
+        public string GetGetPagedListStatement() => string.Format(RepositorySetting.SpGetByIdPattern, EntityInfo.DbObjectName);
 
         public  string GetGetByIdStatement() => string.Format(RepositorySetting.SpGetByIdPattern, EntityInfo.DbObjectName);
 
@@ -206,6 +207,9 @@ namespace SimpleAccess.MySql
         public  string GetDeleteAllStatement() => string.Format(RepositorySetting.SpDeleteAllPattern, EntityInfo.DbObjectName);
 
         public  string GetSoftDeleteStatement() => string.Format(RepositorySetting.SpSoftDeletePattern, EntityInfo.DbObjectName);
+
+        public string Get () => string.Format(RepositorySetting.SpSoftDeletePattern, EntityInfo.DbObjectName);
+
 
         public EntityParameters<MySqlParameter> GetInsertParameters(object entity)
         {

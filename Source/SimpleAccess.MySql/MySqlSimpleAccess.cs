@@ -41,7 +41,6 @@ namespace SimpleAccess.MySql
 
 		/// <summary> The SQL transaction. </summary>
 
-        private MySqlTransaction _transaction;
 
 
         #region Constructors
@@ -183,7 +182,7 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -332,7 +331,7 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -647,7 +646,7 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -791,7 +790,7 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -990,7 +989,7 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1178,7 +1177,7 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1354,7 +1353,7 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1507,7 +1506,7 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1541,7 +1540,7 @@ namespace SimpleAccess.MySql
             }
             finally
             {
-                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1633,9 +1632,6 @@ namespace SimpleAccess.MySql
             if (mySqlParameters != null)
                 dbCommand.Parameters.AddRange(mySqlParameters);
 
-            if (_transaction != null)
-                dbCommand.Transaction = _transaction;
-
             return dbCommand;
         }
 
@@ -1657,8 +1653,6 @@ namespace SimpleAccess.MySql
             dbCommand.CommandText = commandText;
             if (mySqlParameters != null)
                 dbCommand.Parameters.AddRange(mySqlParameters);
-            if (_transaction != null)
-                dbCommand.Transaction = _transaction;
 
             return dbCommand;
         }
@@ -1732,8 +1726,6 @@ namespace SimpleAccess.MySql
         /// unmanaged resources. </summary>
         public void Dispose()
         {
-            if (_transaction != null)
-                _transaction.Dispose();
 
             if (_sqlConnection.State != ConnectionState.Closed)
                 _sqlConnection.Close();

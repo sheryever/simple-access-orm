@@ -16,7 +16,6 @@ namespace SimpleAccess.Oracle
     /// </summary>
     public class StoredProcedureParameters
     {
-        private string _entityName;
         private List<PropertyInfo> _outParameterPropertyInfoCollection;
         private List<OracleParameter> _spOutParameters;
         private List<OracleParameter> _oracleParameters;

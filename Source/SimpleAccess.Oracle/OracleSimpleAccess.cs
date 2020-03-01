@@ -41,8 +41,6 @@ namespace SimpleAccess.Oracle
 
 		/// <summary> The SQL transaction. </summary>
 
-        private OracleTransaction _transaction;
-
 
         #region Constructors
 
@@ -185,7 +183,7 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -338,7 +336,7 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -654,7 +652,7 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -799,7 +797,7 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -998,7 +996,7 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1186,7 +1184,7 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1361,7 +1359,7 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1513,7 +1511,7 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1547,7 +1545,7 @@ namespace SimpleAccess.Oracle
             }
             finally
             {
-                if (_transaction == null && _sqlConnection.State != ConnectionState.Closed)
+                if (_sqlConnection.State != ConnectionState.Closed)
                     _sqlConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
@@ -1639,9 +1637,6 @@ namespace SimpleAccess.Oracle
             if (oracleParameters != null)
                 dbCommand.Parameters.AddRange(oracleParameters);
 
-            if (_transaction != null)
-                dbCommand.Transaction = _transaction;
-
             return dbCommand;
         }
 
@@ -1663,8 +1658,6 @@ namespace SimpleAccess.Oracle
             dbCommand.CommandText = commandText;
             if (oracleParameters != null)
                 dbCommand.Parameters.AddRange(oracleParameters);
-            if (_transaction != null)
-                dbCommand.Transaction = _transaction;
 
             return dbCommand;
         }
@@ -1738,9 +1731,6 @@ namespace SimpleAccess.Oracle
         /// unmanaged resources. </summary>
         public void Dispose()
         {
-            if (_transaction != null)
-                _transaction.Dispose();
-
             if (_sqlConnection.State != ConnectionState.Closed)
                 _sqlConnection.Close();
 
