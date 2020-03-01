@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleAccessNetCore.SqlServer.ConsoleTest
+namespace SimpleAccess.SqlServer.TestNetCore2.Entities
 {
-    [Entity("Incidents")]
-    public partial class Incident
+    [Entity("Attachments")]
+    public partial class Attachment
     {
         #region Properties
         [Identity]
@@ -17,12 +17,15 @@ namespace SimpleAccessNetCore.SqlServer.ConsoleTest
         [Required]
         public int Id { get; set; }
 
-        [Display(Name = "Name")]
+        [Display(Name = "IncidentId")]
+        [Required]
+        public int IncidentId { get; set; }
+
+        [Display(Name = "OtherName")]
         [Required]
         [MaxLength(50)]
-        public string Name { get; set; }
+        public string OtherName { get; set; }
 
         #endregion Properties
     }
-
 }

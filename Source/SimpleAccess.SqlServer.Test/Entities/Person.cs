@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using SimpleAccess;
 
-namespace SimpleAccess.SqlServerTestNetCore2.Entities
+namespace SimpleAccess.SqlServer.TestNetCore2.Entities
 {
 
     [Entity("People")]
     public class Person
     {
         //[Identity]
-        [Key("[dbo].[Seq_People]")]
+        [PrimaryKey("[dbo].[Seq_People]")]
         public int Id { get; set; }
 
         public string FullName { get; set; }

@@ -1,30 +1,30 @@
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SimpleAccess.Core;
+using Microsoft.Data.SqlClient;
+ using SimpleAccess.Core;
 using SimpleAccess.SqlServer;
-using SimpleAccess.SqlServerTestNetCore2.Entities;
+using SimpleAccess.SqlServer.TestNetCore2.Entities;
+using Xunit;
 
-namespace SimpleAccess.SqlServerTest
+namespace SimpleAccess.SqlServer.Test
 {
-    [TestClass]
-    public class SqlEntityRepositoryTest
+     public class SqlSpRepositoryTest
     {
-        private static ISqlSimpleAccess SimpleAccess { get; set; }
-        private static ISqlRepository SqlRepository{ get; set; }
+        private ISqlSimpleAccess SimpleAccess { get; set; }
+        private ISqlRepository SqlRepository { get; set; }
 
-        [ClassInitialize]
-        public static void SetupSimpleAccess(TestContext context)
+         public SqlSpRepositoryTest( )
         {
             SimpleAccess = new SqlSimpleAccess("sqlDefaultConnection");
-            SqlRepository = new SqlEntityRepository(SimpleAccess);
+            SqlRepository = new SqlSpRepository(SimpleAccess);
             SimpleAccess.ExecuteNonQuery(DbConfiguration.DbInitialScript);
         }
 
-        [TestMethod]
-        public void InsertTest()
+        [Fact]
+        public void InsertTest1()
         {
             var person = new Person
             {
@@ -32,12 +32,60 @@ namespace SimpleAccess.SqlServerTest
                 Phone = "1112182123"
             };
             var rowAffected = SqlRepository.Insert<Person>(person);
-            //var rowAffected = SqlRepository.Insert<Person>(person);
 
-            Assert.AreEqual(rowAffected, 1);
+            Assert.Equal(1, rowAffected);
         }
 
-        [TestMethod]
+        [Fact]
+        public void InsertWithTransactionTest()
+        {
+            var person = new Person
+            {
+                FullName = "Muhammad Abdul Rehman Khan",
+                Phone = "1112182123"
+            };
+
+            var rowAffected = 0;
+            using (var transaction = SimpleAccess.BeginTransaction())
+            {
+                rowAffected = SqlRepository.Insert<Person>(transaction, person);
+
+            }
+
+            Assert.Equal(1, rowAffected);
+        }
+
+
+        [Fact]
+        public void InsertAnonymousObjectTest()
+        {
+            var person = new
+            {
+                Id = 0,
+                FullName = "Muhammad Abdul Rehman Khan",
+                Phone = "1112182123"
+            };
+            var rowAffected = SqlRepository.Insert<Person>(person);
+
+            Assert.Equal(1, rowAffected);
+        }
+
+        [Fact]
+        public void InsertSqlParametersTest()
+        {
+            var person = new SqlParameter[]
+            {
+                new SqlParameter("Id", (object)0){ Direction = ParameterDirection.InputOutput},
+                new SqlParameter( "FullName", "Muhammad Abdul Rehman Khan"),
+                new SqlParameter( "Phone" , "1112182123")
+            };
+
+            var rowAffected = SqlRepository.Insert<Person>(person);
+
+            Assert.Equal(1, rowAffected);
+        }
+
+        [Fact]
         public void InsertAllAWithTransactionContextTest()
         {
             using (var trasaction = SqlRepository.SimpleAccess.BeginTransaction())
@@ -66,7 +114,7 @@ namespace SimpleAccess.SqlServerTest
                 };
                 var rowAffected = SqlRepository.InsertAll<Person>(trasaction, people);
 
-                Assert.AreEqual(rowAffected, 4);
+                Assert.Equal(4, rowAffected);
 
 
                 SqlRepository.SimpleAccess.EndTransaction(trasaction);
@@ -74,23 +122,67 @@ namespace SimpleAccess.SqlServerTest
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void GetAllTest()
         {
             var categories = SqlRepository.GetAll<Category>();
 
-            Assert.AreEqual(categories.Count(), 3);
+            Assert.Equal(3, categories.Count());
         }
 
-        [TestMethod]
+        [Fact]
+        public void GetAllWithTransactionTest()
+        {
+            using (var trasaction = SqlRepository.SimpleAccess.BeginTransaction())
+            {
+
+                var categories = SqlRepository.GetAll<Category>(trasaction);
+                Assert.Equal(3, categories.Count());
+
+            }
+
+        }
+
+        [Fact]
+        public void GetDynamicPagedListTest()
+        {
+            var people = SqlRepository.GetDynamicPagedList<Person>(0, 2, "Id");
+
+            Assert.Equal(2, people.Data.Count());
+            Assert.Equal(3, people.TotalRows);
+        }
+
+        [Fact]
+        public void GetDynamicPagedListWithSelectTest()
+        {
+            var people = SqlRepository.GetEntitiesPagedList<Person>(p => new {p.Id, p.FullName}, null , 0, 2, "Id");
+
+            Assert.Equal(2, people.Data.Count());
+            Assert.Equal(3, people.TotalRows);
+        }
+
+        //[Fact]
+        //public void GetAllWithTransactionTest()
+        //{
+        //    using (var trasaction = SqlRepository.SimpleAccess.BeginTransaction())
+        //    {
+
+        //        var categories = SqlRepository.GetAll<Category>(trasaction);
+        //        Assert.Equal(categories.Count(), 3);
+
+        //    }
+
+        //}
+
+        [Fact]
         public void GetTest()
         {
             var category = SqlRepository.Get<Category>(2);
 
-            Assert.IsNotNull(category);
+            Assert.NotNull(category);
         }
 
-        [TestMethod]
+        [Fact]
 
         public void GetWithTransactionContextTest()
         {
@@ -98,30 +190,30 @@ namespace SimpleAccess.SqlServerTest
             {
                 var category = SqlRepository.Get<Category>(transaction, 2);
 
-                Assert.IsNotNull(category);
+                Assert.NotNull(category);
 
                 var branch = SqlRepository.Get<Branch>(transaction, 2);
 
-                Assert.IsNotNull(branch);
+                Assert.NotNull(branch);
 
                 var attachment = SqlRepository.Get<Attachment>(transaction, 3);
 
-                Assert.IsNotNull(attachment);
+                Assert.NotNull(attachment);
 
                 SqlRepository.SimpleAccess.EndTransaction(transaction);
 
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void FindTest()
         {
             var category = SqlRepository.Find<Category>(c => c.Id == 2);
 
-            Assert.IsNotNull(category);
+            Assert.NotNull(category);
         }
 
-        [TestMethod]
+        [Fact]
 
         public void FindWithTransactionContextTest()
         {
@@ -129,15 +221,15 @@ namespace SimpleAccess.SqlServerTest
             {
                 var category = SqlRepository.Find<Category>(transaction, c => c.Id == 2);
 
-                Assert.IsNotNull(category);
+                Assert.NotNull(category);
 
                 var branch = SqlRepository.Find<Branch>(transaction, c => c.Id == 2);
 
-                Assert.IsNotNull(branch);
+                Assert.NotNull(branch);
 
                 var attachment = SqlRepository.Find<Attachment>(transaction, c => c.Id == 2);
 
-                Assert.IsNotNull(attachment);
+                Assert.NotNull(attachment);
 
                 SqlRepository.SimpleAccess.EndTransaction(transaction);
 
@@ -145,36 +237,36 @@ namespace SimpleAccess.SqlServerTest
         }
 
 
-        [TestMethod]
+        [Fact]
         public void FindAllTest()
         {
-            var categories = SqlRepository.FindAll<Category>(c => c.Description.Contains("cat") );
+            var categories = SqlRepository.FindAll<Category>(c => c.Description.Contains("cat"));
 
-            Assert.AreEqual(2 , categories.Count());
+            Assert.Equal(2, categories.Count());
         }
 
-        [TestMethod]
+        [Fact]
 
         public void FindAllWithTransactionContextTest()
         {
             using (var transaction = SqlRepository.SimpleAccess.BeginTransaction())
             {
                 var categories = SqlRepository.FindAll<Category>(transaction, c => c.Description.Contains("cat"));
-                Assert.AreEqual(2, categories.Count());
+                Assert.Equal(2, categories.Count());
 
                 var branches = SqlRepository.FindAll<Branch>(transaction, c => c.CityId == 1);
-                Assert.AreEqual(2, branches.Count());
+                Assert.Equal(2, branches.Count());
 
 
                 var attachments = SqlRepository.FindAll<Attachment>(transaction, c => c.IncidentId == 3);
-                Assert.AreEqual(1, attachments.Count());
+                Assert.Equal(1, attachments.Count());
 
                 SqlRepository.SimpleAccess.EndTransaction(transaction);
 
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void UpdateTest()
         {
             var person = SqlRepository.GetAll<Person>().First();
@@ -183,17 +275,38 @@ namespace SimpleAccess.SqlServerTest
 
             var rowAffected = SqlRepository.Update<Person>(person);
 
-            Assert.AreEqual(rowAffected, 1);
+            Assert.Equal(1, rowAffected);
         }
 
-        [TestMethod]
+        [Fact]
 
-        public void UpdateAllWithTransactionContextTest()
+        public void UpdateAllTest()
         {
             var people = SqlRepository.GetAll<Person>();
 
+
+            foreach (var person in people)
+            {
+                person.FullName = person.FullName + 1;
+            }
+
+
+            var rowAffected = SqlRepository.UpdateAll<Person>(people);
+
+            Assert.Equal(rowAffected, people.Count());
+
+
+
+        }
+
+        [Fact]
+
+        public void UpdateAllWithTransactionTest()
+        {
+
             using (var transaction = SqlRepository.SimpleAccess.BeginTransaction())
             {
+                var people = SqlRepository.GetAll<Person>(transaction);
 
                 foreach (var person in people)
                 {
@@ -203,7 +316,7 @@ namespace SimpleAccess.SqlServerTest
 
                 var rowAffected = SqlRepository.UpdateAll<Person>(transaction, people);
 
-                Assert.AreEqual(rowAffected, people.Count());
+                Assert.Equal(rowAffected, people.Count());
 
 
                 SqlRepository.SimpleAccess.EndTransaction(transaction);
@@ -211,7 +324,7 @@ namespace SimpleAccess.SqlServerTest
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void DeleteTest()
         {
             var person = SqlRepository.GetAll<Person>().First();
@@ -220,20 +333,21 @@ namespace SimpleAccess.SqlServerTest
 
             var rowAffected = SqlRepository.Delete<Person>(person.Id);
 
-            Assert.AreEqual(rowAffected, 1);
+            Assert.Equal(1, rowAffected);
         }
 
-        [TestMethod]
+        [Fact]
         public void DeleteAllWithTransactionContextTest()
         {
-            var people = SqlRepository.GetAll<Person>().Select<Person, long>(p => p.Id);
 
             using (var transaction = SqlRepository.SimpleAccess.BeginTransaction())
             {
+                var people = SqlRepository.GetAll<Person>(transaction).Select<Person, long>(p => p.Id);
 
                 var rowAffected = SqlRepository.DeleteAll<Person>(transaction, people);
 
-                Assert.AreEqual(rowAffected, people.Count());
+                Assert.Equal(rowAffected, people.Count());
+
 
                 SqlRepository.SimpleAccess.EndTransaction(transaction);
 

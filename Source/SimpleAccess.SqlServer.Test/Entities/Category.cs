@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SimpleAccess;
 
-namespace SimpleAccess.SqlServerTestNetCore2.Entities
+namespace SimpleAccess.SqlServer.TestNetCore2.Entities
 {
 
     [Entity("Categories")]
