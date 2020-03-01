@@ -40,6 +40,25 @@ namespace SimpleAccess.SqlServer
             return SimpleAccess.ExecuteEntitiesAsync<TEntity>(commandText, CommandType.StoredProcedure, fieldToSkip);
         }
 
+        /// <summary> Enumerates get all in this collection. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="transactionContext"> The transaction. </param>
+        /// <param name="fieldToSkip"> (optional) the field to skip. </param>
+        /// 
+        /// <returns> An enumerator that allows for each to be used to process get all {TEntity} in this
+        /// collection. </returns>
+
+        public virtual Task<IEnumerable<TEntity>> GetAllAsync<TEntity>(SqlTransactionAsyncContext transactionContext, string fieldToSkip = null)
+            where TEntity : new()
+        {
+            //var name = typeof(TEntity).Name;
+            var entityInfo = SqlSpRepositorySetting.GetEntityInfo(typeof(TEntity));
+            //            string commandText = string.Format("{0}_GetAll", entityInfo.DbObjectName);
+            var commandText = entityInfo.SqlBuilder.GetGetAllStatement();
+
+            return SimpleAccess.ExecuteEntitiesAsync<TEntity>(transactionContext, commandText, CommandType.StoredProcedure, fieldToSkip);
+        }
 
         /// <summary> Gets. </summary>
         /// 
@@ -709,6 +728,50 @@ namespace SimpleAccess.SqlServer
                 }
             }
 
+
+            return result;
+        }
+
+        /// <summary> Deletes all the <typeparamref name="TEntity"/> records by  expression. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="expression">The expression.</param>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        public async Task<int> DeleteAllAsync<TEntity>(Expression<Func<TEntity, bool>> expression)
+            where TEntity : class
+        {
+            int result = 0;
+
+            var entityInfo = SqlSpRepositorySetting.GetEntityInfo(typeof(TEntity));
+
+            //var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
+            var commandText = entityInfo.SqlBuilder.GetDeleteAllStatement();
+
+            result = await SimpleAccess.ExecuteNonQueryAsync(commandText, CommandType.StoredProcedure, DynamicQuery.CreateDbParametersFormWhereExpression(expression, entityInfo));
+
+            return result;
+        }
+
+
+        /// <summary> Deletes all the <typeparamref name="TEntity"/> records by  objects as SqlParameter names and values. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction"> The transaction. </param>
+        /// <param name="expression">The expression.</param>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        public async Task<int> DeleteAllAsync<TEntity>(SqlTransactionAsyncContext transactionContext, Expression<Func<TEntity, bool>> expression)
+            where TEntity : class
+        {
+            int result = 0;
+
+            var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
+
+            //var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
+            var commandText = entityInfo.SqlBuilder.GetDeleteAllStatement();
+
+            result = await SimpleAccess.ExecuteNonQueryAsync(transactionContext, commandText, CommandType.StoredProcedure, DynamicQuery.CreateDbParametersFormWhereExpression(expression, entityInfo));
 
             return result;
         }

@@ -55,6 +55,7 @@ namespace SimpleAccess.SqlServer
         }
 
         public static string SpGetAllPattern { get; set; } = "{0}_GetAll";
+        public static string SpGetPagedListPattern { get; set; } = "{0}_GetPagedList";
         public static string SpGetByIdPattern { get; set; } = "{0}_GetById";
         public static string SpFindPattern { get; set; } = "{0}_Find";
         public static string SpInsertPattern { get; set; } = "{0}_Insert";

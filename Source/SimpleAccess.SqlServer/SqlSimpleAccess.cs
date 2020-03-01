@@ -599,7 +599,7 @@ namespace SimpleAccess.SqlServer
         /// <returns> The <see cref="IEnumerable{T}" /> </returns>
         public IEnumerable<T> ExecuteValues<T>(string commandText, params SqlParameter[] sqlParameters)
         {
-            return ExecuteValues<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSqlParameters(sqlParameters));
+            return ExecuteValues<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, sqlParameters);
         }
 
 

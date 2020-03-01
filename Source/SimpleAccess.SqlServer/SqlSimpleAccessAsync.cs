@@ -495,7 +495,7 @@ namespace SimpleAccess.SqlServer
         /// <returns> The <see cref="IEnumerable{T}" /> </returns>
         public Task<IEnumerable<T>> ExecuteValuesAsync<T>(string commandText, params SqlParameter[] sqlParameters)
         {
-            return ExecuteValuesAsync<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSqlParameters(sqlParameters));
+            return ExecuteValuesAsync<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, sqlParameters);
         }
 
 

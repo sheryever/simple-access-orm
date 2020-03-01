@@ -41,6 +41,25 @@ namespace SimpleAccess.SqlServer
             return SimpleAccess.ExecuteEntitiesAsync<TEntity>(commandText, CommandType.Text, fieldToSkip);
         }
 
+        /// <summary> Enumerates get all in this collection. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="transactionContext"> The TransactionAsyncContext. </param>
+        /// <param name="fieldToSkip"> (optional) the field to skip. </param>
+        /// 
+        /// <returns> An enumerator that allows for each to be used to process get all {TEntity} in this
+        /// collection. </returns>
+
+        public virtual Task<IEnumerable<TEntity>> GetAllAsync<TEntity>(SqlTransactionAsyncContext transactionContext, string fieldToSkip = null)
+            where TEntity : new()
+        {
+            //var name = typeof(TEntity).Name;
+            var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
+            //            string commandText = string.Format("{0}_GetAll", entityInfo.DbObjectName);
+            var commandText = entityInfo.SqlBuilder.GetGetAllStatement();
+
+            return SimpleAccess.ExecuteEntitiesAsync<TEntity>(transactionContext, commandText, CommandType.StoredProcedure, fieldToSkip);
+        }
 
         /// <summary> Gets. </summary>
         /// 
@@ -55,7 +74,7 @@ namespace SimpleAccess.SqlServer
             var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
 
             //var commandText = string.Format("{0}_GetById", entityInfo.DbObjectName);
-            var commandText = entityInfo.SqlBuilder.GetGetByIdStatement();
+            string commandText = $"{entityInfo.SqlBuilder.GetGetAllStatement()} WHERE Id = @id";
 
             return SimpleAccess.ExecuteEntityAsync<TEntity>(commandText, CommandType.Text, fieldToSkip, null,
                 new SqlParameter("@id", id));
@@ -77,7 +96,7 @@ namespace SimpleAccess.SqlServer
             var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
 
             //var commandText = string.Format("{0}_GetById", entityInfo.DbObjectName);
-            var commandText = entityInfo.SqlBuilder.GetGetByIdStatement();
+            string commandText = $"{entityInfo.SqlBuilder.GetGetAllStatement()} WHERE Id = @id";
 
             return SimpleAccess.ExecuteEntityAsync<TEntity>(transactionContext, commandText, CommandType.Text, fieldToSkip, null,
                 new SqlParameter("@id", id));
@@ -99,7 +118,7 @@ namespace SimpleAccess.SqlServer
             var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
 
             //var commandText = string.Format("{0}_GetById", entityInfo.DbObjectName);
-            var commandText = entityInfo.SqlBuilder.GetGetByIdStatement();
+            string commandText = $"{entityInfo.SqlBuilder.GetGetAllStatement()} WHERE {sqlParameter.ParameterName.Replace("@", "")} = @{sqlParameter.ParameterName}";
 
             return SimpleAccess.ExecuteEntityAsync<TEntity>(commandText, CommandType.Text, fieldToSkip, null, new[] { sqlParameter });
         }
@@ -118,7 +137,7 @@ namespace SimpleAccess.SqlServer
             var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
 
             //var commandText = string.Format("{0}_GetById", entityInfo.DbObjectName);
-            var commandText = entityInfo.SqlBuilder.GetGetByIdStatement();
+            string commandText = $"{entityInfo.SqlBuilder.GetGetAllStatement()} WHERE {sqlParameter.ParameterName.Replace("@", "")} = @{sqlParameter.ParameterName}";
 
             return SimpleAccess.ExecuteEntityAsync<TEntity>(transactionContext, commandText, CommandType.Text, fieldToSkip, null, new[] { sqlParameter });
         }
@@ -137,7 +156,7 @@ namespace SimpleAccess.SqlServer
             var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
 
             //var commandText = string.Format("{0}_GetById", entityInfo.DbObjectName);
-            var commandText = entityInfo.SqlBuilder.GetGetByIdStatement();
+            string commandText = $"{entityInfo.SqlBuilder.GetGetAllStatement()} {paramObject.CreateWhereWithAnd()}";
 
             return SimpleAccess.ExecuteEntityAsync<TEntity>(commandText, CommandType.Text, paramObject, fieldToSkip);
         }
@@ -157,7 +176,7 @@ namespace SimpleAccess.SqlServer
             var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
 
             //var commandText = string.Format("{0}_GetById", entityInfo.DbObjectName);
-            var commandText = entityInfo.SqlBuilder.GetGetByIdStatement();
+            string commandText = $"{entityInfo.SqlBuilder.GetGetAllStatement()} {paramObject.CreateWhereWithAnd()}";
 
             return SimpleAccess.ExecuteEntityAsync<TEntity>(transactionContext, commandText, CommandType.Text, paramObject, fieldToSkip);
         }
@@ -175,10 +194,10 @@ namespace SimpleAccess.SqlServer
             var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
 
             //var commandText = string.Format("{0}_Find", entityInfo.DbObjectName);
-            var commandText = entityInfo.SqlBuilder.GetFindStatement();
+            string commandText = $"{entityInfo.SqlBuilder.GetFindStatement()} {DynamicQuery.CreateDbParametersFormWhereExpression(expression, entityInfo)}";
 
             return SimpleAccess.ExecuteEntityAsync<TEntity>(commandText, CommandType.Text
-                    , fieldToSkip, parameters: new SqlParameter("@whereClause", DynamicQuery.CreateDbParametersFormWhereExpression(expression, entityInfo)));
+                    , fieldToSkip);
         }
 
         /// <summary> Searches for <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the first record of the result. </summary>
@@ -195,10 +214,10 @@ namespace SimpleAccess.SqlServer
             var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
 
             //var commandText = string.Format("{0}_Find", entityInfo.DbObjectName);
-            var commandText = entityInfo.SqlBuilder.GetFindStatement();
+            string commandText = $"{entityInfo.SqlBuilder.GetFindStatement()} {DynamicQuery.CreateDbParametersFormWhereExpression(expression, entityInfo)}";
 
             return SimpleAccess.ExecuteEntityAsync<TEntity>(transactionContext, commandText, CommandType.Text
-                , fieldToSkip, parameters: new SqlParameter("@whereClause", DynamicQuery.CreateDbParametersFormWhereExpression(expression, entityInfo)));
+                , fieldToSkip);
         }
 
         /// <summary> Searches for all <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the result as <see cref="IEnumerable{TEntity}"/>. </summary>
@@ -214,8 +233,8 @@ namespace SimpleAccess.SqlServer
             var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
 
             //var commandText = string.Format("{0}_Find", entityInfo.DbObjectName);
-            var commandText = entityInfo.SqlBuilder.GetFindStatement() +
-                              DynamicQuery.CreateDbParametersFormWhereExpression(expression, entityInfo);
+            string commandText = $"{entityInfo.SqlBuilder.GetFindStatement()} {DynamicQuery.CreateDbParametersFormWhereExpression(expression, entityInfo)}";
+
 
             return SimpleAccess.ExecuteEntitiesAsync<TEntity>(commandText, CommandType.Text
                 , fieldToSkip);
@@ -236,8 +255,7 @@ namespace SimpleAccess.SqlServer
             var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
 
             //var commandText = string.Format("{0}_Find", entityInfo.DbObjectName);
-            var commandText = entityInfo.SqlBuilder.GetFindStatement() +
-                              DynamicQuery.CreateDbParametersFormWhereExpression(expression, entityInfo);
+            string commandText = $"{entityInfo.SqlBuilder.GetFindStatement()} {DynamicQuery.CreateDbParametersFormWhereExpression(expression, entityInfo)}";
 
             return SimpleAccess.ExecuteEntitiesAsync<TEntity>(transactionContext, commandText, CommandType.Text
                     , fieldToSkip);
@@ -628,6 +646,8 @@ namespace SimpleAccess.SqlServer
             return SimpleAccess.ExecuteNonQueryAsync(commandText, CommandType.Text, SimpleAccess.BuildSqlParameters(paramObject));
         }
 
+
+
         /// <summary> Deletes the given ID. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -675,42 +695,47 @@ namespace SimpleAccess.SqlServer
 
             return SimpleAccess.ExecuteNonQueryAsync(transactionContext, commandText, CommandType.Text);
         }
-
-        /// <summary> Deletes all the <typeparamref name="TEntity"/> records by  objects as SqlParameter names and values. </summary>
+        
+        /// <summary> Deletes all the <typeparamref name="TEntity"/> records by expression. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="paramObjects"> The <![CDATA[IEnumerable<object>]]> objects as parameters. </param>
+        /// <param name="expression">The expression.</param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        public async Task<int> DeleteAllAsync<TEntity>(IEnumerable<object> paramObjects)
+        public async Task<int> DeleteAllAsync<TEntity>(Expression<Func<TEntity, bool>> expression)
             where TEntity : class
         {
-            SqlTransactionAsyncContext transactionContext = null;
             int result = 0;
 
-            using (transactionContext = await SimpleAccess.BeginTransactionAsync())
-            {
-                try
-                {
-                    var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
-                    //var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
-                    var commandText = entityInfo.SqlBuilder.GetDeleteAllStatement();
 
+            var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
 
-                    foreach (var paramObject in paramObjects)
-                    {
+            //var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
+            var commandText = entityInfo.SqlBuilder.GetDeleteAllStatement();
 
-                        result += await SimpleAccess.ExecuteNonQueryAsync(transactionContext, commandText, CommandType.Text, SimpleAccess.BuildSqlParameters(paramObject));
+            result = await SimpleAccess.ExecuteNonQueryAsync(commandText, CommandType.Text, DynamicQuery.CreateDbParametersFormWhereExpression(expression, entityInfo));
 
-                    }
-                    SimpleAccess.EndTransaction(transactionContext);
-                }
-                catch (Exception)
-                {
-                    SimpleAccess.EndTransaction(transactionContext, false);
-                }
-            }
+            return result;
+        }
 
+        /// <summary> Deletes all the <typeparamref name="TEntity"/> records by expression. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="expression">The expression.</param>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        public async Task<int> DeleteAllAsync<TEntity>(SqlTransactionAsyncContext transactionContext, Expression<Func<TEntity, bool>> expression)
+            where TEntity : class
+        {
+            int result = 0;
+
+            var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
+
+            //var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
+            var commandText = entityInfo.SqlBuilder.GetDeleteAllStatement() + DynamicQuery.CreateDbParametersFormWhereExpression(expression, entityInfo);
+
+            result = await SimpleAccess.ExecuteNonQueryAsync(transactionContext, commandText, CommandType.Text);
 
             return result;
         }

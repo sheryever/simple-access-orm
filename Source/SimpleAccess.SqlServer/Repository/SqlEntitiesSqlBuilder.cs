@@ -73,6 +73,22 @@ namespace SimpleAccess.SqlServer
             return SelectAllStatement ?? (SelectAllStatement = CreateSelectAllStatement());
         }
 
+        public override string GetGetPagedListStatement()
+        {
+            var query = $@" SELECT @totalRows = COUNT(*) FROM {EntityInfo.DbObjectViewName}
+                                    {{whereClause}};
+
+                                SELECT {{columns}} FROM {EntityInfo.DbObjectViewName}
+                                    {{whereClause}}
+                                    ORDER BY {{sortExpression}}
+                                  OFFSET @startIndex ROWS 
+                                  FETCH NEXT @pageSize ROWS ONLY;
+                                ";
+
+            return query;
+        }
+
+
         public string InsertStatement { get; private set; }
 
         public string CreateInsertStatement()
@@ -82,7 +98,7 @@ namespace SimpleAccess.SqlServer
             string[] columns = new string[EntityInsertParameters.DataParametersDictionary.Count];
             var keyProperty = "";
             SqlParameter sqlParameter = null;
-            KeyAttribute keyAttribute = null;
+            PrimaryKeyAttribute primaryKeyAttribute = null;
             var query = "";
             var i = 0;
             foreach (var parameterInfo in EntityInsertParameters.DataParametersDictionary)
@@ -93,24 +109,24 @@ namespace SimpleAccess.SqlServer
                 
                 if (sqlParameter.Direction == ParameterDirection.InputOutput)
                 {
-                    keyAttribute =
+                    primaryKeyAttribute =
                         parameterInfo.Key.GetCustomAttributes(true)
-                        .FirstOrDefault(a => a is KeyAttribute) as KeyAttribute;
+                        .FirstOrDefault(a => a is PrimaryKeyAttribute) as PrimaryKeyAttribute;
                     keyProperty = sqlParameter.ParameterName;
                 }
             }
 
-            if ((keyAttribute == null) || (!keyAttribute.IsIdentity && keyAttribute.DbSequence == null))
+            if ((primaryKeyAttribute == null) || (!primaryKeyAttribute.IsIdentity && primaryKeyAttribute.DbSequence == null))
             {
                  query = $"INSERT INTO {EntityInfo.DbObjectName} \n\t({String.Join("\n\t, ", columns)})\n\t VALUES \n\t(@{String.Join("\n\t, @", columns)});";
             }
-            else if (keyAttribute.IsIdentity)
+            else if (primaryKeyAttribute.IsIdentity)
             {
                 query = $"INSERT INTO {EntityInfo.DbObjectName} \n\t({String.Join("\n\t, ", columns)})\n\t VALUES \n\t(@{String.Join("\n\t, @", columns)}); SELECT {keyProperty} = SCOPE_IDENTITY();";
             }
-            else if (keyAttribute.DbSequence != null)
+            else if (primaryKeyAttribute.DbSequence != null)
             {
-                query = $"SELECT {keyProperty} = NEXT VALUE FOR {keyAttribute.DbSequence};\n INSERT INTO {EntityInfo.DbObjectName} \n\t({String.Join("\n\t, ", columns)})\n\t VALUES \n\t(@{String.Join("\n\t, @", columns)}); ";
+                query = $"SELECT {keyProperty} = NEXT VALUE FOR {primaryKeyAttribute.DbSequence};\n INSERT INTO {EntityInfo.DbObjectName} \n\t({String.Join("\n\t, ", columns)})\n\t VALUES \n\t(@{String.Join("\n\t, @", columns)}); ";
             }
 
             return query;
@@ -128,7 +144,7 @@ namespace SimpleAccess.SqlServer
             var columnsSb = new StringBuilder();
             var keyProperty = "";
             SqlParameter sqlParameter = null;
-            KeyAttribute keyAttribute = null;
+            PrimaryKeyAttribute primaryKeyAttribute = null;
             var query = "";
 
             foreach (var parameterInfo in EntityUpdateParameters.DataParametersDictionary)
@@ -139,8 +155,8 @@ namespace SimpleAccess.SqlServer
 
                 columnsSb.Append($" {columnName} = @{columnName},");
 
-                keyAttribute = propertyInfo.GetCustomAttributes(true).FirstOrDefault(a => a is KeyAttribute) as KeyAttribute;
-                if (keyAttribute != null)
+                primaryKeyAttribute = propertyInfo.GetCustomAttributes(true).FirstOrDefault(a => a is PrimaryKeyAttribute) as PrimaryKeyAttribute;
+                if (primaryKeyAttribute != null)
                 {
                     keyProperty = columnName;
                 }
@@ -148,7 +164,7 @@ namespace SimpleAccess.SqlServer
 
             if (keyProperty == null)
             {
-                throw new InvalidOperationException($"The object of type \"{EntityInfo.EntityType.FullName}\" cannot be updated without KeyAttribute or IdentityAttribute. Please mark the primary key with KeyAttribute or IdentityAttribute");
+                throw new InvalidOperationException($"The object of type \"{EntityInfo.EntityType.FullName}\" cannot be updated without PrimaryKeyAttribute or IdentityAttribute. Please mark the primary key with PrimaryKeyAttribute or IdentityAttribute");
             }
             
             query = $"UPDATE {EntityInfo.DbObjectName} \n\tSET {columnsSb.ToString().Substring(0, columnsSb.Length-1)}\n\t WHERE \t{keyProperty} = @{keyProperty};";
@@ -173,14 +189,14 @@ namespace SimpleAccess.SqlServer
         private string SoftDeleteStatement { get; set; }
         public override string GetSoftDeleteStatement()
         {
-            return SoftDeleteStatement ?? (SoftDeleteStatement = $"UPDATE {EntityInfo.DbObjectName}\n\t SET IsDeleted = 1 WHERE Id = @id");
+            return SoftDeleteStatement ?? (SoftDeleteStatement = $"UPDATE {EntityInfo.DbObjectName}\n\t SET IsDeleted = 1 WHERE Id = @id;");
         }
 
         private string DeleteAllStatement { get; set; }
 
         public string CreateDeleteAllStatement()
         {
-            return $"DELETE {EntityInfo.DbObjectName}; ";
+            return $"DELETE {EntityInfo.DbObjectName}";
         }
 
         public override string GetDeleteAllStatement()

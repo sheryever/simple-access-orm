@@ -35,6 +35,40 @@ namespace SimpleAccess.SqlServer
         IEnumerable<TEntity> GetAll<TEntity>(string fieldToSkip = null)
                     where TEntity : new();
 
+        /// <summary> Get all TEntity object in a <see cref="IEnumerable{TEntity}"/>. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="transaction">  (optional) the transaction. </param>
+        /// <param name="fieldToSkip"> (optional) the field to skip. </param>
+        /// 
+        /// <returns> An enumerator that allows for each to be used to process get all TEntity in this
+        /// collection. </returns>
+        IEnumerable<TEntity> GetAll<TEntity>(SqlTransaction transaction, string fieldToSkip = null)
+            where TEntity : new();
+
+        //PagedData<TEntity> GetEntitiesPagedList<TEntity>(int startIndex, int pageSize, string sortExpression = null, object whereParameters= null)
+        //    where TEntity : class, new();
+
+        //PagedData<TEntity>  GetEntitiesPagedList<TEntity>(SqlTransaction transaction, int startIndex, int pageSize, string sortExpression = null, object whereParameters = null)
+        //    where TEntity : class, new();
+
+        //PagedData<dynamic> GetDynamicPagedList<TEntity>(params SqlParameter[] sqlParameters)
+        //    where TEntity : new();
+
+        //PagedData<dynamic> GetDynamicPagedList<TEntity>(int startIndex, int pageSize)
+        //    where TEntity : new();
+        //PagedData<dynamic> GetDynamicPagedList<TEntity>(int startIndex, int pageSize, string sortExpression)
+        //    where TEntity : new();
+
+        //PagedData<dynamic> GetDynamicPagedList<TEntity>(int startIndex, int pageSize, string sortExpression, object whereParameters)
+        //    where TEntity : new();
+
+        //PagedData<dynamic> GetDynamicPagedList<TEntity>(int startIndex, int pageSize, string sortExpression, params SqlParameter[] parameters)
+        //    where TEntity : new();
+
+        //PagedData<dynamic> GetDynamicPagedList<TEntity>(SqlTransaction transaction, int startIndex, int pageSize, string sortExpression = null, object whereParameters = null)
+        //    where TEntity : new();
+
         /// <summary> Get TEntity by Id or any other parameter. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -320,10 +354,20 @@ namespace SimpleAccess.SqlServer
         /// <summary> Deletes all the <typeparamref name="TEntity"/> records by  objects as SqlParameter names and values. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="paramObjects"> The <![CDATA[IEnumerable<object>]]> objects as parameters. </param>
+        /// <param name="expression">The expression.</param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int DeleteAll<TEntity>(IEnumerable<object> paramObjects)
+        int DeleteAll<TEntity>(Expression<Func<TEntity, bool>> expression)
+            where TEntity : class;
+
+        /// <summary> Deletes all the <typeparamref name="TEntity"/> records by  objects as SqlParameter names and values. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="sqlTransaction"> The transaction. </param>
+        /// <param name="expression">The expression.</param>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        int DeleteAll<TEntity>(SqlTransaction sqlTransaction, Expression<Func<TEntity, bool>> expression)
             where TEntity : class;
 
         /// <summary> Deletes all the <typeparamref name="TEntity"/> records by given IDs. </summary>

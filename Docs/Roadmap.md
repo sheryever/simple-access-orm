@@ -14,6 +14,7 @@
 - [X] SqlEntityRepository implementation (90%)
 - [x] Add `DefaultView` property in EntityAttribute
 - [x] Add `KeyAttribute` for decorating primary key of an entity
+- [x] Add database sequence support using with `KeyAttribute`
 - [X] `DefaultView` property in EntityAttribute support for default select
 - [ ] Column selection with `Find`, `FindAll`, `Get`, `GetAll`
 - [ ] Add `GetAllFrom(string viewName)` select the data from given view name insead of EntityNmae (Table name) & EntityAttribute (EntityName / DefaultView)

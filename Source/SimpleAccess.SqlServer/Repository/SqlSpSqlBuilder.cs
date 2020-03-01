@@ -49,6 +49,7 @@ namespace SimpleAccess.SqlServer
         //}
         
         public override string GetGetAllStatement() => string.Format(SqlSpRepositorySetting.SpGetAllPattern, EntityInfo.DbObjectName);
+        public override string GetGetPagedListStatement() => string.Format(SqlSpRepositorySetting.SpGetPagedListPattern, EntityInfo.DbObjectName);
 
         public override string GetGetByIdStatement() => string.Format(SqlSpRepositorySetting.SpGetByIdPattern, EntityInfo.DbObjectName);
 

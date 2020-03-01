@@ -29,6 +29,7 @@ namespace SimpleAccess.SqlServer
         public IEntityInfo EntityInfo { get; set; }
 
         public abstract string GetGetAllStatement();
+        public abstract string GetGetPagedListStatement();
 
         public abstract string GetGetByIdStatement();
 
@@ -111,7 +112,7 @@ namespace SimpleAccess.SqlServer
 
             if (checkForIdentity)
             {
-                var keyAttribute = attrbutes.FirstOrDefault(a => a is KeyAttribute) as KeyAttribute;
+                var keyAttribute = attrbutes.FirstOrDefault(a => a is PrimaryKeyAttribute) as PrimaryKeyAttribute;
 
                 if ((keyAttribute != null) && (keyAttribute.IsIdentity || keyAttribute.DbSequence != null))
                 {

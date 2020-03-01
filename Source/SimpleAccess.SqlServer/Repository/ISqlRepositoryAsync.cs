@@ -29,6 +29,17 @@ namespace SimpleAccess.SqlServer
         Task<IEnumerable<TEntity>> GetAllAsync<TEntity>(string fieldToSkip = null)
                     where TEntity : new();
 
+        /// <summary> Get all TEntity object in a <see cref="IEnumerable{TEntity}"/>. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="transactionContext"> The transaction. </param>
+        /// <param name="fieldToSkip"> (optional) the field to skip. </param>
+        /// 
+        /// <returns> An enumerator that allows for each to be used to process get all TEntity in this
+        /// collection. </returns>
+        Task<IEnumerable<TEntity>> GetAllAsync<TEntity>(SqlTransactionAsyncContext transactionContext,string fieldToSkip = null)
+            where TEntity : new();
+
         /// <summary> Get TEntity by Id or any other parameter. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
@@ -43,7 +54,7 @@ namespace SimpleAccess.SqlServer
         /// <summary> Gets. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="transactionContext">  (optional) the transaction. </param>
+        /// <param name="transactionContext"> The transaction. </param>
         /// <param name="sqlParameter"> The SQL parameter. </param>
         /// <param name="fieldToSkip">  (optional) the field to skip. </param>
         /// 
@@ -313,12 +324,21 @@ namespace SimpleAccess.SqlServer
         /// <summary> Deletes all the <typeparamref name="TEntity"/> records by  objects as SqlParameter names and values. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="paramObjects"> The <![CDATA[IEnumerable<object>]]> objects as parameters. </param>
+        /// <param name="expression">The expression.</param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        Task<int> DeleteAllAsync<TEntity>(IEnumerable<object> paramObjects)
+        Task<int> DeleteAllAsync<TEntity>(Expression<Func<TEntity, bool>> expression)
             where TEntity : class;
 
+        /// <summary> Deletes all the <typeparamref name="TEntity"/> records by  objects as SqlParameter names and values. </summary>
+        /// 
+        /// <typeparam name="TEntity"> Type of the entity. </typeparam>
+        /// <param name="transactionContext"> The SqlTransactionAsyncContext. </param>
+        /// <param name="expression">The expression.</param>
+        /// 
+        /// <returns> Number of rows affected (integer) </returns>
+        Task<int> DeleteAllAsync<TEntity>(SqlTransactionAsyncContext transactionContext, Expression<Func<TEntity, bool>> expression)
+            where TEntity : class;
         /// <summary> Deletes all the <typeparamref name="TEntity"/> records by given IDs. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>

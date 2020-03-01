@@ -42,6 +42,12 @@ namespace SimpleAccess.SqlServer
                         continue;
 
                     object value = propInfo.GetValue(otherParameters, new object[] { });
+                    if (value is IDataParameter)
+                    {
+                        sqlParameters.Add(value as SqlParameter);
+                        continue;
+                    }
+
                     if (propInfo.PropertyType.Name.ToLower() != "string")
                     {
                         sqlParameters.Add(new SqlParameter("@" + Clean(propInfo.Name), value));
