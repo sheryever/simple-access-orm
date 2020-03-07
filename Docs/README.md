@@ -115,7 +115,7 @@ using (var transaction = simpleAccess.BeginTrasaction())
 
 #### Methods
 | Methods | Description |
-|--------------------|--------|
+|-------- |-------------|
 | BeginTrasaction  | Begins a database transaction.|
 | CloseDbConnection | Close the current open connection.|
 | EndTransaction   | Close an open database transaction.|
