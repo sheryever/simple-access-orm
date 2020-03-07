@@ -114,6 +114,7 @@ using (var transaction = simpleAccess.BeginTrasaction())
 ### SimpleAccess interface
 
 #### Methods
+
 | Methods            | Description                                                                                                     |
 |--------------------|-----------------------------------------------------------------------------------------------------------------|
 | BeginTrasaction    | Begins a database transaction.                                                                                  |
