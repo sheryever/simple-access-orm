@@ -114,12 +114,12 @@ using (var transaction = simpleAccess.BeginTrasaction())
 ### SimpleAccess interface
 
 #### Methods
-| Methods | Description |
-|--------------------|--------|
+| Methods            | Description                                                                                                     |
+|--------------------|-----------------------------------------------------------------------------------------------------------------|
 
-| BeginTrasaction  | Begins a database transaction.|
-| CloseDbConnection | Close the current open connection.|
-| EndTransaction   | Close an open database transaction.|
+| BeginTrasaction    | Begins a database transaction.                                                                                  |
+| CloseDbConnection  | Close the current open connection.|
+| EndTransaction     | Close an open database transaction.|
 | ExecuteEntity&lt;TEntity&gt; | Sends the CommandText to the Database Connection and builds a TEntity from DataReader. |
 | ExecuteEntities&lt;TEntity&gt; | Sends the CommandText to the Database Connection and builds a IEnumerable&lt;TEntity&gt; from DataReader. |
 | ExecuteDynamic | Sends the CommandText to the Database Connection and builds a dynamic object from DataReader. |
@@ -155,10 +155,10 @@ ISqlSimpleAccess simpleAccess = new SqlSimpleAccess(sqlConnection);
 SimpleAccess provides ready repository. Each database provide has it's on repository.
 
 #### Properties
-| Property | Description |
-|--------------------|--------|
+| Property      | Description                             |
+|---------------|-----------------------------------------|
 
-| SimpleAccess  | Base SimpleAccess object of repository.|
+| SimpleAccess  | Base SimpleAccess object of repository. |
 
 
 All methods are based on stored procedures with its related sotred procedure naming convention.
