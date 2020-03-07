@@ -155,10 +155,9 @@ ISqlSimpleAccess simpleAccess = new SqlSimpleAccess(sqlConnection);
 SimpleAccess provides ready repository. Each database provide has it's on repository.
 
 #### Properties
-| Property      | Description                             |
-|---------------|-----------------------------------------|
-
-| SimpleAccess  | Base SimpleAccess object of repository. |
+ Property      | Description
+---------------|------------
+ SimpleAccess  | Base SimpleAccess object of repository. 
 
 
 All methods are based on stored procedures with its related sotred procedure naming convention.
