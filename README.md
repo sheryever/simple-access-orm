@@ -114,11 +114,12 @@ using (var transaction = simpleAccess.BeginTrasaction())
 ### SimpleAccess interface
 
 #### Methods
-| Methods | Description |
-|--------------------|--------|
-| BeginTrasaction  | Begins a database transaction.|
-| CloseDbConnection | Close the current open connection.|
-| EndTransaction   | Close an open database transaction.|
+
+| Methods            | Description                                                                                                     |
+|--------------------|-----------------------------------------------------------------------------------------------------------------|
+| BeginTrasaction    | Begins a database transaction.                                                                                  |
+| CloseDbConnection  | Close the current open connection.|
+| EndTransaction     | Close an open database transaction.|
 | ExecuteEntity&lt;TEntity&gt; | Sends the CommandText to the Database Connection and builds a TEntity from DataReader. |
 | ExecuteEntities&lt;TEntity&gt; | Sends the CommandText to the Database Connection and builds a IEnumerable&lt;TEntity&gt; from DataReader. |
 | ExecuteDynamic | Sends the CommandText to the Database Connection and builds a dynamic object from DataReader. |
@@ -154,26 +155,28 @@ ISqlSimpleAccess simpleAccess = new SqlSimpleAccess(sqlConnection);
 SimpleAccess provides ready repository. Each database provide has it's on repository.
 
 #### Properties
-| Property | Description |
-|--------------------|--------|
-| SimpleAccess  | Base SimpleAccess object of repository.|
+
+| Property      | Description |
+|---------------|-------------|
+| SimpleAccess  | Base SimpleAccess object of repository. |
 
 
 All methods are based on stored procedures with its related sotred procedure naming convention.
 #### Methods
+
 | Methods            | Sp Name | Description |
 |--------------------|---------|-------------|
-| Get&lt;TEntity&gt; | TEntity_GetById </br> ie. People_GetById | Get TEntity by Id or anyother parameter |
-| GetAll&lt;TEntity&gt; | TEntity_GetAll </br> ie. People_GetAll | Get all TEntity object in an IEnumerable&lt;TEntity&gt;. |
-| Find&lt;TEntity&gt; | TEntity_Find </br> ie. People_Find | Searches for TEntity that matches the conditions defined by the specified predicate, and returns the first record of the result. |
-| FindAll&lt;TEntity&gt; | TEntity_Find </br> ie. People_Find | Searches for all TEntity that matches the conditions defined by the specified predicate, and returns the result as IEnumerable&lt;TEntity&gt;. |
-| Insert&lt;TEntity&gt; | TEntity_Insert </br> ie. People_Insert  | Inserts the given TEntity |
-| InsertAll&lt;TEntity&gt; | TEntity_Insert </br> ie. People_Insert  | Inserts all the given entities |
-| Update&lt;TEntity&gt; | TEntity_Update </br> ie. People_Update | Updates the given TEntity |
-| UpdateAll&lt;TEntity&gt; | TEntity_Update </br> ie. People_Update  | Updates all the given entities |
-| Delete&lt;TEntity&gt; | TEntity_Delete </br> ie. People_Delete | Deletes TEntity by the given Id |
-| DeleteAll&lt;TEntity&gt; | TEntity_Delete </br> ie. People_Delete | Deletes all the TEntity records by the given Ids |
-| SoftDelete&lt;TEntity&gt; | TEntity_SoftDelete </br> ie. People_SoftDelete | Marks TEntity deleted by the given Id   |
+| Get&lt;TEntity&gt; | TEntity_GetById <br /> ie. People_GetById | Get TEntity by Id or anyother parameter |
+| GetAll&lt;TEntity&gt; | TEntity_GetAll <br /> ie. People_GetAll | Get all TEntity object in an IEnumerable&lt;TEntity&gt;. |
+| Find&lt;TEntity&gt; | TEntity_Find <br /> ie. People_Find | Searches for TEntity that matches the conditions defined by the specified predicate, and returns the first record of the result. |
+| FindAll&lt;TEntity&gt; | TEntity_Find <br /> ie. People_Find | Searches for all TEntity that matches the conditions defined by the specified predicate, and returns the result as IEnumerable&lt;TEntity&gt;. |
+| Insert&lt;TEntity&gt; | TEntity_Insert <br /> ie. People_Insert  | Inserts the given TEntity |
+| InsertAll&lt;TEntity&gt; | TEntity_Insert <br /> ie. People_Insert  | Inserts all the given entities |
+| Update&lt;TEntity&gt; | TEntity_Update <br /> ie. People_Update | Updates the given TEntity |
+| UpdateAll&lt;TEntity&gt; | TEntity_Update <br /> ie. People_Update  | Updates all the given entities |
+| Delete&lt;TEntity&gt; | TEntity_Delete <br /> ie. People_Delete | Deletes TEntity by the given Id |
+| DeleteAll&lt;TEntity&gt; | TEntity_Delete <br /> ie. People_Delete | Deletes all the TEntity records by the given Ids |
+| SoftDelete&lt;TEntity&gt; | TEntity_SoftDelete <br /> ie. People_SoftDelete | Marks TEntity deleted by the given Id   |
 
 ### Using SqlRepository with StoredProcedure
 
@@ -452,4 +455,4 @@ namespace SimpleAccess.SqlServer.ConsoleTest
 - [x] Separate SimpleCommand and Repositoy
 - [x] vitual properties must behave like NotASpParameter marked perperty in Entities drived from StoredProcedureParameters
 - [x] Remove StoredProcedureParameters inheritance from Enity Class to make entity more lighter
-[Read more...](/Docs/Roadmap.md)
+[Read more...](/docs/Roadmap.md)
