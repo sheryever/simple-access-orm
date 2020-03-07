@@ -166,17 +166,17 @@ All methods are based on stored procedures with its related sotred procedure nam
 
 | Methods            | Sp Name | Description |
 |--------------------|---------|-------------|
-| Get&lt;TEntity&gt; | TEntity_GetById </br> ie. People_GetById | Get TEntity by Id or anyother parameter |
-| GetAll&lt;TEntity&gt; | TEntity_GetAll </br> ie. People_GetAll | Get all TEntity object in an IEnumerable&lt;TEntity&gt;. |
-| Find&lt;TEntity&gt; | TEntity_Find </br> ie. People_Find | Searches for TEntity that matches the conditions defined by the specified predicate, and returns the first record of the result. |
-| FindAll&lt;TEntity&gt; | TEntity_Find </br> ie. People_Find | Searches for all TEntity that matches the conditions defined by the specified predicate, and returns the result as IEnumerable&lt;TEntity&gt;. |
-| Insert&lt;TEntity&gt; | TEntity_Insert </br> ie. People_Insert  | Inserts the given TEntity |
-| InsertAll&lt;TEntity&gt; | TEntity_Insert </br> ie. People_Insert  | Inserts all the given entities |
-| Update&lt;TEntity&gt; | TEntity_Update </br> ie. People_Update | Updates the given TEntity |
-| UpdateAll&lt;TEntity&gt; | TEntity_Update </br> ie. People_Update  | Updates all the given entities |
-| Delete&lt;TEntity&gt; | TEntity_Delete </br> ie. People_Delete | Deletes TEntity by the given Id |
-| DeleteAll&lt;TEntity&gt; | TEntity_Delete </br> ie. People_Delete | Deletes all the TEntity records by the given Ids |
-| SoftDelete&lt;TEntity&gt; | TEntity_SoftDelete </br> ie. People_SoftDelete | Marks TEntity deleted by the given Id   |
+| Get&lt;TEntity&gt; | TEntity_GetById <br /> ie. People_GetById | Get TEntity by Id or anyother parameter |
+| GetAll&lt;TEntity&gt; | TEntity_GetAll <br /> ie. People_GetAll | Get all TEntity object in an IEnumerable&lt;TEntity&gt;. |
+| Find&lt;TEntity&gt; | TEntity_Find <br /> ie. People_Find | Searches for TEntity that matches the conditions defined by the specified predicate, and returns the first record of the result. |
+| FindAll&lt;TEntity&gt; | TEntity_Find <br /> ie. People_Find | Searches for all TEntity that matches the conditions defined by the specified predicate, and returns the result as IEnumerable&lt;TEntity&gt;. |
+| Insert&lt;TEntity&gt; | TEntity_Insert <br /> ie. People_Insert  | Inserts the given TEntity |
+| InsertAll&lt;TEntity&gt; | TEntity_Insert <br /> ie. People_Insert  | Inserts all the given entities |
+| Update&lt;TEntity&gt; | TEntity_Update <br /> ie. People_Update | Updates the given TEntity |
+| UpdateAll&lt;TEntity&gt; | TEntity_Update <br /> ie. People_Update  | Updates all the given entities |
+| Delete&lt;TEntity&gt; | TEntity_Delete <br /> ie. People_Delete | Deletes TEntity by the given Id |
+| DeleteAll&lt;TEntity&gt; | TEntity_Delete <br /> ie. People_Delete | Deletes all the TEntity records by the given Ids |
+| SoftDelete&lt;TEntity&gt; | TEntity_SoftDelete <br /> ie. People_SoftDelete | Marks TEntity deleted by the given Id   |
 
 ### Using SqlRepository with StoredProcedure
 
