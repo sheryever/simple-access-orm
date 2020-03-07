@@ -455,4 +455,4 @@ namespace SimpleAccess.SqlServer.ConsoleTest
 - [x] Separate SimpleCommand and Repositoy
 - [x] vitual properties must behave like NotASpParameter marked perperty in Entities drived from StoredProcedureParameters
 - [x] Remove StoredProcedureParameters inheritance from Enity Class to make entity more lighter
-[Read more...](/Docs/Roadmap.md)
+[Read more...](/Roadmap.md)
