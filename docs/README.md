@@ -209,6 +209,7 @@ All methods are based on stored procedures with its related sotred procedure nam
 - [x] Add `KeyAttribute` for decorating primary key of an entity
 - [x] Add database sequence support using with `PrimaryKeyAttribute`
 - [X] `DefaultView` property in EntityAttribute support for default select
+- [ ] Improve ILogger
 - [ ] Column selection with `Find`, `FindAll`, `Get`, `GetAll`
 - [ ] Fixing comments, documention and adding examples
 - [ ] SimpleAccess Factory, Allow SimpleAccess to create SimpleAccess object the base of configuration(xml/json)
