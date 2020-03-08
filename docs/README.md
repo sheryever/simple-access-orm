@@ -117,7 +117,7 @@ using (var transaction = simpleAccess.BeginTrasaction())
 
 | Methods            | Description                                                                                                     |
 |--------------------|-----------------------------------------------------------------------------------------------------------------|
-| BeginTrasaction    | Begins and return a database transaction.                                                                       |
+| BeginTransaction    | Begins and return a database transaction.                                                                      |
 | CloseDbConnection  | Close the current open connection.|
 | EndTransaction     | Close an open database transaction.|
 | ExecuteEntity&lt;TEntity&gt; | Sends the CommandText to the Database Connection and builds a TEntity from DataReader. |
@@ -131,7 +131,7 @@ using (var transaction = simpleAccess.BeginTrasaction())
 | Fill | Execute commant text against connection and add or refresh rows in DataSet or DataTable. |
 | GetNewConnection | Gets the new connection with the SimpleAccess Ojbect ConnectionString.|
 
-***BeginTransaction and all Execute methods support async ***
+***BeginTransaction and all Execute methods support async functionality***
 
 Creating SimpleAccess object for Sql Server
 ``` C#
@@ -181,7 +181,7 @@ All methods are based on stored procedures with its related sotred procedure nam
 | DeleteAll&lt;TEntity&gt; | TEntity_Delete <br /> ie. People_Delete | Deletes all the TEntity records by the given Ids |
 | SoftDelete&lt;TEntity&gt; | TEntity_SoftDelete <br /> ie. People_SoftDelete | Marks TEntity deleted by the given Id   |
 
-***All methods support async***
+***All methods support async functionality***
 
 
 #### Using SimpleAccess Repository
