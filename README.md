@@ -136,7 +136,7 @@ using (var transaction = simpleAccess.BeginTrasaction())
 Creating SimpleAccess object for Sql Server
 ``` C#
 // Uses the provided connnection string
-ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("Data Source=SQLEXPRESS2014;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=whoever;Password=whatever");
+ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("Data Source=SQLEXPRESS2014;Initial Catalog=SimpleAccessTest;Persist Security Info=True;Integrated Security=True;");
 
 // Loads the connectionString from web.config or app.config connection strings
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnectionString");
@@ -145,14 +145,14 @@ ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnectionString");
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess();
 
 // Uses the provided SqlConnection object.
-var sqlConnection = new SqlConnection("Data Source=SQLEXPRESS2014;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=whoever;Password=whatever");
+var sqlConnection = new SqlConnection("Data Source=SQLEXPRESS2014;Initial Catalog=SimpleAccessTest;Persist Security Info=True;Integrated Security=True;");
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess(sqlConnection);
 ```
 ***There are more constructors to configurtion the SimpleAccess***
 
 ## SimpleAccess with Repository pattern
 
-SimpleAccess provides ready repository. Each database provide has it's on repository.
+SimpleAccess provides ready repository of each supported database.
 
 #### Properties
 
@@ -182,12 +182,44 @@ All methods are based on stored procedures with its related sotred procedure nam
 ##### [Using SimpleAccess v1](/docs/UsingSimpleAccess.v1.md)
 
 ## Support
-- Simple Access is written in C# and support .net Managed Code languages (C# and VB.net etc)
+- SimpleAccess is written in C# and support .net Managed Code languages (C# and VB.net etc)
 - Sql Server 2005 and later
-- Oracle 10g and later (in default Simple Access uses Oracle Data Provider for .NET, to use Oracle Data Access Components (ODAC))
+- Oracle 10g and later (in default SimpleAccess uses Oracle Managed Data Provider for .NET)
+- SQLite
+- MySql
+- PostgreSQL (coming)
 
 ## Roadmap
 - [x] Separate SimpleCommand and Repositoy
 - [x] vitual properties must behave like NotASpParameter marked perperty in Entities drived from StoredProcedureParameters
 - [x] Remove StoredProcedureParameters inheritance from Enity Class to make entity more lighter
-[Read more...](/docs/Roadmap.md)
+- [x] Add InsertAll\<TEntity\>, UpdateAll\<TEntity\>, DeleteAll\<TEntity\> with support of internal trasaction in Repository
+- [x] Add Find\<TEntity\> and  FindAll\<TEntity\> in Repository
+- [X] Add ExecuteValues\<T\> for getting result of a single column query in IEnumerable\<T\>
+- [X] NetStandard 2.0 support
+- [X] Write unit test
+- [X] NetStandard 2.1 support with Microsoft.Data.SqlClient
+- [X] Configure StoredProcedure naming convention mapping to repository method (Insert, Update, Delete, Get, GetAll, Find, FindAll) methods in repository settings
+- [X] Add Sql Generation for Non StoredProcedures command types (Insert, Update, Delete, Get, GetAll, Find, FindAll) (90%)
+### SqlEntityRepository Without SP implementation (version 3.1)
+- [X] SqlEntityRepository implementation (90%)
+- [x] Add `DefaultView` property in EntityAttribute
+- [x] Add `KeyAttribute` for decorating primary key of an entity
+- [x] Add database sequence support using with `PrimaryKeyAttribute`
+- [X] `DefaultView` property in EntityAttribute support for default select
+- [ ] Column selection with `Find`, `FindAll`, `Get`, `GetAll`
+- [ ] Fixing comments, documention and adding examples
+- [ ] SimpleAccess Factory, Allow SimpleAccess to create SimpleAccess object the base of configuration(xml/json)
+```C#
+ISimpleAccess sqlSimpleAccess = SimpleAccessFactory.Create("SqlServer")
+ISimpleAccess oralceSimpleAccess = SimpleAccessFactory.Create("OracleServer")
+```
+- [ ] Allow developer to add database column custom/special value mapper and parameter builder using IDbDataMapper.
+```
+SimpleAccess.DataMappers.Add(new GeomaryDataMapper());
+```
+- [ ] Allow developer to force SimpleAccess to use specific custom DataMapper to map and build parameter using DbMapperAttribute DbMapper(typeof(GeomaryDataMapper)) 
+- [ ] ExecuteJson and ExecuteBson
+- [ ] Rewrite code generation application
+ - [ ] Allow developer to add more T4 Templates
+ - [ ] Allow developer to edit T4 Templates directly inside the application
