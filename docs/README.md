@@ -136,7 +136,7 @@ using (var transaction = simpleAccess.BeginTrasaction())
 Creating SimpleAccess object for Sql Server
 ``` C#
 // Uses the provided connnection string
-ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("Data Source=SQLEXPRESS2014;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=whoever;Password=whatever");
+ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("Data Source=SQLEXPRESS2014;Initial Catalog=SimpleAccessTest;Persist Security Info=True;Integrated Security=True;");
 
 // Loads the connectionString from web.config or app.config connection strings
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnectionString");
@@ -145,7 +145,7 @@ ISqlSimpleAccess simpleAccess = new SqlSimpleAccess("defaultConnectionString");
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess();
 
 // Uses the provided SqlConnection object.
-var sqlConnection = new SqlConnection("Data Source=SQLEXPRESS2014;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=whoever;Password=whatever");
+var sqlConnection = new SqlConnection("Data Source=SQLEXPRESS2014;Initial Catalog=SimpleAccessTest;Persist Security Info=True;Integrated Security=True;");
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess(sqlConnection);
 ```
 ***There are more constructors to configurtion the SimpleAccess***
@@ -208,7 +208,6 @@ All methods are based on stored procedures with its related sotred procedure nam
 - [x] Add database sequence support using with `PrimaryKeyAttribute`
 - [X] `DefaultView` property in EntityAttribute support for default select
 - [ ] Column selection with `Find`, `FindAll`, `Get`, `GetAll`
-- [ ] Add `GetAllFrom(string viewName)` select the data from given view name insead of EntityNmae (Table name) & EntityAttribute (EntityName / DefaultView)
 - [ ] Fixing comments, documention and adding examples
 - [ ] SimpleAccess Factory, Allow SimpleAccess to create SimpleAccess object the base of configuration(xml/json)
 ```C#
