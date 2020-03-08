@@ -178,8 +178,8 @@ All methods are based on stored procedures with its related sotred procedure nam
 | DeleteAll&lt;TEntity&gt; | TEntity_Delete <br /> ie. People_Delete | Deletes all the TEntity records by the given Ids |
 | SoftDelete&lt;TEntity&gt; | TEntity_SoftDelete <br /> ie. People_SoftDelete | Marks TEntity deleted by the given Id   |
 
-##### [Usingj SimpleAccess v2 SqlRepository with StoredProcedure] (/docs/UsingSimpleAccess.v2.Repository.md)
-##### [Using SimpleAccess v1] (/docs/UsingSimpleAccess.v1.md)
+##### [Usingj SimpleAccess v2 SqlRepository with StoredProcedure](/docs/UsingSimpleAccess.v2.Repository.md)
+##### [Using SimpleAccess v1](/docs/UsingSimpleAccess.v1.md)
 
 ## Support
 - Simple Access is written in C# and support .net Managed Code languages (C# and VB.net etc)
