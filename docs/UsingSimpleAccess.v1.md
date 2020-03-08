@@ -1,5 +1,147 @@
-##### Using SimpleAccess v1 Sql Server Repository (Repository)
-***It is recommanded to use SimpleAccess v2 SqlRepository instead of SimpleAccess v1 repository. Although SimpleAccess v1 repository is supported and included in SimpleAccess v2 for backward compatibility***
+#### Using SimpleAccess v1 Sql Server Repository (Repository)
+***It is recommanded to use SimpleAccess latest SqlRepository instead of SimpleAccess v1 repository. Although SimpleAccess v1 repository is supported and included in SimpleAccess v2 for backward compatibility***
+
+#### SimpleAccess SqlRepository Stored Procedures
+
+##### People Table
+```Sql
+CREATE TABLE [dbo].[People](
+	[Id] [INT] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[Name] [NVARCHAR](100) NOT NULL,
+	[PhoneNumbers] [NVARCHAR](30) NULL,
+	[Address] [NVARCHAR](300) NULL,
+	[IsDeleted] [BIT] NOT NULL,
+	[CreatedBy] [BIGINT] NULL,
+	[CreatedOn] [SMALLDATETIME] NULL,
+	[ModifiedBy] [BIGINT] NULL,
+	[ModifiedOn] [SMALLDATETIME] NULL
+)
+
+GO
+```
+##### People_GetById
+```Sql
+CREATE PROC [dbo].[People_GetById]
+	@id INT
+AS
+BEGIN
+    SELECT  Id, Name, PhoneNumbers, Address, IsDeleted, CreatedBy, CreatedOn, ModifiedBy, ModifiedOn
+         FROM dbo.People
+		 WHERE Id = @Id AND IsDeleted = 0;
+END
+```
+##### People_GetAll
+```Sql
+CREATE PROC [dbo].[People_GetAll]
+AS
+BEGIN
+    SELECT  Id, Name, PhoneNumbers, Address, IsDeleted, CreatedBy, CreatedOn, ModifiedBy, ModifiedOn
+         FROM dbo.People;
+         WHERE IsDeleted = 0;
+END
+```
+
+##### People_Find
+```Sql
+CREATE PROC [dbo].[People_Find]
+	@whereClause NVARCHAR(4000)
+    WITH EXEC AS CALLER
+AS
+BEGIN
+    DECLARE @sql NVARCHAR(4000);
+    SET @sql =
+		'SELECT  Id, Name, PhoneNumbers, Address, IsDeleted, CreatedBy, CreatedOn, ModifiedBy, ModifiedOn ' + ' FROM dbo.People ' +
+        ISNULL(@whereClause, '') + 'AND IsDeleted = 0';
+
+     EXEC sp_executesql @sql;
+END
+```
+##### People_Insert
+```Sql
+CREATE PROC [dbo].[People_Insert]
+	  @name NVARCHAR(100)
+	 , @phoneNumbers NVARCHAR(30)
+	 , @address NVARCHAR(300)
+	 , @isDeleted BIT
+	 , @createdBy BIGINT
+	 , @createdOn SMALLDATETIME
+	 , @modifiedBy BIGINT
+	 , @modifiedOn SMALLDATETIME
+	,@Id INT OUTPUT
+AS
+BEGIN
+     INSERT INTO dbo.People 
+        ( Name, PhoneNumbers, Address, IsDeleted, CreatedBy, CreatedOn, ModifiedBy, ModifiedOn )
+        VALUES ( @name, @phoneNumbers, @address, @isDeleted, @createdBy, @createdOn, @modifiedBy, @modifiedOn );
+
+	SELECT @Id = SCOPE_IDENTITY();
+END
+```
+##### People_Update
+```Sql
+CREATE PROC [dbo].[People_Update]
+	@Id INT
+	 , @name NVARCHAR(100)
+	 , @phoneNumbers NVARCHAR(30)
+	 , @address NVARCHAR(300)
+	 , @isDeleted BIT
+	 , @createdBy BIGINT
+	 , @createdOn SMALLDATETIME
+	 , @modifiedBy BIGINT
+	 , @modifiedOn SMALLDATETIME
+AS
+BEGIN
+    UPDATE dbo.People SET Name =  @name
+         , PhoneNumbers = @phoneNumbers
+         , Address = @address
+         , IsDeleted = @isDeleted
+         , CreatedBy = @createdBy
+         , CreatedOn = @createdOn
+         , ModifiedBy = @modifiedBy
+         , ModifiedOn = @modifiedOn
+     WHERE Id = @Id
+
+END
+```
+##### People_Delete
+```Sql
+CREATE PROC [dbo].[People_Delete]
+	@Id INT
+AS
+BEGIN
+    DELETE FROM dbo.People
+    	WHERE Id = @Id
+
+END
+```
+##### People_SoftDelete
+```Sql
+CREATE PROC [dbo].[People_SoftDelete]
+	@Id INT
+AS
+BEGIN
+    UPDATE dbo.People SET IsDelete = 1
+    	WHERE Id = @Id
+END
+```
+
+##### c# Entity
+````C#
+    [Entity("People")]
+    public class Person
+    {
+        [Identity]
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string PhoneNumbers { get; set; }
+        public string Address { get; set; }
+        public bool IsDeleted { get; set; }
+        public long CreatedBy { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public long ModifiedBy { get; set; }
+        public DateTime ModifiedOn { get; set; }
+    }
+````
 
 ````C#
 using System.Data;
