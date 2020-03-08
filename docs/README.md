@@ -117,7 +117,7 @@ using (var transaction = simpleAccess.BeginTrasaction())
 
 | Methods            | Description                                                                                                     |
 |--------------------|-----------------------------------------------------------------------------------------------------------------|
-| BeginTrasaction    | Begins a database transaction.                                                                                  |
+| BeginTrasaction    | Begins and return a database transaction.                                                                       |
 | CloseDbConnection  | Close the current open connection.|
 | EndTransaction     | Close an open database transaction.|
 | ExecuteEntity&lt;TEntity&gt; | Sends the CommandText to the Database Connection and builds a TEntity from DataReader. |
@@ -131,7 +131,7 @@ using (var transaction = simpleAccess.BeginTrasaction())
 | Fill | Execute commant text against connection and add or refresh rows in DataSet or DataTable. |
 | GetNewConnection | Gets the new connection with the SimpleAccess Ojbect ConnectionString.|
 
-***All Execute and Fill methods have multiple overloads.***
+***BeginTransaction and all Execute methods support async ***
 
 Creating SimpleAccess object for Sql Server
 ``` C#
@@ -152,7 +152,10 @@ ISqlSimpleAccess simpleAccess = new SqlSimpleAccess(sqlConnection);
 
 ## SimpleAccess with Repository pattern
 
-SimpleAccess provides ready repository of each supported database.
+SimpleAccess provides ready repository with Stored Procedure
+
+*** SimpleAccess now also provide SqlEntityRepository and SqlRepository has renamed to SqlSpRepository.
+Both SqlSpRepository and SqlEntityRepository implements the ISqlRepository interface (version 3.1) ***
 
 #### Properties
 
@@ -177,6 +180,9 @@ All methods are based on stored procedures with its related sotred procedure nam
 | Delete&lt;TEntity&gt; | TEntity_Delete <br /> ie. People_Delete | Deletes TEntity by the given Id |
 | DeleteAll&lt;TEntity&gt; | TEntity_Delete <br /> ie. People_Delete | Deletes all the TEntity records by the given Ids |
 | SoftDelete&lt;TEntity&gt; | TEntity_SoftDelete <br /> ie. People_SoftDelete | Marks TEntity deleted by the given Id   |
+
+*** All methods support async ***
+
 
 #### Using SimpleAccess Repository
 [Usingj SimpleAccess v2 SqlRepository with StoredProcedure](/UsingSimpleAccess.v2.Repository.md)
