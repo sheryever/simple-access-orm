@@ -154,8 +154,8 @@ ISqlSimpleAccess simpleAccess = new SqlSimpleAccess(sqlConnection);
 
 SimpleAccess provides ready repository with Stored Procedure
 
-*** SimpleAccess now also provide SqlEntityRepository and SqlRepository has renamed to SqlSpRepository.
-Both SqlSpRepository and SqlEntityRepository implements the ISqlRepository interface (version 3.1) ***
+***SimpleAccess now also provide SqlEntityRepository and SqlRepository has renamed to SqlSpRepository.
+Both SqlSpRepository and SqlEntityRepository implements the ISqlRepository interface (version 3.1)***
 
 #### Properties
 
@@ -181,7 +181,7 @@ All methods are based on stored procedures with its related sotred procedure nam
 | DeleteAll&lt;TEntity&gt; | TEntity_Delete <br /> ie. People_Delete | Deletes all the TEntity records by the given Ids |
 | SoftDelete&lt;TEntity&gt; | TEntity_SoftDelete <br /> ie. People_SoftDelete | Marks TEntity deleted by the given Id   |
 
-*** All methods support async ***
+***All methods support async***
 
 
 #### Using SimpleAccess Repository
