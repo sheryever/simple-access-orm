@@ -39,7 +39,7 @@ namespace SimpleAccess.Oracle
                     object value = propInfo.GetValue(otherParameters, new object[] { });
                     if (propInfo.PropertyType.Name.ToLower() != "string")
                     {
-                        oracleParameters.Add(new OracleParameter("@" + Clean(propInfo.Name), value));
+                        oracleParameters.Add(new OracleParameter("@" + Clean(propInfo.Name), value ?? DBNull.Value));
                         continue;
                     }
                     else if (value != null)

@@ -26,8 +26,6 @@ namespace SimpleAccess.SqlServer
     /// </summary>
     public partial class SqlSimpleAccess
     {
-
-
         /// <summary> Executes the non query operation. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>

@@ -1,3 +1,4 @@
+using System;
 using System.Data;
 using System.Linq;
 using SimpleAccess.Core;
@@ -75,7 +76,20 @@ namespace SimpleAccess.SqlServer.Test
 
 
                 Assert.Equal(3, rowCount);
+                try
+                {
+                    var a = new
+                        Attachment2
+                        {OtherName = "TETET"};
+                    rowCount = SimpleAccess.ExecuteScalar<int>(transaction,
+                        "INSERT INTO [Attachments2] VALUES (@IncidentId, @OtherName, @ShipDate); SELECT SCOPE_IDENTITY() ", a);
 
+                }
+                catch (Exception ex)
+                {
+                    Assert.Equal(3, rowCount);
+
+                }
 
                 SimpleAccess.EndTransaction(transaction);
 

@@ -28,4 +28,23 @@ namespace SimpleAccess.SqlServer.TestNetCore2.Entities
 
         #endregion Properties
     }
+
+    public partial class Attachment2
+    {
+        #region Properties
+
+        [Display(Name = "IncidentId")]
+        [Required]
+        public int IncidentId { get; set; }
+
+        [Display(Name = "OtherName")]
+        [Required]
+        [MaxLength(50)]
+        public string OtherName { get; set; }
+
+
+        public DateTime? ShipDate { get; set; }
+
+        #endregion Properties
+    }
 }

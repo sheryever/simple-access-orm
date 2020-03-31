@@ -36,7 +36,7 @@ namespace SimpleAccess.SQLite
                     object value = propInfo.GetValue(otherParameters, new object[] { });
                     if (propInfo.PropertyType.Name.ToLower() != "string")
                     {
-                        sqliteParameters.Add(new SQLiteParameter("@" + Clean(propInfo.Name), value));
+                        sqliteParameters.Add(new SQLiteParameter("@" + Clean(propInfo.Name), value ?? DBNull.Value));
                         continue;
                     }
                     else if (value != null)

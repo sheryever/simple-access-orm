@@ -38,7 +38,7 @@ namespace SimpleAccess.MySql
                     object value = propInfo.GetValue(otherParameters, new object[] { });
                     if (propInfo.PropertyType.Name.ToLower() != "string")
                     {
-                        sqlParameters.Add(new MySqlParameter("@" + Clean(propInfo.Name), value));
+                        sqlParameters.Add(new MySqlParameter("@" + Clean(propInfo.Name), value ?? DBNull.Value));
                         continue;
                     }
                     else if (value != null)

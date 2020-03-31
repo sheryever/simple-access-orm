@@ -7,7 +7,7 @@ using System.Text;
 namespace SimpleAccess.Core.Logger
 {
     /// <summary>
-    /// Default implementation of ISimpleLoger, It uses the <see cref="Trace"/> to log the <see cref="Exception"/>.
+    /// Default implementation of ISimpleLogger, It uses the <see cref="Trace"/> to log the <see cref="Exception"/>.
     /// </summary>
     public class SimpleLogger : ISimpleLogger
     {

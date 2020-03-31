@@ -48,28 +48,25 @@ namespace SimpleAccess.SqlServer
                         continue;
                     }
 
-                    if (propInfo.PropertyType.Name.ToLower() != "string")
+                    //if (propInfo.PropertyType.Name.ToLower() != "string")
+                    //{
+                    //    sqlParameters.Add(new SqlParameter("@" + Clean(propInfo.Name), value ?? DBNull.Value));
+                    //    continue;
+                    //}
+                    //else if (value != null)
+                    //{
+                    //    value = SafeSqlLiteral(value.ToString());
+                    //}
+
+                    if (propInfo.PropertyType.Name.ToLower() == "string" && value != null)
                     {
-                        sqlParameters.Add(new SqlParameter("@" + Clean(propInfo.Name), value));
+                        sqlParameters.Add(new SqlParameter("@" + Clean(propInfo.Name), SafeSqlLiteral(value.ToString())));
                         continue;
                     }
-                    else if (value != null)
-                    {
-                        value = SafeSqlLiteral(value.ToString());
-                    }
+
                     sqlParameters.Add(new SqlParameter("@" + Clean(propInfo.Name), value ?? DBNull.Value));
                 }
-                //var sqlParams = otherParametersObj.GetType().GetProperties().Select(
-                //    param =>
-                //    {
-                //        object value = param.GetValue(otherParameters, new object[] { });
-                //        if (param.PropertyType.Name.ToLower() == "string" && value != null)
-                //        {
-                //            value = SafeSqlLiteral(value.ToString());
-                //        }
-                //        return new SqlParameter("@" + Clean(param.Name), value ?? DBNull.Value);
-                //    });//.ToList();
-                //sqlParameters.AddRange(sqlParams);
+
             }
         }
 
