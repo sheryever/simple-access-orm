@@ -9,7 +9,7 @@ SimpleAccess also provides excpetion logging.
 SimpleAccess returns data in Entity and dynamic data type but also allow developers to work on direct DataReader or DataSet
 
 ## Documentation
-(simpleaccessorm.com)[https://simpleaccessorm.com]
+[simpleaccessorm.com](https://simpleaccessorm.com)
 
 ### Nuget package
 #### Sql Server
