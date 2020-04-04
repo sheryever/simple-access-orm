@@ -16,7 +16,6 @@ CREATE TABLE [dbo].[People](
 	[ModifiedOn] [SMALLDATETIME] NULL
 )
 
-GO
 ```
 ##### People_GetById
 ```Sql
@@ -55,7 +54,7 @@ BEGIN
      EXEC sp_executesql @sql;
 END
 ```
-##### People_Insert
+##### People_Insert With Identity column
 ```Sql
 CREATE PROC [dbo].[People_Insert]
 	  @name NVARCHAR(100)
@@ -76,6 +75,42 @@ BEGIN
 	SELECT @Id = SCOPE_IDENTITY();
 END
 ```
+
+##### People_Insert With Sequence
+
+```Sql
+CREATE SEQUENCE [dbo].[Seq_People] 
+ AS [int]
+ START WITH 6
+ INCREMENT BY 1
+ MINVALUE 1
+ MAXVALUE 2147483647
+ CACHE 
+ 
+GO
+
+CREATE PROC [dbo].[People_Insert]
+	  @name NVARCHAR(100)
+	 , @phoneNumbers NVARCHAR(30)
+	 , @address NVARCHAR(300)
+	 , @isDeleted BIT
+	 , @createdBy BIGINT
+	 , @createdOn SMALLDATETIME
+	 , @modifiedBy BIGINT
+	 , @modifiedOn SMALLDATETIME
+	,@Id INT OUTPUT
+AS
+BEGIN
+
+     SET @id = NEXT VALUE FOR [dbo].[Seq_Attachments];
+
+     INSERT INTO dbo.People 
+        (Id, Name, PhoneNumbers, Address, IsDeleted, CreatedBy, CreatedOn, ModifiedBy, ModifiedOn )
+        VALUES (@id, @name, @phoneNumbers, @address, @isDeleted, @createdBy, @createdOn, @modifiedBy, @modifiedOn );
+
+END
+```
+
 ##### People_Update
 ```Sql
 CREATE PROC [dbo].[People_Update]
