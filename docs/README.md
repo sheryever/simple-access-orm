@@ -32,11 +32,11 @@ PM > Install-Package SimpleAccess.MySql
 PM > Install-Package SimpleAccess.SQLite
 ```
 
-Creating SimpleAccess object for Sql Server
+
+Creating SimpleAccess instance for Sql Server
 ``` C#
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess();
 ```
-***There are other constructors to configurtion the SimpleAccess***
 
 Reading single record from the database as dynamic object
 ``` C#
