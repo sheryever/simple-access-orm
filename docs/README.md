@@ -185,10 +185,13 @@ All methods are based on stored procedures with its related sotred procedure nam
 
 
 #### Using SimpleAccess Repository
-[Using SimpleAccess v3.1 SqlEntityRepository with StoredProcedure](/docs/UsingSimpleAccess.v31.SqlEntityRepository.md)
-[Using SimpleAccess v3.1 SqlSpRepository with StoredProcedure](/docs/UsingSimpleAccess.v31.SqlSpRepository.md)
-[Using SimpleAccess v2 and later SqlRepository with StoredProcedure](/docs/UsingSimpleAccess.v2.Repository.md)
-[Using SimpleAccess v1](/docs/UsingSimpleAccess.v1.md)
+[Using SimpleAccess v3.1 SqlEntityRepository with StoredProcedure](doc/UsingSimpleAccess.v31.SqlEntityRepository.md)
+
+[Using SimpleAccess v3.1 SqlSpRepository with StoredProcedure](doc/UsingSimpleAccess.v31.SqlSpRepository.md)
+
+[Using SimpleAccess v2 and later SqlRepository with StoredProcedure](doc/UsingSimpleAccess.v2.Repository.md)
+
+[Using SimpleAccess v1](doc/UsingSimpleAccess.v1.md)
 
 ## Support
 - SimpleAccess is written in C# and support .net Managed Code languages (C# and VB.net etc)
