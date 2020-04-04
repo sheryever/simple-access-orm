@@ -49,7 +49,7 @@ namespace SimpleAccess.SqlServer.ConsoleTest
         static void Main(string[] args)
         {
 
-            ISqlRepository repo = new SqlRepository("connectionStringName");
+            ISqlRepository repo = new SqlEntityRepository("connectionStringName");
 
             // Retrive data using SimpleAccess SqlEntityRepository
             var people = repo.GetAll<Person>();
