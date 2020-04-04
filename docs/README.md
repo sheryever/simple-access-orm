@@ -213,7 +213,7 @@ All methods are based on stored procedures with its related sotred procedure nam
 ### SqlEntityRepository Without SP implementation (version 3.1)
 - [X] SqlEntityRepository implementation (90%)
 - [x] Add `DefaultView` property in EntityAttribute
-- [x] Add `KeyAttribute` for decorating primary key of an entity
+- [x] Add `PrimaryAttribute` for decorating primary key of an entity
 - [x] Add database sequence support using with `PrimaryKeyAttribute`
 - [X] `DefaultView` property in EntityAttribute support for default select
 - [ ] Replace ISimpleLogger with ILogger

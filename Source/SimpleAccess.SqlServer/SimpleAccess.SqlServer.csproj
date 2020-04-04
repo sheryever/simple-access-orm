@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
     <TargetFrameworks>net40;net45;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>3.1.0-rc</Version>
+    <Version>3.1.0-rc-2</Version>
     <Product>SimpleAccess Sql Server ORM</Product>
     <Description>Simple Access ORM provides database access in Ado.net methods naming pattern.
 Documentation of using SimpleAccess is available at https://github.com/sheryever/simple-access-orm
@@ -9,7 +9,7 @@ Documentation of using SimpleAccess is available at https://github.com/sheryever
     <Authors>Abu Ali Muhammad Sharjeel</Authors>
     <Company>Wayzsoft</Company>
     <Copyright>Copyright 2019</Copyright>
-    <PackageProjectUrl>https://github.com/sheryever/simple-access-orm</PackageProjectUrl>
+    <PackageProjectUrl>https://simpleaccessorm.com</PackageProjectUrl>
     <RepositoryUrl>https://github.com/sheryever/simple-access-orm</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>SimpleAccess, Sql Server, ObjectMapper, ORM, Database Access</PackageTags>
@@ -20,16 +20,18 @@ Documentation of using SimpleAccess is available at https://github.com/sheryever
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
     <ProjectGuid>{D97DEB44-C9BD-4813-AE06-3119CE26214A}</ProjectGuid>
-    <PackageReleaseNotes>Changes:
-- SqlEntityRepository Implemented
-- .Net Starndard 2.1 with Microsoft.Data.SqlClient support added
-- Repository Performace improvement
-- GetPagedList extensions methods added
-- SqlRepository is renamed to SqlSpRepository and SqlRepository is marked as Obsolete
-- PrimaryKey attribute added to support Sequence object
+    <PackageReleaseNotes>
+      Changes:
+      - SqlEntityRepository Implemented
+      - .Net Standard 2.0 and .Net Standard 2.1 with Microsoft.Data.SqlClient support added
+      - Aysnc support for Dotnet full framework 4.5 and .Net Standard 2.0 and later
+      - Repository Performance improvement
+      - GetPagedList extensions methods added
+      - SqlRepository is renamed to SqlSpRepository and SqlRepository is marked as Obsolete
+      - PrimaryKey attribute added to support Sequence object
 
-Bug fixes
-- SqlEntityRepository Get, Find, FindAll methods fixed</PackageReleaseNotes>
+      Bug fixes
+      - SqlEntityRepository Get, Find, FindAll methods fixed</PackageReleaseNotes>
     <AssemblyVersion>3.1.0.7</AssemblyVersion>
     <FileVersion>3.1.0.7</FileVersion>
   </PropertyGroup>
