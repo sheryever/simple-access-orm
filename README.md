@@ -10,7 +10,7 @@ SimpleAccess returns data in Entity and dynamic data type but also allow develop
 
 ## Platform support
 
-Simple Access ORM 3.x is built on .Net Standard 2.0, while Simple Access ORM 2.x is built on dotnet full framework 3.5 to support our clients windows applications which are deployed on 100s of PCs with support of Windows XP and later Windows operating systems
+Simple Access ORM 3.x is support dotnet 4.0, dotnet 4.5, .Net Standard 2.0 (for dotnet 2.1) and .Net Standard 2.1, while Simple Access ORM 2.x is built on dotnet full framework 3.5 to support our clients windows applications which are deployed on 100s of PCs with support of Windows XP and later Windows operating systems
 
 ## Using SimpleAccess
 Insall your required SimpleAccess implementaion from nuget
@@ -117,7 +117,7 @@ using (var transaction = simpleAccess.BeginTrasaction())
 
 | Methods            | Description                                                                                                     |
 |--------------------|-----------------------------------------------------------------------------------------------------------------|
-| BeginTrasaction    | Begins a database transaction.                                                                                  |
+| BeginTransaction    | Begins and return a database transaction.                                                                      |
 | CloseDbConnection  | Close the current open connection.|
 | EndTransaction     | Close an open database transaction.|
 | ExecuteEntity&lt;TEntity&gt; | Sends the CommandText to the Database Connection and builds a TEntity from DataReader. |
@@ -131,7 +131,7 @@ using (var transaction = simpleAccess.BeginTrasaction())
 | Fill | Execute commant text against connection and add or refresh rows in DataSet or DataTable. |
 | GetNewConnection | Gets the new connection with the SimpleAccess Ojbect ConnectionString.|
 
-***All Execute and Fill methods have multiple overloads.***
+***BeginTransaction and all Execute methods support async functionality***
 
 Creating SimpleAccess object for Sql Server
 ``` C#
@@ -152,7 +152,10 @@ ISqlSimpleAccess simpleAccess = new SqlSimpleAccess(sqlConnection);
 
 ## SimpleAccess with Repository pattern
 
-SimpleAccess provides ready repository of each supported database.
+SimpleAccess provides ready repository with Stored Procedure
+
+***SimpleAccess now also provide SqlEntityRepository and SqlRepository has renamed to SqlSpRepository.
+Both SqlSpRepository and SqlEntityRepository implements the ISqlRepository interface (version 3.1)***
 
 #### Properties
 
@@ -178,8 +181,14 @@ All methods are based on stored procedures with its related sotred procedure nam
 | DeleteAll&lt;TEntity&gt; | TEntity_Delete <br /> ie. People_Delete | Deletes all the TEntity records by the given Ids |
 | SoftDelete&lt;TEntity&gt; | TEntity_SoftDelete <br /> ie. People_SoftDelete | Marks TEntity deleted by the given Id   |
 
-##### [Usingj SimpleAccess v2 SqlRepository with StoredProcedure](/docs/UsingSimpleAccess.v2.Repository.md)
-##### [Using SimpleAccess v1](/docs/UsingSimpleAccess.v1.md)
+***All methods support async functionality***
+
+
+#### Using SimpleAccess Repository
+[Using SimpleAccess v3.1 SqlEntityRepository with StoredProcedure](/docs/UsingSimpleAccess.v31.SqlEntityRepository.md)
+[Using SimpleAccess v3.1 SqlSpRepository with StoredProcedure](/docs/UsingSimpleAccess.v31.SqlSpRepository.md)
+[Using SimpleAccess v2 and later SqlRepository with StoredProcedure](/docs/UsingSimpleAccess.v2.Repository.md)
+[Using SimpleAccess v1](/docs/UsingSimpleAccess.v1.md)
 
 ## Support
 - SimpleAccess is written in C# and support .net Managed Code languages (C# and VB.net etc)
@@ -207,6 +216,7 @@ All methods are based on stored procedures with its related sotred procedure nam
 - [x] Add `KeyAttribute` for decorating primary key of an entity
 - [x] Add database sequence support using with `PrimaryKeyAttribute`
 - [X] `DefaultView` property in EntityAttribute support for default select
+- [ ] Replace ISimpleLogger with ILogger
 - [ ] Column selection with `Find`, `FindAll`, `Get`, `GetAll`
 - [ ] Fixing comments, documention and adding examples
 - [ ] SimpleAccess Factory, Allow SimpleAccess to create SimpleAccess object the base of configuration(xml/json)

@@ -10,7 +10,7 @@ SimpleAccess returns data in Entity and dynamic data type but also allow develop
 
 ## Platform support
 
-Simple Access ORM 3.x is built on .Net Standard 2.0, while Simple Access ORM 2.x is built on dotnet full framework 3.5 to support our clients windows applications which are deployed on 100s of PCs with support of Windows XP and later Windows operating systems
+Simple Access ORM 3.x is support dotnet 4.0, dotnet 4.5, .Net Standard 2.0 (for dotnet 2.1) and .Net Standard 2.1, while Simple Access ORM 2.x is built on dotnet full framework 3.5 to support our clients windows applications which are deployed on 100s of PCs with support of Windows XP and later Windows operating systems
 
 ## Using SimpleAccess
 Insall your required SimpleAccess implementaion from nuget
@@ -185,9 +185,10 @@ All methods are based on stored procedures with its related sotred procedure nam
 
 
 #### Using SimpleAccess Repository
-[Usingj SimpleAccess v2 SqlRepository with StoredProcedure](/UsingSimpleAccess.v2.Repository.md)
-
-[Using SimpleAccess v1](/UsingSimpleAccess.v1.md)
+[Using SimpleAccess v3.1 SqlEntityRepository with StoredProcedure](/docs/UsingSimpleAccess.v31.SqlEntityRepository.md)
+[Using SimpleAccess v3.1 SqlSpRepository with StoredProcedure](/docs/UsingSimpleAccess.v31.SqlSpRepository.md)
+[Using SimpleAccess v2 and later SqlRepository with StoredProcedure](/docs/UsingSimpleAccess.v2.Repository.md)
+[Using SimpleAccess v1](/docs/UsingSimpleAccess.v1.md)
 
 ## Support
 - SimpleAccess is written in C# and support .net Managed Code languages (C# and VB.net etc)
