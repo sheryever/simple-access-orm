@@ -11,9 +11,6 @@ SimpleAccess returns data in Entity and dynamic data type but also allow develop
 ## Using SimpleAccess
 Insall your required SimpleAccess implementaion from nuget
 
-**_We will use the SimpleAccess implementation for Sql Server in our example, The Implementation for Oracle, MySql and SQLite have there own IOracleSimpleAccess with OracleSimpleAccess, IMySqlSimpleAccess with MySqlSimpleAccess and ISQLiteSimpleAccess with SQLiteSimpleAccess.
-They all implement ISimpleAccess_**
-
 ### Nuget package
 #### Sql Server
 ```powershell
@@ -31,6 +28,9 @@ PM > Install-Package SimpleAccess.MySql
 ```powershell
 PM > Install-Package SimpleAccess.SQLite
 ```
+
+**_We will use the SimpleAccess implementation for Sql Server in our example, The Implementation for Oracle, MySql and SQLite have there own IOracleSimpleAccess with OracleSimpleAccess, IMySqlSimpleAccess with MySqlSimpleAccess and ISQLiteSimpleAccess with SQLiteSimpleAccess.
+They all implement ISimpleAccess_**
 
 
 Creating SimpleAccess instance for Sql Server
