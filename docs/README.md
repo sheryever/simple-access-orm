@@ -29,7 +29,7 @@ PM > Install-Package SimpleAccess.MySql
 PM > Install-Package SimpleAccess.SQLite
 ```
 
-**_We will use the SimpleAccess implementation for Sql Server in our example, The Implementation for Oracle, MySql and SQLite have there own IOracleSimpleAccess with OracleSimpleAccess, IMySqlSimpleAccess with MySqlSimpleAccess and ISQLiteSimpleAccess with SQLiteSimpleAccess.
+**_We will use the SimpleAccess implementation for Sql Server in our example, The Implementation for Oracle, MySql and SQLite have their own IOracleSimpleAccess with OracleSimpleAccess, IMySqlSimpleAccess with MySqlSimpleAccess and ISQLiteSimpleAccess with SQLiteSimpleAccess.
 They all implement ISimpleAccess_**
 
 
