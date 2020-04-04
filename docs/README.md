@@ -185,9 +185,9 @@ All methods are based on stored procedures with its related sotred procedure nam
 
 
 #### Using SimpleAccess Repository
-[Using SimpleAccess v3.1 SqlEntityRepository with StoredProcedure](/UsingSimpleAccess.v31.SqlEntityRepository)
+[Using SimpleAccess v3.1 SqlEntityRepository](/UsingSimpleAccess.v31.SqlEntityRepository)
 
-[Using SimpleAccess v3.1 SqlSpRepository with StoredProcedure](/UsingSimpleAccess.v31.SqlSpRepository)
+[Using SimpleAccess v3.1 SqlSpRepository (Repository based on Stored Procedures)](/UsingSimpleAccess.v31.SqlSpRepository)
 
 [Using SimpleAccess v2 and later SqlRepository with StoredProcedure](/UsingSimpleAccess.v2.Repository)
 
