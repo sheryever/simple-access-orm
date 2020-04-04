@@ -171,7 +171,7 @@ namespace SimpleAccess.SqlServer.ConsoleTest
 
             people = repo.FindAll<Person>(b => b.Address == null);  // Where Address is null
 
-			// Insert
+	    // Insert
 	    var newPerson = new Person {
             	Name = "Ahemd"
                 , PhoneNumbers = "1231231323"
