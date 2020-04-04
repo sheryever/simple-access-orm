@@ -8,10 +8,6 @@ SimpleAccess also provides excpetion logging.
 
 SimpleAccess returns data in Entity and dynamic data type but also allow developers to work on direct DataReader or DataSet
 
-## Platform support
-
-Simple Access ORM 3.x is support dotnet 4.0, dotnet 4.5, .Net Standard 2.0 (for dotnet 2.1) and .Net Standard 2.1, while Simple Access ORM 2.x is built on dotnet full framework 3.5 to support our clients windows applications which are deployed on 100s of PCs with support of Windows XP and later Windows operating systems
-
 ## Using SimpleAccess
 Insall your required SimpleAccess implementaion from nuget
 
@@ -200,6 +196,8 @@ All methods are based on stored procedures with its related sotred procedure nam
 - SQLite
 - MySql
 - PostgreSQL (coming)
+
+Simple Access ORM 3.1 supports dotnet 4.0, dotnet 4.5, .Net Standard 2.0 (for .netcore 2.1) and .Net Standard 2.1, while Simple Access ORM 2.x is built on dotnet full framework 3.5 to support our clients Windows XP applications which are deployed on 100s of PCs
 
 ## Roadmap
 - [x] Separate SimpleCommand and Repositoy
