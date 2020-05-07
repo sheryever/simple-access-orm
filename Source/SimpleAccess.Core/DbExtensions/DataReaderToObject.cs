@@ -1,4 +1,6 @@
-﻿#pragma warning disable CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
+﻿
+using System.Diagnostics.Contracts;
+#pragma warning disable CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
 using System;
 #pragma warning restore CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
 #pragma warning disable CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
@@ -89,7 +91,7 @@ namespace SimpleAccess.Core
                 var dbColumnAttribute =
                             prop.GetCustomAttributes(false).FirstOrDefault(a =>
                                 a is DbColumnAttribute) as DbColumnAttribute;
-                if (dbColumnAttribute != null)
+                if (dbColumnAttribute != null && prop.CanWrite)
                     piListBasedOnDbColumn.Add(dbColumnAttribute.DbColumn.ToLower(), prop);
             }
 
@@ -106,12 +108,14 @@ namespace SimpleAccess.Core
         {
             if (EntityProperties.TryGetValue(entityFullName, out var piList))
                 return piList;
-            
+
             piList = new Dictionary<string, PropertyInfo>();
 
             var props = typeof(TType).GetProperties(BindingFlags.Instance | BindingFlags.Public);
             foreach (var prop in props)
-                piList.Add(prop.Name.ToLower(), prop);
+            {
+                if (prop.CanWrite) piList.Add(prop.Name.ToLower(), prop);
+            }
 
             lock (EntityProperties)
             {
@@ -220,118 +224,50 @@ namespace SimpleAccess.Core
             {
                 string name = reader.GetName(index).ToLower();
 
-                if (piList.ContainsKey(name))
-                {
+                if (fieldsToSkip.Contains("," + name + ","))
+                    continue;
+
+
 
 #if DEBUG
                     System.Diagnostics.Debug.WriteLine("loading value for : " + name);
 
 #endif
-                    var prop = piList[name];
-
-                    if (fieldsToSkip.Contains("," + name + ","))
-                        continue;
-
-                    //System.Diagnostics.Debug.WriteLine(prop.Name);
-                    if ((prop != null) && prop.CanWrite)
-                    {
-                        try
-                        {
-                            //var dbColumnPropertyAttribute =
-                            //    prop.GetCustomAttributes(false).FirstOrDefault(a =>
-                            //        a is DbColumnPropertyAttribute) as DbColumnPropertyAttribute;
+                PropertyInfo prop = null;
+                if (!piList.TryGetValue(name, out prop) && piListBasedOnDbColumn == null)
+                    continue;
 
 
-                            //if (dbColumnPropertyAttribute != null)
-                            //    prop = piList[dbColumnPropertyAttribute.DbColumnProperty.ToLower()];
+                if (!piListBasedOnDbColumn.TryGetValue(name, out prop))
+                    continue;
 
-                            var val = reader.GetValue(index);
-                            
-                            if (prop.PropertyType.IsGenericType)
-                            {
-                                if (prop.PropertyType.GetGenericArguments()[0].IsEnum)
-                                {
-                                    prop.SetValue(instance, (val == DBNull.Value)
-                                        ? null
-                                        : Enum.Parse(prop.PropertyType.GetGenericArguments()[0],
-                                            val.ToString())
-                                        , null);
-                                    continue;
-                                }
-                            }
-                            /*
-                            if (prop.PropertyType.IsEnum)
-                            {
-                                prop.SetValue(instance, (val == DBNull.Value)
-                                                            ? null
-                                                            : Enum.Parse(prop.PropertyType.GetGenericArguments()[0],
-                                                                         val.ToString())
-                                              , null);
-                                continue;
-                            }*/
-
-
-                            prop.SetValue(instance, (val == DBNull.Value) ? null : val, null);
-                        }
-                        catch (Exception ex)
-                        {
-                            throw new Exception(string.Format("Error in assigning value of {0}. Exception: {1}", prop.Name, ex.Message));
-                        }
-                    }
-                }
-
-
-                // searching for DbColumn attribute
-                if (piListBasedOnDbColumn == null)
-                    return;
-
-                if (piListBasedOnDbColumn.ContainsKey(name))
+                try
                 {
-                    var prop = piListBasedOnDbColumn[name];
+                    var val = reader.GetValue(index);
 
-                    if (fieldsToSkip.Contains("," + name + ","))
-                        continue;
+                    if (val == DBNull.Value) continue;
 
-                    //System.Diagnostics.Debug.WriteLine(prop.Name);
-                    if ((prop != null) && prop.CanWrite)
+                    if (prop.PropertyType.IsGenericType)
                     {
-                        try
+                        if (prop.PropertyType.GetGenericArguments()[0].IsEnum)
                         {
-                            var val = reader.GetValue(index);
-
-                            if (prop.PropertyType.IsGenericType)
-                            {
-                                if (prop.PropertyType.GetGenericArguments()[0].IsEnum)
-                                {
-                                    prop.SetValue(instance, (val == DBNull.Value)
-                                                                ? null
-                                                                : Enum.Parse(prop.PropertyType.GetGenericArguments()[0],
-                                                                             val.ToString())
-                                                  , null);
-                                    continue;
-                                }
-                            }
-                            /*
-                            if (prop.PropertyType.IsEnum)
-                            {
-                                prop.SetValue(instance, (val == DBNull.Value)
-                                                            ? null
-                                                            : Enum.Parse(prop.PropertyType.GetGenericArguments()[0],
-                                                                         val.ToString())
-                                              , null);
-                                continue;
-                            }*/
-                            prop.SetValue(instance, (val == DBNull.Value) ? null : val, null);
-                        }
-                        catch (Exception ex)
-                        {
-
-                            throw new Exception(string.Format("Error in assigning the value of {0}. Exception: {1}", prop.Name, ex.Message), ex);
+                            prop.SetValue(instance, (val == DBNull.Value)
+                                ? null
+                                : Enum.Parse(prop.PropertyType.GetGenericArguments()[0],
+                                    val.ToString())
+                                , null);
+                            continue;
                         }
                     }
+
+                    prop.SetValue(instance, val, null);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(string.Format("Error in assigning value of {0}. Exception: {1}", prop.Name, ex.Message));
                 }
             }
         }
- 
+
     }
 }
