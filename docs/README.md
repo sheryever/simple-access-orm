@@ -8,15 +8,8 @@ SimpleAccess also provides excpetion logging.
 
 SimpleAccess returns data in Entity and dynamic data type but also allow developers to work on direct DataReader or DataSet
 
-## Platform support
-
-Simple Access ORM 3.x is support dotnet 4.0, dotnet 4.5, .Net Standard 2.0 (for dotnet 2.1) and .Net Standard 2.1, while Simple Access ORM 2.x is built on dotnet full framework 3.5 to support our clients windows applications which are deployed on 100s of PCs with support of Windows XP and later Windows operating systems
-
 ## Using SimpleAccess
 Insall your required SimpleAccess implementaion from nuget
-
-**_We will use the SimpleAccess implementation for Sql Server in our example, The Implementation for Oracle, MySql and SQLite have there own IOracleSimpleAccess with OracleSimpleAccess, IMySqlSimpleAccess with MySqlSimpleAccess and ISQLiteSimpleAccess with SQLiteSimpleAccess.
-They all implement ISimpleAccess_**
 
 ### Nuget package
 #### Sql Server
@@ -36,11 +29,14 @@ PM > Install-Package SimpleAccess.MySql
 PM > Install-Package SimpleAccess.SQLite
 ```
 
-Creating SimpleAccess object for Sql Server
+**_We will use the SimpleAccess implementation for Sql Server in our example, The Implementation for Oracle, MySql and SQLite have their own IOracleSimpleAccess with OracleSimpleAccess, IMySqlSimpleAccess with MySqlSimpleAccess and ISQLiteSimpleAccess with SQLiteSimpleAccess.
+They all implement ISimpleAccess_**
+
+
+Creating SimpleAccess instance for Sql Server
 ``` C#
 ISqlSimpleAccess simpleAccess = new SqlSimpleAccess();
 ```
-***There are other constructors to configurtion the SimpleAccess***
 
 Reading single record from the database as dynamic object
 ``` C#
@@ -185,10 +181,13 @@ All methods are based on stored procedures with its related sotred procedure nam
 
 
 #### Using SimpleAccess Repository
-[Using SimpleAccess v3.1 SqlEntityRepository with StoredProcedure](/docs/UsingSimpleAccess.v31.SqlEntityRepository.md)
-[Using SimpleAccess v3.1 SqlSpRepository with StoredProcedure](/docs/UsingSimpleAccess.v31.SqlSpRepository.md)
-[Using SimpleAccess v2 and later SqlRepository with StoredProcedure](/docs/UsingSimpleAccess.v2.Repository.md)
-[Using SimpleAccess v1](/docs/UsingSimpleAccess.v1.md)
+[Using SimpleAccess v3.1 SqlEntityRepository](UsingSimpleAccess.v31.SqlEntityRepository.md)
+
+[Using SimpleAccess v3.1 SqlSpRepository (Repository based on Stored Procedures)](UsingSimpleAccess.v31.SqlSpRepository.md)
+
+[Using SimpleAccess v2 and later SqlRepository with StoredProcedure](UsingSimpleAccess.v2.Repository.md)
+
+[Using SimpleAccess v1](UsingSimpleAccess.v1.md)
 
 ## Support
 - SimpleAccess is written in C# and support .net Managed Code languages (C# and VB.net etc)
@@ -197,6 +196,8 @@ All methods are based on stored procedures with its related sotred procedure nam
 - SQLite
 - MySql
 - PostgreSQL (coming)
+
+Simple Access ORM 3.1 supports dotnet 4.0, dotnet 4.5, .Net Standard 2.0 (for .netcore 2.1) and .Net Standard 2.1, while Simple Access ORM 2.x is built on dotnet full framework 3.5 to support our clients Windows XP applications which are deployed on 100s of PCs
 
 ## Roadmap
 - [x] Separate SimpleCommand and Repositoy
