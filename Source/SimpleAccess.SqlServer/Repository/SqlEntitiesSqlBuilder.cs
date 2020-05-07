@@ -95,7 +95,8 @@ namespace SimpleAccess.SqlServer
         {
             BuildEntityInsertParameters();
 
-            string[] columns = new string[EntityInsertParameters.DataParametersDictionary.Count];
+            //List<string> columns = new string[EntityInsertParameters.DataParametersDictionary.Count];
+            List<string> columns = new List<string>(); //[EntityInsertParameters.DataParametersDictionary.Count];
             var keyProperty = "";
             SqlParameter sqlParameter = null;
             PrimaryKeyAttribute primaryKeyAttribute = null;
@@ -105,15 +106,18 @@ namespace SimpleAccess.SqlServer
             {
                 sqlParameter = parameterInfo.Value;
 
-                columns[i++] = sqlParameter.ParameterName.Substring(1);
-                
+              
                 if (sqlParameter.Direction == ParameterDirection.InputOutput)
                 {
                     primaryKeyAttribute =
                         parameterInfo.Key.GetCustomAttributes(true)
                         .FirstOrDefault(a => a is PrimaryKeyAttribute) as PrimaryKeyAttribute;
                     keyProperty = sqlParameter.ParameterName;
+                    if (primaryKeyAttribute.IsIdentity) continue;
                 }
+
+                columns.Add(sqlParameter.ParameterName.Substring(1));
+
             }
 
             if ((primaryKeyAttribute == null) || (!primaryKeyAttribute.IsIdentity && primaryKeyAttribute.DbSequence == null))

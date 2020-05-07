@@ -1716,7 +1716,6 @@ namespace SimpleAccess.SqlServer
                 expandoObject.Add(reader.GetName(i), value == DBNull.Value ? null : value);
             }
 
-
             return expandoObject;
         }
 
