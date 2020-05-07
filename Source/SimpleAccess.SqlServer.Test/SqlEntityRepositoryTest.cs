@@ -23,7 +23,7 @@ namespace SimpleAccess.SqlServer.Test
 
 
         [Fact]
-        public void InsertTest()
+        public void InsertWithSequenceTest()
         {
             var person = new Person
             {
@@ -37,7 +37,22 @@ namespace SimpleAccess.SqlServer.Test
 
             Assert.Equal(1, rowAffected);
         }
+        [Fact]
+        public void InsertWithIdentityTest()
+        {
+            var branch = new Branch2
+            {
+                Name = "New Branch",
+                CityId = 2,
+                PhoneNumbers = "234234234"
+            };
+            var rowAffected = SqlRepository.Insert<Branch2>(branch);
+            //var rowAffected = SqlRepository.Insert<Person>(person);
 
+            // SqlRepository.GetDynamicPagedList<Person>((person1 => new {person.Id, person.FullName}), 0, 10);
+
+            Assert.Equal(1, rowAffected);
+        }
         [Fact]
         public void InsertAllAWithTransactionContextTest()
         {
