@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
     <TargetFrameworks>net40;net45;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>3.1.0-rc-4</Version>
+    <Version>3.1.0-rc-5</Version>
     <Product>SimpleAccess Sql Server ORM</Product>
     <Description>Simple Access ORM provides database access in Ado.net methods naming pattern.
 Documentation of using SimpleAccess is available at https://simpleaccessorm.com
@@ -34,8 +34,8 @@ Documentation of using SimpleAccess is available at https://simpleaccessorm.com
       Bug fixes
       - SqlEntityRepository Get, Find, FindAll methods fixed
       - Insert is not working with Indentity column</PackageReleaseNotes>
-    <AssemblyVersion>3.1.0.9</AssemblyVersion>
-    <FileVersion>3.1.0.9</FileVersion>
+    <AssemblyVersion>3.1.0.10</AssemblyVersion>
+    <FileVersion>3.1.0.10</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">

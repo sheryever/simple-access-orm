@@ -1001,7 +1001,7 @@ namespace SimpleAccess.SqlServer
             {
                 dbCommand = CreateCommand(commandText, commandType, sqlParameters);
                 dbCommand.Connection.OpenSafely();
-                using (var reader = dbCommand.ExecuteReader(CommandBehavior.SingleRow))
+                using (var reader = dbCommand.ExecuteReader(CommandBehavior.SingleResult | CommandBehavior.SingleRow ))
                 {
                     return reader.HasRows ? reader.DataReaderToObject<TEntity>(fieldsToSkip, propertyInfoDictionary) : null;
                 }
@@ -1104,7 +1104,7 @@ namespace SimpleAccess.SqlServer
             {
                 dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
                 dbCommand.Connection.OpenSafely();
-                using (var reader = dbCommand.ExecuteReader())
+                using (var reader = dbCommand.ExecuteReader(CommandBehavior.SingleResult | CommandBehavior.SingleRow))
                 {
                     return reader.HasRows ? reader.DataReaderToObject<TEntity>(fieldsToSkip, propertyInfoDictionary) : null;
                 }
@@ -1371,7 +1371,7 @@ namespace SimpleAccess.SqlServer
             {
                 dbCommand = CreateCommand(commandText, commandType, sqlParameters);
                 dbCommand.Connection.OpenSafely();
-                var reader = dbCommand.ExecuteReader(CommandBehavior.SingleRow);
+                var reader = dbCommand.ExecuteReader(CommandBehavior.SingleResult | CommandBehavior.SingleRow);
                 if (reader.Read())
                 {
                     var result = SqlDataReaderToExpando(reader);
@@ -1463,7 +1463,7 @@ namespace SimpleAccess.SqlServer
             {
                 dbCommand = CreateCommand(sqlTransaction, commandText, commandType, sqlParameters);
                 dbCommand.Connection.OpenSafely();
-                using (var reader = dbCommand.ExecuteReader())
+                using (var reader = dbCommand.ExecuteReader(CommandBehavior.SingleResult | CommandBehavior.SingleRow))
                 {
                     if (reader.Read())
                         return SqlDataReaderToExpando(reader);
@@ -1643,13 +1643,13 @@ namespace SimpleAccess.SqlServer
         /// <returns> The new command. </returns>
         public SqlCommand CreateCommand(string commandText, CommandType commandType, params SqlParameter[] sqlParameters)
         {
-            var dbCommand = _sqlConnection.CreateCommand();
+            var dbCommand = new SqlCommand(commandText, _sqlConnection);
+                //_sqlConnection.CreateCommand();
             dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
             dbCommand.CommandType = commandType;
-            dbCommand.CommandText = commandText;
+            //dbCommand.CommandText = commandText;
             if (sqlParameters != null)
                 dbCommand.Parameters.AddRange(sqlParameters);
-
 
             return dbCommand;
         }
@@ -1713,7 +1713,8 @@ namespace SimpleAccess.SqlServer
             for (var i = 0; i < reader.FieldCount; i++)
             {
                 var value = reader[i];
-                expandoObject.Add(reader.GetName(i), value == DBNull.Value ? null : value);
+                if (value != null)
+                    expandoObject.Add(reader.GetName(i), value);
             }
 
             return expandoObject;
