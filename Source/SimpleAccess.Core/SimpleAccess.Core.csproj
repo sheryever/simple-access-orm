@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netstandard2.0;net40;net45</TargetFrameworks>
-    <Version>3.1.0-rc4</Version>
+    <Version>3.1.0-rc5</Version>
     <Product>SimpleAccess ORM Core</Product>
     <Description>The core and common interfaces and implementation of SimpleAccess ORM</Description>
     <Authors>Abu Ali Muhammad Sharjeel</Authors>
@@ -19,8 +19,8 @@
 - EntityInfo performance improved
 - Data mapping performance improved
 </PackageReleaseNotes>
-    <AssemblyVersion>3.1.0.4</AssemblyVersion>
-    <FileVersion>3.1.0.4</FileVersion>
+    <AssemblyVersion>3.1.0.5</AssemblyVersion>
+    <FileVersion>3.1.0.5</FileVersion>
   </PropertyGroup>
 
 

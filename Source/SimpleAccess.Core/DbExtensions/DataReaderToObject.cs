@@ -234,12 +234,11 @@ namespace SimpleAccess.Core
 
 #endif
                 PropertyInfo prop = null;
-                if (!piList.TryGetValue(name, out prop) && piListBasedOnDbColumn == null)
-                    continue;
-
-
-                if (!piListBasedOnDbColumn.TryGetValue(name, out prop))
-                    continue;
+                if (!piList.TryGetValue(name, out prop))
+                {
+                    if (!piListBasedOnDbColumn.TryGetValue(name, out prop))
+                        continue;
+                }
 
                 try
                 {
