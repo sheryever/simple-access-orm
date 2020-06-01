@@ -88,13 +88,6 @@ namespace SimpleAccess.SqlServer.ConsoleTest
 
             // Retrive data using SqlRepository.SimpleAccess
             var peopleDeleted = repo.SimpleAccess.ExecuteDynamics("People_GetAllDeleted");
-
-            // while using SqlRepository with StoredProcedures SimpleAccess default command type will be stored procedure
-	    var peopleInDyanmics = repo.SimpleAccess.ExecuteDynamics("Select * FROM people", CommandType.Text);
-	    var peopleEnumerable = repo.SimpleAccess.ExecuteEntities<Person>("Select * FROM people", CommandType.Text);
-
-	    // Retrive scalar value with query
-            var totalPeople = repo.SimpleAccess.ExecuteScalar<int>("SELECT COUNT([Id]) FROM people;", CommandType.Text);
     	}
     }
 }
