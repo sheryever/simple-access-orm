@@ -87,7 +87,7 @@ namespace SimpleAccess.SqlServer.ConsoleTest
             var rowAffected = repo.Delete<Person>(1);
 
             // Retrive data using SqlRepository.SimpleAccess
-            var peopleDeleted = repo.SimpleAccess.ExecuteDynamics("People_GetAllDeleted");
+            var peopleDeleted = repo.SimpleAccess.ExecuteDynamics("SELECT * FROM People");
     	}
     }
 }
