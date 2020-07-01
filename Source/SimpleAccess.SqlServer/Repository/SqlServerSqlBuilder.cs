@@ -58,19 +58,33 @@ namespace SimpleAccess.SqlServer
         /// Create parameters from object properties
         /// </summary>
         /// <returns></returns>
-        public EntityParameters<SqlParameter> CreateEntityParameters(bool checkForIdentityColumn)
+        public EntityParameters<SqlParameter> CreateEntityParameters(bool createInsertParameter)
         {
-
             var entityParameters = EntityParameters<SqlParameter>.Create((dataParameters, outParamsDictionary, checkForIdentity) =>
             {
                 var propertiesForDataParams = EntityInfo.GetPropertyInfos();
 
                 foreach (var propertyInfo in propertiesForDataParams)
                 {
+                    if (createInsertParameter)
+                    {
+                        if (propertyInfo.GetCustomAttributes(true).Any(a => a is IgnoreInsertAttribute || a is NotMappedAttribute))
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if (propertyInfo.GetCustomAttributes(true).Any(a => a is IgnoreUpdateAttribute || a is NotMappedAttribute))
+                        {
+                            continue;
+                        }
+                    }
+
                     CreateDataParameter(propertyInfo, dataParameters, outParamsDictionary, checkForIdentity);
                 }
 
-            }, checkForIdentityColumn);
+            }, createInsertParameter);
 
             return entityParameters;
         }
@@ -80,7 +94,8 @@ namespace SimpleAccess.SqlServer
         /// </summary>
         /// <param name="propertyInfo"></param>
         /// <returns></returns>
-        public void CreateDataParameter(PropertyInfo propertyInfo, IDictionary<PropertyInfo, SqlParameter> dataParameters, IDictionary<PropertyInfo, SqlParameter> outParamsDictionary, bool checkForIdentity)
+        public void CreateDataParameter(PropertyInfo propertyInfo, IDictionary<PropertyInfo, SqlParameter> dataParameters
+            , IDictionary<PropertyInfo, SqlParameter> outParamsDictionary, bool checkForIdentity)
         {
             var getMethodInfo = propertyInfo.GetGetMethod();
             if (getMethodInfo.IsVirtual && !getMethodInfo.IsFinal)
