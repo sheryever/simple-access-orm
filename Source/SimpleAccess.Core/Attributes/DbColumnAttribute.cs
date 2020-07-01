@@ -3,7 +3,7 @@
 namespace SimpleAccess
 {
     /// <summary>
-    /// Use for mappint the property with database table column.
+    /// Use for mapping the property with database table column.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class DbColumnAttribute : Attribute

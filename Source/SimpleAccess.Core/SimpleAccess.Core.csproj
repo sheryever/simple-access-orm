@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netstandard2.0;net40;net45</TargetFrameworks>
-    <Version>3.1.0-rc5</Version>
+    <Version>3.1.0-rc6</Version>
     <Product>SimpleAccess ORM Core</Product>
     <Description>The core and common interfaces and implementation of SimpleAccess ORM</Description>
     <Authors>Abu Ali Muhammad Sharjeel</Authors>
@@ -18,9 +18,9 @@
 - Database Sequence support added with KeyAttribute implementation
 - EntityInfo performance improved
 - Data mapping performance improved
-</PackageReleaseNotes>
-    <AssemblyVersion>3.1.0.5</AssemblyVersion>
-    <FileVersion>3.1.0.5</FileVersion>
+- IgnoreSelect, IgnoreInsert, IgnoreUpdate and NotMapped property attributes added for EntityRepositories</PackageReleaseNotes>
+    <AssemblyVersion>3.1.0.6</AssemblyVersion>
+    <FileVersion>3.1.0.6</FileVersion>
   </PropertyGroup>
 
 
@@ -32,12 +32,6 @@
     <PackageReference Include="Microsoft.CSharp">
       <Version>4.7.0</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration">
-      <Version>3.1.0</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json">
-      <Version>3.1.0</Version>
-    </PackageReference>
   </ItemGroup>
 
 
@@ -48,12 +42,12 @@
     <PackageReference Include="Microsoft.CSharp">
       <Version>4.5.0</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration">
+    <!--<PackageReference Include="Microsoft.Extensions.Configuration">
       <Version>2.2.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json">
       <Version>2.2.0</Version>
-    </PackageReference>
+    </PackageReference>-->
   </ItemGroup>
 
   <!-- .NET 4.0 references, compilation flags and build options -->

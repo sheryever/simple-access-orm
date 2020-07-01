@@ -31,7 +31,7 @@ namespace SimpleAccess.Core
         IDataParameter CreateDataParameter(PropertyInfo propertyInfo, ParametersType parametersType,
             IEnumerable<PropertyInfo> propertyInfos, IList<PropertyInfo> outParameterPropertyInfoCollection , List<IDataParameter> outDataParameters );
 
-        EntityParameters<TDbParameter> CreateEntityParameters(bool checkForIdentityColumn);
+        EntityParameters<TDbParameter> CreateEntityParameters(bool createInsertParameter);
 
         IEntityInfo EntityInfo { get; set; }
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿
 using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
 #pragma warning disable CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
 using System;
 #pragma warning restore CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
@@ -49,6 +50,9 @@ namespace SimpleAccess.Core
         /// </param>
         /// <param name="piListBasedOnDbColumn"> List of <see cref="PropertyInfo"/> object having <see cref="DbColumnAttribute"/> in it's custom attributes</param>
         /// <returns></returns>
+//#if !NET40
+//        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+//#endif
         public static List<TType> DataReaderToObjectList<TType>(this IDataReader reader, string fieldsToSkip = null
             , Dictionary<string, PropertyInfo> piList = null, Dictionary<string, PropertyInfo> piListBasedOnDbColumn = null)
             where TType : new()
@@ -191,6 +195,9 @@ namespace SimpleAccess.Core
         /// <param name="fieldsToSkip">Optional - A comma delimited list of object properties that should not be updated</param>
         /// <param name="piList">Optional - Cached PropertyInfo dictionary that holds property info data for this object</param>
         /// <param name="piListBasedOnDbColumn"> List of <see cref="PropertyInfo"/> object having <see cref="DbColumnAttribute"/> in it's custom attributes</param>
+//#if !NET40
+//        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+//#endif
         public static void DataReaderToObject<TEntity>(this IDataReader reader, TEntity instance, string fieldsToSkip = null
             , Dictionary<string, PropertyInfo> piList = null, Dictionary<string, PropertyInfo> piListBasedOnDbColumn = null)
         {
@@ -239,22 +246,22 @@ namespace SimpleAccess.Core
                     if (!piListBasedOnDbColumn.TryGetValue(name, out prop))
                         continue;
                 }
-
+                
                 try
                 {
                     var val = reader.GetValue(index);
 
-                    if (val == DBNull.Value) continue;
+                    if (val == DBNull.Value)
+                    {
+                        prop.SetValue(instance, null, null);
+                        continue;
+                    }
 
                     if (prop.PropertyType.IsGenericType)
                     {
                         if (prop.PropertyType.GetGenericArguments()[0].IsEnum)
                         {
-                            prop.SetValue(instance, (val == DBNull.Value)
-                                ? null
-                                : Enum.Parse(prop.PropertyType.GetGenericArguments()[0],
-                                    val.ToString())
-                                , null);
+                            prop.SetValue(instance, Enum.Parse(prop.PropertyType.GetGenericArguments()[0], val.ToString()), null);
                             continue;
                         }
                     }

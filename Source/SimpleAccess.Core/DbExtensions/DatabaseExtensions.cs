@@ -61,8 +61,7 @@ namespace SimpleAccess.Core
 
         public static void ClearDbCommand(this IDbCommand dbCommand)
         {
-            if (dbCommand != null)
-                dbCommand.Parameters.Clear();
+            dbCommand?.Parameters.Clear();
         }
     }
 }

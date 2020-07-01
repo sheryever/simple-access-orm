@@ -3,7 +3,6 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 #if NETSTANDARD
-using Microsoft.Extensions.Configuration;
 #endif
 using SimpleAccess.Core.Logger;
 
@@ -30,45 +29,16 @@ namespace SimpleAccess.Core
 
             }
 
-            return LoadConnectionStringSettingsFromConfigurationFile(connection, true).ConnectionString;
+            return null;
         }
 
-#pragma warning disable CS0246 // The type or namespace name 'ConnectionStringSettings' could not be found (are you missing a using directive or an assembly reference?)
-        /// <summary>
-        /// Load and returns the <see cref="ConnectionStringSettings"/> from the default config file
-        /// based on provided contection string name.
-        /// </summary>
-        /// <param name="connectionStringName"> The connection string name </param>
-        /// <param name="force"> The <see cref="ConnectionStringSettings"/> required other wise thorw Exception </param>
-        /// <returns></returns>
-        public static ConnectionStringSettings LoadConnectionStringSettingsFromConfigurationFile(string connectionStringName, bool force = false)
-#pragma warning restore CS0246 // The type or namespace name 'ConnectionStringSettings' could not be found (are you missing a using directive or an assembly reference?)
-        {
-#if NETSTANDARD
-            var connectionStringSettings = new ConnectionStringSettings(connectionStringName, Configuration.GetConnectionString(connectionStringName));
-            Console.WriteLine($"ConnectionStringName:{connectionStringName}\nConnectionString:{connectionStringSettings.ConnectionString}");
-#else
-            var connectionStringSettings = ConfigurationManager.ConnectionStrings[connectionStringName];
-#endif
 
-
-
-            if (connectionStringSettings == null && force)
-                throw new Exception("ConnectionStringName not found in the configuration file.");
-
-            return connectionStringSettings;
-        }
 #if NETSTANDARD
 
         static SimpleAccessSettings()
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            Configuration = builder.Build();
-        }
 
-        public static IConfigurationRoot Configuration { get; private set; }
+        }
 #endif
 
         /// <summary>
