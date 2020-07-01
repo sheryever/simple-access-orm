@@ -18,7 +18,7 @@ namespace SimpleAccess.SqlServer.Test
 
          public SqlSpRepositoryTest( )
         {
-            SimpleAccess = new SqlSimpleAccess("sqlDefaultConnection");
+            SimpleAccess = new SqlSimpleAccess("Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=sa;Password=Test123;");
             SqlRepository = new SqlSpRepository(SimpleAccess);
             SimpleAccess.ExecuteNonQuery(DbConfiguration.DbInitialScript);
         }

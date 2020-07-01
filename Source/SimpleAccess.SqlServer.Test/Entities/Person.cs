@@ -18,5 +18,8 @@ namespace SimpleAccess.SqlServer.TestNetCore2.Entities
         public string FullName { get; set; }
 
         public string Phone { get; set; }
+
+        [NotMapped]
+        public virtual string ExtraField {get;set;}
     }
 }

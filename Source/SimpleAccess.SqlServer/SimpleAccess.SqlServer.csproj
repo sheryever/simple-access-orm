@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
     <TargetFrameworks>net40;net45;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>3.1.0-rc-5</Version>
+    <Version>3.1.0-rc-7.3</Version>
     <Product>SimpleAccess Sql Server ORM</Product>
     <Description>Simple Access ORM provides database access in Ado.net methods naming pattern.
 Documentation of using SimpleAccess is available at https://simpleaccessorm.com
@@ -27,15 +27,19 @@ Documentation of using SimpleAccess is available at https://simpleaccessorm.com
       - Aysnc support for Dotnet full framework 4.5 and .Net Standard 2.0 and later
       - Repository Performance improvement
       - GetPagedList extensions methods added
+      - Async GetPagedList extensions methods added
+      - Distinct and select support added to GetPagedList extensions
       - SqlRepository is renamed to SqlSpRepository and SqlRepository is marked as Obsolete
       - PrimaryKey attribute added to support Sequence object
       - Data mapping performance improved
+      - IgnoreSelect, IgnoreInsert, IgnoreUpdate and NotMapped property attributes support implemente for Repositories
 
       Bug fixes
       - SqlEntityRepository Get, Find, FindAll methods fixed
-      - Insert is not working with Indentity column</PackageReleaseNotes>
-    <AssemblyVersion>3.1.0.10</AssemblyVersion>
-    <FileVersion>3.1.0.10</FileVersion>
+      - Insert is not working with Indentity column
+      - Sql Server Keywords cannot be used as table column</PackageReleaseNotes>
+    <AssemblyVersion>3.1.0.15</AssemblyVersion>
+    <FileVersion>3.1.0.15</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">

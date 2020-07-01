@@ -14,7 +14,7 @@ namespace SimpleAccess.SqlServer.Test
  
         public SimpleAccessTest()
         {
-            SimpleAccess = new SqlSimpleAccess("sqlDefaultConnection");
+            SimpleAccess = new SqlSimpleAccess("Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=sa;Password=Test123;");
             SimpleAccess.ExecuteNonQuery(DbConfiguration.DbInitialScript);
         }
 
@@ -22,7 +22,7 @@ namespace SimpleAccess.SqlServer.Test
         public void ExecuteScalarTest()
         {
             var categoriesCount = SimpleAccess.ExecuteScalar<int>("Select Count(*) FROM Categories");
-
+            
             Assert.Equal(3, categoriesCount);
         }
 
@@ -80,7 +80,7 @@ namespace SimpleAccess.SqlServer.Test
                 {
                     var a = new
                         Attachment2
-                        {OtherName = "TETET"};
+                        {OtherName = "OtherName" };
                     rowCount = SimpleAccess.ExecuteScalar<int>(transaction,
                         "INSERT INTO [Attachments2] VALUES (@IncidentId, @OtherName, @ShipDate); SELECT SCOPE_IDENTITY() ", a);
 

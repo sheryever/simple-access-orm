@@ -16,7 +16,7 @@ namespace SimpleAccess.SqlServer.Test
 
          public SqlEntityRepositoryAsyncTest()
         {
-            SimpleAccess = new SqlSimpleAccess("sqlDefaultConnection");
+            SimpleAccess = new SqlSimpleAccess("Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=sa;Password=Test123;");
             SqlRepository = new SqlEntityRepository(SimpleAccess);
             SimpleAccess.ExecuteNonQuery(DbConfiguration.DbInitialScript);
         }

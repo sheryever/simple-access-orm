@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 using SimpleAccess.Core;
 using SimpleAccess.SqlServer;
 using SimpleAccess.SqlServer.TestNetCore2.Entities;
@@ -16,7 +17,7 @@ namespace SimpleAccess.SqlServer.Test
 
         public SqlEntityRepositoryTest()
         {
-            SimpleAccess = new SqlSimpleAccess("sqlDefaultConnection");
+            SimpleAccess = new SqlSimpleAccess("Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=sa;Password=Test123;");
             SqlRepository = new SqlEntityRepository(SimpleAccess);
             SimpleAccess.ExecuteNonQuery(DbConfiguration.DbInitialScript);
         }
@@ -37,6 +38,7 @@ namespace SimpleAccess.SqlServer.Test
 
             Assert.Equal(1, rowAffected);
         }
+
         [Fact]
         public void InsertWithIdentityTest()
         {
@@ -106,6 +108,43 @@ namespace SimpleAccess.SqlServer.Test
 
             Assert.Equal(2, people.Data.Count());
             Assert.Equal(3, people.TotalRows);
+        }
+
+        [Fact]
+        public void GetDynamicPagedListTestWithSelect()
+        {
+            var people = SqlRepository.GetDynamicPagedList<Person>(p => new { p.Id }, 0, 2, "Id");
+
+            Assert.Equal(2, people.Data.Count());
+            Assert.Equal(3, people.TotalRows);
+        }
+        [Fact]
+        public void GetDynamicPagedListTestWithObjectParameters()
+        {
+            var id = 1;
+            var people = SqlRepository.GetDynamicPagedList<Person>(0, 2, "Id, FullName", new { id });
+
+            Assert.Equal(1, people.Data.Count());
+            Assert.Equal(1, people.TotalRows);
+        }
+
+        [Fact]
+        public void GetDynamicPagedListTestWithSqlParameters()
+        {
+            var people = SqlRepository.GetDynamicPagedList<Person>(0, 2, "Id, FullName", new SqlParameter("@id", 1));
+
+            Assert.Equal(1, people.Data.Count());
+            Assert.Equal(1, people.TotalRows);
+        }
+
+        [Fact]
+        public void GetEntitiesPagedListTestWithLike()
+        {
+            var people = SqlRepository.GetEntitiesPagedList<Person>(p => new { p.Id, p.FullName }
+            , "Where FullName like '%' + @fullName + '%'" , 0, 2, "Id", new { fullName = "ah" });
+
+            Assert.Equal(1, people.Data.Count());
+            Assert.Equal(1, people.TotalRows);
         }
 
         [Fact]
