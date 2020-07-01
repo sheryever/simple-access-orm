@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace SimpleAccess.SqlServer
     public partial class SqlSimpleAccess : ISqlSimpleAccess
 
     {
-        private const string DefaultConnectionStringKey = "simpleAccess:sqlConnectionStringName";
+        private const string DefaultConnectionStringKey = "DefaultConnection";
 
         /// <summary>
         /// Default connection string.
@@ -44,11 +45,6 @@ namespace SimpleAccess.SqlServer
 
         /// <summary> The SQL connection. </summary>
         private readonly SqlConnection _sqlConnection;
-
-        /// <summary> The SQL transaction. </summary>
-
-        //private SqlTransaction _sqlTransaction;
-
 
         #region Constructors
 
@@ -95,7 +91,7 @@ namespace SimpleAccess.SqlServer
         /// 
         /// <param name="connection"> The ConnectionString Name from the config file or a complete ConnectionString . </param>
         public SqlSimpleAccess(string connection)
-            : this(new SqlConnection(SimpleAccessSettings.GetProperConnectionString(connection)))
+            : this(new SqlConnection(connection))
         {
         }
 
@@ -104,7 +100,7 @@ namespace SimpleAccess.SqlServer
         /// <param name="connection"> The ConnectionString Name from the config file or a complete ConnectionString . </param>
         /// <param name="defaultCommandType"> The default command type for all queries </param>
         public SqlSimpleAccess(string connection, CommandType defaultCommandType)
-            : this(new SqlConnection(SimpleAccessSettings.GetProperConnectionString(connection)), defaultCommandType)
+            : this(new SqlConnection(connection), defaultCommandType)
         {
         }
 
@@ -113,7 +109,7 @@ namespace SimpleAccess.SqlServer
         /// <param name="connection"> The ConnectionString Name from the config file or a complete ConnectionString . </param>
         /// <param name="defaultSimpleAccessSettings"> The default settings for simple access </param>
         public SqlSimpleAccess(string connection, SimpleAccessSettings defaultSimpleAccessSettings)
-            : this(new SqlConnection(SimpleAccessSettings.GetProperConnectionString(connection)), defaultSimpleAccessSettings)
+            : this(new SqlConnection(connection), defaultSimpleAccessSettings)
         {
         }
 
@@ -153,7 +149,6 @@ namespace SimpleAccess.SqlServer
         }
 #endregion
 
-
         /// <summary> Executes the non query operation. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
@@ -165,7 +160,6 @@ namespace SimpleAccess.SqlServer
         public int ExecuteNonQuery(string commandText, params SqlParameter[] sqlParameters)
         {
             return ExecuteNonQuery(commandText, DefaultSimpleAccessSettings.DefaultCommandType, sqlParameters);
-
         }
 
         /// <summary> Executes the non query operation. </summary>
@@ -1728,7 +1722,7 @@ namespace SimpleAccess.SqlServer
         public IList<dynamic> GetDynamicSqlData(SqlDataReader reader)
         {
             var result = new List<dynamic>();
-
+            
             while (reader.Read())
             {
                 result.Add(SqlDataReaderToExpando(reader));
