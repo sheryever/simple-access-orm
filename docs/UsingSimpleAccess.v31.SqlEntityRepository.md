@@ -49,7 +49,7 @@ namespace SimpleAccess.SqlServer.ConsoleTest
         static void Main(string[] args)
         {
 
-            ISqlRepository repo = new SqlEntityRepository("connectionStringName");
+            ISqlRepository repo = new SqlEntityRepository("Data Source=SqlServerName;Initial Catalog=SimpleAccessTest;Persist Security Info=True;Integrated Security=True;);
 
             // Retrive data using SimpleAccess SqlEntityRepository
             var people = repo.GetAll<Person>();
@@ -87,14 +87,7 @@ namespace SimpleAccess.SqlServer.ConsoleTest
             var rowAffected = repo.Delete<Person>(1);
 
             // Retrive data using SqlRepository.SimpleAccess
-            var peopleDeleted = repo.SimpleAccess.ExecuteDynamics("People_GetAllDeleted");
-
-            // while using SqlRepository with StoredProcedures SimpleAccess default command type will be stored procedure
-	    var peopleInDyanmics = repo.SimpleAccess.ExecuteDynamics("Select * FROM people", CommandType.Text);
-	    var peopleEnumerable = repo.SimpleAccess.ExecuteEntities<Person>("Select * FROM people", CommandType.Text);
-
-	    // Retrive scalar value with query
-            var totalPeople = repo.SimpleAccess.ExecuteScalar<int>("SELECT COUNT([Id]) FROM people;", CommandType.Text);
+            var peopleDeleted = repo.SimpleAccess.ExecuteDynamics("SELECT * FROM People");
     	}
     }
 }
