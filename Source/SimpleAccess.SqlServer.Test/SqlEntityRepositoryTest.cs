@@ -101,60 +101,6 @@ namespace SimpleAccess.SqlServer.Test
         }
 
 
-        [Fact]
-        public void GetDynamicPagedListTest()
-        {
-            var people = SqlRepository.GetDynamicPagedList<Person>(0, 2, "Id");
-
-            Assert.Equal(2, people.Data.Count());
-            Assert.Equal(3, people.TotalRows);
-        }
-
-        [Fact]
-        public void GetDynamicPagedListTestWithSelect()
-        {
-            var people = SqlRepository.GetDynamicPagedList<Person>(p => new { p.Id }, 0, 2, "Id");
-
-            Assert.Equal(2, people.Data.Count());
-            Assert.Equal(3, people.TotalRows);
-        }
-        [Fact]
-        public void GetDynamicPagedListTestWithObjectParameters()
-        {
-            var id = 1;
-            var people = SqlRepository.GetDynamicPagedList<Person>(0, 2, "Id, FullName", new { id });
-
-            Assert.Equal(1, people.Data.Count());
-            Assert.Equal(1, people.TotalRows);
-        }
-
-        [Fact]
-        public void GetDynamicPagedListTestWithSqlParameters()
-        {
-            var people = SqlRepository.GetDynamicPagedList<Person>(0, 2, "Id, FullName", new SqlParameter("@id", 1));
-
-            Assert.Equal(1, people.Data.Count());
-            Assert.Equal(1, people.TotalRows);
-        }
-
-        [Fact]
-        public void GetEntitiesPagedListTestWithLike()
-        {
-            var people = SqlRepository.GetEntitiesPagedList<Person>(p => new { p.Id, p.FullName }
-            , "Where FullName like '%' + @fullName + '%'" , 0, 2, "Id", new { fullName = "ah" });
-
-            Assert.Equal(1, people.Data.Count());
-            Assert.Equal(1, people.TotalRows);
-        }
-
-        [Fact]
-        public void GetEntitiesPagedListTest()
-        {
-            var people = SqlRepository.GetEntitiesPagedList<Person>(p => new { p.Id, p.FullName }, null, 0, 2, "Id");
-
-            Assert.Equal(2, people.Data.Count());
-            Assert.Equal(3, people.TotalRows);
-        }
 
         [Fact]
         public void GetTest()
@@ -164,8 +110,7 @@ namespace SimpleAccess.SqlServer.Test
 
             Assert.NotNull(category);
 
-            Assert.Equal(2, category.Id);
-        }
+            Assert.Equal(2, category.Id);        }
 
         [Fact]
 
@@ -318,6 +263,256 @@ namespace SimpleAccess.SqlServer.Test
                 SqlRepository.SimpleAccess.EndTransaction(transaction);
 
             }
+        }
+
+
+
+        [Fact]
+        public void GetDynamicPagedListTest()
+        {
+            var people = SqlRepository.GetDynamicPagedList<Person>(0, 2, "Id");
+
+            Assert.Equal(2, people.Data.Count());
+            Assert.Equal(3, people.TotalRows);
+        }
+
+        [Fact]
+        public void GetDynamicPagedListTestWithSelect()
+        {
+            var people = SqlRepository.GetDynamicPagedList<Person>(p => new { p.Id }, 0, 2, "Id");
+
+            Assert.Equal(2, people.Data.Count());
+            Assert.Equal(3, people.TotalRows);
+        }
+        [Fact]
+        public void GetDynamicPagedListTestWithObjectParameters()
+        {
+            var id = 1;
+            var people = SqlRepository.GetDynamicPagedList<Person>(0, 2, "Id, FullName", new { id });
+
+            Assert.Equal(1, people.Data.Count());
+            Assert.Equal(1, people.TotalRows);
+        }
+
+        [Fact]
+        public void GetDynamicPagedListTestWithSqlParameters()
+        {
+            var people = SqlRepository.GetDynamicPagedList<Person>(0, 2, "Id, FullName", new SqlParameter("@id", 1));
+
+            Assert.Equal(1, people.Data.Count());
+            Assert.Equal(1, people.TotalRows);
+        }
+
+        [Fact]
+        public void GetEntitiesPagedListTestWithLike()
+        {
+            var people = SqlRepository.GetEntitiesPagedList<Person>(p => new { p.Id, p.FullName }
+            , "Where FullName like '%' + @fullName + '%'", 0, 2, "Id", new { fullName = "ah" });
+
+            Assert.Equal(1, people.Data.Count());
+            Assert.Equal(1, people.TotalRows);
+        }
+
+        [Fact]
+        public void GetEntitiesPagedListTest()
+        {
+            var people = SqlRepository.GetEntitiesPagedList<Person>(p => new { p.Id, p.FullName }, null, 0, 2, "Id");
+
+            Assert.Equal(2, people.Data.Count());
+            Assert.Equal(3, people.TotalRows);
+        }
+
+        [Fact]
+        public void GetCountTest()
+        {
+            var rowCount = SqlRepository.GetCount<Person>();
+
+            Assert.Equal(3, rowCount);
+
+        }
+
+        [Fact]
+        public void GetCountTestWithWhere()
+        {
+            var rowCount = SqlRepository.GetCount<Person>(p => p.Id == 1);
+
+            Assert.Equal(1, rowCount);
+
+        }
+
+        [Fact]
+        public void GetCountTestWithSingleColumn()
+        {
+            var rowCount = SqlRepository.GetCount<Person, string>(select => select.Address);
+
+            Assert.Equal(2, rowCount);
+
+        }
+
+        [Fact]
+        public void GetCountTestWithSelect()
+        {
+            var counts = SqlRepository.GetCount<Branch>(p => new { p.Id, p.CityId });
+
+            Assert.Equal(3, counts.CountOfId);
+            Assert.Equal(3, counts.CountOfCityId);
+        }
+
+        [Fact]
+        public void GetCountTestWithSelectAndWhere()
+        {
+            var counts = SqlRepository.GetCount<Branch>(p => new { p.Id, p.CityId }, where => where.Id == 1);
+
+            Assert.Equal(1, counts.CountOfId);
+            Assert.Equal(1, counts.CountOfCityId);
+
+        }
+
+        [Fact]
+        public void GetSumTest()
+        {
+            var sumOfSalary = SqlRepository.GetSum<Person>(p => p.BasicSalary);
+
+            Assert.Equal(12000, sumOfSalary);
+
+        }
+
+        [Fact]
+        public void GetSumTestWithMultiColumn()
+        {
+            var sum = SqlRepository.GetSum<Person>(p => new { p.BasicSalary, p.Transport });
+
+            Assert.Equal(12000, sum.SumOfBasicSalary);
+            Assert.Equal(1000, sum.SumOfTransport);
+        }
+
+
+        [Fact]
+        public void GetSumTestWithSingleNullableColumn()
+        {
+            var sumOfTransport = SqlRepository.GetSum<Person>(p => p.Transport);
+
+            Assert.Equal(1000, sumOfTransport);
+        }
+
+        [Fact]
+        public void GetSumTestWithSelectAndWhere()
+        {
+            var sumOfSalary = SqlRepository.GetSum<Person>(p => p.BasicSalary, where => where.Id > 1);
+
+            Assert.Equal(8000, sumOfSalary);
+
+        }
+
+
+        [Fact]
+        public void GetMinTest()
+        {
+            var MinOfSalary = SqlRepository.GetMin<Person>(p => p.BasicSalary);
+
+            Assert.Equal(3000, MinOfSalary);
+
+        }
+
+        [Fact]
+        public void GetMinTestWithMultiColumn()
+        {
+            var Min = SqlRepository.GetMin<Person>(p => new { p.BasicSalary, p.Transport });
+
+            Assert.Equal(3000, Min.MinOfBasicSalary);
+            Assert.Equal(300, Min.MinOfTransport);
+        }
+
+
+        [Fact]
+        public void GetMinTestWithSingleNullableColumn()
+        {
+            var MinOfTransport = SqlRepository.GetMin<Person>(p => p.Transport);
+
+            Assert.Equal(300, MinOfTransport);
+        }
+
+        [Fact]
+        public void GetMinTestWithSelectAndWhere()
+        {
+            var MinOfSalary = SqlRepository.GetMin<Person>(p => p.BasicSalary, where => where.Id > 1);
+
+            Assert.Equal(3000, MinOfSalary);
+
+        }
+
+
+        [Fact]
+        public void GetMaxTest()
+        {
+            var MaxOfSalary = SqlRepository.GetMax<Person>(p => p.BasicSalary);
+
+            Assert.Equal(5000, MaxOfSalary);
+
+        }
+
+        [Fact]
+        public void GetMaxTestWithMultiColumn()
+        {
+            var Max = SqlRepository.GetMax<Person>(p => new { p.BasicSalary, p.Transport });
+
+            Assert.Equal(5000, Max.MaxOfBasicSalary);
+            Assert.Equal(700, Max.MaxOfTransport);
+        }
+
+
+        [Fact]
+        public void GetMaxTestWithSingleNullableColumn()
+        {
+            var MaxOfTransport = SqlRepository.GetMax<Person>(p => p.Transport);
+
+            Assert.Equal(700, MaxOfTransport);
+        }
+
+        [Fact]
+        public void GetMaxTestWithSelectAndWhere()
+        {
+            var MaxOfSalary = SqlRepository.GetMax<Person>(p => p.BasicSalary, where => where.Id > 2);
+
+            Assert.Equal(3000, MaxOfSalary);
+
+        }
+
+
+        [Fact]
+        public void GetAvgTest()
+        {
+            var AvgOfSalary = SqlRepository.GetAvg<Person>(p => p.BasicSalary);
+
+            Assert.Equal(4000, AvgOfSalary);
+
+        }
+
+        [Fact]
+        public void GetAvgTestWithMultiColumn()
+        {
+            var Avg = SqlRepository.GetAvg<Person>(p => new { p.BasicSalary, p.Transport });
+
+            Assert.Equal(4000, Avg.AvgOfBasicSalary);
+            Assert.Equal(500, Avg.AvgOfTransport);
+        }
+
+
+        [Fact]
+        public void GetAvgTestWithSingleNullableColumn()
+        {
+            var AvgOfTransport = SqlRepository.GetAvg<Person>(p => p.Transport);
+
+            Assert.Equal(500, AvgOfTransport);
+        }
+
+        [Fact]
+        public void GetAvgTestWithSelectAndWhere()
+        {
+            var AvgOfSalary = SqlRepository.GetAvg<Person>(p => p.BasicSalary, where => where.Id > 1);
+
+            Assert.Equal(4000, AvgOfSalary);
+
         }
     }
 }

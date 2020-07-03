@@ -29,9 +29,9 @@ namespace SimpleAccess.SqlServer.Test
             Insert INTO Branches VALUES(2, 1, 'Makkah', null,null, null);
             Insert INTO Branches VALUES(3, 2, 'Karachi', null,null, null);
 
-            Insert INTO People VALUES(1, 'Ahmed', '00000');
-            Insert INTO People VALUES(2, 'Muhammad', '000000');
-            Insert INTO People VALUES(3, 'Shehriyar', '00000');
+            Insert INTO People VALUES(1, 'Ahmed', '00000', 'Madina', 4000, 300);
+            Insert INTO People VALUES(2, 'Muhammad', '000000', 'Makkah', 5000, null);
+            Insert INTO People VALUES(3, 'Karim', '00000', null, 3000, 700);
 
 ";
 

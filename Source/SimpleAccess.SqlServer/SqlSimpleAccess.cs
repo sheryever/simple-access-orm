@@ -334,7 +334,13 @@ namespace SimpleAccess.SqlServer
                 dbCommand.Connection.Open();
                 var result = dbCommand.ExecuteScalar();
 
-                return (T)Convert.ChangeType(result, typeof(T));
+                if (result == DBNull.Value) return default(T);
+
+                return (T)result;
+                //if (typeof(T).Name.IndexOf("Nullable") > -1)
+                    
+
+                //return (T)Convert.ChangeType(result, typeof(T));
             }
             catch (Exception ex)
             {
@@ -418,7 +424,9 @@ namespace SimpleAccess.SqlServer
                 dbCommand.Connection.OpenSafely();
                 var result = dbCommand.ExecuteScalar();
 
-                return (T)Convert.ChangeType(result, typeof(T));
+                return (T)result;
+
+                //return (T)Convert.ChangeType(result, typeof(T));
             }
             catch (Exception ex)
             {
