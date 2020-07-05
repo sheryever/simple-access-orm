@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netstandard2.0;net40;net45</TargetFrameworks>
-    <Version>3.1.0-rc6</Version>
+    <Version>3.1.0-rc7</Version>
     <Product>SimpleAccess ORM Core</Product>
     <Description>The core and common interfaces and implementation of SimpleAccess ORM</Description>
     <Authors>Abu Ali Muhammad Sharjeel</Authors>
     <Company>Wayzsoft</Company>
-    <Copyright>Copyright 2019</Copyright>
+    <Copyright>Copyright 2020</Copyright>
     <PackageProjectUrl>https://github.com/sheryever/simple-access-orm</PackageProjectUrl>
     <RepositoryUrl>https://github.com/sheryever/simple-access-orm</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
@@ -18,9 +18,10 @@
 - Database Sequence support added with KeyAttribute implementation
 - EntityInfo performance improved
 - Data mapping performance improved
-- IgnoreSelect, IgnoreInsert, IgnoreUpdate and NotMapped property attributes added for EntityRepositories</PackageReleaseNotes>
-    <AssemblyVersion>3.1.0.6</AssemblyVersion>
-    <FileVersion>3.1.0.6</FileVersion>
+- IgnoreSelect, IgnoreInsert, IgnoreUpdate and NotMapped property attributes added for EntityRepositories
+- Support for generating having clause added</PackageReleaseNotes>
+    <AssemblyVersion>3.1.0.7</AssemblyVersion>
+    <FileVersion>3.1.0.7</FileVersion>
   </PropertyGroup>
 
 
