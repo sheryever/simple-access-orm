@@ -147,6 +147,24 @@ namespace SimpleAccess.SqlServer.Test
         }
 
         [Fact]
+        public void FindTestForIsNullQuery()
+        {
+            var people = SqlRepository.FindAll<Person>(c => c.Address == null);
+
+            Assert.True(people.Any());
+
+        }
+
+        [Fact]
+        public void FindTestForIsNotNullQuery()
+        {
+            var people = SqlRepository.FindAll<Person>(c => c.Address != null);
+
+            Assert.True(people.Any());
+
+        }
+
+        [Fact]
 
         public void FindWithTransactionContextTest()
         {
@@ -369,6 +387,8 @@ namespace SimpleAccess.SqlServer.Test
 
         }
 
+
+
         [Fact]
         public void GetSumTest()
         {
@@ -519,7 +539,7 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void GetAggregateTest()
         {
-            var data = SqlRepository.GetAggregateFirstOrDefault<Employee>(
+            var data = SqlRepository.GetAggregate<Employee>(
                 countOf: co => co,
                 sumOf: so => new { so.BasicSalary, so.Inssurance, so.Transport },
                 maxOf: mo => new { mo.BasicSalary, mo.Inssurance, mo.Transport },
@@ -533,7 +553,7 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void GetAggregateTestWithWhereAndGroupBy()
         {
-            var data = SqlRepository.GetAggregate<Employee>(
+            var data = SqlRepository.GetAggregateWithGroupBy<Employee>(
                 countOf: co => co,
                 sumOf: so => new { so.BasicSalary, so.Inssurance, so.Transport },
                 maxOf: mo => new { mo.BasicSalary, mo.Inssurance, mo.Transport },
@@ -549,19 +569,23 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void GetAggregateTestWithWhereGroupByHaving()
         {
-            var data = SqlRepository.GetAggregate<Employee>(
+            var data = SqlRepository.GetAggregateWithGroupBy<Employee>(
                 countOf: co => co,
                 sumOf: so => new { so.BasicSalary, so.Inssurance, so.Transport },
                 maxOf: mo => new { mo.BasicSalary, mo.Inssurance, mo.Transport },
                 minOf: mi => new { mi.BasicSalary, mi.Inssurance, mi.Transport },
                 where: w => w.Id > 2,
                 groupBy: g => new { g.Department },
-                having: hv => hv.Min(s => s.BasicSalary).GreaterThanEqualTo(2000)
-                                .And().Min(s => s.BasicSalary).LessThan(9000)
+                having: hv => hv.Min(s => s.BasicSalary) >= 2000
+                                && hv.Min(s => s.BasicSalary) < 9000
             );
 
 
             Assert.True(data.Any());
+            Assert.Equal(3, data.Count());
+
         }
+
+
     }
 }
