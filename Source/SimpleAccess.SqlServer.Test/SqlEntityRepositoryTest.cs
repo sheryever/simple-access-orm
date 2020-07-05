@@ -106,11 +106,12 @@ namespace SimpleAccess.SqlServer.Test
         public void GetTest()
         {
             var category = SqlRepository.Get<Category>(2);
-            
+
 
             Assert.NotNull(category);
 
-            Assert.Equal(2, category.Id);        }
+            Assert.Equal(2, category.Id);
+        }
 
         [Fact]
 
@@ -482,7 +483,7 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void GetAvgTest()
         {
-            var AvgOfSalary = SqlRepository.GetAvg<Person>(p => p.BasicSalary);
+            var AvgOfSalary = SqlRepository.GetAverage<Person>(p => p.BasicSalary);
 
             Assert.Equal(4000, AvgOfSalary);
 
@@ -491,7 +492,7 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void GetAvgTestWithMultiColumn()
         {
-            var Avg = SqlRepository.GetAvg<Person>(p => new { p.BasicSalary, p.Transport });
+            var Avg = SqlRepository.GetAverage<Person>(p => new { p.BasicSalary, p.Transport });
 
             Assert.Equal(4000, Avg.AvgOfBasicSalary);
             Assert.Equal(500, Avg.AvgOfTransport);
@@ -501,7 +502,7 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void GetAvgTestWithSingleNullableColumn()
         {
-            var AvgOfTransport = SqlRepository.GetAvg<Person>(p => p.Transport);
+            var AvgOfTransport = SqlRepository.GetAverage<Person>(p => p.Transport);
 
             Assert.Equal(500, AvgOfTransport);
         }
@@ -509,10 +510,58 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void GetAvgTestWithSelectAndWhere()
         {
-            var AvgOfSalary = SqlRepository.GetAvg<Person>(p => p.BasicSalary, where => where.Id > 1);
+            var AvgOfSalary = SqlRepository.GetAverage<Person>(p => p.BasicSalary, where => where.Id > 1);
 
             Assert.Equal(4000, AvgOfSalary);
 
+        }
+
+        [Fact]
+        public void GetAggregateTest()
+        {
+            var data = SqlRepository.GetAggregateFirstOrDefault<Employee>(
+                countOf: co => co,
+                sumOf: so => new { so.BasicSalary, so.Inssurance, so.Transport },
+                maxOf: mo => new { mo.BasicSalary, mo.Inssurance, mo.Transport },
+                minOf: mi => new { mi.BasicSalary, mi.Inssurance, mi.Transport }
+            );
+            Assert.True(data != null);
+
+        }
+
+
+        [Fact]
+        public void GetAggregateTestWithWhereAndGroupBy()
+        {
+            var data = SqlRepository.GetAggregate<Employee>(
+                countOf: co => co,
+                sumOf: so => new { so.BasicSalary, so.Inssurance, so.Transport },
+                maxOf: mo => new { mo.BasicSalary, mo.Inssurance, mo.Transport },
+                minOf: mi => new { mi.BasicSalary, mi.Inssurance, mi.Transport },
+                where: w => w.Id > 2,
+                groupBy: g => new { g.Department }
+            );
+
+
+            Assert.True(data.Any());
+        }
+
+        [Fact]
+        public void GetAggregateTestWithWhereGroupByHaving()
+        {
+            var data = SqlRepository.GetAggregate<Employee>(
+                countOf: co => co,
+                sumOf: so => new { so.BasicSalary, so.Inssurance, so.Transport },
+                maxOf: mo => new { mo.BasicSalary, mo.Inssurance, mo.Transport },
+                minOf: mi => new { mi.BasicSalary, mi.Inssurance, mi.Transport },
+                where: w => w.Id > 2,
+                groupBy: g => new { g.Department },
+                having: hv => hv.Min(s => s.BasicSalary).GreaterThanEqualTo(2000)
+                                .And().Min(s => s.BasicSalary).LessThan(9000)
+            );
+
+
+            Assert.True(data.Any());
         }
     }
 }
