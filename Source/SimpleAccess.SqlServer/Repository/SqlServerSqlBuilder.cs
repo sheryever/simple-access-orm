@@ -294,9 +294,14 @@ namespace SimpleAccess.SqlServer
         public string BuildWhereExpression(string propertyName, Type valueType, string @operator, object value)
         {
             var result = "";
+
             if (value == null && @operator == "=")
             {
-                return string.Format(" {0} is null", propertyName);
+                return string.Format(" {0} IS NULL", propertyName);
+            }
+            if (value == null && @operator == "!=")
+            {
+                return string.Format(" {0} IS NOT NULL", propertyName);
             }
             if (@operator == "EndsWith")
             {

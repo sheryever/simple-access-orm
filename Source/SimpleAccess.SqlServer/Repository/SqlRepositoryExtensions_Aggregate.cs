@@ -10,6 +10,8 @@ using Microsoft.Data.SqlClient;
 #endif
 using System.Linq.Expressions;
 using SimpleAccess.Core.Entity.RepoWrapper;
+using System.Security.Cryptography;
+using System.Runtime.InteropServices;
 
 namespace SimpleAccess.SqlServer
 {
@@ -23,185 +25,162 @@ namespace SimpleAccess.SqlServer
 
         #region Aggregate functions
 
+//        public static dynamic GetAggregate<TEntity>(this ISqlRepository sqlRepository
+//            , Func<TEntity, object> countOf = null, Func<TEntity, object> sumOf = null
+//            , Func<TEntity, object> minOf = null, Func<TEntity, object> maxOf = null
+//            , Func<TEntity, object> avgOf = null
+//            , Expression<Func<TEntity, bool>> where = null
+//            , Action<HavingBuilder<TEntity>> having = null)
+//            where TEntity : class, new()
+//        {
+//            return GetAggregateWithGroupBy<TEntity>(sqlRepository, countOf, sumOf, minOf, maxOf, avgOf, where, null, having).FirstOrDefault();
+//        }
+
+//        public static IEnumerable<dynamic> GetAggregateWithGroupBy<TEntity>(this ISqlRepository sqlRepository
+//            , Func<TEntity, object> countOf = null, Func<TEntity, object> sumOf = null
+//            , Func<TEntity, object> minOf = null, Func<TEntity, object> maxOf = null
+//            , Func<TEntity, object> avgOf = null
+//            , Expression<Func<TEntity, bool>> where = null
+//            , Func<TEntity, object> groupBy = null
+//            , Action<HavingBuilder<TEntity>> having = null)
+//            where TEntity : class, new()
+//        {
+
+//            if (countOf == null && sumOf == null && minOf == null && maxOf == null && avgOf == null )
+//            {
+//                throw new NullReferenceException($"At least one must be provided {nameof(countOf)}, {nameof(sumOf)}, {nameof(minOf)},{nameof(maxOf)}, {nameof(avgOf)}");
+//            }
+
+//            string commandText = 
+//@"SELECT {groupByColumns}, {columns} 
+//    FROM {table} 
+//    {whereClause} 
+//    {groupByClause} 
+//    {havingClause}";
+
+//            var aggregateColums = new List<string>();
+
+//            if (groupBy != null)
+//            {
+//                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(groupBy));
+
+//                commandText = commandText.Replace("{groupByColumns}", string.Join(", ", groupByProperties.Select(g => g.Value.Name)));
+//                commandText = commandText.Replace("{groupByClause}", "GROUP BY " + string.Join(", ", groupByProperties.Select(g => g.Value.Name)));
+
+//            }
+//            else
+//            {
+//                commandText = commandText.Replace("{groupBy}", "");
+//            }
+
+//            if (countOf != null)
+//            {
+//                var returnedType = countOf.Invoke(new TEntity());
+
+//                if (returnedType is TEntity)
+//                {
+//                    aggregateColums.Add("COUNT(*) as CountOfAll");
+
+//                }
+//                else
+//                {
+//                    var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(countOf));
+
+//                    aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"COUNT({c.Value.Name}) as CountOf{c.Value.Name}")));
+
+//                }
+//            }
+
+//            if (sumOf != null)
+//            {
+//                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(sumOf));
+
+//                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"SUM({c.Value.Name}) as SumOf{c.Value.Name}")));
+//            }
+
+//            if (minOf != null)
+//            {
+//                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(minOf));
+
+//                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"MIN({c.Value.Name}) as MinOf{c.Value.Name}")));
+//            }
+
+//            if (maxOf != null)
+//            {
+//                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(maxOf));
+
+//                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"MAX({c.Value.Name}) as MaxOf{c.Value.Name}")));
+//            }
+
+//            if (avgOf != null)
+//            {
+//                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(avgOf));
+
+//                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"AVG({c.Value.Name}) as AvgOf{c.Value.Name}")));
+//            }
+
+//            commandText = commandText.Replace("{columns}", string.Join(", ", aggregateColums));
+
+//            string whereClause = "";
+//            if (sqlRepository is SqlSpRepository)
+//            {
+//                var entityInfo = SqlSpRepositorySetting.GetEntityInfo(typeof(TEntity));
+//                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
+//                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+//            }
+//            else
+//            {
+//                var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
+//                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
+//                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+//            }
+//            commandText = commandText.Replace("{whereClause}", whereClause);
+
+//            if (having != null)
+//            {
+//                var havingBuilder = new HavingBuilder<TEntity>();
+//                having.Invoke(havingBuilder);
+//                commandText = commandText.Replace("{havingClause}", havingBuilder.GetHaving());
+//            }
+//            else
+//            {
+//                commandText = commandText.Replace("{havingClause}", "");
+//            }
+
+//            var result = sqlRepository.SimpleAccess.ExecuteDynamics(commandText, CommandType.Text);
+
+//            return result;
+
+//        }
 
 
-        //    #region GetAvg
-        //    public static int GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int>> selector)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, int>(sqlRepository, selector);
-        //    }
-
-        //    public static int? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int?>> selector)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, int?>(sqlRepository, selector);
-        //    }
-
-        //    public static long GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long>> selector)
-        //where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, long>(sqlRepository, selector);
-        //    }
-
-        //    public static long? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long?>> selector)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, long?>(sqlRepository, selector);
-        //    }
-
-        //    public static float GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float>> selector)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, float>(sqlRepository, selector);
-        //    }
-
-        //    public static float? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float?>> selector)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, float?>(sqlRepository, selector);
-        //    }
-
-        //    public static decimal GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal>> selector)
-        //where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, decimal>(sqlRepository, selector);
-        //    }
-
-        //    public static decimal? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal?>> selector)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, decimal?>(sqlRepository, selector);
-        //    }
-
-        //    public static double GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double>> selector)
-        //where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, double>(sqlRepository, selector);
-        //    }
-
-        //    public static double? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double?>> selector)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, double?>(sqlRepository, selector);
-        //    }
-
-        //    private static TReturn GetAvg<TEntity, TReturn>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TReturn>> selector)
-        //        where TEntity : class, new()
-        //    {
-
-        //        var column = GetSingleSelectedProperty(selector);
-        //        return GetAggregateResult<TEntity, TReturn>(sqlRepository, "Avg", column, null);
-        //    }
-
-        //    public static int GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int>> selector, Expression<Func<TEntity, bool>> where)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, int>(sqlRepository, selector, where);
-        //    }
-
-        //    public static int? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int?>> selector, Expression<Func<TEntity, bool>> where)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, int?>(sqlRepository, selector, where);
-        //    }
-
-        //    public static long GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long>> selector, Expression<Func<TEntity, bool>> where)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, long>(sqlRepository, selector, where);
-        //    }
-
-        //    public static long? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long?>> selector, Expression<Func<TEntity, bool>> where)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, long?>(sqlRepository, selector, where);
-        //    }
-
-        //    public static float GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float>> selector, Expression<Func<TEntity, bool>> where)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, float>(sqlRepository, selector, where);
-        //    }
-
-        //    public static float? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float?>> selector, Expression<Func<TEntity, bool>> where)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, float?>(sqlRepository, selector, where);
-        //    }
-
-        //    public static decimal GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal>> selector, Expression<Func<TEntity, bool>> where)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, decimal>(sqlRepository, selector, where);
-        //    }
-
-        //    public static decimal? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal?>> selector, Expression<Func<TEntity, bool>> where)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, decimal?>(sqlRepository, selector, where);
-        //    }
-
-        //    public static double GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double>> selector, Expression<Func<TEntity, bool>> where)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, double>(sqlRepository, selector, where);
-        //    }
-
-        //    public static double? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double?>> selector, Expression<Func<TEntity, bool>> where)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAvg<TEntity, double?>(sqlRepository, selector, where);
-        //    }
-
-        //    public static TReturn GetAvg<TEntity, TReturn>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TReturn>> selector, Expression<Func<TEntity, bool>> where)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAggregateResult<TEntity, TReturn>(sqlRepository, "Avg", GetSingleSelectedProperty(selector), where);
-        //    }
-
-        //    public static dynamic GetAvg<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAggregateResult<TEntity>(sqlRepository, "Avg", selector, null);
-        //    }
-
-        //    public static dynamic GetAvg<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector, Expression<Func<TEntity, bool>> where)
-        //        where TEntity : class, new()
-        //    {
-        //        return GetAggregateResult<TEntity>(sqlRepository, "Avg", selector, where);
-        //    }
-
-        //    #endregion
-
-
-        public static dynamic GetAggregateFirstOrDefault<TEntity>(this ISqlRepository sqlRepository
+        public static dynamic GetAggregate<TEntity>(this ISqlRepository sqlRepository
             , Func<TEntity, object> countOf = null, Func<TEntity, object> sumOf = null
             , Func<TEntity, object> minOf = null, Func<TEntity, object> maxOf = null
             , Func<TEntity, object> avgOf = null
             , Expression<Func<TEntity, bool>> where = null
-            , Action<HavingBuilder<TEntity>> having = null)
+            , Expression<Func<Aggregator<TEntity>, bool>> having = null)
             where TEntity : class, new()
         {
-            return GetAggregate<TEntity>(sqlRepository, countOf, sumOf, minOf, maxOf, avgOf, where, null, having).FirstOrDefault();
+            return GetAggregateWithGroupBy<TEntity>(sqlRepository, countOf, sumOf, minOf, maxOf, avgOf, where, null, having).FirstOrDefault();
         }
 
-        public static IEnumerable<dynamic> GetAggregate<TEntity>(this ISqlRepository sqlRepository
+        public static IEnumerable<dynamic> GetAggregateWithGroupBy<TEntity>(this ISqlRepository sqlRepository
             , Func<TEntity, object> countOf = null, Func<TEntity, object> sumOf = null
             , Func<TEntity, object> minOf = null, Func<TEntity, object> maxOf = null
             , Func<TEntity, object> avgOf = null
             , Expression<Func<TEntity, bool>> where = null
             , Func<TEntity, object> groupBy = null
-            , Action<HavingBuilder<TEntity>> having = null)
+            , Expression<Func<Aggregator<TEntity>, bool>> having = null)
             where TEntity : class, new()
         {
 
-            if (countOf == null && sumOf == null && minOf == null && maxOf == null && avgOf == null )
+            if (countOf == null && sumOf == null && minOf == null && maxOf == null && avgOf == null)
             {
                 throw new NullReferenceException($"At least one must be provided {nameof(countOf)}, {nameof(sumOf)}, {nameof(minOf)},{nameof(maxOf)}, {nameof(avgOf)}");
             }
 
-            string commandText = 
+            string commandText =
 @"SELECT {groupByColumns}, {columns} 
     FROM {table} 
     {whereClause} 
@@ -271,181 +250,224 @@ namespace SimpleAccess.SqlServer
 
             commandText = commandText.Replace("{columns}", string.Join(", ", aggregateColums));
 
-            string whereClause = "";
+            string whereClause = "", havingClause ="";
             if (sqlRepository is SqlSpRepository)
             {
                 var entityInfo = SqlSpRepositorySetting.GetEntityInfo(typeof(TEntity));
                 commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
                 whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+                havingClause = having == null ? "" : DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
+
+                DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
             }
             else
             {
                 var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
                 commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
                 whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+                havingClause = having == null ? "" : DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
+
             }
             commandText = commandText.Replace("{whereClause}", whereClause);
 
-            if (having != null)
-            {
-                var havingBuilder = new HavingBuilder<TEntity>();
-                having.Invoke(havingBuilder);
-                commandText = commandText.Replace("{havingClause}", havingBuilder.GetHaving());
-            }
-            else
-            {
-                commandText = commandText.Replace("{havingClause}", "");
-            }
+            commandText = commandText.Replace("{havingClause}", havingClause);
+
 
             var result = sqlRepository.SimpleAccess.ExecuteDynamics(commandText, CommandType.Text);
 
             return result;
 
         }
+        //public static dynamic GetAggregate2<TEntity>(this ISqlRepository sqlRepository
+        //    , Func<TEntity, object> countOf = null, Func<TEntity, object> sumOf = null
+        //    , Func<TEntity, object> minOf = null, Func<TEntity, object> maxOf = null
+        //    , Func<TEntity, object> avgOf = null
+        //    , Expression<Func<TEntity, bool>> where = null
+        //    , Expression<Func<Aggregator<TEntity>, bool>> having = null)
+        //    where TEntity : class, new()
+        //{
+        //    var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
+
+        //    var havingClause =  DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
+
+        //    throw new NotImplementedException();
+        //    //GetAggregateWithGroupBy<TEntity>(sqlRepository, countOf, sumOf, minOf, maxOf, avgOf, where, null, having).FirstOrDefault();
+        //}
+
+
 
         #endregion
-        public class HavingBuilder<TEntity>
+        //public class HavingBuilder<TEntity>
+        //    where TEntity : class, new()
+        //{
+        //    private string _having = "";
+        //    public HavingBuilder<TEntity> Sum<TKey>(Expression<Func<TEntity, TKey>> selector)
+        //    {
+        //        var column = GetSingleSelectedProperty(selector);
+
+        //        _having += $" SUM({column}) ";
+
+        //        return this;
+        //    }
+        //    public HavingBuilder<TEntity> Count<TKey>(Expression<Func<TEntity, TKey>> selector)
+        //    {
+        //        var column = GetSingleSelectedProperty(selector);
+
+        //        _having += $" COUNT({column}) ";
+
+        //        return this;
+        //    }
+        //    public HavingBuilder<TEntity> Min<TKey>(Expression<Func<TEntity, TKey>> selector)
+        //    {
+        //        var column = GetSingleSelectedProperty(selector);
+
+        //        _having += $" MIN({column}) ";
+
+        //        return this;
+        //    }
+        //    public HavingBuilder<TEntity> Max<TKey>(Expression<Func<TEntity, TKey>> selector)
+        //    {
+        //        var column = GetSingleSelectedProperty(selector);
+
+        //        _having += $" MAX({column}) ";
+
+        //        return this;
+        //    }
+        //    public HavingBuilder<TEntity> Average<TKey>(Expression<Func<TEntity, TKey>> selector)
+        //    {
+        //        var column = GetSingleSelectedProperty(selector);
+
+        //        _having += $" AVG({column}) ";
+                
+        //        return this;
+        //    }
+        //    public HavingBuilder<TEntity> GreaterThan()
+        //    {
+        //        _having += " > ";
+
+        //        return this;
+        //    }
+        //    public HavingBuilder<TEntity> GreaterThan<T>(T value)
+        //    {
+        //        _having += $" > {value.ToString().Replace("'", "''")}";
+
+        //        return this;
+        //    }
+
+        //    public HavingBuilder<TEntity> GreaterThanEqualTo()
+        //    {
+        //        _having += " >= ";
+
+        //        return this;
+        //    }
+        //    public HavingBuilder<TEntity> GreaterThanEqualTo<T>(T value)
+        //    {
+        //        _having += $" >= {value.ToString().Replace("'", "''")}";
+
+        //        return this;
+        //    }
+
+        //    public HavingBuilder<TEntity> LessThan()
+        //    {
+
+        //        _having += $" < ";
+
+        //        return this;
+        //    }
+        //    public HavingBuilder<TEntity> LessThan<T>(T value)
+        //    {
+        //        _having += $" < {value.ToString().Replace("'", "''")}";
+
+        //        return this;
+        //    }
+
+        //    public HavingBuilder<TEntity> LessThanEqualTo()
+        //    {
+
+        //        _having += $" <= ";
+
+        //        return this;
+        //    }
+        //    public HavingBuilder<TEntity> LessThanEqualTo<T>(T value)
+        //    {
+        //        _having += $" <= {value.ToString().Replace("'", "''")}";
+
+        //        return this;
+        //    }
+
+        //    public HavingBuilder<TEntity> EqualTo()
+        //    {
+        //        _having += " = ";
+
+        //        return this;
+        //    }
+        //    public HavingBuilder<TEntity> EqualTo<T>(T value)
+        //    {
+        //        _having += $" = {value.ToString().Replace("'", "''")}";
+
+        //        return this;
+        //    }
+        //    public HavingBuilder<TEntity> NotEqualTo()
+        //    {
+        //        _having += $" <> ";
+
+        //        return this;
+        //    }
+        //    public HavingBuilder<TEntity> NotEqualTo<T>(T value)
+        //    {
+        //        _having += $" <> {value.ToString().Replace("'", "''")}";
+
+        //        return this;
+        //    }
+        //    public HavingBuilder<TEntity> And()
+        //    {
+        //        _having += $" AND ";
+
+        //        return this;
+        //    }
+        //    public HavingBuilder<TEntity> Or()
+        //    {
+        //        _having += $" OR ";
+
+        //        return this;
+        //    }
+
+        //    public string GetHaving()
+        //    {
+        //        return " HAVING " + _having ;
+        //    }
+        //}
+
+        public class Aggregator<TEntity>
             where TEntity : class, new()
         {
             private string _having = "";
-            public HavingBuilder<TEntity> Sum<TKey>(Expression<Func<TEntity, TKey>> selector)
+            public TKey Sum<TKey>(Expression<Func<TEntity, TKey>> selector)
             {
-                var column = GetSingleSelectedProperty(selector);
-
-                _having += $" SUM({column}) ";
-
-                return this;
+                return default(TKey);
             }
-            public HavingBuilder<TEntity> Count<TKey>(Expression<Func<TEntity, TKey>> selector)
+            public TKey Count<TKey>(Expression<Func<TEntity, TKey>> selector)
             {
-                var column = GetSingleSelectedProperty(selector);
-
-                _having += $" COUNT({column}) ";
-
-                return this;
+                return default(TKey);
             }
-            public HavingBuilder<TEntity> Min<TKey>(Expression<Func<TEntity, TKey>> selector)
+            public TKey Min<TKey>(Expression<Func<TEntity, TKey>> selector)
             {
-                var column = GetSingleSelectedProperty(selector);
-
-                _having += $" MIN({column}) ";
-
-                return this;
+                return default(TKey);
             }
-            public HavingBuilder<TEntity> Max<TKey>(Expression<Func<TEntity, TKey>> selector)
+            public TKey Max<TKey>(Expression<Func<TEntity, TKey>> selector)
             {
-                var column = GetSingleSelectedProperty(selector);
-
-                _having += $" MAX({column}) ";
-
-                return this;
+                return default(TKey);
             }
-            public HavingBuilder<TEntity> Average<TKey>(Expression<Func<TEntity, TKey>> selector)
+            public TKey Average<TKey>(Expression<Func<TEntity, TKey>> selector)
             {
-                var column = GetSingleSelectedProperty(selector);
-
-                _having += $" AVG({column}) ";
-                
-                return this;
-            }
-            public HavingBuilder<TEntity> GreaterThan()
-            {
-                _having += " > ";
-
-                return this;
-            }
-            public HavingBuilder<TEntity> GreaterThan<T>(T value)
-            {
-                _having += $" > {value.ToString().Replace("'", "''")}";
-
-                return this;
-            }
-
-            public HavingBuilder<TEntity> GreaterThanEqualTo()
-            {
-                _having += " >= ";
-
-                return this;
-            }
-            public HavingBuilder<TEntity> GreaterThanEqualTo<T>(T value)
-            {
-                _having += $" >= {value.ToString().Replace("'", "''")}";
-
-                return this;
-            }
-
-            public HavingBuilder<TEntity> LessThan()
-            {
-
-                _having += $" < ";
-
-                return this;
-            }
-            public HavingBuilder<TEntity> LessThan<T>(T value)
-            {
-                _having += $" < {value.ToString().Replace("'", "''")}";
-
-                return this;
-            }
-
-            public HavingBuilder<TEntity> LessThanEqualTo()
-            {
-
-                _having += $" <= ";
-
-                return this;
-            }
-            public HavingBuilder<TEntity> LessThanEqualTo<T>(T value)
-            {
-                _having += $" <= {value.ToString().Replace("'", "''")}";
-
-                return this;
-            }
-
-            public HavingBuilder<TEntity> EqualTo()
-            {
-                _having += " = ";
-
-                return this;
-            }
-            public HavingBuilder<TEntity> EqualTo<T>(T value)
-            {
-                _having += $" = {value.ToString().Replace("'", "''")}";
-
-                return this;
-            }
-            public HavingBuilder<TEntity> NotEqualTo()
-            {
-                _having += $" <> ";
-
-                return this;
-            }
-            public HavingBuilder<TEntity> NotEqualTo<T>(T value)
-            {
-                _having += $" <> {value.ToString().Replace("'", "''")}";
-
-                return this;
-            }
-            public HavingBuilder<TEntity> And()
-            {
-                _having += $" AND ";
-
-                return this;
-            }
-            public HavingBuilder<TEntity> Or()
-            {
-                _having += $" OR ";
-
-                return this;
+                return default(TKey);
             }
 
             public string GetHaving()
             {
-                return " HAVING " + _having ;
+                return " HAVING " + _having;
             }
         }
 
     }
-
-
 }
