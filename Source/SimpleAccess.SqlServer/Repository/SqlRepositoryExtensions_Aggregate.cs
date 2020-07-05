@@ -23,736 +23,254 @@ namespace SimpleAccess.SqlServer
 
         #region Aggregate functions
 
-        #region GetCount
-        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, bool>> where = null)
+
+
+        //    #region GetAvg
+        //    public static int GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int>> selector)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, int>(sqlRepository, selector);
+        //    }
+
+        //    public static int? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int?>> selector)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, int?>(sqlRepository, selector);
+        //    }
+
+        //    public static long GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long>> selector)
+        //where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, long>(sqlRepository, selector);
+        //    }
+
+        //    public static long? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long?>> selector)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, long?>(sqlRepository, selector);
+        //    }
+
+        //    public static float GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float>> selector)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, float>(sqlRepository, selector);
+        //    }
+
+        //    public static float? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float?>> selector)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, float?>(sqlRepository, selector);
+        //    }
+
+        //    public static decimal GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal>> selector)
+        //where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, decimal>(sqlRepository, selector);
+        //    }
+
+        //    public static decimal? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal?>> selector)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, decimal?>(sqlRepository, selector);
+        //    }
+
+        //    public static double GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double>> selector)
+        //where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, double>(sqlRepository, selector);
+        //    }
+
+        //    public static double? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double?>> selector)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, double?>(sqlRepository, selector);
+        //    }
+
+        //    private static TReturn GetAvg<TEntity, TReturn>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TReturn>> selector)
+        //        where TEntity : class, new()
+        //    {
+
+        //        var column = GetSingleSelectedProperty(selector);
+        //        return GetAggregateResult<TEntity, TReturn>(sqlRepository, "Avg", column, null);
+        //    }
+
+        //    public static int GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int>> selector, Expression<Func<TEntity, bool>> where)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, int>(sqlRepository, selector, where);
+        //    }
+
+        //    public static int? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int?>> selector, Expression<Func<TEntity, bool>> where)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, int?>(sqlRepository, selector, where);
+        //    }
+
+        //    public static long GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long>> selector, Expression<Func<TEntity, bool>> where)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, long>(sqlRepository, selector, where);
+        //    }
+
+        //    public static long? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long?>> selector, Expression<Func<TEntity, bool>> where)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, long?>(sqlRepository, selector, where);
+        //    }
+
+        //    public static float GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float>> selector, Expression<Func<TEntity, bool>> where)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, float>(sqlRepository, selector, where);
+        //    }
+
+        //    public static float? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float?>> selector, Expression<Func<TEntity, bool>> where)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, float?>(sqlRepository, selector, where);
+        //    }
+
+        //    public static decimal GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal>> selector, Expression<Func<TEntity, bool>> where)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, decimal>(sqlRepository, selector, where);
+        //    }
+
+        //    public static decimal? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal?>> selector, Expression<Func<TEntity, bool>> where)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, decimal?>(sqlRepository, selector, where);
+        //    }
+
+        //    public static double GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double>> selector, Expression<Func<TEntity, bool>> where)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, double>(sqlRepository, selector, where);
+        //    }
+
+        //    public static double? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double?>> selector, Expression<Func<TEntity, bool>> where)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAvg<TEntity, double?>(sqlRepository, selector, where);
+        //    }
+
+        //    public static TReturn GetAvg<TEntity, TReturn>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TReturn>> selector, Expression<Func<TEntity, bool>> where)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAggregateResult<TEntity, TReturn>(sqlRepository, "Avg", GetSingleSelectedProperty(selector), where);
+        //    }
+
+        //    public static dynamic GetAvg<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAggregateResult<TEntity>(sqlRepository, "Avg", selector, null);
+        //    }
+
+        //    public static dynamic GetAvg<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector, Expression<Func<TEntity, bool>> where)
+        //        where TEntity : class, new()
+        //    {
+        //        return GetAggregateResult<TEntity>(sqlRepository, "Avg", selector, where);
+        //    }
+
+        //    #endregion
+
+
+        public static dynamic GetAggregateFirstOrDefault<TEntity>(this ISqlRepository sqlRepository
+            , Func<TEntity, object> countOf = null, Func<TEntity, object> sumOf = null
+            , Func<TEntity, object> minOf = null, Func<TEntity, object> maxOf = null
+            , Func<TEntity, object> avgOf = null
+            , Expression<Func<TEntity, bool>> where = null
+            , Action<HavingBuilder<TEntity>> having = null)
             where TEntity : class, new()
         {
-            return GetCount<TEntity, int>(sqlRepository, null, where);
+            return GetAggregate<TEntity>(sqlRepository, countOf, sumOf, minOf, maxOf, avgOf, where, null, having).FirstOrDefault();
         }
 
-        public static int GetCount<TEntity, TKey>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TKey>> selector = null
-        , Expression<Func<TEntity, bool>> where = null)
+        public static IEnumerable<dynamic> GetAggregate<TEntity>(this ISqlRepository sqlRepository
+            , Func<TEntity, object> countOf = null, Func<TEntity, object> sumOf = null
+            , Func<TEntity, object> minOf = null, Func<TEntity, object> maxOf = null
+            , Func<TEntity, object> avgOf = null
+            , Expression<Func<TEntity, bool>> where = null
+            , Func<TEntity, object> groupBy = null
+            , Action<HavingBuilder<TEntity>> having = null)
             where TEntity : class, new()
         {
-            string commandText = "SELECT {columns} FROM {table} {whereClause}";
-            CommandType commandType = CommandType.Text;
 
-            if (selector != null)
+            if (countOf == null && sumOf == null && minOf == null && maxOf == null && avgOf == null )
             {
-                var selectedColumn = GetSingleSelectedProperty(selector);
+                throw new NullReferenceException($"At least one must be provided {nameof(countOf)}, {nameof(sumOf)}, {nameof(minOf)},{nameof(maxOf)}, {nameof(avgOf)}");
+            }
 
-                commandText = commandText.Replace("{columns}", $"COUNT({selectedColumn}) AS CountOf{selectedColumn}");
+            string commandText = 
+@"SELECT {groupByColumns}, {columns} 
+    FROM {table} 
+    {whereClause} 
+    {groupByClause} 
+    {havingClause}";
+
+            var aggregateColums = new List<string>();
+
+            if (groupBy != null)
+            {
+                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(groupBy));
+
+                commandText = commandText.Replace("{groupByColumns}", string.Join(", ", groupByProperties.Select(g => g.Value.Name)));
+                commandText = commandText.Replace("{groupByClause}", "GROUP BY " + string.Join(", ", groupByProperties.Select(g => g.Value.Name)));
+
             }
             else
             {
-                commandText = commandText.Replace("{columns}", "COUNT(*) AS CountOfAll");
+                commandText = commandText.Replace("{groupBy}", "");
             }
 
-            var whereClause = "";
-
-            if (sqlRepository is SqlSpRepository)
+            if (countOf != null)
             {
-                var entityInfo = SqlSpRepositorySetting.GetEntityInfo(typeof(TEntity));
-                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
-                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+                var returnedType = countOf.Invoke(new TEntity());
+
+                if (returnedType is TEntity)
+                {
+                    aggregateColums.Add("COUNT(*) as CountOfAll");
+
+                }
+                else
+                {
+                    var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(countOf));
+
+                    aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"COUNT({c.Value.Name}) as CountOf{c.Value.Name}")));
+
+                }
             }
-            else
+
+            if (sumOf != null)
             {
-                var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
-                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
-                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(sumOf));
+
+                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"SUM({c.Value.Name}) as SumOf{c.Value.Name}")));
             }
 
-            commandText = commandText.Replace("{whereClause}", whereClause);
-
-            return sqlRepository.SimpleAccess.ExecuteScalar<int>(commandText, commandType);
-        }
-
-
-        public static dynamic GetCount<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector
-        , Expression<Func<TEntity, bool>> where = null)
-        where TEntity : class, new()
-        {
-            string commandText = "SELECT {columns} FROM {table} {whereClause}";
-            CommandType commandType = CommandType.Text;
-
-            if (selector != null)
+            if (minOf != null)
             {
-                var selectProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(selector));
+                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(minOf));
 
-                commandText = commandText.Replace("{columns}", string.Join(", ", selectProperties.Values.Select(p => $"COUNT({p.Name}) AS CountOf{p.Name}")));
+                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"MIN({c.Value.Name}) as MinOf{c.Value.Name}")));
             }
-            else
+
+            if (maxOf != null)
             {
-                commandText = commandText.Replace("{columns}", "COUNT(*) AS CountOfAll");
+                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(maxOf));
+
+                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"MAX({c.Value.Name}) as MaxOf{c.Value.Name}")));
             }
 
-            var whereClause = "";
-
-            if (sqlRepository is SqlSpRepository)
+            if (avgOf != null)
             {
-                var entityInfo = SqlSpRepositorySetting.GetEntityInfo(typeof(TEntity));
-                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
-                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
-            }
-            else
-            {
-                var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
-                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
-                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(avgOf));
+
+                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"AVG({c.Value.Name}) as AvgOf{c.Value.Name}")));
             }
 
-            commandText = commandText.Replace("{whereClause}", whereClause);
+            commandText = commandText.Replace("{columns}", string.Join(", ", aggregateColums));
 
-            return sqlRepository.SimpleAccess.ExecuteDynamic(commandText, commandType);
-        }
-
-        #endregion
-
-        #region GetSum
-        public static int GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int>> selector)
-            where TEntity : class, new()
-        {
-            return GetSum<TEntity, int>(sqlRepository, selector);
-        }
-
-        public static int? GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int?>> selector)
-            where TEntity : class, new()
-        {
-            return GetSum<TEntity, int?>(sqlRepository, selector);
-        }
-
-        public static long GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long>> selector)
-    where TEntity : class, new()
-        {
-            return GetSum<TEntity, long>(sqlRepository, selector);
-        }
-
-        public static long? GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long?>> selector)
-            where TEntity : class, new()
-        {
-            return GetSum<TEntity, long?>(sqlRepository, selector);
-        }
-
-        public static float GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float>> selector)
-            where TEntity : class, new()
-        {
-            return GetSum<TEntity, float>(sqlRepository, selector);
-        }
-
-        public static float? GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float?>> selector)
-            where TEntity : class, new()
-        {
-            return GetSum<TEntity, float?>(sqlRepository, selector);
-        }
-
-        public static decimal GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal>> selector)
-    where TEntity : class, new()
-        {
-            return GetSum<TEntity, decimal>(sqlRepository, selector);
-        }
-
-        public static decimal? GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal?>> selector)
-            where TEntity : class, new()
-        {
-            return GetSum<TEntity, decimal?>(sqlRepository, selector);
-        }
-
-        public static double GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double>> selector)
-    where TEntity : class, new()
-        {
-            return GetSum<TEntity, double>(sqlRepository, selector);
-        }
-
-        public static double? GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double?>> selector)
-            where TEntity : class, new()
-        {
-            return GetSum<TEntity, double?>(sqlRepository, selector);
-        }
-
-        private static TReturn GetSum<TEntity, TReturn>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TReturn>> selector)
-            where TEntity : class, new()
-        {
-            
-            var column = GetSingleSelectedProperty(selector);
-            return GetAggregateResult<TEntity, TReturn>(sqlRepository, "Sum", column, null);
-        }
-
-        public static int GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetSum<TEntity, int>(sqlRepository, selector, where);
-        }
-
-        public static int? GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetSum<TEntity, int?>(sqlRepository, selector, where);
-        }
-
-        public static long GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetSum<TEntity, long>(sqlRepository, selector, where);
-        }
-
-        public static long? GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetSum<TEntity, long?>(sqlRepository, selector, where);
-        }
-
-        public static float GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetSum<TEntity, float>(sqlRepository, selector, where);
-        }
-
-        public static float? GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetSum<TEntity, float?>(sqlRepository, selector, where);
-        }
-
-        public static decimal GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetSum<TEntity, decimal>(sqlRepository, selector, where);
-        }
-
-        public static decimal? GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetSum<TEntity, decimal?>(sqlRepository, selector, where);
-        }
-
-        public static double GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetSum<TEntity, double>(sqlRepository, selector, where);
-        }
-
-        public static double? GetSum<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetSum<TEntity, double?>(sqlRepository, selector, where);
-        }
-
-        public static TReturn GetSum<TEntity, TReturn>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TReturn>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetAggregateResult<TEntity, TReturn>(sqlRepository, "Sum", GetSingleSelectedProperty(selector), where);
-        }
-
-        public static dynamic GetSum<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector)
-            where TEntity : class, new()
-        {
-            return GetAggregateResult<TEntity>(sqlRepository, "Sum", selector, null);
-        }
-
-        public static dynamic GetSum<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetAggregateResult<TEntity>(sqlRepository, "Sum", selector, where);
-        }
-
-        #endregion
-
-        #region GetMin
-        public static int GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int>> selector)
-            where TEntity : class, new()
-        {
-            return GetMin<TEntity, int>(sqlRepository, selector);
-        }
-
-        public static int? GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int?>> selector)
-            where TEntity : class, new()
-        {
-            return GetMin<TEntity, int?>(sqlRepository, selector);
-        }
-
-        public static long GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long>> selector)
-    where TEntity : class, new()
-        {
-            return GetMin<TEntity, long>(sqlRepository, selector);
-        }
-
-        public static long? GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long?>> selector)
-            where TEntity : class, new()
-        {
-            return GetMin<TEntity, long?>(sqlRepository, selector);
-        }
-
-        public static float GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float>> selector)
-            where TEntity : class, new()
-        {
-            return GetMin<TEntity, float>(sqlRepository, selector);
-        }
-
-        public static float? GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float?>> selector)
-            where TEntity : class, new()
-        {
-            return GetMin<TEntity, float?>(sqlRepository, selector);
-        }
-
-        public static decimal GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal>> selector)
-    where TEntity : class, new()
-        {
-            return GetMin<TEntity, decimal>(sqlRepository, selector);
-        }
-
-        public static decimal? GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal?>> selector)
-            where TEntity : class, new()
-        {
-            return GetMin<TEntity, decimal?>(sqlRepository, selector);
-        }
-
-        public static double GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double>> selector)
-    where TEntity : class, new()
-        {
-            return GetMin<TEntity, double>(sqlRepository, selector);
-        }
-
-        public static double? GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double?>> selector)
-            where TEntity : class, new()
-        {
-            return GetMin<TEntity, double?>(sqlRepository, selector);
-        }
-
-        private static TReturn GetMin<TEntity, TReturn>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TReturn>> selector)
-            where TEntity : class, new()
-        {
-
-            var column = GetSingleSelectedProperty(selector);
-            return GetAggregateResult<TEntity, TReturn>(sqlRepository, "Min", column, null);
-        }
-
-        public static int GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMin<TEntity, int>(sqlRepository, selector, where);
-        }
-
-        public static int? GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMin<TEntity, int?>(sqlRepository, selector, where);
-        }
-
-        public static long GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMin<TEntity, long>(sqlRepository, selector, where);
-        }
-
-        public static long? GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMin<TEntity, long?>(sqlRepository, selector, where);
-        }
-
-        public static float GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMin<TEntity, float>(sqlRepository, selector, where);
-        }
-
-        public static float? GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMin<TEntity, float?>(sqlRepository, selector, where);
-        }
-
-        public static decimal GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMin<TEntity, decimal>(sqlRepository, selector, where);
-        }
-
-        public static decimal? GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMin<TEntity, decimal?>(sqlRepository, selector, where);
-        }
-
-        public static double GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMin<TEntity, double>(sqlRepository, selector, where);
-        }
-
-        public static double? GetMin<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMin<TEntity, double?>(sqlRepository, selector, where);
-        }
-
-        public static TReturn GetMin<TEntity, TReturn>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TReturn>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetAggregateResult<TEntity, TReturn>(sqlRepository, "Min", GetSingleSelectedProperty(selector), where);
-        }
-
-        public static dynamic GetMin<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector)
-            where TEntity : class, new()
-        {
-            return GetAggregateResult<TEntity>(sqlRepository, "Min", selector, null);
-        }
-
-        public static dynamic GetMin<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetAggregateResult<TEntity>(sqlRepository, "Min", selector, where);
-        }
-
-        #endregion
-
-
-        //public static dynamic GetMin<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector)
-        //    where TEntity : class, new()
-        //{
-        //    return GetAggregateResult<TEntity>(sqlRepository, "Min", selector, null);
-        //}
-
-        //public static dynamic GetMin<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector, Expression<Func<TEntity, bool>> where)
-        //    where TEntity : class, new()
-        //{
-        //    return GetAggregateResult<TEntity>(sqlRepository, "Min", selector, where);
-        //}
-
-        #region GetMax
-        public static int GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int>> selector)
-            where TEntity : class, new()
-        {
-            return GetMax<TEntity, int>(sqlRepository, selector);
-        }
-
-        public static int? GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int?>> selector)
-            where TEntity : class, new()
-        {
-            return GetMax<TEntity, int?>(sqlRepository, selector);
-        }
-
-        public static long GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long>> selector)
-    where TEntity : class, new()
-        {
-            return GetMax<TEntity, long>(sqlRepository, selector);
-        }
-
-        public static long? GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long?>> selector)
-            where TEntity : class, new()
-        {
-            return GetMax<TEntity, long?>(sqlRepository, selector);
-        }
-
-        public static float GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float>> selector)
-            where TEntity : class, new()
-        {
-            return GetMax<TEntity, float>(sqlRepository, selector);
-        }
-
-        public static float? GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float?>> selector)
-            where TEntity : class, new()
-        {
-            return GetMax<TEntity, float?>(sqlRepository, selector);
-        }
-
-        public static decimal GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal>> selector)
-    where TEntity : class, new()
-        {
-            return GetMax<TEntity, decimal>(sqlRepository, selector);
-        }
-
-        public static decimal? GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal?>> selector)
-            where TEntity : class, new()
-        {
-            return GetMax<TEntity, decimal?>(sqlRepository, selector);
-        }
-
-        public static double GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double>> selector)
-    where TEntity : class, new()
-        {
-            return GetMax<TEntity, double>(sqlRepository, selector);
-        }
-
-        public static double? GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double?>> selector)
-            where TEntity : class, new()
-        {
-            return GetMax<TEntity, double?>(sqlRepository, selector);
-        }
-
-        private static TReturn GetMax<TEntity, TReturn>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TReturn>> selector)
-            where TEntity : class, new()
-        {
-
-            var column = GetSingleSelectedProperty(selector);
-            return GetAggregateResult<TEntity, TReturn>(sqlRepository, "Max", column, null);
-        }
-
-        public static int GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMax<TEntity, int>(sqlRepository, selector, where);
-        }
-
-        public static int? GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMax<TEntity, int?>(sqlRepository, selector, where);
-        }
-
-        public static long GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMax<TEntity, long>(sqlRepository, selector, where);
-        }
-
-        public static long? GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMax<TEntity, long?>(sqlRepository, selector, where);
-        }
-
-        public static float GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMax<TEntity, float>(sqlRepository, selector, where);
-        }
-
-        public static float? GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMax<TEntity, float?>(sqlRepository, selector, where);
-        }
-
-        public static decimal GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMax<TEntity, decimal>(sqlRepository, selector, where);
-        }
-
-        public static decimal? GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMax<TEntity, decimal?>(sqlRepository, selector, where);
-        }
-
-        public static double GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMax<TEntity, double>(sqlRepository, selector, where);
-        }
-
-        public static double? GetMax<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetMax<TEntity, double?>(sqlRepository, selector, where);
-        }
-
-        public static TReturn GetMax<TEntity, TReturn>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TReturn>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetAggregateResult<TEntity, TReturn>(sqlRepository, "Max", GetSingleSelectedProperty(selector), where);
-        }
-
-        public static dynamic GetMax<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector)
-            where TEntity : class, new()
-        {
-            return GetAggregateResult<TEntity>(sqlRepository, "Max", selector, null);
-        }
-
-        public static dynamic GetMax<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetAggregateResult<TEntity>(sqlRepository, "Max", selector, where);
-        }
-
-        #endregion
-
-
-        //public static dynamic GetMax<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector)
-        //    where TEntity : class, new()
-        //{
-        //    return GetAggregateResult<TEntity>(sqlRepository, "Max", selector, null);
-        //}
-
-        //public static dynamic GetMax<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector, Expression<Func<TEntity, bool>> where)
-        //    where TEntity : class, new()
-        //{
-        //    return GetAggregateResult<TEntity>(sqlRepository, "Max", selector, where);
-        //}
-
-
-        #region GetAvg
-        public static int GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int>> selector)
-            where TEntity : class, new()
-        {
-            return GetAvg<TEntity, int>(sqlRepository, selector);
-        }
-
-        public static int? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int?>> selector)
-            where TEntity : class, new()
-        {
-            return GetAvg<TEntity, int?>(sqlRepository, selector);
-        }
-
-        public static long GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long>> selector)
-    where TEntity : class, new()
-        {
-            return GetAvg<TEntity, long>(sqlRepository, selector);
-        }
-
-        public static long? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long?>> selector)
-            where TEntity : class, new()
-        {
-            return GetAvg<TEntity, long?>(sqlRepository, selector);
-        }
-
-        public static float GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float>> selector)
-            where TEntity : class, new()
-        {
-            return GetAvg<TEntity, float>(sqlRepository, selector);
-        }
-
-        public static float? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float?>> selector)
-            where TEntity : class, new()
-        {
-            return GetAvg<TEntity, float?>(sqlRepository, selector);
-        }
-
-        public static decimal GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal>> selector)
-    where TEntity : class, new()
-        {
-            return GetAvg<TEntity, decimal>(sqlRepository, selector);
-        }
-
-        public static decimal? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal?>> selector)
-            where TEntity : class, new()
-        {
-            return GetAvg<TEntity, decimal?>(sqlRepository, selector);
-        }
-
-        public static double GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double>> selector)
-    where TEntity : class, new()
-        {
-            return GetAvg<TEntity, double>(sqlRepository, selector);
-        }
-
-        public static double? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double?>> selector)
-            where TEntity : class, new()
-        {
-            return GetAvg<TEntity, double?>(sqlRepository, selector);
-        }
-
-        private static TReturn GetAvg<TEntity, TReturn>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TReturn>> selector)
-            where TEntity : class, new()
-        {
-
-            var column = GetSingleSelectedProperty(selector);
-            return GetAggregateResult<TEntity, TReturn>(sqlRepository, "Avg", column, null);
-        }
-
-        public static int GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetAvg<TEntity, int>(sqlRepository, selector, where);
-        }
-
-        public static int? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetAvg<TEntity, int?>(sqlRepository, selector, where);
-        }
-
-        public static long GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetAvg<TEntity, long>(sqlRepository, selector, where);
-        }
-
-        public static long? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetAvg<TEntity, long?>(sqlRepository, selector, where);
-        }
-
-        public static float GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetAvg<TEntity, float>(sqlRepository, selector, where);
-        }
-
-        public static float? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetAvg<TEntity, float?>(sqlRepository, selector, where);
-        }
-
-        public static decimal GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetAvg<TEntity, decimal>(sqlRepository, selector, where);
-        }
-
-        public static decimal? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetAvg<TEntity, decimal?>(sqlRepository, selector, where);
-        }
-
-        public static double GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetAvg<TEntity, double>(sqlRepository, selector, where);
-        }
-
-        public static double? GetAvg<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double?>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetAvg<TEntity, double?>(sqlRepository, selector, where);
-        }
-
-        public static TReturn GetAvg<TEntity, TReturn>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TReturn>> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetAggregateResult<TEntity, TReturn>(sqlRepository, "Avg", GetSingleSelectedProperty(selector), where);
-        }
-
-        public static dynamic GetAvg<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector)
-            where TEntity : class, new()
-        {
-            return GetAggregateResult<TEntity>(sqlRepository, "Avg", selector, null);
-        }
-
-        public static dynamic GetAvg<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            return GetAggregateResult<TEntity>(sqlRepository, "Avg", selector, where);
-        }
-
-        #endregion
-
-
-        //public static dynamic GetAvg<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector)
-        //    where TEntity : class, new()
-        //{
-        //    return GetAggregateResult<TEntity>(sqlRepository, "Avg", selector, null);
-        //}
-
-        //public static dynamic GetAvg<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> selector, Expression<Func<TEntity, bool>> where)
-        //    where TEntity : class, new()
-        //{
-        //    return GetAggregateResult<TEntity>(sqlRepository, "Avg", selector, where);
-        //}
-
-        private static dynamic GetAggregateResult<TEntity>(this ISqlRepository sqlRepository, string function
-            , Func<TEntity, object> selector, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-            if (selector == null) throw new NullReferenceException($"{nameof(selector)} cannot be null");
-
-
-            string commandText = "SELECT  {columns} FROM {table} {whereClause}";
             string whereClause = "";
             if (sqlRepository is SqlSpRepository)
             {
@@ -766,48 +284,168 @@ namespace SimpleAccess.SqlServer
                 commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
                 whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
             }
-
-            CommandType commandType = CommandType.Text;
-            var selectProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(selector));
-
-            commandText = commandText.Replace("{columns}", string.Join(", ", selectProperties.Values.Select(p => $"{function}({p.Name}) AS {function}Of{p.Name}")));
-
             commandText = commandText.Replace("{whereClause}", whereClause);
 
-            return sqlRepository.SimpleAccess.ExecuteDynamic(commandText, commandType);
-        }
-
-        private static TReturn GetAggregateResult<TEntity, TReturn>(this ISqlRepository sqlRepository, string function
-            , string selectColumn, Expression<Func<TEntity, bool>> where)
-            where TEntity : class, new()
-        {
-
-            string commandText = "SELECT  {columns} FROM {table} {whereClause}";
-            string whereClause = "";
-            if (sqlRepository is SqlSpRepository)
+            if (having != null)
             {
-                var entityInfo = SqlSpRepositorySetting.GetEntityInfo(typeof(TEntity));
-                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
-                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+                var havingBuilder = new HavingBuilder<TEntity>();
+                having.Invoke(havingBuilder);
+                commandText = commandText.Replace("{havingClause}", havingBuilder.GetHaving());
             }
             else
             {
-                var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
-                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
-                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+                commandText = commandText.Replace("{havingClause}", "");
             }
 
-            CommandType commandType = CommandType.Text;
+            var result = sqlRepository.SimpleAccess.ExecuteDynamics(commandText, CommandType.Text);
 
-            commandText = commandText.Replace("{columns}", $"{function}({selectColumn}) AS Value");
+            return result;
 
-            commandText = commandText.Replace("{whereClause}", whereClause);
-
-            return sqlRepository.SimpleAccess.ExecuteScalar<TReturn>(commandText, commandType);
         }
 
-
         #endregion
+        public class HavingBuilder<TEntity>
+            where TEntity : class, new()
+        {
+            private string _having = "";
+            public HavingBuilder<TEntity> Sum<TKey>(Expression<Func<TEntity, TKey>> selector)
+            {
+                var column = GetSingleSelectedProperty(selector);
+
+                _having += $" SUM({column}) ";
+
+                return this;
+            }
+            public HavingBuilder<TEntity> Count<TKey>(Expression<Func<TEntity, TKey>> selector)
+            {
+                var column = GetSingleSelectedProperty(selector);
+
+                _having += $" COUNT({column}) ";
+
+                return this;
+            }
+            public HavingBuilder<TEntity> Min<TKey>(Expression<Func<TEntity, TKey>> selector)
+            {
+                var column = GetSingleSelectedProperty(selector);
+
+                _having += $" MIN({column}) ";
+
+                return this;
+            }
+            public HavingBuilder<TEntity> Max<TKey>(Expression<Func<TEntity, TKey>> selector)
+            {
+                var column = GetSingleSelectedProperty(selector);
+
+                _having += $" MAX({column}) ";
+
+                return this;
+            }
+            public HavingBuilder<TEntity> Average<TKey>(Expression<Func<TEntity, TKey>> selector)
+            {
+                var column = GetSingleSelectedProperty(selector);
+
+                _having += $" AVG({column}) ";
+                
+                return this;
+            }
+            public HavingBuilder<TEntity> GreaterThan()
+            {
+                _having += " > ";
+
+                return this;
+            }
+            public HavingBuilder<TEntity> GreaterThan<T>(T value)
+            {
+                _having += $" > {value.ToString().Replace("'", "''")}";
+
+                return this;
+            }
+
+            public HavingBuilder<TEntity> GreaterThanEqualTo()
+            {
+                _having += " >= ";
+
+                return this;
+            }
+            public HavingBuilder<TEntity> GreaterThanEqualTo<T>(T value)
+            {
+                _having += $" >= {value.ToString().Replace("'", "''")}";
+
+                return this;
+            }
+
+            public HavingBuilder<TEntity> LessThan()
+            {
+
+                _having += $" < ";
+
+                return this;
+            }
+            public HavingBuilder<TEntity> LessThan<T>(T value)
+            {
+                _having += $" < {value.ToString().Replace("'", "''")}";
+
+                return this;
+            }
+
+            public HavingBuilder<TEntity> LessThanEqualTo()
+            {
+
+                _having += $" <= ";
+
+                return this;
+            }
+            public HavingBuilder<TEntity> LessThanEqualTo<T>(T value)
+            {
+                _having += $" <= {value.ToString().Replace("'", "''")}";
+
+                return this;
+            }
+
+            public HavingBuilder<TEntity> EqualTo()
+            {
+                _having += " = ";
+
+                return this;
+            }
+            public HavingBuilder<TEntity> EqualTo<T>(T value)
+            {
+                _having += $" = {value.ToString().Replace("'", "''")}";
+
+                return this;
+            }
+            public HavingBuilder<TEntity> NotEqualTo()
+            {
+                _having += $" <> ";
+
+                return this;
+            }
+            public HavingBuilder<TEntity> NotEqualTo<T>(T value)
+            {
+                _having += $" <> {value.ToString().Replace("'", "''")}";
+
+                return this;
+            }
+            public HavingBuilder<TEntity> And()
+            {
+                _having += $" AND ";
+
+                return this;
+            }
+            public HavingBuilder<TEntity> Or()
+            {
+                _having += $" OR ";
+
+                return this;
+            }
+
+            public string GetHaving()
+            {
+                return " HAVING " + _having ;
+            }
+        }
 
     }
+
+
 }

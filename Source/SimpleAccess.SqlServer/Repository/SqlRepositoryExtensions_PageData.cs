@@ -481,7 +481,7 @@ namespace SimpleAccess.SqlServer
             {
                 commandText = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity)).SqlBuilder.GetGetPagedListStatement();
 
-                if (distinct) commandText = commandText.Replace("SELECT {{", "SELECT DISTINCT {{");
+                if (distinct) commandText = commandText.Replace("SELECT {", "SELECT DISTINCT {");
 
                 if (select != null)
                 {
