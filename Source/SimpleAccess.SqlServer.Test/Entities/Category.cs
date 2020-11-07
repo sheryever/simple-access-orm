@@ -15,5 +15,7 @@ namespace SimpleAccess.SqlServer.TestNetCore2.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        [NotMapped]
+        public int? DummyField { get; set; }
     }
 }

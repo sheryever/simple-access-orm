@@ -20,34 +20,6 @@ namespace SimpleAccess.SqlServer
 
 #if !NET40
 
-        public static Task<PagedData<dynamic>> GetDynamicPagedListAsync<TEntity>(this ISqlRepository sqlRepository, int startIndex, int pageSize)
-            where TEntity : class, new()
-        {
-            var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize);
-            return GetDynamicPagedListAsync<TEntity>(sqlRepository, false, null, pagedListParameters.GetParametersToExecute());
-        }
-
-        public static Task<PagedData<dynamic>> GetDynamicPagedListAsync<TEntity>(this ISqlRepository sqlRepository, bool distinct, int startIndex, int pageSize)
-            where TEntity : class, new()
-        {
-            var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize);
-            return GetDynamicPagedListAsync<TEntity>(sqlRepository, distinct, null, pagedListParameters.GetParametersToExecute());
-        }
-
-        public static Task<PagedData<dynamic>> GetDynamicPagedListAsync<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> select, int startIndex, int pageSize)
-            where TEntity : class, new()
-        {
-            var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize);
-            return GetDynamicPagedListAsync<TEntity>(sqlRepository, false, select, pagedListParameters.GetParametersToExecute());
-        }
-
-        public static Task<PagedData<dynamic>> GetDynamicPagedListAsync<TEntity>(this ISqlRepository sqlRepository, bool distinct, Func<TEntity, object> select, int startIndex, int pageSize)
-            where TEntity : class, new()
-        {
-            var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize);
-            return GetDynamicPagedListAsync<TEntity>(sqlRepository, distinct, select, pagedListParameters.GetParametersToExecute());
-        }
-
         public static Task<PagedData<dynamic>> GetDynamicPagedListAsync<TEntity>(this ISqlRepository sqlRepository, int startIndex, int pageSize, string sortExpression)
             where TEntity : class, new()
         {
@@ -164,7 +136,7 @@ namespace SimpleAccess.SqlServer
                 }
                 else
                 {
-                    commandText = commandText.Replace("{sortExpression}", "");
+                    throw new Exception("sortExpression parameter is required.");
                 }
 
                 commandType = CommandType.Text;
@@ -193,19 +165,6 @@ namespace SimpleAccess.SqlServer
             return pagedData;
         }
 
-
-        public static Task<PagedData<TEntity>> GetEntitiesPagedListAsync<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> select, string whereClause, int startIndex, int pageSize)
-          where TEntity : class, new()
-        {
-            var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize);
-            return GetEntitiesPagedListAsync<TEntity>(sqlRepository, false, select, whereClause, pagedListParameters.GetParametersToExecute());
-        }
-        public static Task<PagedData<TEntity>> GetEntitiesPagedListAsync<TEntity>(this ISqlRepository sqlRepository, bool distinct, Func<TEntity, object> select, string whereClause, int startIndex, int pageSize)
-            where TEntity : class, new()
-        {
-            var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize);
-            return GetEntitiesPagedListAsync<TEntity>(sqlRepository, distinct, select, whereClause, pagedListParameters.GetParametersToExecute());
-        }
         public static Task<PagedData<TEntity>> GetEntitiesPagedListAsync<TEntity>(this ISqlRepository sqlRepository, string whereClause, int startIndex, int pageSize, string sortExpression)
             where TEntity : class, new()
         {
@@ -326,7 +285,7 @@ namespace SimpleAccess.SqlServer
                 }
                 else
                 {
-                    commandText = commandText.Replace("{sortExpression}", "");
+                    throw new Exception("sortExpression parameter is required.");
                 }
 
 
@@ -367,34 +326,6 @@ namespace SimpleAccess.SqlServer
         }
 #endif
 
-
-        public static PagedData<dynamic> GetDynamicPagedList<TEntity>(this ISqlRepository sqlRepository, int startIndex, int pageSize)
-            where TEntity : class, new()
-        {
-            var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize);
-            return GetDynamicPagedList<TEntity>(sqlRepository, false, null, pagedListParameters.GetParametersToExecute());
-        }
-
-        public static PagedData<dynamic> GetDynamicPagedList<TEntity>(this ISqlRepository sqlRepository, bool distinct, int startIndex, int pageSize)
-            where TEntity : class, new()
-        {
-            var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize);
-            return GetDynamicPagedList<TEntity>(sqlRepository, distinct, null, pagedListParameters.GetParametersToExecute());
-        }
-
-        public static PagedData<dynamic> GetDynamicPagedList<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> select, int startIndex, int pageSize)
-            where TEntity : class, new()
-        {
-            var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize);
-            return GetDynamicPagedList<TEntity>(sqlRepository, false, select, pagedListParameters.GetParametersToExecute());
-        }
-
-        public static PagedData<dynamic> GetDynamicPagedList<TEntity>(this ISqlRepository sqlRepository, bool distinct, Func<TEntity, object> select, int startIndex, int pageSize)
-            where TEntity : class, new()
-        {
-            var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize);
-            return GetDynamicPagedList<TEntity>(sqlRepository, distinct, select, pagedListParameters.GetParametersToExecute());
-        }
 
         public static PagedData<dynamic> GetDynamicPagedList<TEntity>(this ISqlRepository sqlRepository, int startIndex, int pageSize, string sortExpression)
             where TEntity : class, new()
@@ -506,7 +437,7 @@ namespace SimpleAccess.SqlServer
                 }
                 else
                 {
-                    commandText = commandText.Replace("{sortExpression}", "");
+                    throw new Exception("sortExpression parameter is required.");
                 }
 
                 commandType = CommandType.Text;
@@ -535,18 +466,6 @@ namespace SimpleAccess.SqlServer
             return pagedData;
         }
 
-        public static PagedData<TEntity> GetEntitiesPagedList<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> select, string whereClause, int startIndex, int pageSize)
-            where TEntity : class, new()
-        {
-            var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize);
-            return GetEntitiesPagedList<TEntity>(sqlRepository, false, select, whereClause, pagedListParameters.GetParametersToExecute());
-        }
-        public static PagedData<TEntity> GetEntitiesPagedList<TEntity>(this ISqlRepository sqlRepository, bool distinct, Func<TEntity, object> select, string whereClause, int startIndex, int pageSize)
-            where TEntity : class, new()
-        {
-            var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize);
-            return GetEntitiesPagedList<TEntity>(sqlRepository, distinct, select, whereClause, pagedListParameters.GetParametersToExecute());
-        }
         public static PagedData<TEntity> GetEntitiesPagedList<TEntity>(this ISqlRepository sqlRepository, string whereClause, int startIndex, int pageSize, string sortExpression)
             where TEntity : class, new()
         {
@@ -667,7 +586,7 @@ namespace SimpleAccess.SqlServer
                 }
                 else
                 {
-                    commandText = commandText.Replace("{sortExpression}", "");
+                    throw new Exception("sortExpression parameter is required.");
                 }
 
 

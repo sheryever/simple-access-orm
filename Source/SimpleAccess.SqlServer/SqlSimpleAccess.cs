@@ -60,7 +60,7 @@ namespace SimpleAccess.SqlServer
                 DefaultLogger = new SimpleLogger()
             };
             _sqlConnection = sqlConnection;
-
+            DefaultConnectionString = _sqlConnection.ConnectionString;
         }
 
         /// <summary> Constructor. </summary>
@@ -72,6 +72,8 @@ namespace SimpleAccess.SqlServer
         {
             DefaultSimpleAccessSettings = new SimpleAccessSettings(defaultCommandType);
             _sqlConnection = sqlConnection;
+            DefaultConnectionString = _sqlConnection.ConnectionString;
+
         }
 
         /// <summary> Constructor. </summary>
@@ -85,6 +87,8 @@ namespace SimpleAccess.SqlServer
             DefaultSimpleAccessSettings.DbCommandTimeout = defaultSimpleAccessSettings.DbCommandTimeout;
 
             _sqlConnection = sqlConnection;
+            DefaultConnectionString = _sqlConnection.ConnectionString;
+
         }
 
         /// <summary> Constructor. </summary>
@@ -1590,8 +1594,8 @@ namespace SimpleAccess.SqlServer
         /// <returns> The new connection. </returns>
         public SqlConnection GetNewConnection()
         {
-            //return new SqlConnection(DefaultConnectionString);
-            return new SqlConnection(_sqlConnection.ConnectionString);
+            return new SqlConnection(DefaultConnectionString);
+            //return new SqlConnection(_sqlConnection.ConnectionString);
         }
 
         /// <summary> Close the current open connection. </summary>

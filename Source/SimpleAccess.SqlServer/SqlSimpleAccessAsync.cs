@@ -1452,7 +1452,7 @@ namespace SimpleAccess.SqlServer
         /// <returns> The new command. </returns>
         public SqlCommand CreateCommandForAsync(string commandText, CommandType commandType, params SqlParameter[] sqlParameters)
         {
-            var connection = new SqlConnection(_sqlConnection.ConnectionString);
+            var connection = new SqlConnection(DefaultConnectionString);
             var dbCommand = connection.CreateCommand();
             dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
             dbCommand.CommandType = commandType;

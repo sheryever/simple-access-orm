@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
     <TargetFrameworks>net40;net45;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>3.1.0-rc-7.7</Version>
+    <Version>3.1.0-rc-8</Version>
     <Product>SimpleAccess Sql Server ORM</Product>
     <Description>Simple Access ORM provides database access in Ado.net methods naming pattern.
 Documentation of using SimpleAccess is available at https://simpleaccessorm.com
@@ -35,15 +35,19 @@ Changes:
 - IgnoreSelect, IgnoreInsert, IgnoreUpdate and NotMapped property attributes support implemente for Repositories
 - Aggregate functions (Count, Sum, Min, Max and Avg) extensions added to SqlRepository extension methods
 - GetAggregate and GetAggregateWithGroupBy functions extensions added to SqlRepository extension methods
+- IsExist function extension added with
+- 20 more overloads added for GetCount extensions method
 
 Bug fixes
 - SqlEntityRepository Get, Find, FindAll methods fixed
 - Insert is not working with Indentity column
 - Sql Server Keywords cannot be used as table column
 - ExecuteScalar do not support nullable types
-- Where expression throw null exception when using != operator</PackageReleaseNotes>
-    <AssemblyVersion>3.1.0.19</AssemblyVersion>
-    <FileVersion>3.1.0.19</FileVersion>
+- Where expression throw null exception when using != operator
+- ConnectionString lost user credential bug fixed
+- Issue #9: SqlRepository.FindAll is throwing NullReference exception if the lambda parameter is nullable property</PackageReleaseNotes>
+    <AssemblyVersion>3.1.0.22</AssemblyVersion>
+    <FileVersion>3.1.0.22</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">

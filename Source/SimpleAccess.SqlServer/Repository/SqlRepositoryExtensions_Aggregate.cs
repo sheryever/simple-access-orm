@@ -12,6 +12,7 @@ using System.Linq.Expressions;
 using SimpleAccess.Core.Entity.RepoWrapper;
 using System.Security.Cryptography;
 using System.Runtime.InteropServices;
+using SimpleAccess.Core.Entity;
 
 namespace SimpleAccess.SqlServer
 {
@@ -25,259 +26,356 @@ namespace SimpleAccess.SqlServer
 
         #region Aggregate functions
 
-//        public static dynamic GetAggregate<TEntity>(this ISqlRepository sqlRepository
-//            , Func<TEntity, object> countOf = null, Func<TEntity, object> sumOf = null
-//            , Func<TEntity, object> minOf = null, Func<TEntity, object> maxOf = null
-//            , Func<TEntity, object> avgOf = null
-//            , Expression<Func<TEntity, bool>> where = null
-//            , Action<HavingBuilder<TEntity>> having = null)
-//            where TEntity : class, new()
-//        {
-//            return GetAggregateWithGroupBy<TEntity>(sqlRepository, countOf, sumOf, minOf, maxOf, avgOf, where, null, having).FirstOrDefault();
-//        }
+        //        public static dynamic GetAggregate<TEntity>(this ISqlRepository sqlRepository
+        //            , Func<TEntity, object> countOf = null, Func<TEntity, object> sumOf = null
+        //            , Func<TEntity, object> minOf = null, Func<TEntity, object> maxOf = null
+        //            , Func<TEntity, object> avgOf = null
+        //            , Expression<Func<TEntity, bool>> where = null
+        //            , Action<HavingBuilder<TEntity>> having = null)
+        //            where TEntity : class, new()
+        //        {
+        //            return GetAggregateWithGroupBy<TEntity>(sqlRepository, countOf, sumOf, minOf, maxOf, avgOf, where, null, having).FirstOrDefault();
+        //        }
 
-//        public static IEnumerable<dynamic> GetAggregateWithGroupBy<TEntity>(this ISqlRepository sqlRepository
-//            , Func<TEntity, object> countOf = null, Func<TEntity, object> sumOf = null
-//            , Func<TEntity, object> minOf = null, Func<TEntity, object> maxOf = null
-//            , Func<TEntity, object> avgOf = null
-//            , Expression<Func<TEntity, bool>> where = null
-//            , Func<TEntity, object> groupBy = null
-//            , Action<HavingBuilder<TEntity>> having = null)
-//            where TEntity : class, new()
-//        {
+        //        public static IEnumerable<dynamic> GetAggregateWithGroupBy<TEntity>(this ISqlRepository sqlRepository
+        //            , Func<TEntity, object> countOf = null, Func<TEntity, object> sumOf = null
+        //            , Func<TEntity, object> minOf = null, Func<TEntity, object> maxOf = null
+        //            , Func<TEntity, object> avgOf = null
+        //            , Expression<Func<TEntity, bool>> where = null
+        //            , Func<TEntity, object> groupBy = null
+        //            , Action<HavingBuilder<TEntity>> having = null)
+        //            where TEntity : class, new()
+        //        {
 
-//            if (countOf == null && sumOf == null && minOf == null && maxOf == null && avgOf == null )
-//            {
-//                throw new NullReferenceException($"At least one must be provided {nameof(countOf)}, {nameof(sumOf)}, {nameof(minOf)},{nameof(maxOf)}, {nameof(avgOf)}");
-//            }
+        //            if (countOf == null && sumOf == null && minOf == null && maxOf == null && avgOf == null )
+        //            {
+        //                throw new NullReferenceException($"At least one must be provided {nameof(countOf)}, {nameof(sumOf)}, {nameof(minOf)},{nameof(maxOf)}, {nameof(avgOf)}");
+        //            }
 
-//            string commandText = 
-//@"SELECT {groupByColumns}, {columns} 
-//    FROM {table} 
-//    {whereClause} 
-//    {groupByClause} 
-//    {havingClause}";
+        //            string commandText = 
+        //@"SELECT {groupByColumns}, {columns} 
+        //    FROM {table} 
+        //    {whereClause} 
+        //    {groupByClause} 
+        //    {havingClause}";
 
-//            var aggregateColums = new List<string>();
+        //            var aggregateColums = new List<string>();
 
-//            if (groupBy != null)
-//            {
-//                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(groupBy));
+        //            if (groupBy != null)
+        //            {
+        //                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(groupBy));
 
-//                commandText = commandText.Replace("{groupByColumns}", string.Join(", ", groupByProperties.Select(g => g.Value.Name)));
-//                commandText = commandText.Replace("{groupByClause}", "GROUP BY " + string.Join(", ", groupByProperties.Select(g => g.Value.Name)));
+        //                commandText = commandText.Replace("{groupByColumns}", string.Join(", ", groupByProperties.Select(g => g.Value.Name)));
+        //                commandText = commandText.Replace("{groupByClause}", "GROUP BY " + string.Join(", ", groupByProperties.Select(g => g.Value.Name)));
 
-//            }
-//            else
-//            {
-//                commandText = commandText.Replace("{groupBy}", "");
-//            }
+        //            }
+        //            else
+        //            {
+        //                commandText = commandText.Replace("{groupBy}", "");
+        //            }
 
-//            if (countOf != null)
-//            {
-//                var returnedType = countOf.Invoke(new TEntity());
+        //            if (countOf != null)
+        //            {
+        //                var returnedType = countOf.Invoke(new TEntity());
 
-//                if (returnedType is TEntity)
-//                {
-//                    aggregateColums.Add("COUNT(*) as CountOfAll");
+        //                if (returnedType is TEntity)
+        //                {
+        //                    aggregateColums.Add("COUNT(*) as CountOfAll");
 
-//                }
-//                else
-//                {
-//                    var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(countOf));
+        //                }
+        //                else
+        //                {
+        //                    var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(countOf));
 
-//                    aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"COUNT({c.Value.Name}) as CountOf{c.Value.Name}")));
+        //                    aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"COUNT({c.Value.Name}) as CountOf{c.Value.Name}")));
 
-//                }
-//            }
+        //                }
+        //            }
 
-//            if (sumOf != null)
-//            {
-//                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(sumOf));
+        //            if (sumOf != null)
+        //            {
+        //                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(sumOf));
 
-//                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"SUM({c.Value.Name}) as SumOf{c.Value.Name}")));
-//            }
+        //                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"SUM({c.Value.Name}) as SumOf{c.Value.Name}")));
+        //            }
 
-//            if (minOf != null)
-//            {
-//                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(minOf));
+        //            if (minOf != null)
+        //            {
+        //                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(minOf));
 
-//                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"MIN({c.Value.Name}) as MinOf{c.Value.Name}")));
-//            }
+        //                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"MIN({c.Value.Name}) as MinOf{c.Value.Name}")));
+        //            }
 
-//            if (maxOf != null)
-//            {
-//                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(maxOf));
+        //            if (maxOf != null)
+        //            {
+        //                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(maxOf));
 
-//                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"MAX({c.Value.Name}) as MaxOf{c.Value.Name}")));
-//            }
+        //                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"MAX({c.Value.Name}) as MaxOf{c.Value.Name}")));
+        //            }
 
-//            if (avgOf != null)
-//            {
-//                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(avgOf));
+        //            if (avgOf != null)
+        //            {
+        //                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(avgOf));
 
-//                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"AVG({c.Value.Name}) as AvgOf{c.Value.Name}")));
-//            }
+        //                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"AVG({c.Value.Name}) as AvgOf{c.Value.Name}")));
+        //            }
 
-//            commandText = commandText.Replace("{columns}", string.Join(", ", aggregateColums));
+        //            commandText = commandText.Replace("{columns}", string.Join(", ", aggregateColums));
 
-//            string whereClause = "";
-//            if (sqlRepository is SqlSpRepository)
-//            {
-//                var entityInfo = SqlSpRepositorySetting.GetEntityInfo(typeof(TEntity));
-//                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
-//                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
-//            }
-//            else
-//            {
-//                var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
-//                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
-//                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
-//            }
-//            commandText = commandText.Replace("{whereClause}", whereClause);
+        //            string whereClause = "";
+        //            if (sqlRepository is SqlSpRepository)
+        //            {
+        //                var entityInfo = SqlSpRepositorySetting.GetEntityInfo(typeof(TEntity));
+        //                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
+        //                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+        //            }
+        //            else
+        //            {
+        //                var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
+        //                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
+        //                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+        //            }
+        //            commandText = commandText.Replace("{whereClause}", whereClause);
 
-//            if (having != null)
-//            {
-//                var havingBuilder = new HavingBuilder<TEntity>();
-//                having.Invoke(havingBuilder);
-//                commandText = commandText.Replace("{havingClause}", havingBuilder.GetHaving());
-//            }
-//            else
-//            {
-//                commandText = commandText.Replace("{havingClause}", "");
-//            }
+        //            if (having != null)
+        //            {
+        //                var havingBuilder = new HavingBuilder<TEntity>();
+        //                having.Invoke(havingBuilder);
+        //                commandText = commandText.Replace("{havingClause}", havingBuilder.GetHaving());
+        //            }
+        //            else
+        //            {
+        //                commandText = commandText.Replace("{havingClause}", "");
+        //            }
 
-//            var result = sqlRepository.SimpleAccess.ExecuteDynamics(commandText, CommandType.Text);
+        //            var result = sqlRepository.SimpleAccess.ExecuteDynamics(commandText, CommandType.Text);
 
-//            return result;
+        //            return result;
 
-//        }
-
-
-        public static dynamic GetAggregate<TEntity>(this ISqlRepository sqlRepository
-            , Func<TEntity, object> countOf = null, Func<TEntity, object> sumOf = null
-            , Func<TEntity, object> minOf = null, Func<TEntity, object> maxOf = null
-            , Func<TEntity, object> avgOf = null
-            , Expression<Func<TEntity, bool>> where = null
-            , Expression<Func<Aggregator<TEntity>, bool>> having = null)
-            where TEntity : class, new()
-        {
-            return GetAggregateWithGroupBy<TEntity>(sqlRepository, countOf, sumOf, minOf, maxOf, avgOf, where, null, having).FirstOrDefault();
-        }
-
-        public static IEnumerable<dynamic> GetAggregateWithGroupBy<TEntity>(this ISqlRepository sqlRepository
-            , Func<TEntity, object> countOf = null, Func<TEntity, object> sumOf = null
-            , Func<TEntity, object> minOf = null, Func<TEntity, object> maxOf = null
-            , Func<TEntity, object> avgOf = null
-            , Expression<Func<TEntity, bool>> where = null
-            , Func<TEntity, object> groupBy = null
-            , Expression<Func<Aggregator<TEntity>, bool>> having = null)
-            where TEntity : class, new()
-        {
-
-            if (countOf == null && sumOf == null && minOf == null && maxOf == null && avgOf == null)
-            {
-                throw new NullReferenceException($"At least one must be provided {nameof(countOf)}, {nameof(sumOf)}, {nameof(minOf)},{nameof(maxOf)}, {nameof(avgOf)}");
-            }
-
-            string commandText =
-@"SELECT {groupByColumns}, {columns} 
-    FROM {table} 
-    {whereClause} 
-    {groupByClause} 
-    {havingClause}";
-
-            var aggregateColums = new List<string>();
-
-            if (groupBy != null)
-            {
-                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(groupBy));
-
-                commandText = commandText.Replace("{groupByColumns}", string.Join(", ", groupByProperties.Select(g => g.Value.Name)));
-                commandText = commandText.Replace("{groupByClause}", "GROUP BY " + string.Join(", ", groupByProperties.Select(g => g.Value.Name)));
-
-            }
-            else
-            {
-                commandText = commandText.Replace("{groupBy}", "");
-            }
-
-            if (countOf != null)
-            {
-                var returnedType = countOf.Invoke(new TEntity());
-
-                if (returnedType is TEntity)
-                {
-                    aggregateColums.Add("COUNT(*) as CountOfAll");
-
-                }
-                else
-                {
-                    var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(countOf));
-
-                    aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"COUNT({c.Value.Name}) as CountOf{c.Value.Name}")));
-
-                }
-            }
-
-            if (sumOf != null)
-            {
-                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(sumOf));
-
-                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"SUM({c.Value.Name}) as SumOf{c.Value.Name}")));
-            }
-
-            if (minOf != null)
-            {
-                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(minOf));
-
-                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"MIN({c.Value.Name}) as MinOf{c.Value.Name}")));
-            }
-
-            if (maxOf != null)
-            {
-                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(maxOf));
-
-                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"MAX({c.Value.Name}) as MaxOf{c.Value.Name}")));
-            }
-
-            if (avgOf != null)
-            {
-                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(avgOf));
-
-                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"AVG({c.Value.Name}) as AvgOf{c.Value.Name}")));
-            }
-
-            commandText = commandText.Replace("{columns}", string.Join(", ", aggregateColums));
-
-            string whereClause = "", havingClause ="";
-            if (sqlRepository is SqlSpRepository)
-            {
-                var entityInfo = SqlSpRepositorySetting.GetEntityInfo(typeof(TEntity));
-                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
-                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
-                havingClause = having == null ? "" : DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
-
-                DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
-            }
-            else
-            {
-                var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
-                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
-                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
-                havingClause = having == null ? "" : DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
-
-            }
-            commandText = commandText.Replace("{whereClause}", whereClause);
-
-            commandText = commandText.Replace("{havingClause}", havingClause);
+        //        }
 
 
-            var result = sqlRepository.SimpleAccess.ExecuteDynamics(commandText, CommandType.Text);
+        //        public static dynamic GetAggregate<TEntity>(this ISqlRepository sqlRepository
+        //            , Func<TEntity, object> countOf = null, Func<TEntity, object> sumOf = null
+        //            , Func<TEntity, object> minOf = null, Func<TEntity, object> maxOf = null
+        //            , Func<TEntity, object> avgOf = null
+        //            , Expression<Func<TEntity, bool>> where = null
+        //            , Expression<Func<Aggregator<TEntity>, bool>> having = null)
+        //            where TEntity : class, new()
+        //        {
+        //            return GetAggregateWithGroupBy<TEntity>(sqlRepository, countOf, sumOf, minOf, maxOf, avgOf, where, null, having).FirstOrDefault();
+        //        }
 
-            return result;
+        //        public static IEnumerable<dynamic> GetAggregateWithGroupBy<TEntity>(this ISqlRepository sqlRepository
+        //            , Func<TEntity, object> countOf = null, Func<TEntity, object> sumOf = null
+        //            , Func<TEntity, object> minOf = null, Func<TEntity, object> maxOf = null
+        //            , Func<TEntity, object> avgOf = null
+        //            , Expression<Func<TEntity, bool>> where = null
+        //            , Func<TEntity, object> groupBy = null
+        //            , Expression<Func<Aggregator<TEntity>, bool>> having = null)
+        //            where TEntity : class, new()
+        //        {
 
-        }
+        //            if (countOf == null && sumOf == null && minOf == null && maxOf == null && avgOf == null)
+        //            {
+        //                throw new NullReferenceException($"At least one must be provided {nameof(countOf)}, {nameof(sumOf)}, {nameof(minOf)},{nameof(maxOf)}, {nameof(avgOf)}");
+        //            }
+
+        //            string commandText =
+        //@"SELECT {groupByColumns}, {columns} 
+        //    FROM {table} 
+        //    {whereClause} 
+        //    {groupByClause} 
+        //    {havingClause}";
+
+        //            var aggregateColums = new List<string>();
+
+        //            if (groupBy != null)
+        //            {
+        //                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(groupBy));
+
+        //                commandText = commandText.Replace("{groupByColumns}", string.Join(", ", groupByProperties.Select(g => g.Value.Name)));
+        //                commandText = commandText.Replace("{groupByClause}", "GROUP BY " + string.Join(", ", groupByProperties.Select(g => g.Value.Name)));
+
+        //            }
+        //            else
+        //            {
+        //                commandText = commandText.Replace("{groupBy}", "");
+        //            }
+
+        //            if (countOf != null)
+        //            {
+        //                var returnedType = countOf.Invoke(new TEntity());
+
+        //                if (returnedType is TEntity)
+        //                {
+        //                    aggregateColums.Add("COUNT(*) as CountOfAll");
+
+        //                }
+        //                else
+        //                {
+        //                    var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(countOf));
+
+        //                    aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"COUNT({c.Value.Name}) as CountOf{c.Value.Name}")));
+
+        //                }
+        //            }
+
+        //            if (sumOf != null)
+        //            {
+        //                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(sumOf));
+
+        //                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"SUM({c.Value.Name}) as SumOf{c.Value.Name}")));
+        //            }
+
+        //            if (minOf != null)
+        //            {
+        //                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(minOf));
+
+        //                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"MIN({c.Value.Name}) as MinOf{c.Value.Name}")));
+        //            }
+
+        //            if (maxOf != null)
+        //            {
+        //                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(maxOf));
+
+        //                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"MAX({c.Value.Name}) as MaxOf{c.Value.Name}")));
+        //            }
+
+        //            if (avgOf != null)
+        //            {
+        //                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(avgOf));
+
+        //                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"AVG({c.Value.Name}) as AvgOf{c.Value.Name}")));
+        //            }
+
+        //            commandText = commandText.Replace("{columns}", string.Join(", ", aggregateColums));
+
+        //            string whereClause = "", havingClause ="";
+        //            if (sqlRepository is SqlSpRepository)
+        //            {
+        //                var entityInfo = SqlSpRepositorySetting.GetEntityInfo(typeof(TEntity));
+        //                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
+        //                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+        //                havingClause = having == null ? "" : DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
+
+        //                DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
+        //            }
+        //            else
+        //            {
+        //                var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
+        //                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
+        //                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+        //                havingClause = having == null ? "" : DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
+
+        //            }
+        //            commandText = commandText.Replace("{whereClause}", whereClause);
+
+        //            commandText = commandText.Replace("{havingClause}", havingClause);
+
+
+        //            var result = sqlRepository.SimpleAccess.ExecuteDynamics(commandText, CommandType.Text);
+
+        //            return result;
+
+        //        }
+        //public static IEnumerable<dynamic> GetAggregate<TEntity>(this ISqlRepository sqlRepository
+        //    , Func<Aggregator, TEntity, object> aggregator
+        //    , Expression<Func<TEntity, bool>> where = null
+        //    , Expression<Func<Aggregator, TEntity, bool>> having = null)
+        //    where TEntity : class, new()
+        //{
+        //    return GetAggregateWithGroupBy<TEntity>(sqlRepository, aggregator, where, null, having).FirstOrDefault();
+        //}
+
+
+        //public static IEnumerable<dynamic> GetAggregateWithGroupBy<TEntity>(this ISqlRepository sqlRepository
+        //    , Func<Aggregator, TEntity, object> aggregator
+        //    , Expression<Func<TEntity, bool>> where = null
+        //    , Func<TEntity, object> groupBy = null
+        //    , Expression<Func<Aggregator, TEntity, bool>> having = null)
+        //    where TEntity : class, new()
+        //{
+
+        //    if (aggregator == null)
+        //    {
+        //        throw new NullReferenceException($"{nameof(aggregator)} cannot be null");
+        //    }
+
+        //    string commandText = @"SELECT {groupByColumns}, {columns} 
+        //                            FROM {table} 
+        //                            {whereClause} 
+        //                            {groupByClause} 
+        //                            {havingClause}";
+
+        //    var aggregateColums = new List<string>();
+
+        //    if (groupBy != null)
+        //    {
+        //        var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(groupBy));
+
+        //        commandText = commandText.Replace("{groupByColumns}", string.Join(", ", groupByProperties.Select(g => g.Value.Name)));
+        //        commandText = commandText.Replace("{groupByClause}", "GROUP BY " + string.Join(", ", groupByProperties.Select(g => g.Value.Name)));
+
+        //    }
+        //    else
+        //    {
+        //        commandText = commandText.Replace("{groupBy}", "");
+        //    }
+
+
+
+        //    string whereClause = "", havingClause = "";
+        //    if (sqlRepository is SqlSpRepository)
+        //    {
+        //        var entityInfo = SqlSpRepositorySetting.GetEntityInfo(typeof(TEntity));
+        //        commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
+        //        whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+        //        havingClause = having == null ? "" : DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
+
+        //        DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
+        //    }
+        //    else
+        //    {
+        //        var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
+
+
+        //        if (aggregator != null)
+        //        {
+        //            var returnedType = aggregator.Invoke(new Aggregator(), new TEntity());
+
+        //            if (returnedType is TEntity)
+        //            {
+        //                aggregateColums.Add("COUNT(*) AS CountOfAll");
+        //            }
+        //            else
+        //            {
+        //                var groupByProperties = DynamicQuery.CreateAggregateColumnsFormAggregateExpression(aggregator, entityInfo);
+
+        //                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"COUNT({c.Value.Name}) as CountOf{c.Value.Name}")));
+        //            }
+        //        }
+
+        //        commandText = commandText.Replace("{columns}", string.Join(", ", aggregateColums));
+
+        //        commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
+        //        whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+        //        havingClause = having == null ? "" : DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
+
+        //    }
+
+
+        //    commandText = commandText.Replace("{whereClause}", whereClause);
+
+        //    commandText = commandText.Replace("{havingClause}", havingClause);
+
+
+        //    var result = sqlRepository.SimpleAccess.ExecuteDynamics(commandText, CommandType.Text);
+
+        //    return result;
+
+        //}
+
         //public static dynamic GetAggregate2<TEntity>(this ISqlRepository sqlRepository
         //    , Func<TEntity, object> countOf = null, Func<TEntity, object> sumOf = null
         //    , Func<TEntity, object> minOf = null, Func<TEntity, object> maxOf = null
@@ -288,7 +386,7 @@ namespace SimpleAccess.SqlServer
         //{
         //    var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
 
-        //    var havingClause =  DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
+        //    var havingClause = DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
 
         //    throw new NotImplementedException();
         //    //GetAggregateWithGroupBy<TEntity>(sqlRepository, countOf, sumOf, minOf, maxOf, avgOf, where, null, having).FirstOrDefault();
@@ -338,7 +436,7 @@ namespace SimpleAccess.SqlServer
         //        var column = GetSingleSelectedProperty(selector);
 
         //        _having += $" AVG({column}) ";
-                
+
         //        return this;
         //    }
         //    public HavingBuilder<TEntity> GreaterThan()
@@ -438,36 +536,39 @@ namespace SimpleAccess.SqlServer
         //    }
         //}
 
-        public class Aggregator<TEntity>
-            where TEntity : class, new()
-        {
-            private string _having = "";
-            public TKey Sum<TKey>(Expression<Func<TEntity, TKey>> selector)
-            {
-                return default(TKey);
-            }
-            public TKey Count<TKey>(Expression<Func<TEntity, TKey>> selector)
-            {
-                return default(TKey);
-            }
-            public TKey Min<TKey>(Expression<Func<TEntity, TKey>> selector)
-            {
-                return default(TKey);
-            }
-            public TKey Max<TKey>(Expression<Func<TEntity, TKey>> selector)
-            {
-                return default(TKey);
-            }
-            public TKey Average<TKey>(Expression<Func<TEntity, TKey>> selector)
-            {
-                return default(TKey);
-            }
+        //public class Aggregator<TEntity>
+        //    where TEntity : class, new()
+        //{
+        //    private string _having = "";
+        //    public TKey Sum<TKey>(Expression<Func<TEntity, TKey>> selector)
+        //    {
+        //        return default(TKey);
+        //    }
+        //    public TKey Count<TKey>(Expression<Func<TEntity, TKey>> selector)
+        //    {
+        //        return default(TKey);
+        //    }
+        //    public TKey Min<TKey>(Expression<Func<TEntity, TKey>> selector)
+        //    {
+        //        return default(TKey);
+        //    }
+        //    public TKey Max<TKey>(Expression<Func<TEntity, TKey>> selector)
+        //    {
+        //        return default(TKey);
+        //    }
+        //    public TKey Average<TKey>(Expression<Func<TEntity, TKey>> selector)
+        //    {
+        //        return default(TKey);
+        //    }
 
-            public string GetHaving()
-            {
-                return " HAVING " + _having;
-            }
-        }
+        //    public string GetHaving()
+        //    {
+        //        return " HAVING " + _having;
+        //    }
+        //}
+
+
+
 
     }
 }

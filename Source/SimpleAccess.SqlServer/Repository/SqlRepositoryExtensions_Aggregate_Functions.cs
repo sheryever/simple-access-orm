@@ -24,6 +24,118 @@ namespace SimpleAccess.SqlServer
         #region Aggregate functions
 
         #region GetCount
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, byte>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return GetCount<TEntity, byte>(sqlRepository, selector, where);
+        }
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, byte?>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return GetCount<TEntity, byte?>(sqlRepository, selector, where);
+        }
+
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, short>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return GetCount<TEntity, short>(sqlRepository, selector, where);
+        }
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, short?>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return GetCount<TEntity, short?>(sqlRepository, selector, where);
+        }
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int>> selector, Expression<Func<TEntity, bool>> where = null)
+            where TEntity : class, new()
+        {
+            return GetCount<TEntity, int>(sqlRepository, selector, where);
+        }
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int?>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return GetCount<TEntity, int?>(sqlRepository, selector, where);
+        }
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return GetCount<TEntity, long>(sqlRepository, selector, where);
+        }
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long?>> selector, Expression<Func<TEntity, bool>> where = null)
+   where TEntity : class, new()
+        {
+            return GetCount<TEntity, long?>(sqlRepository, selector, where);
+        }
+
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, string>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return GetCount<TEntity, string>(sqlRepository, selector, where);
+        }
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return GetCount<TEntity, float>(sqlRepository, selector, where);
+        }
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float?>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return GetCount<TEntity, float?>(sqlRepository, selector, where);
+        }
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return GetCount<TEntity, decimal>(sqlRepository, selector, where);
+        }
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal?>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return GetCount<TEntity, decimal?>(sqlRepository, selector, where);
+        }
+
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return GetCount<TEntity, double>(sqlRepository, selector, where);
+        }
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double?>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return GetCount<TEntity, double?>(sqlRepository, selector, where);
+        }
+
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, bool>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return GetCount<TEntity, bool>(sqlRepository, selector, where);
+        }
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, bool?>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return GetCount<TEntity, bool?>(sqlRepository, selector, where);
+        }
+
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, DateTime>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return GetCount<TEntity, DateTime>(sqlRepository, selector, where);
+        }
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, DateTime?>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return GetCount<TEntity, DateTime?>(sqlRepository, selector, where);
+        }
+
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TimeSpan>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return GetCount<TEntity, TimeSpan>(sqlRepository, selector, where);
+        }
+        public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TimeSpan?>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return GetCount<TEntity, TimeSpan?>(sqlRepository, selector, where);
+        }
+
         public static int GetCount<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, bool>> where = null)
             where TEntity : class, new()
         {
@@ -173,7 +285,7 @@ namespace SimpleAccess.SqlServer
         private static TReturn GetSum<TEntity, TReturn>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TReturn>> selector)
             where TEntity : class, new()
         {
-            
+
             var column = GetSingleSelectedProperty(selector);
             return GetAggregateResult<TEntity, TReturn>(sqlRepository, "Sum", column, null);
         }

@@ -147,6 +147,28 @@ namespace SimpleAccess.SqlServer.Test
         }
 
         [Fact]
+        public void FindTestWithDifferentType()
+        {
+            long id = 2;
+            var category = SqlRepository.Find<Category>(c => c.Id == id);
+
+            Assert.NotNull(category);
+            Assert.Equal(2, category.Id);
+
+        }
+        [Fact]
+        public void FindTestWithDifferentTypeDummy()
+        {
+            long id = 2;
+            var category = SqlRepository.Find<Category>(c => c.DummyField == id);
+
+            Assert.NotNull(category);
+            Assert.Equal(2, category.Id);
+
+        }
+
+
+        [Fact]
         public void FindTestForIsNullQuery()
         {
             var people = SqlRepository.FindAll<Person>(c => c.Address == null);
@@ -303,6 +325,16 @@ namespace SimpleAccess.SqlServer.Test
             Assert.Equal(2, people.Data.Count());
             Assert.Equal(3, people.TotalRows);
         }
+
+        [Fact]
+        public void GetDynamicPagedListTestWithSelectDistinct()
+        {
+            var people = SqlRepository.GetDynamicPagedList<Person>(true, p => new { p.Id }, 0, 2, "Id");
+
+            Assert.Equal(2, people.Data.Count());
+            Assert.Equal(3, people.TotalRows);
+        }
+
         [Fact]
         public void GetDynamicPagedListTestWithObjectParameters()
         {
@@ -323,6 +355,15 @@ namespace SimpleAccess.SqlServer.Test
         }
 
         [Fact]
+        public void GetEntitiesPagedListTestWithSelectDistinct()
+        {
+            var people = SqlRepository.GetEntitiesPagedList<Person>(true, p => new { p.Id }, null, 0, 2, "Id");
+
+            Assert.Equal(2, people.Data.Count());
+            Assert.Equal(3, people.TotalRows);
+        }
+
+        [Fact]
         public void GetEntitiesPagedListTestWithLike()
         {
             var people = SqlRepository.GetEntitiesPagedList<Person>(p => new { p.Id, p.FullName }
@@ -340,6 +381,41 @@ namespace SimpleAccess.SqlServer.Test
             Assert.Equal(2, people.Data.Count());
             Assert.Equal(3, people.TotalRows);
         }
+
+        [Fact]
+        public void IsExistTest()
+        {
+            var result = SqlRepository.IsExist<Person>();
+
+            Assert.True(result);
+
+        }
+
+        [Fact]
+        public void IsExistTestTestWithSelector()
+        {
+            var result = SqlRepository.IsExist<Person>(p => p.Id);
+
+            Assert.True(result);
+
+        }
+
+        [Fact]
+        public void IsExistTestTestWithWhereTrue()
+        {
+            var result = SqlRepository.IsExist<Person>(p => p.Id == 1);
+
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void IsExistTestTestWithWhereFalse()
+        {
+            var result = SqlRepository.IsExist<Person>(p => p.Id > 100);
+
+            Assert.False(result);
+        }
+
 
         [Fact]
         public void GetCountTest()
@@ -540,10 +616,7 @@ namespace SimpleAccess.SqlServer.Test
         public void GetAggregateTest()
         {
             var data = SqlRepository.GetAggregate<Employee>(
-                countOf: co => co,
-                sumOf: so => new { so.BasicSalary, so.Inssurance, so.Transport },
-                maxOf: mo => new { mo.BasicSalary, mo.Inssurance, mo.Transport },
-                minOf: mi => new { mi.BasicSalary, mi.Inssurance, mi.Transport }
+                aggregator: (ag, e) => new { SumOfBasicSalary = ag.Sum(e.BasicSalary), MaxOfBasicSalary = ag.Max(e.BasicSalary) }
             );
             Assert.True(data != null);
 
@@ -554,14 +627,16 @@ namespace SimpleAccess.SqlServer.Test
         public void GetAggregateTestWithWhereAndGroupBy()
         {
             var data = SqlRepository.GetAggregateWithGroupBy<Employee>(
-                countOf: co => co,
-                sumOf: so => new { so.BasicSalary, so.Inssurance, so.Transport },
-                maxOf: mo => new { mo.BasicSalary, mo.Inssurance, mo.Transport },
-                minOf: mi => new { mi.BasicSalary, mi.Inssurance, mi.Transport },
+                aggregator: (ag, e) => new
+                {
+                    SumOfBasicSalary = ag.Sum(e.BasicSalary),
+                    MaxOfBasicSalary = ag.Max(e.BasicSalary),
+                    MinOfBasicSalary = ag.Min(e.BasicSalary),
+                    AvgOfBasicSalary = ag.Average(e.BasicSalary)
+                },
                 where: w => w.Id > 2,
                 groupBy: g => new { g.Department }
             );
-
 
             Assert.True(data.Any());
         }
@@ -570,22 +645,61 @@ namespace SimpleAccess.SqlServer.Test
         public void GetAggregateTestWithWhereGroupByHaving()
         {
             var data = SqlRepository.GetAggregateWithGroupBy<Employee>(
-                countOf: co => co,
-                sumOf: so => new { so.BasicSalary, so.Inssurance, so.Transport },
-                maxOf: mo => new { mo.BasicSalary, mo.Inssurance, mo.Transport },
-                minOf: mi => new { mi.BasicSalary, mi.Inssurance, mi.Transport },
+                    aggregator: (ag, p) => new
+                    {
+                        Count = ag.Count(p),
+                        SumOfBasicSalary = ag.Sum(p.BasicSalary),
+                        SumOfInssurance = ag.Sum(p.Inssurance),
+                        SumOfTransport = ag.Sum(p.Transport)
+        ,
+                        MaxOfBasicSalary = ag.Max(p.BasicSalary),
+                        MaxOfInssurance = ag.Max(p.Inssurance),
+                        MaxOfTransport = ag.Max(p.Transport)
+        ,
+                        MinOfBasicSalary = ag.Min(p.BasicSalary),
+                        MinOfInssurance = ag.Min(p.Inssurance),
+                        MinOfTransport = ag.Min(p.Transport)
+                    },
                 where: w => w.Id > 2,
                 groupBy: g => new { g.Department },
-                having: hv => hv.Min(s => s.BasicSalary) >= 2000
-                                && hv.Min(s => s.BasicSalary) < 9000
+                having: (hv, s) => hv.Min(s.BasicSalary) >= 2000
+                                 && hv.Max(s.BasicSalary) < 9000
             );
-
 
             Assert.True(data.Any());
             Assert.Equal(3, data.Count());
 
         }
+        // SimpleAccess.ExecuteAll(query, map: SimpleMapper => SimpleReader.Map<>);
+        // repo.ExecuteAllEntities<PurchaseOrder, ItemCategory, OrderDetail, ...>(query);
 
 
+        [Fact]
+        public void GetAggregateWithAggregatorSelectorTest()
+        {
+            var data = SqlRepository.GetAggregateWithGroupBy<Employee>(
+                aggregator: (ag, p) => new
+                {
+                    SumOfBasicSalary = ag.Sum(p.BasicSalary),
+                    SumOfInssurance = ag.Sum(p.Inssurance),
+                    SumOfTransport = ag.Sum(p.Transport)
+                    ,
+                    MaxOfBasicSalary = ag.Max(p.BasicSalary),
+                    MaxOfInssurance = ag.Max(p.Inssurance),
+                    MaxOfTransport = ag.Max(p.Transport)
+                    ,
+                    MinOfBasicSalary = ag.Min(p.BasicSalary),
+                    MinOfInssurance = ag.Min(p.Inssurance),
+                    MinOfTransport = ag.Min(p.Transport)
+                },
+                where: w => w.Id > 2,
+                groupBy: g => new { g.Department },
+                having: (hv, s) => hv.Min(s.BasicSalary) >= 2000
+                                && hv.Max(s.BasicSalary) < 9000
+            );
+
+            Assert.True(data.Any());
+
+        }
     }
 }

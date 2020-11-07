@@ -231,6 +231,133 @@ namespace SimpleAccess.Core.Entity
 
 
             /// <summary>
+            /// Gets the dynamic query.
+            /// </summary>
+            /// <param name="tableName">Name of the table.</param>
+            /// <param name="expression">The expression.</param>
+            /// <returns>A result object with the generated sql and dynamic params.</returns>
+            public static string CreateDbParametersFormHavingExpression<TISqlBuilder, TDbParameter, TEntitiy>(Expression<Func<Aggregator, TEntitiy, bool>> expression, EntityInfo<TISqlBuilder, TDbParameter> entityInfo)
+                where TISqlBuilder : ISqlBuilder<TDbParameter>, new()
+                where TDbParameter : IDataParameter
+            {
+                BinaryExpression binaryExpressionBody = null;
+                MethodCallExpression methodCallExpressionBody = null;
+                var queryProperties = new List<QueryHavingParameter>();
+                if (expression.Body is BinaryExpression)
+                {
+                    binaryExpressionBody = (BinaryExpression)expression.Body;
+                    // walk the tree and build up a list of query parameter objects
+                    // from the left and right branches of the expression tree
+                    WalkTreeHavingExpressoin(binaryExpressionBody, ExpressionType.Default, ref queryProperties);
+                }
+                else if (expression.Body is MethodCallExpression)
+                {
+                    methodCallExpressionBody = (MethodCallExpression)expression.Body;
+                    // walk the tree and build up a list of query parameter objects
+                    // from the left and right branches of the expression tree
+                    WalkTreeHavingExpressoin(methodCallExpressionBody, ExpressionType.Default, ref queryProperties);
+
+                }
+
+                IDictionary<string, Object> expando = new ExpandoObject();
+                var builder = new StringBuilder();
+
+                // convert the query parms into a SQL string and dynamic property object
+
+                builder.Append(" HAVING ");
+
+                var entityType = typeof(TEntitiy).GetGenericArguments()[0];
+
+                for (int i = 0; i < queryProperties.Count(); i++)
+                {
+                    QueryHavingParameter item = queryProperties[i];
+
+                    var propertyInfo = entityType.GetProperty(item.PropertyName);
+                    if (!string.IsNullOrEmpty(item.LinkingOperator) && i > 0)
+                    {
+                        //builder.Append(string.Format("{0} {1} {2} @{1} ", item.LinkingOperator, item.PropertyName,
+                        builder.Append(string.Format("{0}  {1} ", item.LinkingOperator,
+                            entityInfo.SqlBuilder.BuildWhereExpression($"{item.FunctionName}({item.PropertyName})", propertyInfo.PropertyType,
+                                item.QueryOperator, item.PropertyValue)));
+
+                    }
+                    else
+                    {
+                        builder.Append(entityInfo.SqlBuilder.BuildWhereExpression($"{item.FunctionName}({item.PropertyName})", propertyInfo.PropertyType,
+                                    item.QueryOperator, item.PropertyValue));
+                        //                                entityInfo.SqlBuilder.BuildValueOperand(propertyInfo.PropertyType, item.PropertyValue)));
+
+                    }
+                }
+
+                return builder.ToString();
+            }
+
+            /// <summary>
+            /// Gets the dynamic query.
+            /// </summary>
+            /// <param name="tableName">Name of the table.</param>
+            /// <param name="expression">The expression.</param>
+            /// <returns>A result object with the generated sql and dynamic params.</returns>
+            public static string CreateAggregateColumnsFormAggregateExpression<TISqlBuilder, TDbParameter, TEntitiy>(Expression<Func<Aggregator, TEntitiy, object>> expression, EntityInfo<TISqlBuilder, TDbParameter> entityInfo)
+                where TISqlBuilder : ISqlBuilder<TDbParameter>, new()
+                where TDbParameter : IDataParameter
+            {
+                BinaryExpression binaryExpressionBody = null;
+                MethodCallExpression methodCallExpressionBody = null;
+                var queryProperties = new List<QueryHavingParameter>();
+                if (expression.Body is BinaryExpression)
+                {
+                    binaryExpressionBody = (BinaryExpression)expression.Body;
+                    // walk the tree and build up a list of query parameter objects
+                    // from the left and right branches of the expression tree
+                    WalkTreeHavingExpressoin(binaryExpressionBody, ExpressionType.Default, ref queryProperties);
+                }
+                else if (expression.Body is MethodCallExpression)
+                {
+                    methodCallExpressionBody = (MethodCallExpression)expression.Body;
+                    // walk the tree and build up a list of query parameter objects
+                    // from the left and right branches of the expression tree
+                    WalkTreeHavingExpressoin(methodCallExpressionBody, ExpressionType.Default, ref queryProperties);
+
+                }
+
+                IDictionary<string, Object> expando = new ExpandoObject();
+                var builder = new StringBuilder();
+
+                // convert the query parms into a SQL string and dynamic property object
+
+                builder.Append(" HAVING ");
+
+                var entityType = typeof(TEntitiy).GetGenericArguments()[0];
+
+                for (int i = 0; i < queryProperties.Count(); i++)
+                {
+                    QueryHavingParameter item = queryProperties[i];
+
+                    var propertyInfo = entityType.GetProperty(item.PropertyName);
+                    if (!string.IsNullOrEmpty(item.LinkingOperator) && i > 0)
+                    {
+                        //builder.Append(string.Format("{0} {1} {2} @{1} ", item.LinkingOperator, item.PropertyName,
+                        builder.Append(string.Format("{0}  {1} ", item.LinkingOperator,
+                            entityInfo.SqlBuilder.BuildWhereExpression($"{item.FunctionName}({item.PropertyName})", propertyInfo.PropertyType,
+                                item.QueryOperator, item.PropertyValue)));
+
+                    }
+                    else
+                    {
+                        builder.Append(entityInfo.SqlBuilder.BuildWhereExpression($"{item.FunctionName}({item.PropertyName})", propertyInfo.PropertyType,
+                                    item.QueryOperator, item.PropertyValue));
+                        //                                entityInfo.SqlBuilder.BuildValueOperand(propertyInfo.PropertyType, item.PropertyValue)));
+
+                    }
+                }
+
+                return builder.ToString();
+            }
+
+
+            /// <summary>
             /// Walks the tree.
             /// </summary>
             /// <param name="body">The body.</param>
@@ -361,8 +488,12 @@ namespace SimpleAccess.Core.Entity
 
                 if (body.Left.NodeType == ExpressionType.Convert)
                 {
-                    // hack to remove the trailing ) when convering.
+                    // hack to remove the trailing ) when convering. Need proper handling
                     propertyName = propertyName.Replace(")", string.Empty);
+                    if (propertyName.IndexOf(",") > 0)
+                    {
+                        propertyName =  propertyName.Substring(0, propertyName.IndexOf(","));
+                    }
                 }
 
                 return propertyName;
@@ -380,7 +511,6 @@ namespace SimpleAccess.Core.Entity
 
                 var function = values[1].Substring(0, values[1].IndexOf("("));
                 var column = values[2].Substring(0, values[2].IndexOf(")"));
-
 
                 //if (body.Left.NodeType == ExpressionType.Convert)
                 //{
@@ -619,6 +749,35 @@ namespace SimpleAccess.Core.Entity
                 this.PropertyValue = propertyValue;
                 this.QueryOperator = queryOperator;
             }
+        }
+    }
+    public class Aggregator
+    {
+        private string _having = "";
+        public TKey Sum<TKey>(TKey selector)
+        {
+            return default(TKey);
+        }
+        public TKey Count<TKey>(TKey selector)
+        {
+            return default(TKey);
+        }
+        public TKey Min<TKey>(TKey selector)
+        {
+            return default(TKey);
+        }
+        public TKey Max<TKey>(TKey selector)
+        {
+            return default(TKey);
+        }
+        public TKey Average<TKey>(TKey selector)
+        {
+            return default(TKey);
+        }
+
+        public string GetHaving()
+        {
+            return " HAVING " + _having;
         }
     }
 

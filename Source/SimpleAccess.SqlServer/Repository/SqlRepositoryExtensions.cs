@@ -16,6 +16,7 @@ using System.Text;
 using SimpleAccess.Core.Extensions;
 using System.Data.Common;
 using SimpleAccess.Core.Entity.RepoWrapper;
+using SimpleAccess.Core.Entity;
 
 namespace SimpleAccess.SqlServer
 {
@@ -26,6 +27,163 @@ namespace SimpleAccess.SqlServer
 #if !NET40
 
 #endif
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, byte>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, byte>(sqlRepository, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, byte?>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return IsExist<TEntity, byte?>(sqlRepository, selector, where);
+        }
+
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, short>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return IsExist<TEntity, short>(sqlRepository, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, short?>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return IsExist<TEntity, short?>(sqlRepository, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int>> selector, Expression<Func<TEntity, bool>> where = null)
+            where TEntity : class, new()
+        {
+            return IsExist<TEntity, int>(sqlRepository, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int?>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return IsExist<TEntity, int?>(sqlRepository, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return IsExist<TEntity, long>(sqlRepository, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long?>> selector, Expression<Func<TEntity, bool>> where = null)
+   where TEntity : class, new()
+        {
+            return IsExist<TEntity, long?>(sqlRepository, selector, where);
+        }
+
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, string>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return IsExist<TEntity, string>(sqlRepository, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return IsExist<TEntity, float>(sqlRepository, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float?>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return IsExist<TEntity, float?>(sqlRepository, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return IsExist<TEntity, decimal>(sqlRepository, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal?>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, decimal?>(sqlRepository, selector, where);
+        }
+
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, double>(sqlRepository, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double?>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, double?>(sqlRepository, selector, where);
+        }
+
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, bool>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, bool>(sqlRepository, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, bool?>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, bool?>(sqlRepository, selector, where);
+        }
+
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, DateTime>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, DateTime>(sqlRepository, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, DateTime?>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, DateTime?>(sqlRepository, selector, where);
+        }
+
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TimeSpan>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, TimeSpan>(sqlRepository, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TimeSpan?>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, TimeSpan?>(sqlRepository, selector, where);
+        }
+
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, bool>> where = null)
+            where TEntity : class, new()
+        {
+            return IsExist<TEntity, int>(sqlRepository, null, where);
+        }
+
+        private static bool IsExist<TEntity, TKey>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TKey>> selector = null
+        , Expression<Func<TEntity, bool>> where = null)
+            where TEntity : class, new()
+        {
+            string commandText = "IF EXISTS (SELECT {column} FROM {table} {whereClause}) SELECT 1 ELSE SELECT 0;";
+            CommandType commandType = CommandType.Text;
+
+            if (selector != null)
+            {
+                var selectedColumn = GetSingleSelectedProperty(selector);
+
+                commandText = commandText.Replace("{column}", $"{selectedColumn}");
+            }
+            else
+            {
+                commandText = commandText.Replace("{column}", "*");
+            }
+
+            var whereClause = "";
+
+            if (sqlRepository is SqlSpRepository)
+            {
+                var entityInfo = SqlSpRepositorySetting.GetEntityInfo(typeof(TEntity));
+                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
+                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+            }
+            else
+            {
+                var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
+                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
+                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+            }
+
+            commandText = commandText.Replace("{whereClause}", whereClause);
+
+            return sqlRepository.SimpleAccess.ExecuteScalar<int>(commandText, commandType) > 0;
+        }
+
+
         private static string[] GetSelectedProperties<TEntity>(Func<TEntity, object> select)
             where TEntity : class, new()
         {
@@ -36,6 +194,8 @@ namespace SimpleAccess.SqlServer
                    .Select(p => p.Name.ToLower())
                    .ToArray();
         }
+
+
 
         private static string GetSingleSelectedProperty<TEntity, TReturn>(Expression<Func<TEntity, TReturn>> select)
             where TEntity : class, new()
@@ -84,7 +244,7 @@ namespace SimpleAccess.SqlServer
 
 
         public static T[] CreateSqlParameters<T>(object otherParameters)
-            where T: DbParameter, new()
+            where T : DbParameter, new()
         {
             var otherParametersObj = otherParameters as Object;
             if (otherParametersObj != null)
