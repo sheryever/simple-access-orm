@@ -620,32 +620,29 @@ namespace SimpleAccess.Core.Entity
                 switch (type)
                 {
                     case ExpressionType.Equal:
-                        return "=";
+                        return " = ";
                     case ExpressionType.NotEqual:
-                        return "!=";
+                        return " != ";
                     case ExpressionType.LessThan:
-                        return "<";
+                        return " < ";
                     case ExpressionType.LessThanOrEqual:
-                        return "<=";
+                        return " <= ";
                     case ExpressionType.GreaterThan:
-                        return ">";
+                        return " > ";
                     case ExpressionType.GreaterThanOrEqual:
-                        return ">=";
+                        return " >= ";
                     case ExpressionType.AndAlso:
                     case ExpressionType.And:
-                        return "AND";
+                        return " AND ";
                     case ExpressionType.Or:
                     case ExpressionType.OrElse:
-                        return "OR";
+                        return " OR ";
                     case ExpressionType.Default:
                         return string.Empty;
                     default:
                         throw new NotImplementedException();
                 }
             }
-
-
-
         }
 
 #region Expression helpers
