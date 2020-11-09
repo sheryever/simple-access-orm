@@ -279,102 +279,102 @@ namespace SimpleAccess.SqlServer
         //            return result;
 
         //        }
-        //public static IEnumerable<dynamic> GetAggregate<TEntity>(this ISqlRepository sqlRepository
-        //    , Func<Aggregator, TEntity, object> aggregator
-        //    , Expression<Func<TEntity, bool>> where = null
-        //    , Expression<Func<Aggregator, TEntity, bool>> having = null)
-        //    where TEntity : class, new()
-        //{
-        //    return GetAggregateWithGroupBy<TEntity>(sqlRepository, aggregator, where, null, having).FirstOrDefault();
-        //}
+        public static IEnumerable<dynamic> GetAggregate<TEntity>(this ISqlRepository sqlRepository
+            , Func<Aggregator, TEntity, object> aggregator
+            , Expression<Func<TEntity, bool>> where = null
+            , Expression<Func<Aggregator, TEntity, bool>> having = null)
+            where TEntity : class, new()
+        {
+            return GetAggregateWithGroupBy<TEntity>(sqlRepository, aggregator, where, null, having).FirstOrDefault();
+        }
 
 
-        //public static IEnumerable<dynamic> GetAggregateWithGroupBy<TEntity>(this ISqlRepository sqlRepository
-        //    , Func<Aggregator, TEntity, object> aggregator
-        //    , Expression<Func<TEntity, bool>> where = null
-        //    , Func<TEntity, object> groupBy = null
-        //    , Expression<Func<Aggregator, TEntity, bool>> having = null)
-        //    where TEntity : class, new()
-        //{
+        public static IEnumerable<dynamic> GetAggregateWithGroupBy<TEntity>(this ISqlRepository sqlRepository
+            , Func<Aggregator, TEntity, object> aggregator
+            , Expression<Func<TEntity, bool>> where = null
+            , Func<TEntity, object> groupBy = null
+            , Expression<Func<Aggregator, TEntity, bool>> having = null)
+            where TEntity : class, new()
+        {
 
-        //    if (aggregator == null)
-        //    {
-        //        throw new NullReferenceException($"{nameof(aggregator)} cannot be null");
-        //    }
+            if (aggregator == null)
+            {
+                throw new NullReferenceException($"{nameof(aggregator)} cannot be null");
+            }
 
-        //    string commandText = @"SELECT {groupByColumns}, {columns} 
-        //                            FROM {table} 
-        //                            {whereClause} 
-        //                            {groupByClause} 
-        //                            {havingClause}";
+            string commandText = @"SELECT {groupByColumns}, {columns} 
+                                    FROM {table} 
+                                    {whereClause} 
+                                    {groupByClause} 
+                                    {havingClause}";
 
-        //    var aggregateColums = new List<string>();
+            var aggregateColums = new List<string>();
 
-        //    if (groupBy != null)
-        //    {
-        //        var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(groupBy));
+            if (groupBy != null)
+            {
+                var groupByProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(groupBy));
 
-        //        commandText = commandText.Replace("{groupByColumns}", string.Join(", ", groupByProperties.Select(g => g.Value.Name)));
-        //        commandText = commandText.Replace("{groupByClause}", "GROUP BY " + string.Join(", ", groupByProperties.Select(g => g.Value.Name)));
+                commandText = commandText.Replace("{groupByColumns}", string.Join(", ", groupByProperties.Select(g => g.Value.Name)));
+                commandText = commandText.Replace("{groupByClause}", "GROUP BY " + string.Join(", ", groupByProperties.Select(g => g.Value.Name)));
 
-        //    }
-        //    else
-        //    {
-        //        commandText = commandText.Replace("{groupBy}", "");
-        //    }
-
-
-
-        //    string whereClause = "", havingClause = "";
-        //    if (sqlRepository is SqlSpRepository)
-        //    {
-        //        var entityInfo = SqlSpRepositorySetting.GetEntityInfo(typeof(TEntity));
-        //        commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
-        //        whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
-        //        havingClause = having == null ? "" : DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
-
-        //        DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
-        //    }
-        //    else
-        //    {
-        //        var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
+            }
+            else
+            {
+                commandText = commandText.Replace("{groupBy}", "");
+            }
 
 
-        //        if (aggregator != null)
-        //        {
-        //            var returnedType = aggregator.Invoke(new Aggregator(), new TEntity());
 
-        //            if (returnedType is TEntity)
-        //            {
-        //                aggregateColums.Add("COUNT(*) AS CountOfAll");
-        //            }
-        //            else
-        //            {
-        //                var groupByProperties = DynamicQuery.CreateAggregateColumnsFormAggregateExpression(aggregator, entityInfo);
+            string whereClause = "", havingClause = "";
+            if (sqlRepository is SqlSpRepository)
+            {
+                var entityInfo = SqlSpRepositorySetting.GetEntityInfo(typeof(TEntity));
+                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
+                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+                havingClause = having == null ? "" : DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
 
-        //                aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"COUNT({c.Value.Name}) as CountOf{c.Value.Name}")));
-        //            }
-        //        }
-
-        //        commandText = commandText.Replace("{columns}", string.Join(", ", aggregateColums));
-
-        //        commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
-        //        whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
-        //        havingClause = having == null ? "" : DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
-
-        //    }
+                DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
+            }
+            else
+            {
+                var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
 
 
-        //    commandText = commandText.Replace("{whereClause}", whereClause);
+                if (aggregator != null)
+                {
+                    var returnedType = aggregator.Invoke(new Aggregator(), new TEntity());
 
-        //    commandText = commandText.Replace("{havingClause}", havingClause);
+                    if (returnedType is TEntity)
+                    {
+                        aggregateColums.Add("COUNT(*) AS CountOfAll");
+                    }
+                    else
+                    {
+                        //var groupByProperties = DynamicQuery.CreateAggregateColumnsFormAggregateExpression(aggregator, entityInfo);
+
+                        //aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"COUNT({c.Value.Name}) as CountOf{c.Value.Name}")));
+                    }
+                }
+
+                commandText = commandText.Replace("{columns}", string.Join(", ", aggregateColums));
+
+                commandText = commandText.Replace("{table}", entityInfo.DbObjectViewName);
+                whereClause = where == null ? "" : DynamicQuery.CreateDbParametersFormWhereExpression(where, entityInfo);
+                havingClause = having == null ? "" : DynamicQuery.CreateDbParametersFormHavingExpression(having, entityInfo);
+
+            }
 
 
-        //    var result = sqlRepository.SimpleAccess.ExecuteDynamics(commandText, CommandType.Text);
+            commandText = commandText.Replace("{whereClause}", whereClause);
 
-        //    return result;
+            commandText = commandText.Replace("{havingClause}", havingClause);
 
-        //}
+
+            var result = sqlRepository.SimpleAccess.ExecuteDynamics(commandText, CommandType.Text);
+
+            return result;
+
+        }
 
         //public static dynamic GetAggregate2<TEntity>(this ISqlRepository sqlRepository
         //    , Func<TEntity, object> countOf = null, Func<TEntity, object> sumOf = null

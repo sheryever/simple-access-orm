@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
     <TargetFrameworks>net40;net45;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>3.1.0-rc-8.1</Version>
+    <Version>3.1.0-rc-8.2</Version>
     <Product>SimpleAccess Sql Server ORM</Product>
     <Description>Simple Access ORM provides database access in Ado.net methods naming pattern.
 Documentation of using SimpleAccess is available at https://simpleaccessorm.com
@@ -21,33 +21,35 @@ Documentation of using SimpleAccess is available at https://simpleaccessorm.com
     <OldToolsVersion>2.0</OldToolsVersion>
     <ProjectGuid>{D97DEB44-C9BD-4813-AE06-3119CE26214A}</ProjectGuid>
     <PackageReleaseNotes>
-Changes:
-- SqlEntityRepository Implemented
-- .Net Standard 2.0 and .Net Standard 2.1 with Microsoft.Data.SqlClient support added
-- Aysnc support for Dotnet full framework 4.5 and .Net Standard 2.0 and later
-- Repository Performance improvement
-- GetPagedList extensions methods added
-- Async GetPagedList extensions methods added
-- Distinct and select support added to GetPagedList extensions
-- SqlRepository is renamed to SqlSpRepository and SqlRepository is marked as Obsolete
-- PrimaryKey attribute added to support Sequence object
-- Data mapping performance improved
-- IgnoreSelect, IgnoreInsert, IgnoreUpdate and NotMapped property attributes support implemente for Repositories
-- Aggregate functions (Count, Sum, Min, Max and Avg) extensions added to SqlRepository extension methods
-- GetAggregate and GetAggregateWithGroupBy functions extensions added to SqlRepository extension methods
-- IsExist function extension added with
-- 20 more overloads added for GetCount extensions method
+      Changes:
+      - SqlEntityRepository Implemented
+      - .Net Standard 2.0 and .Net Standard 2.1 with Microsoft.Data.SqlClient support added
+      - Aysnc support for Dotnet full framework 4.5 and .Net Standard 2.0 and later
+      - Repository Performance improvement
+      - GetPagedList extensions methods added
+      - Async GetPagedList extensions methods added
+      - Distinct and select support added to GetPagedList extensions
+      - SqlRepository is renamed to SqlSpRepository and SqlRepository is marked as Obsolete
+      - PrimaryKey attribute added to support Sequence object
+      - Data mapping performance improved
+      - IgnoreSelect, IgnoreInsert, IgnoreUpdate and NotMapped property attributes support implemente for Repositories
+      - Aggregate functions (Count, Sum, Min, Max and Avg) extensions added to SqlRepository extension methods
+      - GetAggregate and GetAggregateWithGroupBy functions extensions added to SqlRepository extension methods
+      - IsExist function extension added with
+      - 20 more overloads added for GetCount extensions method
+      - IN Clause support added using Contains SqlSyntax extentions
 
-Bug fixes
-- SqlEntityRepository Get, Find, FindAll methods fixed
-- Insert is not working with Indentity column
-- Sql Server Keywords cannot be used as table column
-- ExecuteScalar do not support nullable types
-- Where expression throw null exception when using != operator
-- ConnectionString lost user credential bug fixed
-- Issue #9: SqlRepository.FindAll is throwing NullReference exception if the lambda parameter is nullable property</PackageReleaseNotes>
-    <AssemblyVersion>3.1.0.23</AssemblyVersion>
-    <FileVersion>3.1.0.23</FileVersion>
+      Bug fixes
+      - SqlEntityRepository Get, Find, FindAll methods fixed
+      - Insert is not working with Indentity column
+      - Sql Server Keywords cannot be used as table column
+      - ExecuteScalar do not support nullable types
+      - Where expression throw null exception when using != operator
+      - ConnectionString lost user credential bug fixed
+      - Error in executing in Where lambda expression fixed
+      - Issue #9: SqlRepository.FindAll is throwing NullReference exception if the lambda parameter is nullable property</PackageReleaseNotes>
+    <AssemblyVersion>3.1.0.24</AssemblyVersion>
+    <FileVersion>3.1.0.24</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">

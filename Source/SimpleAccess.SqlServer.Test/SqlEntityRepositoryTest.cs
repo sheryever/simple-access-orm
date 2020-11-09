@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using SimpleAccess.Core;
+using SimpleAccess.Core.Extensions;
+using SimpleAccess.Core.SqlSyntaxExtensions;
 using SimpleAccess.SqlServer;
 using SimpleAccess.SqlServer.TestNetCore2.Entities;
 using Xunit;
@@ -147,6 +149,33 @@ namespace SimpleAccess.SqlServer.Test
         }
 
         [Fact]
+        public void FindTestWithInClauseFunction()
+        {
+            var category = SqlRepository.Find<Category>(c => c.Id.Contains(2,1));
+
+            Assert.NotNull(category);
+            Assert.Equal(1, category.Id);
+
+        }
+
+        [Fact]
+        public void FindTestWithInClauseFunction2()
+        {
+            var categories = SqlRepository.FindAll<Category>(c => c.Id.Contains(2, 1));
+
+            Assert.Equal(2, categories.Count());
+
+        }
+
+        [Fact]
+        public void FindTestWithLikeClauseUsingContainFunction()
+        {
+            var category = SqlRepository.Find<Category>(c => c.Name.Contains("CATE"));
+
+            Assert.NotNull(category);
+
+        }
+        [Fact]
         public void FindTestWithDifferentType()
         {
             long id = 2;
@@ -157,10 +186,10 @@ namespace SimpleAccess.SqlServer.Test
 
         }
         [Fact]
-        public void FindTestWithDifferentTypeDummy()
+        public void FindTestWithDifferentNullableType()
         {
-            long id = 2;
-            var category = SqlRepository.Find<Category>(c => c.DummyField == id);
+            long? id = 2;
+            var category = SqlRepository.Find<Category>(c => c.Id == id);
 
             Assert.NotNull(category);
             Assert.Equal(2, category.Id);
@@ -172,6 +201,15 @@ namespace SimpleAccess.SqlServer.Test
         public void FindTestForIsNullQuery()
         {
             var people = SqlRepository.FindAll<Person>(c => c.Address == null);
+
+            Assert.True(people.Any());
+
+        }
+
+        [Fact]
+        public void FindTestForIsNullAndOtherValueQuery()
+        {
+            var people = SqlRepository.FindAll<Person>(c => c.Address == null && c.Id == 3);
 
             Assert.True(people.Any());
 

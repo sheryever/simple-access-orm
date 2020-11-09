@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Contracts;
 using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -452,8 +453,8 @@ namespace SimpleAccess.Core.Entity
                                          ref List<QueryParameter> queryProperties)
             {
                 string propertyName = GetPropertyName(body);
-                dynamic propertyValue = GetExpressionValue(body);
-                string opr = body.Method.Name;
+                dynamic propertyValue = GetExpressionValue(body, out bool isArray);
+                string opr = isArray ? body.Method.Name + "WithArray" : body.Method.Name ;
                 string link = GetOperator(linkingType);
 
                 queryProperties.Add(new QueryParameter(link, propertyName, propertyValue, opr));
@@ -521,11 +522,42 @@ namespace SimpleAccess.Core.Entity
                 return new { FunctionName = function, ColumnName = column };
             }
 
-            private static object GetExpressionValue(MethodCallExpression body)
+            private static object GetExpressionValue(MethodCallExpression body, out bool isArray)
             {
+                isArray = false;
                 if (body.Arguments[0] is ConstantExpression)
                 {
                     return ((dynamic) body.Arguments[0]).Value;
+                }
+                else if (body.Arguments.Count == 2 && body.Arguments[1] is NewArrayExpression)
+                {
+                    isArray = true;
+                    LambdaExpression lambda = Expression.Lambda(body.Arguments[1]);
+                    var compiledExpression = lambda.Compile();
+                    var values = compiledExpression.DynamicInvoke();
+                    var valueStrings = new List<string>();
+                    var valueTypeName = values.GetType().Name.Replace("[]", "");
+                    foreach (var value in values as Array)
+                    {
+                        if (value == null)
+                        {
+                            valueStrings.Add("NULL"); continue;
+                        }
+                        if (value is string)
+                        {
+                            valueStrings.Add($"'{(value as string).Replace("'", "'")}'");
+                        }
+                        if (value is bool)
+                        {
+                            valueStrings.Add((bool)value ? "1" : "0");
+                        }
+                        else
+                        {
+                            valueStrings.Add($"{value}");
+                        }                            
+                    }
+
+                    return string.Join(", ", valueStrings);
                 }
                 else
                 {
@@ -589,7 +621,15 @@ namespace SimpleAccess.Core.Entity
             /// <returns>The property name for the property expression.</returns>
             private static string GetPropertyName(MethodCallExpression body)
             {
-                string propertyName = body.Object.ToString().Split(new char[] { '.' })[1];
+                string propertyName = null;
+                if (body.Object != null)
+                {
+                    propertyName = body.Object.ToString().Split(new char[] { '.' })[1];
+                }
+                else
+                {
+                    propertyName = body.Arguments[0].ToString().Split(new char[] { '.' })[1];
+                }
 
                 return propertyName;
             }
@@ -620,23 +660,23 @@ namespace SimpleAccess.Core.Entity
                 switch (type)
                 {
                     case ExpressionType.Equal:
-                        return " = ";
+                        return "=";
                     case ExpressionType.NotEqual:
-                        return " != ";
+                        return "!=";
                     case ExpressionType.LessThan:
-                        return " < ";
+                        return "<";
                     case ExpressionType.LessThanOrEqual:
-                        return " <= ";
+                        return "<=";
                     case ExpressionType.GreaterThan:
-                        return " > ";
+                        return ">";
                     case ExpressionType.GreaterThanOrEqual:
-                        return " >= ";
+                        return ">=";
                     case ExpressionType.AndAlso:
                     case ExpressionType.And:
-                        return " AND ";
+                        return "AND";
                     case ExpressionType.Or:
                     case ExpressionType.OrElse:
-                        return " OR ";
+                        return "OR";
                     case ExpressionType.Default:
                         return string.Empty;
                     default:

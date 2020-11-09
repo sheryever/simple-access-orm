@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netstandard2.0;net40;net45</TargetFrameworks>
-    <Version>3.1.0-rc8</Version>
+    <Version>3.1.0-rc9</Version>
     <Product>SimpleAccess ORM Core</Product>
     <Description>The core and common interfaces and implementation of SimpleAccess ORM</Description>
     <Authors>Abu Ali Muhammad Sharjeel</Authors>
@@ -20,8 +20,8 @@
 - Data mapping performance improved
 - IgnoreSelect, IgnoreInsert, IgnoreUpdate and NotMapped property attributes added for EntityRepositories
 - Support for generating having clause added</PackageReleaseNotes>
-    <AssemblyVersion>3.1.0.8</AssemblyVersion>
-    <FileVersion>3.1.0.8</FileVersion>
+    <AssemblyVersion>3.1.0.9</AssemblyVersion>
+    <FileVersion>3.1.0.9</FileVersion>
   </PropertyGroup>
 
 
