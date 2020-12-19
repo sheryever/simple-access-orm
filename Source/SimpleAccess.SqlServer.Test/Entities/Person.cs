@@ -14,6 +14,8 @@ namespace SimpleAccess.SqlServer.TestNetCore2.Entities
         //[Identity]
         [PrimaryKey("[dbo].[Seq_People]")]
         public int Id { get; set; }
+        [NotMapped]
+        public long RowNumber { get; set; }
 
         public string FullName { get; set; }
 

@@ -271,7 +271,7 @@ namespace SimpleAccess.SqlServer.Test
 
 
                 var attachments = SqlRepository.FindAll<Attachment>(transaction, c => c.IncidentId == 3);
-                Assert.Equal(1, attachments.Count());
+                Assert.Single(attachments);
 
                 SqlRepository.SimpleAccess.EndTransaction(transaction);
 
@@ -349,7 +349,7 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void GetDynamicPagedListTest()
         {
-            var people = SqlRepository.GetDynamicPagedList<Person>(0, 2, "Id");
+            var people = SqlRepository.GetDynamicPagedList<Person>(0, 2, "Id", false);
 
             Assert.Equal(2, people.Data.Count());
             Assert.Equal(3, people.TotalRows);
@@ -358,7 +358,7 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void GetDynamicPagedListTestWithSelect()
         {
-            var people = SqlRepository.GetDynamicPagedList<Person>(p => new { p.Id }, 0, 2, "Id");
+            var people = SqlRepository.GetDynamicPagedList<Person>(p => new { p.Id }, 0, 2, "Id", false);
 
             Assert.Equal(2, people.Data.Count());
             Assert.Equal(3, people.TotalRows);
@@ -367,7 +367,7 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void GetDynamicPagedListTestWithSelectDistinct()
         {
-            var people = SqlRepository.GetDynamicPagedList<Person>(true, p => new { p.Id }, 0, 2, "Id");
+            var people = SqlRepository.GetDynamicPagedList<Person>(true, p => new { p.Id }, 0, 2, "Id", false);
 
             Assert.Equal(2, people.Data.Count());
             Assert.Equal(3, people.TotalRows);
@@ -377,7 +377,7 @@ namespace SimpleAccess.SqlServer.Test
         public void GetDynamicPagedListTestWithObjectParameters()
         {
             var id = 1;
-            var people = SqlRepository.GetDynamicPagedList<Person>(0, 2, "Id, FullName", new { id });
+            var people = SqlRepository.GetDynamicPagedList<Person>(0, 2, "Id, FullName", new { id }, true);
 
             Assert.Equal(1, people.Data.Count());
             Assert.Equal(1, people.TotalRows);
@@ -386,7 +386,7 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void GetDynamicPagedListTestWithSqlParameters()
         {
-            var people = SqlRepository.GetDynamicPagedList<Person>(0, 2, "Id, FullName", new SqlParameter("@id", 1));
+            var people = SqlRepository.GetDynamicPagedList<Person>(0, 2, "Id, FullName", false, new SqlParameter("@id", 1));
 
             Assert.Equal(1, people.Data.Count());
             Assert.Equal(1, people.TotalRows);
@@ -395,7 +395,7 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void GetEntitiesPagedListTestWithSelectDistinct()
         {
-            var people = SqlRepository.GetEntitiesPagedList<Person>(true, p => new { p.Id }, null, 0, 2, "Id");
+            var people = SqlRepository.GetEntitiesPagedList<Person>(true, p => new { p.Id }, null, 0, 2, "Id", false);
 
             Assert.Equal(2, people.Data.Count());
             Assert.Equal(3, people.TotalRows);
@@ -404,8 +404,8 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void GetEntitiesPagedListTestWithLike()
         {
-            var people = SqlRepository.GetEntitiesPagedList<Person>(p => new { p.Id, p.FullName }
-            , "Where FullName like '%' + @fullName + '%'", 0, 2, "Id", new { fullName = "ah" });
+            var people = SqlRepository.GetEntitiesPagedList<Person>(p => new { p.Id, p.FullName, p.RowNumber }
+            , "Where FullName like '%' + @fullName + '%'", 0, 2, "Id", new { fullName = "ah" }, true);
 
             Assert.Equal(1, people.Data.Count());
             Assert.Equal(1, people.TotalRows);
@@ -414,7 +414,7 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void GetEntitiesPagedListTest()
         {
-            var people = SqlRepository.GetEntitiesPagedList<Person>(p => new { p.Id, p.FullName }, null, 0, 2, "Id");
+            var people = SqlRepository.GetEntitiesPagedList<Person>(p => new { p.Id, p.FullName }, null, 0, 2, "Id", false);
 
             Assert.Equal(2, people.Data.Count());
             Assert.Equal(3, people.TotalRows);

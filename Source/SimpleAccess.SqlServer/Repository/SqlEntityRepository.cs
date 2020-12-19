@@ -800,7 +800,6 @@ namespace SimpleAccess.SqlServer
 
             var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
 
-            //var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
             var commandText = entityInfo.SqlBuilder.GetDeleteAllStatement();
 
             result = SimpleAccess.ExecuteNonQuery(commandText, CommandType.Text, DynamicQuery.CreateDbParametersFormWhereExpression(expression, entityInfo));

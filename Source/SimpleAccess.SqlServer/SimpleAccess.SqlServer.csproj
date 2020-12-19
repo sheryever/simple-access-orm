@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
     <TargetFrameworks>net40;net45;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>3.1.0-rc-8.2</Version>
+    <Version>3.1.0-rc-8.4</Version>
     <Product>SimpleAccess Sql Server ORM</Product>
     <Description>Simple Access ORM provides database access in Ado.net methods naming pattern.
 Documentation of using SimpleAccess is available at https://simpleaccessorm.com
@@ -38,6 +38,7 @@ Documentation of using SimpleAccess is available at https://simpleaccessorm.com
       - IsExist function extension added with
       - 20 more overloads added for GetCount extensions method
       - IN Clause support added using Contains SqlSyntax extentions
+      - RowNumber column added in Paging extensions using addRowNumber bool parameter
 
       Bug fixes
       - SqlEntityRepository Get, Find, FindAll methods fixed
@@ -48,8 +49,17 @@ Documentation of using SimpleAccess is available at https://simpleaccessorm.com
       - ConnectionString lost user credential bug fixed
       - Error in executing in Where lambda expression fixed
       - Issue #9: SqlRepository.FindAll is throwing NullReference exception if the lambda parameter is nullable property</PackageReleaseNotes>
-    <AssemblyVersion>3.1.0.24</AssemblyVersion>
-    <FileVersion>3.1.0.24</FileVersion>
+    <AssemblyVersion>3.1.0.26</AssemblyVersion>
+    <FileVersion>3.1.0.26</FileVersion>
+
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
@@ -104,6 +114,10 @@ Documentation of using SimpleAccess is available at https://simpleaccessorm.com
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|AnyCPU'">
     <DocumentationFile>D:\Documents\GitHub\simple-access-orm\Source\SimpleAccess.SqlServer\SimpleAccess.SqlServer.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Properties\AssemblyInfo.cs" />

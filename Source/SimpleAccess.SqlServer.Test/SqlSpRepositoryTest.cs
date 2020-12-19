@@ -146,7 +146,7 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void GetDynamicPagedListTest()
         {
-            var people = SqlRepository.GetDynamicPagedList<Person>(0, 2, "Id");
+            var people = SqlRepository.GetDynamicPagedList<Person>(0, 2, "Id", false);
 
             Assert.Equal(2, people.Data.Count());
             Assert.Equal(3, people.TotalRows);
@@ -155,7 +155,7 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void GetDynamicPagedListWithSelectTest()
         {
-            var people = SqlRepository.GetEntitiesPagedList<Person>(p => new {p.Id, p.FullName}, null , 0, 2, "Id");
+            var people = SqlRepository.GetEntitiesPagedList<Person>(p => new {p.Id, p.FullName}, null , 0, 2, "Id", false);
 
             Assert.Equal(2, people.Data.Count());
             Assert.Equal(3, people.TotalRows);
