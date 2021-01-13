@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netstandard2.0;net40;net45</TargetFrameworks>
-    <Version>3.1.0-rc9</Version>
+    <Version>3.1.0-rc10</Version>
     <Product>SimpleAccess ORM Core</Product>
     <Description>The core and common interfaces and implementation of SimpleAccess ORM</Description>
     <Authors>Abu Ali Muhammad Sharjeel</Authors>
     <Company>Wayzsoft</Company>
-    <Copyright>Copyright 2020</Copyright>
+    <Copyright>Copyright 2021</Copyright>
     <PackageProjectUrl>https://github.com/sheryever/simple-access-orm</PackageProjectUrl>
     <RepositoryUrl>https://github.com/sheryever/simple-access-orm</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
@@ -20,11 +20,24 @@
 - Data mapping performance improved
 - IgnoreSelect, IgnoreInsert, IgnoreUpdate and NotMapped property attributes added for EntityRepositories
 - Support for generating having clause added</PackageReleaseNotes>
-    <AssemblyVersion>3.1.0.9</AssemblyVersion>
-    <FileVersion>3.1.0.9</FileVersion>
+    <AssemblyVersion>3.1.0.10</AssemblyVersion>
+    <FileVersion>3.1.0.10</FileVersion>
+    
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+  </ItemGroup>
+  
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.1'">
     <DefineConstants>NETSTANDARD2_1</DefineConstants>
   </PropertyGroup>
