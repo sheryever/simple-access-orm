@@ -30,122 +30,242 @@ namespace SimpleAccess.SqlServer
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, byte>> selector, Expression<Func<TEntity, bool>> where = null)
 where TEntity : class, new()
         {
-            return IsExist<TEntity, byte>(sqlRepository, selector, where);
+            return IsExist<TEntity, byte>(sqlRepository, null, selector, where);
         }
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, byte?>> selector, Expression<Func<TEntity, bool>> where = null)
     where TEntity : class, new()
         {
-            return IsExist<TEntity, byte?>(sqlRepository, selector, where);
+            return IsExist<TEntity, byte?>(sqlRepository, null, selector, where);
         }
 
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, short>> selector, Expression<Func<TEntity, bool>> where = null)
     where TEntity : class, new()
         {
-            return IsExist<TEntity, short>(sqlRepository, selector, where);
+            return IsExist<TEntity, short>(sqlRepository, null, selector, where);
         }
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, short?>> selector, Expression<Func<TEntity, bool>> where = null)
     where TEntity : class, new()
         {
-            return IsExist<TEntity, short?>(sqlRepository, selector, where);
+            return IsExist<TEntity, short?>(sqlRepository, null, selector, where);
         }
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int>> selector, Expression<Func<TEntity, bool>> where = null)
             where TEntity : class, new()
         {
-            return IsExist<TEntity, int>(sqlRepository, selector, where);
+            return IsExist<TEntity, int>(sqlRepository, null, selector, where);
         }
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, int?>> selector, Expression<Func<TEntity, bool>> where = null)
     where TEntity : class, new()
         {
-            return IsExist<TEntity, int?>(sqlRepository, selector, where);
+            return IsExist<TEntity, int?>(sqlRepository, null, selector, where);
         }
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long>> selector, Expression<Func<TEntity, bool>> where = null)
     where TEntity : class, new()
         {
-            return IsExist<TEntity, long>(sqlRepository, selector, where);
+            return IsExist<TEntity, long>(sqlRepository, null, selector, where);
         }
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, long?>> selector, Expression<Func<TEntity, bool>> where = null)
    where TEntity : class, new()
         {
-            return IsExist<TEntity, long?>(sqlRepository, selector, where);
+            return IsExist<TEntity, long?>(sqlRepository, null, selector, where);
         }
 
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, string>> selector, Expression<Func<TEntity, bool>> where = null)
     where TEntity : class, new()
         {
-            return IsExist<TEntity, string>(sqlRepository, selector, where);
+            return IsExist<TEntity, string>(sqlRepository, null, selector, where);
         }
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float>> selector, Expression<Func<TEntity, bool>> where = null)
     where TEntity : class, new()
         {
-            return IsExist<TEntity, float>(sqlRepository, selector, where);
+            return IsExist<TEntity, float>(sqlRepository, null, selector, where);
         }
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, float?>> selector, Expression<Func<TEntity, bool>> where = null)
     where TEntity : class, new()
         {
-            return IsExist<TEntity, float?>(sqlRepository, selector, where);
+            return IsExist<TEntity, float?>(sqlRepository, null, selector, where);
         }
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal>> selector, Expression<Func<TEntity, bool>> where = null)
     where TEntity : class, new()
         {
-            return IsExist<TEntity, decimal>(sqlRepository, selector, where);
+            return IsExist<TEntity, decimal>(sqlRepository, null, selector, where);
         }
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, decimal?>> selector, Expression<Func<TEntity, bool>> where = null)
 where TEntity : class, new()
         {
-            return IsExist<TEntity, decimal?>(sqlRepository, selector, where);
+            return IsExist<TEntity, decimal?>(sqlRepository, null, selector, where);
         }
 
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double>> selector, Expression<Func<TEntity, bool>> where = null)
 where TEntity : class, new()
         {
-            return IsExist<TEntity, double>(sqlRepository, selector, where);
+            return IsExist<TEntity, double>(sqlRepository, null, selector, where);
         }
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, double?>> selector, Expression<Func<TEntity, bool>> where = null)
 where TEntity : class, new()
         {
-            return IsExist<TEntity, double?>(sqlRepository, selector, where);
+            return IsExist<TEntity, double?>(sqlRepository, null, selector, where);
         }
 
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, bool>> selector, Expression<Func<TEntity, bool>> where = null)
 where TEntity : class, new()
         {
-            return IsExist<TEntity, bool>(sqlRepository, selector, where);
+            return IsExist<TEntity, bool>(sqlRepository, null, selector, where);
         }
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, bool?>> selector, Expression<Func<TEntity, bool>> where = null)
 where TEntity : class, new()
         {
-            return IsExist<TEntity, bool?>(sqlRepository, selector, where);
+            return IsExist<TEntity, bool?>(sqlRepository, null, selector, where);
         }
 
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, DateTime>> selector, Expression<Func<TEntity, bool>> where = null)
 where TEntity : class, new()
         {
-            return IsExist<TEntity, DateTime>(sqlRepository, selector, where);
+            return IsExist<TEntity, DateTime>(sqlRepository, null, selector, where);
         }
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, DateTime?>> selector, Expression<Func<TEntity, bool>> where = null)
 where TEntity : class, new()
         {
-            return IsExist<TEntity, DateTime?>(sqlRepository, selector, where);
+            return IsExist<TEntity, DateTime?>(sqlRepository, null, selector, where);
         }
 
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TimeSpan>> selector, Expression<Func<TEntity, bool>> where = null)
 where TEntity : class, new()
         {
-            return IsExist<TEntity, TimeSpan>(sqlRepository, selector, where);
+            return IsExist<TEntity, TimeSpan>(sqlRepository, null, selector, where);
         }
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TimeSpan?>> selector, Expression<Func<TEntity, bool>> where = null)
 where TEntity : class, new()
         {
-            return IsExist<TEntity, TimeSpan?>(sqlRepository, selector, where);
+            return IsExist<TEntity, TimeSpan?>(sqlRepository, null, selector, where);
         }
 
         public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, Expression<Func<TEntity, bool>> where = null)
             where TEntity : class, new()
         {
-            return IsExist<TEntity, int>(sqlRepository, null, where);
+            return IsExist<TEntity, int>(sqlRepository, null, null, where);
         }
 
-        private static bool IsExist<TEntity, TKey>(this ISqlRepository sqlRepository, Expression<Func<TEntity, TKey>> selector = null
+        /* */
+
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, byte>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, byte>(sqlRepository, transaction, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, byte?>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return IsExist<TEntity, byte?>(sqlRepository, transaction, selector, where);
+        }
+
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, short>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return IsExist<TEntity, short>(sqlRepository, transaction, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, short?>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return IsExist<TEntity, short?>(sqlRepository, transaction, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, int>> selector, Expression<Func<TEntity, bool>> where = null)
+            where TEntity : class, new()
+        {
+            return IsExist<TEntity, int>(sqlRepository, transaction, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, int?>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return IsExist<TEntity, int?>(sqlRepository, transaction, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, long>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return IsExist<TEntity, long>(sqlRepository, transaction, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, long?>> selector, Expression<Func<TEntity, bool>> where = null)
+   where TEntity : class, new()
+        {
+            return IsExist<TEntity, long?>(sqlRepository, transaction, selector, where);
+        }
+
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, string>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return IsExist<TEntity, string>(sqlRepository, transaction, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, float>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return IsExist<TEntity, float>(sqlRepository, transaction, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, float?>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return IsExist<TEntity, float?>(sqlRepository, transaction, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, decimal>> selector, Expression<Func<TEntity, bool>> where = null)
+    where TEntity : class, new()
+        {
+            return IsExist<TEntity, decimal>(sqlRepository, transaction, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, decimal?>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, decimal?>(sqlRepository, transaction, selector, where);
+        }
+
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, double>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, double>(sqlRepository, transaction, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, double?>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, double?>(sqlRepository, transaction, selector, where);
+        }
+
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, bool>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, bool>(sqlRepository, transaction, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, bool?>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, bool?>(sqlRepository, transaction, selector, where);
+        }
+
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, DateTime>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, DateTime>(sqlRepository, transaction, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, DateTime?>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, DateTime?>(sqlRepository, transaction, selector, where);
+        }
+
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, TimeSpan>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, TimeSpan>(sqlRepository, transaction, selector, where);
+        }
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, TimeSpan?>> selector, Expression<Func<TEntity, bool>> where = null)
+where TEntity : class, new()
+        {
+            return IsExist<TEntity, TimeSpan?>(sqlRepository, transaction, selector, where);
+        }
+
+        public static bool IsExist<TEntity>(this ISqlRepository sqlRepository, SqlTransaction transaction, Expression<Func<TEntity, bool>> where = null)
+            where TEntity : class, new()
+        {
+            return IsExist<TEntity, int>(sqlRepository, transaction, null, where);
+        }
+
+        private static bool IsExist<TEntity, TKey>(this ISqlRepository sqlRepository, SqlTransaction transaction = null, Expression<Func<TEntity, TKey>> selector = null
         , Expression<Func<TEntity, bool>> where = null)
             where TEntity : class, new()
         {
@@ -179,8 +299,13 @@ where TEntity : class, new()
             }
 
             commandText = commandText.Replace("{whereClause}", whereClause);
+            if (transaction != null)
+            {
+                return sqlRepository.SimpleAccess.ExecuteScalar<int>(transaction, commandText, commandType) > 0;
+            }
 
             return sqlRepository.SimpleAccess.ExecuteScalar<int>(commandText, commandType) > 0;
+
         }
 
 
