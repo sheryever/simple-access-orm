@@ -650,6 +650,46 @@ namespace SimpleAccess.SqlServer.Test
 
         }
 
+        [Fact]
+        public void InClauseWithArrayVariableTest()
+        {
+            var ids = new[] { 1, 2 };
+            var found = SqlRepository.FindAll<Person>(p => p.Id.In(ids));
+
+            Assert.True(found.Any());
+        }
+
+        [Fact]
+        public void InClauseWithArrayValuesTest()
+        {
+            var found = SqlRepository.FindAll<Person>(p => p.Id.In(new[] { 1, 2 }));
+
+            Assert.True(found.Any());
+        }
+
+        [Fact]
+        public void InClauseExpressionTest()
+        {
+            var found = SqlRepository.FindAll<Person>(p => p.Id.In<Person, int>(pr => pr.Id));
+
+            Assert.True(found.Any());
+
+        }
+
+        [Fact]
+        public void InClauseWithSubWhereExpressionTest()
+        {
+            var found = SqlRepository.FindAll<Person>(p => p.Id.In<Category, int>(pr => pr.Id, pw => pw.Id < 10));
+            Assert.True(found.Any());
+
+        }
+        [Fact]
+        public void TestGetDynamicPage()
+        {
+            var people = SqlRepository.GetDynamicPagedList<Person>(e => new { e.Id, e.FullName }, 0, 1000, "FullName", false);
+            Assert.Equal(1, people.Data.Count());
+        }
+
         //[Fact]
         //public void GetAggregateTest()
         //{

@@ -360,7 +360,7 @@ namespace SimpleAccess.SqlServer.Test
 
 
         [Fact]
-        public void ExecuteDynamicsWithTransactionTest()
+        public void ExecuteStringQueryWithTransactionTest()
         {
             using (var transaction = SimpleAccess.BeginTransaction())
             {
@@ -385,5 +385,7 @@ namespace SimpleAccess.SqlServer.Test
 
             }
         }
+
+
     }
 }

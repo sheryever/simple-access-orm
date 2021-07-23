@@ -366,6 +366,21 @@ where TEntity : class, new()
 
         #endregion
 
+        public static bool In<TEntity, T>(this object obj, Expression<Func<TEntity, int?>> selector)
+            where TEntity : class, new()
+            where T : struct
+        {
+            // No implementation, It will be used just as expression
+            throw new NotImplementedException("The function has no implementation, It is being used as IN Clause expression");
+        }
+
+        public static bool In<TEntity, T>(this object obj, Expression<Func<TEntity, int?>> selector, Expression<Func<TEntity, bool>> where)
+            where TEntity : class, new()
+            where T: struct
+        {
+            // No implementation, It will be used just as expression
+            throw new NotImplementedException("The function has no implementation, It is being used as IN Clause expression");
+        }
 
 
         public static T[] CreateSqlParameters<T>(object otherParameters)

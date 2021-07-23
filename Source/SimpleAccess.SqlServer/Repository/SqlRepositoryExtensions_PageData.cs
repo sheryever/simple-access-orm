@@ -450,7 +450,7 @@ namespace SimpleAccess.SqlServer
                 {
                     var selectProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(select));
 
-                    commandText = commandText.Replace("{columns}", string.Join(", ", selectProperties.Keys));
+                    commandText = commandText.Replace("{columns}", string.Join(", ", selectProperties.Values.Select(v => v.Name)));
                 }
                 else
                 {
@@ -608,7 +608,7 @@ namespace SimpleAccess.SqlServer
                        .Where(p => !p.GetCustomAttributes(true).Any(a => a is IgnoreSelectAttribute || a is NotMappedAttribute))
                        .Select(p => p.Name.ToLower())
                        .ToArray());   //.ToDictionary(p => p.Name.ToLower());
-                    commandText = commandText.Replace("{columns}", string.Join(", ", selectProperties.Keys));
+                    commandText = commandText.Replace("{columns}", string.Join(", ", selectProperties.Values.Select(v => v.Name)));
                     if (addRowNumber) commandText = commandText.Replace("rownumber,", "");
                 }
                 else

@@ -10,11 +10,13 @@ using Microsoft.Data.SqlClient;
 #endif
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using SimpleAccess.Core;
 using SimpleAccess.Core.Entity;
+using SimpleAccess.Core.Entity.RepoWrapper;
 using SimpleAccess.Core.Extensions;
 
 namespace SimpleAccess.SqlServer
@@ -341,6 +343,37 @@ namespace SimpleAccess.SqlServer
             }
 
             return result;
+        }
+
+        //https://entityframework.net/knowledge-base/7731905/how-to-convert-an-expression-tree-to-a-partial-sql-query-
+        //https://mehfuzh.github.io/LinqExtender/
+        public string BuildWhereInClauseExpression<TEntity>(string propertyName, string @operator, object value, Expression<Func<TEntity, bool>> expression)
+        {
+            var methodCallExp = (MethodCallExpression)expression.Body;
+            var arg = methodCallExp.Arguments[1].ToString();
+            var alias = arg.Split(' ')[0];
+            var column = arg.Split('(')[1];
+            column = column.Replace(", Nullable`1", "").Replace(")", "");
+            var subEntityInfo = SqlEntityRepositorySetting.GetEntityInfo(methodCallExp.Method.GetGenericArguments()[0]);
+
+            var whereClause = "";
+            if (methodCallExp.Arguments.Count > 2)
+            {
+                var typeArg = Expression.Parameter(subEntityInfo.EntityType, "t");
+                Expression.TryGetFuncType(new[] { subEntityInfo.EntityType, typeof(bool) }, out var newType);
+
+                LambdaExpression exp = (LambdaExpression) ((UnaryExpression)methodCallExp.Arguments[2]).Operand;
+
+
+               // var t = Expression.Convert(lambda, newType);
+
+                whereClause = DynamicQuery.CreateDbParametersFormSubWhereExpression(exp.Body, alias, subEntityInfo);
+            }
+                                
+            var subQuery = $" SELECT {column} FROM {subEntityInfo.DbObjectName} AS {alias} {whereClause} ";
+
+            return string.Format("( [{0}] IN ({1}) )", propertyName, subQuery);
+
         }
 
         /// <summary>
