@@ -9,6 +9,7 @@ using System.Collections.Generic;
 #pragma warning restore CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
 #pragma warning disable CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
 using System.Data;
+using System.Linq.Expressions;
 #pragma warning restore CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
 #pragma warning disable CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
 using System.Reflection;
@@ -121,6 +122,7 @@ namespace SimpleAccess.Core
         List<PropertyInfo> OutParameterPropertyInfoCollection { get; set; }
 
         string BuildWhereExpression(string propertyName, Type valueType, string @operator, object value);
+        string BuildWhereInClauseExpression<TEntity>(string propertyName, string @operator, object value, Expression<Func<TEntity, bool>> expression);
 
         /// <summary>
         /// Clear all DbParameters of both insert and update EntityParameters

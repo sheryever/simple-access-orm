@@ -9,6 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using SimpleAccess.Core.Extensions;
 
 // #if NET40
 namespace SimpleAccess.Core.Entity
@@ -107,7 +108,7 @@ namespace SimpleAccess.Core.Entity
             /// <param name="tableName">Name of the table.</param>
             /// <param name="expression">The expression.</param>
             /// <returns>A result object with the generated sql and dynamic params.</returns>
-            public static string CreateDbParametersFormWhereExpression<TISqlBuilder, TDbParameter, TEntitiy>(Expression<Func<TEntitiy, bool>> expression, EntityInfo<TISqlBuilder, TDbParameter> entityInfo)
+            public static string CreateDbParametersFormWhereExpression<TISqlBuilder, TDbParameter, TEntity>(Expression<Func<TEntity, bool>> expression, EntityInfo<TISqlBuilder, TDbParameter> entityInfo)
                 where TISqlBuilder : ISqlBuilder<TDbParameter>, new()
                 where TDbParameter : IDataParameter
             {
@@ -139,7 +140,7 @@ namespace SimpleAccess.Core.Entity
 
                 builder.Append(" WHERE ");
 
-                var entityType = typeof(TEntitiy);
+                var entityType = typeof(TEntity);
                 
                 for (int i = 0; i < queryProperties.Count(); i++)
                 {
@@ -150,13 +151,19 @@ namespace SimpleAccess.Core.Entity
                     {
                         //builder.Append(string.Format("{0} {1} {2} @{1} ", item.LinkingOperator, item.PropertyName,
                         builder.Append(string.Format("{0}  {1} ", item.LinkingOperator,
+                            item.QueryOperator == "InClause" ? 
+                            entityInfo.SqlBuilder.BuildWhereInClauseExpression(item.PropertyName, 
+                                item.QueryOperator, item.PropertyValue, expression) :
                             entityInfo.SqlBuilder.BuildWhereExpression(item.PropertyName, propertyInfo.PropertyType,
                                 item.QueryOperator, item.PropertyValue)));
 
                     }
                     else
                     {
-                        builder.Append(entityInfo.SqlBuilder.BuildWhereExpression(item.PropertyName, propertyInfo.PropertyType,
+                        builder.Append(item.QueryOperator == "InClause" ?
+                            entityInfo.SqlBuilder.BuildWhereInClauseExpression(item.PropertyName,
+                                item.QueryOperator, item.PropertyValue, expression) :
+                            entityInfo.SqlBuilder.BuildWhereExpression(item.PropertyName, propertyInfo.PropertyType,
                                     item.QueryOperator, item.PropertyValue));
 //                                entityInfo.SqlBuilder.BuildValueOperand(propertyInfo.PropertyType, item.PropertyValue)));
                         
@@ -166,6 +173,71 @@ namespace SimpleAccess.Core.Entity
                 return builder.ToString();
             }
 
+            /// <summary>
+            /// Gets the dynamic query.
+            /// </summary>
+            /// <param name="tableName">Name of the table.</param>
+            /// <param name="expression">The expression.</param>
+            /// <returns>A result object with the generated sql and dynamic params.</returns>
+            public static string CreateDbParametersFormSubWhereExpression<TISqlBuilder, TDbParameter>(Expression expression, string subQueryAlias, EntityInfo<TISqlBuilder, TDbParameter> entityInfo)
+                where TISqlBuilder : ISqlBuilder<TDbParameter>, new()
+                where TDbParameter : IDataParameter
+            {
+                var queryProperties = new List<QueryParameter>();
+                Type entityType = null;
+                if (expression is BinaryExpression)
+                {
+                    var binaryExpression = (BinaryExpression)expression;
+                    // walk the tree and build up a list of query parameter objects
+                    // from the left and right branches of the expression tree
+                    WalkTree(binaryExpression, ExpressionType.Default, ref queryProperties);
+                    entityType = ((MemberExpression)binaryExpression.Left).Expression.Type;
+
+
+                }
+                else if (expression is MethodCallExpression)
+                {
+                    MethodCallExpression methodCallExpression = (MethodCallExpression)expression;
+                    // walk the tree and build up a list of query parameter objects
+                    // from the left and right branches of the expression tree
+                    WalkTree(methodCallExpression, ExpressionType.Default, ref queryProperties);
+                    entityType = ((MethodCallExpression)expression).Method.GetGenericArguments()[0]; ;
+                }
+                // walk the tree and build up a list of query parameter objects
+                // from the left and right branches of the expression tree
+
+                IDictionary<string, Object> expando = new ExpandoObject();
+                var builder = new StringBuilder();
+
+                // convert the query parms into a SQL string and dynamic property object
+
+                builder.Append(" WHERE ");
+
+                for (int i = 0; i < queryProperties.Count(); i++)
+                {
+                    QueryParameter item = queryProperties[i];
+
+                    var propertyInfo = entityType.GetProperty(item.PropertyName);
+                    if (!string.IsNullOrEmpty(item.LinkingOperator) && i > 0)
+                    {
+                        //builder.Append(string.Format("{0} {1} {2} @{1} ", item.LinkingOperator, item.PropertyName,
+                        builder.Append(string.Format("{0}  {1} ", item.LinkingOperator,
+                            entityInfo.SqlBuilder.BuildWhereExpression($"{subQueryAlias}].[{item.PropertyName}", propertyInfo.PropertyType,
+                                item.QueryOperator, item.PropertyValue)));
+
+                    }
+                    else
+                    {
+                        builder.Append(
+                            entityInfo.SqlBuilder.BuildWhereExpression($"{subQueryAlias}].[{item.PropertyName}", propertyInfo.PropertyType,
+                                    item.QueryOperator, item.PropertyValue));
+                        //                                entityInfo.SqlBuilder.BuildValueOperand(propertyInfo.PropertyType, item.PropertyValue)));
+
+                    }
+                }
+
+                return builder.ToString();
+            }
 
             /// <summary>
             /// Gets the dynamic query.
@@ -452,10 +524,27 @@ namespace SimpleAccess.Core.Entity
             private static void WalkTree(MethodCallExpression body, ExpressionType linkingType,
                                          ref List<QueryParameter> queryProperties)
             {
-                string propertyName = GetPropertyName(body);
-                dynamic propertyValue = GetExpressionValue(body, out bool isArray);
-                string opr = isArray ? body.Method.Name + "WithArray" : body.Method.Name ;
-                string link = GetOperator(linkingType);
+                string propertyName = "";
+                var opr = "";
+                string link = "";
+                dynamic propertyValue = null;
+                if (body.Method.Name == "In" 
+                    && !(body.Arguments.Count == 2 
+                    && body.Arguments[1].NodeType.In(ExpressionType.NewArrayInit, ExpressionType.MemberAccess)))
+                {
+                    propertyName = GetInClausePropertyName(body);
+
+                    opr = "InClause";
+                    link = GetOperator(linkingType);
+
+                    queryProperties.Add(new QueryParameter(link, propertyName, propertyValue, opr));
+
+                    return;
+                }
+                propertyName = GetPropertyName(body);
+                propertyValue = GetExpressionValue(body, out bool isArray);
+                opr = isArray ? "ContainsWithArray" : body.Method.Name ;
+                link = GetOperator(linkingType);
 
                 queryProperties.Add(new QueryParameter(link, propertyName, propertyValue, opr));
             }
@@ -529,7 +618,7 @@ namespace SimpleAccess.Core.Entity
                 {
                     return ((dynamic) body.Arguments[0]).Value;
                 }
-                else if (body.Arguments.Count == 2 && body.Arguments[1] is NewArrayExpression)
+                else if (body.Arguments.Count == 2 && body.Arguments[1].NodeType.In(ExpressionType.NewArrayInit, ExpressionType.MemberAccess))
                 {
                     isArray = true;
                     LambdaExpression lambda = Expression.Lambda(body.Arguments[1]);
@@ -626,6 +715,11 @@ namespace SimpleAccess.Core.Entity
                 {
                     propertyName = body.Object.ToString().Split(new char[] { '.' })[1];
                 }
+                else if (body.Arguments.Count > 2)
+                {
+                    propertyName = body.Arguments[0].ToString().Split(new char[] { '.' })[1];
+                    propertyName = propertyName.Split(',')[0];
+                }
                 else
                 {
                     propertyName = body.Arguments[0].ToString().Split(new char[] { '.' })[1];
@@ -634,6 +728,20 @@ namespace SimpleAccess.Core.Entity
                 return propertyName;
             }
 
+            /// <summary>
+            /// Gets the name of the property.
+            /// </summary>
+            /// <param name="body">The body.</param>
+            /// <returns>The property name for the property expression.</returns>
+            private static string GetInClausePropertyName(MethodCallExpression body)
+            {
+                string propertyName = null;
+
+                propertyName = body.Arguments[0].ToString().Split(new char[] { '.' })[1];
+                propertyName = propertyName.Split(',')[0];
+
+                return propertyName;
+            }
 
             /// <summary>
             /// Gets the name of the property.
@@ -743,7 +851,7 @@ namespace SimpleAccess.Core.Entity
             public string PropertyName { get; set; }
             public object PropertyValue { get; set; }
             public string QueryOperator { get; set; }
-
+            
             /// <summary>
             /// Initializes a new instance of the <see cref="QueryParameter" /> class.
             /// </summary>
