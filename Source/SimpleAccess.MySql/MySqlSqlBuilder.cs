@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SimpleAccess.Core;
 using SimpleAccess.Core.Entity;
+using System.Linq.Expressions;
 
 namespace SimpleAccess.MySql
 {
@@ -357,6 +358,10 @@ namespace SimpleAccess.MySql
             return inputSql.Replace("'", "''");
         }
 
+        public string BuildWhereInClauseExpression<TEntity>(string propertyName, string @operator, object value, Expression<Func<TEntity, bool>> expression)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 
