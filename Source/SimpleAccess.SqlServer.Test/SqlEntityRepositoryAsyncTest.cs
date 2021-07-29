@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 using SimpleAccess.Core;
 using SimpleAccess.SqlServer;
 using SimpleAccess.SqlServer.TestNetCore2.Entities;
@@ -239,6 +240,25 @@ namespace SimpleAccess.SqlServer.Test
                 SqlRepository.SimpleAccess.EndTransaction(transContext);
 
             }
+        }
+
+        [Fact]
+        public void GetDynamicPagedListAsyncTestWithSelectAndWhereClause()
+        {
+            var people = SqlRepository.GetDynamicPagedListAsync<Person>(p => new { p.Id }, "WHERE ID > 1", 0, 2, "Id", false).Result;
+
+            Assert.Equal(2, people.Data.Count());
+            Assert.Equal(2, people.TotalRows);
+        }
+
+        [Fact]
+        public void GetDynamicPagedListAsyncTestWithSelectDistinctAndWhereClause()
+        {
+            var people = SqlRepository.GetDynamicPagedListAsync<Person>(true, p => new { p.Id }
+                                , "WHERE ID > @id", 0, 2, "Id", false, new SqlParameter("@id", 1)).Result;
+
+            Assert.Equal(2, people.Data.Count());
+            Assert.Equal(2, people.TotalRows);
         }
 
         //[Fact]

@@ -374,6 +374,25 @@ namespace SimpleAccess.SqlServer.Test
         }
 
         [Fact]
+        public void GetDynamicPagedListTestWithSelectAndWhereClause()
+        {
+            var people = SqlRepository.GetDynamicPagedList<Person>(p => new { p.Id }, "WHERE ID > 1", 0, 2, "Id", false);
+
+            Assert.Equal(2, people.Data.Count());
+            Assert.Equal(2, people.TotalRows);
+        }
+
+        [Fact]
+        public void GetDynamicPagedListTestWithSelectDistinctAndWhereClause()
+        {
+            var people = SqlRepository.GetDynamicPagedList<Person>(true, p => new { p.Id }
+                                , "WHERE ID > @id", 0, 2, "Id", false, new SqlParameter( "@id", 1 ));
+
+            Assert.Equal(2, people.Data.Count());
+            Assert.Equal(2, people.TotalRows);
+        }
+
+        [Fact]
         public void GetDynamicPagedListTestWithObjectParameters()
         {
             var id = 1;
@@ -404,7 +423,7 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void GetEntitiesPagedListTestWithLike()
         {
-            var people = SqlRepository.GetEntitiesPagedList<Person>(p => new { p.Id, p.FullName, p.RowNumber }
+            var people = SqlRepository.GetEntitiesPagedList<Person>(p => new { p.Id, p.FullName }
             , "Where FullName like '%' + @fullName + '%'", 0, 2, "Id", new { fullName = "ah" }, true);
 
             Assert.Equal(1, people.Data.Count());
@@ -687,7 +706,7 @@ namespace SimpleAccess.SqlServer.Test
         public void TestGetDynamicPage()
         {
             var people = SqlRepository.GetDynamicPagedList<Person>(e => new { e.Id, e.FullName }, 0, 1000, "FullName", false);
-            Assert.Equal(1, people.Data.Count());
+            Assert.Equal(3, people.Data.Count());
         }
 
         //[Fact]

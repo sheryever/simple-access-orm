@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 using SimpleAccess.Core;
 using SimpleAccess.SqlServer;
 using SimpleAccess.SqlServer.TestNetCore2.Entities;
@@ -264,6 +265,8 @@ namespace SimpleAccess.SqlServer.Test
 
             }
         }
+
+
 
         //[Fact]
         //public void ExecuteReaderAsyncTest()

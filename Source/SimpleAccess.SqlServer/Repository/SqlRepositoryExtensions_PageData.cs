@@ -24,7 +24,7 @@ namespace SimpleAccess.SqlServer
             where TEntity : class, new()
         {
             var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression);
-            return GetDynamicPagedListAsync<TEntity>(sqlRepository, false, null, addRowNumber, pagedListParameters.GetParametersToExecute());
+            return GetDynamicPagedListAsync<TEntity>(sqlRepository, false, null, null, addRowNumber, pagedListParameters.GetParametersToExecute());
         }
 
         public static Task<PagedData<dynamic>> GetDynamicPagedListAsync<TEntity>(this ISqlRepository sqlRepository, bool distinct, int startIndex, int pageSize, string sortExpression, object whereParameters, bool addRowNumber = false)
@@ -32,7 +32,7 @@ namespace SimpleAccess.SqlServer
         {
             var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression);
             pagedListParameters.AddOtherParams(whereParameters);
-            return GetDynamicPagedListAsync<TEntity>(sqlRepository, distinct, null, addRowNumber, pagedListParameters.GetParametersToExecute());
+            return GetDynamicPagedListAsync<TEntity>(sqlRepository, distinct, null, null, addRowNumber, pagedListParameters.GetParametersToExecute());
         }
 
         public static Task<PagedData<dynamic>> GetDynamicPagedListAsync<TEntity>(this ISqlRepository sqlRepository, int startIndex, int pageSize, string sortExpression, object whereParameters, bool addRowNumber = false)
@@ -40,7 +40,7 @@ namespace SimpleAccess.SqlServer
         {
             var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression);
             pagedListParameters.AddOtherParams(whereParameters);
-            return GetDynamicPagedListAsync<TEntity>(sqlRepository, false, null, addRowNumber, pagedListParameters.GetParametersToExecute());
+            return GetDynamicPagedListAsync<TEntity>(sqlRepository, false, null, null, addRowNumber, pagedListParameters.GetParametersToExecute());
         }
 
         public static Task<PagedData<dynamic>> GetDynamicPagedListAsync<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> select, int startIndex, int pageSize, string sortExpression, object whereParameters, bool addRowNumber = false)
@@ -48,14 +48,14 @@ namespace SimpleAccess.SqlServer
         {
             var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression);
             pagedListParameters.AddOtherParams(whereParameters);
-            return GetDynamicPagedListAsync<TEntity>(sqlRepository, false, select, addRowNumber, pagedListParameters.GetParametersToExecute());
+            return GetDynamicPagedListAsync<TEntity>(sqlRepository, false, select, null, addRowNumber, pagedListParameters.GetParametersToExecute());
         }
         public static Task<PagedData<dynamic>> GetDynamicPagedListAsync<TEntity>(this ISqlRepository sqlRepository, bool distinct, Func<TEntity, object> select, int startIndex, int pageSize, string sortExpression, object whereParameters, bool addRowNumber = false)
             where TEntity : class, new()
         {
             var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression);
             pagedListParameters.AddOtherParams(whereParameters);
-            return GetDynamicPagedListAsync<TEntity>(sqlRepository, distinct, select, addRowNumber, pagedListParameters.GetParametersToExecute());
+            return GetDynamicPagedListAsync<TEntity>(sqlRepository, distinct, select, null, addRowNumber, pagedListParameters.GetParametersToExecute());
         }
 
         public static Task<PagedData<dynamic>> GetDynamicPagedListAsync<TEntity>(this ISqlRepository sqlRepository, int startIndex, int pageSize, string sortExpression, bool addRowNumber, params SqlParameter[] parameters)
@@ -63,7 +63,7 @@ namespace SimpleAccess.SqlServer
         {
             var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression, parameters);
 
-            return GetDynamicPagedListAsync<TEntity>(sqlRepository, false, null, addRowNumber, pagedListParameters.GetParametersToExecute());
+            return GetDynamicPagedListAsync<TEntity>(sqlRepository, false, null, null, addRowNumber, pagedListParameters.GetParametersToExecute());
         }
 
         public static Task<PagedData<dynamic>> GetDynamicPagedListAsync<TEntity>(this ISqlRepository sqlRepository, bool distinct, int startIndex, int pageSize, string sortExpression, bool addRowNumber, params SqlParameter[] parameters)
@@ -71,7 +71,7 @@ namespace SimpleAccess.SqlServer
         {
             var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression, parameters);
 
-            return GetDynamicPagedListAsync<TEntity>(sqlRepository, distinct, null, addRowNumber, pagedListParameters.GetParametersToExecute());
+            return GetDynamicPagedListAsync<TEntity>(sqlRepository, distinct, null, null, addRowNumber, pagedListParameters.GetParametersToExecute());
         }
 
         public static Task<PagedData<dynamic>> GetDynamicPagedListAsync<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> select, int startIndex, int pageSize, string sortExpression, bool addRowNumber, params SqlParameter[] parameters)
@@ -79,7 +79,7 @@ namespace SimpleAccess.SqlServer
         {
             var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression, parameters);
 
-            return GetDynamicPagedListAsync<TEntity>(sqlRepository, false, select, addRowNumber, pagedListParameters.GetParametersToExecute());
+            return GetDynamicPagedListAsync<TEntity>(sqlRepository, false, select, null, addRowNumber, pagedListParameters.GetParametersToExecute());
         }
 
         public static Task<PagedData<dynamic>> GetDynamicPagedListAsync<TEntity>(this ISqlRepository sqlRepository, bool distinct, Func<TEntity, object> select, int startIndex, int pageSize, string sortExpression, bool addRowNumber, params SqlParameter[] parameters)
@@ -87,10 +87,26 @@ namespace SimpleAccess.SqlServer
         {
             var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression, parameters);
 
-            return GetDynamicPagedListAsync<TEntity>(sqlRepository, distinct, select, addRowNumber, pagedListParameters.GetParametersToExecute());
+            return GetDynamicPagedListAsync<TEntity>(sqlRepository, distinct, select, null, addRowNumber, pagedListParameters.GetParametersToExecute());
         }
 
-        public static async Task<PagedData<dynamic>> GetDynamicPagedListAsync<TEntity>(this ISqlRepository sqlRepository, bool distinct, Func<TEntity, object> select, bool addRowNumber, params SqlParameter[] sqlParameters)
+        public static Task<PagedData<dynamic>> GetDynamicPagedListAsync<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> select, string whereClause, int startIndex, int pageSize, string sortExpression, bool addRowNumber, params SqlParameter[] parameters)
+    where TEntity : class, new()
+        {
+            var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression, parameters);
+
+            return GetDynamicPagedListAsync<TEntity>(sqlRepository, false, select, whereClause, addRowNumber, pagedListParameters.GetParametersToExecute());
+        }
+
+        public static Task<PagedData<dynamic>> GetDynamicPagedListAsync<TEntity>(this ISqlRepository sqlRepository, bool distinct, Func<TEntity, object> select, string whereClause, int startIndex, int pageSize, string sortExpression, bool addRowNumber, params SqlParameter[] parameters)
+            where TEntity : class, new()
+        {
+            var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression, parameters);
+
+            return GetDynamicPagedListAsync<TEntity>(sqlRepository, distinct, select, whereClause, addRowNumber, pagedListParameters.GetParametersToExecute());
+        }
+
+        public static async Task<PagedData<dynamic>> GetDynamicPagedListAsync<TEntity>(this ISqlRepository sqlRepository, bool distinct, Func<TEntity, object> select, string whereClause, bool addRowNumber, params SqlParameter[] sqlParameters)
             where TEntity : class, new()
         {
             string commandText = "";
@@ -135,8 +151,8 @@ namespace SimpleAccess.SqlServer
                     commandText = commandText.Replace("{columns}", "*");
                 }
 
-                var whereClause = CreateWhereClauseFromSqlParameter(sqlParameters, "@sortexpression", "@totalrows", "@startindex", "@pagesize");
-                commandText = commandText.Replace("{whereClause}", whereClause);
+                var finalWhereClause = CreateWhereClauseFromSqlParameter(whereClause, sqlParameters, "@sortexpression", "@totalrows", "@startindex", "@pagesize");
+                commandText = commandText.Replace("{whereClause}", finalWhereClause);
 
                 var sortExpression = sqlParameters.FirstOrDefault(p => p.ParameterName == "@sortExpression");
                 if (sortExpression != null)
@@ -289,8 +305,15 @@ namespace SimpleAccess.SqlServer
                        .ToArray());   //.ToDictionary(p => p.Name.ToLower());
                     commandText = commandText.Replace("{columns}", string.Join(", ", selectProperties.Keys));
                     
-                    if (addRowNumber) commandText = commandText.Replace("rownumber,", "");
-
+                    if (addRowNumber)
+                    {
+                        commandText = commandText.Replace("rownumber,", "");
+                        var rowNumberProperty = typeof(TEntity).GetProperties().FirstOrDefault(p => p.Name.ToLower() == "rownumber");
+                        if (rowNumberProperty != null)
+                        {
+                            selectProperties.Add(rowNumberProperty.Name, rowNumberProperty);
+                        }
+                    }
                 }
                 else
                 {
@@ -354,7 +377,7 @@ namespace SimpleAccess.SqlServer
             where TEntity : class, new()
         {
             var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression);
-            return GetDynamicPagedList<TEntity>(sqlRepository, false, null, addRowNumber, pagedListParameters.GetParametersToExecute());
+            return GetDynamicPagedList<TEntity>(sqlRepository, false, null, null, addRowNumber, pagedListParameters.GetParametersToExecute());
         }
 
         public static PagedData<dynamic> GetDynamicPagedList<TEntity>(this ISqlRepository sqlRepository, bool distinct, int startIndex, int pageSize, string sortExpression, object whereParameters, bool addRowNumber = false)
@@ -362,7 +385,7 @@ namespace SimpleAccess.SqlServer
         {
             var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression);
             pagedListParameters.AddOtherParams(whereParameters);
-            return GetDynamicPagedList<TEntity>(sqlRepository, distinct, null, addRowNumber, pagedListParameters.GetParametersToExecute());
+            return GetDynamicPagedList<TEntity>(sqlRepository, distinct, null, null, addRowNumber, pagedListParameters.GetParametersToExecute());
         }
 
         public static PagedData<dynamic> GetDynamicPagedList<TEntity>(this ISqlRepository sqlRepository, int startIndex, int pageSize, string sortExpression, object whereParameters, bool addRowNumber = false)
@@ -370,7 +393,7 @@ namespace SimpleAccess.SqlServer
         {
             var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression);
             pagedListParameters.AddOtherParams(whereParameters);
-            return GetDynamicPagedList<TEntity>(sqlRepository, false, null, addRowNumber, pagedListParameters.GetParametersToExecute());
+            return GetDynamicPagedList<TEntity>(sqlRepository, false, null, null, addRowNumber, pagedListParameters.GetParametersToExecute());
         }
 
         public static PagedData<dynamic> GetDynamicPagedList<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> select, int startIndex, int pageSize, string sortExpression, object whereParameters, bool addRowNumber = false)
@@ -378,14 +401,14 @@ namespace SimpleAccess.SqlServer
         {
             var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression);
             pagedListParameters.AddOtherParams(whereParameters);
-            return GetDynamicPagedList<TEntity>(sqlRepository, false, select, addRowNumber, pagedListParameters.GetParametersToExecute());
+            return GetDynamicPagedList<TEntity>(sqlRepository, false, select, null, addRowNumber, pagedListParameters.GetParametersToExecute());
         }
         public static PagedData<dynamic> GetDynamicPagedList<TEntity>(this ISqlRepository sqlRepository, bool distinct, Func<TEntity, object> select, int startIndex, int pageSize, string sortExpression, object whereParameters, bool addRowNumber = false)
             where TEntity : class, new()
         {
             var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression);
             pagedListParameters.AddOtherParams(whereParameters);
-            return GetDynamicPagedList<TEntity>(sqlRepository, distinct, select, addRowNumber, pagedListParameters.GetParametersToExecute());
+            return GetDynamicPagedList<TEntity>(sqlRepository, distinct, select, null, addRowNumber, pagedListParameters.GetParametersToExecute());
         }
 
         public static PagedData<dynamic> GetDynamicPagedList<TEntity>(this ISqlRepository sqlRepository, int startIndex, int pageSize, string sortExpression, bool addRowNumber, params SqlParameter[] parameters)
@@ -393,7 +416,7 @@ namespace SimpleAccess.SqlServer
         {
             var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression, parameters);
 
-            return GetDynamicPagedList<TEntity>(sqlRepository, false, null, addRowNumber, pagedListParameters.GetParametersToExecute());
+            return GetDynamicPagedList<TEntity>(sqlRepository, false, null, null, addRowNumber, pagedListParameters.GetParametersToExecute());
         }
 
         public static PagedData<dynamic> GetDynamicPagedList<TEntity>(this ISqlRepository sqlRepository, bool distinct, int startIndex, int pageSize, string sortExpression, bool addRowNumber, params SqlParameter[] parameters)
@@ -401,7 +424,7 @@ namespace SimpleAccess.SqlServer
         {
             var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression, parameters);
 
-            return GetDynamicPagedList<TEntity>(sqlRepository, distinct, null, addRowNumber, pagedListParameters.GetParametersToExecute());
+            return GetDynamicPagedList<TEntity>(sqlRepository, distinct, null, null, addRowNumber, pagedListParameters.GetParametersToExecute());
         }
 
         public static PagedData<dynamic> GetDynamicPagedList<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> select, int startIndex, int pageSize, string sortExpression, bool addRowNumber, params SqlParameter[] parameters)
@@ -409,7 +432,7 @@ namespace SimpleAccess.SqlServer
         {
             var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression, parameters);
 
-            return GetDynamicPagedList<TEntity>(sqlRepository, false, select, addRowNumber, pagedListParameters.GetParametersToExecute());
+            return GetDynamicPagedList<TEntity>(sqlRepository, false, select, null, addRowNumber, pagedListParameters.GetParametersToExecute());
         }
 
         public static PagedData<dynamic> GetDynamicPagedList<TEntity>(this ISqlRepository sqlRepository, bool distinct, Func<TEntity, object> select, int startIndex, int pageSize, string sortExpression, bool addRowNumber, params SqlParameter[] parameters)
@@ -417,10 +440,26 @@ namespace SimpleAccess.SqlServer
         {
             var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression, parameters);
 
-            return GetDynamicPagedList<TEntity>(sqlRepository, distinct, select, addRowNumber, pagedListParameters.GetParametersToExecute());
+            return GetDynamicPagedList<TEntity>(sqlRepository, distinct, select, null, addRowNumber, pagedListParameters.GetParametersToExecute());
         }
 
-        public static PagedData<dynamic> GetDynamicPagedList<TEntity>(this ISqlRepository sqlRepository, bool distinct, Func<TEntity, object> select, bool addRowNumber, params SqlParameter[] sqlParameters)
+        public static PagedData<dynamic> GetDynamicPagedList<TEntity>(this ISqlRepository sqlRepository, Func<TEntity, object> select, string whereClause, int startIndex, int pageSize, string sortExpression, bool addRowNumber, params SqlParameter[] parameters)
+            where TEntity : class, new()
+        {
+            var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression, parameters);
+
+            return GetDynamicPagedList<TEntity>(sqlRepository, false, select, whereClause, addRowNumber, pagedListParameters.GetParametersToExecute());
+        }
+
+        public static PagedData<dynamic> GetDynamicPagedList<TEntity>(this ISqlRepository sqlRepository, bool distinct, Func<TEntity, object> select, string whereClause, int startIndex, int pageSize, string sortExpression, bool addRowNumber, params SqlParameter[] parameters)
+            where TEntity : class, new()
+        {
+            var pagedListParameters = new PagedListParameters<SqlParameter>(startIndex, pageSize, sortExpression, parameters);
+
+            return GetDynamicPagedList<TEntity>(sqlRepository, distinct, select, whereClause, addRowNumber, pagedListParameters.GetParametersToExecute());
+        }
+
+        public static PagedData<dynamic> GetDynamicPagedList<TEntity>(this ISqlRepository sqlRepository, bool distinct, Func<TEntity, object> select, string whereClause, bool addRowNumber, params SqlParameter[] sqlParameters)
             where TEntity : class, new()
         {
             string commandText = "";
@@ -457,8 +496,8 @@ namespace SimpleAccess.SqlServer
                     commandText = commandText.Replace("{columns}", "*");
                 }
 
-                var whereClause = CreateWhereClauseFromSqlParameter(sqlParameters, "@sortexpression", "@totalrows", "@startindex", "@pagesize");
-                commandText = commandText.Replace("{whereClause}", whereClause);
+                var finalWhereClause = CreateWhereClauseFromSqlParameter(whereClause, sqlParameters, "@sortexpression", "@totalrows", "@startindex", "@pagesize");
+                commandText = commandText.Replace("{whereClause}", finalWhereClause);
 
                 var sortExpression = sqlParameters.FirstOrDefault(p => p.ParameterName == "@sortExpression");
                 if (sortExpression != null)
@@ -609,7 +648,15 @@ namespace SimpleAccess.SqlServer
                        .Select(p => p.Name.ToLower())
                        .ToArray());   //.ToDictionary(p => p.Name.ToLower());
                     commandText = commandText.Replace("{columns}", string.Join(", ", selectProperties.Values.Select(v => v.Name)));
-                    if (addRowNumber) commandText = commandText.Replace("rownumber,", "");
+                    if (addRowNumber)
+                    {
+                        commandText = commandText.Replace("rownumber,", "");
+                        var rowNumberProperty = typeof(TEntity).GetProperties().FirstOrDefault(p => p.Name.ToLower() == "rownumber");
+                        if (rowNumberProperty != null)
+                        {
+                            selectProperties.Add(rowNumberProperty.Name.ToLower(), rowNumberProperty);
+                        }
+                    }
                 }
                 else
                 {

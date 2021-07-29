@@ -339,26 +339,36 @@ where TEntity : class, new()
                 .ToDictionary(p => p.Name.ToLower());
         }
 
-        private static string CreateWhereClauseFromSqlParameter(SqlParameter[] parameters, params string[] skipParameters)
+        private static string CreateWhereClauseFromSqlParameter(string whereClause, SqlParameter[] parameters, params string[] skipParameters)
         {
             if (parameters == null || parameters.Length < 1) return "";
 
             var whereSb = new StringBuilder();
-
-            whereSb.Append($"WHERE 1 = 1 ");
-
+            var whereClauseLower = "";
+            if (!string.IsNullOrEmpty(whereClause))
+            {
+                whereSb.Append(whereClause);
+                whereClauseLower = whereClause.ToLower();
+            }
+            else 
+            {
+                whereSb.Append("WHERE 1 = 1 ");
+            }
+       
             for (int i = 0; i < parameters.Length; i++)
             {
                 var parameter = parameters[i];
 
                 if (parameter.ParameterName.ToLower().In(skipParameters)) continue;
 
+                if (whereClauseLower.IndexOf(parameter.ParameterName.ToLower()) > -1) continue;
+
                 whereSb.Append($" AND {parameter.ParameterName.Replace("@", "")} = {parameter.ParameterName}");
             }
 
-            var whereClause = whereSb.ToString();
+            var finalWhereClause = whereSb.ToString();
 
-            return whereClause == "WHERE 1 = 1 " ? "" : whereClause;
+            return finalWhereClause == "WHERE 1 = 1 " ? "" : finalWhereClause;
         }
 
 
