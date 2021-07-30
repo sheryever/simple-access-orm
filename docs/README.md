@@ -185,7 +185,7 @@ All methods are based on stored procedures with its related sotred procedure nam
 | Methods            | Description |
 |--------------------|-------------|
 | GetDynamicPagedList&lt;TEntity&gt; | Get the paged records of the entity as IEnumberable&lt;dynamic&gt; |
-| GetEntityPagedList&lt;TEntity&gt; | Get the paged records of the entity as IEnumberable&lt;TEntity&gt; |
+| GetEntityPagedList&lt;TEntity&gt;  | Get the paged records of the entity as IEnumberable&lt;TEntity&gt; |
 
 ***All these operations also support async functionality***
 
@@ -193,15 +193,13 @@ All methods are based on stored procedures with its related sotred procedure nam
 #### Others Extension methods
 | Methods            | Description |
 |--------------------|-------------|
-| IsExist&lt;TEntity&gt; | Executes the Exist query to check the record |
-| GetCount&lt;TEntity&gt; | Get the count of the records |
-| GetSum&lt;TEntity&gt; | Get the Sum of a column |
-| GetMin&lt;TEntity&gt; | Get the minimum value of the column |
-| GetMax&lt;TEntity&gt; | Get the maximum value of the column |
+| IsExist&lt;TEntity&gt;    | Executes the Exist query to check the record |
+| GetCount&lt;TEntity&gt;   | Get the count of the records |
+| GetSum&lt;TEntity&gt;     | Get the Sum of a column |
+| GetMin&lt;TEntity&gt;     | Get the minimum value of the column |
+| GetMax&lt;TEntity&gt;     | Get the maximum value of the column |
 | GetAverage&lt;TEntity&gt; | Get the average value of the column |
 | GetAverage&lt;TEntity&gt; | Get the average value of the column |
-
-
 
 #### Using SimpleAccess Repository
 [Using SimpleAccess v3.1 SqlEntityRepository](UsingSimpleAccess.v31.SqlEntityRepository.md)
