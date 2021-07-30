@@ -152,18 +152,18 @@ namespace SimpleAccess.Core.Entity
                         //builder.Append(string.Format("{0} {1} {2} @{1} ", item.LinkingOperator, item.PropertyName,
                         builder.Append(string.Format("{0}  {1} ", item.LinkingOperator,
                             item.QueryOperator == "InClause" ? 
-                            entityInfo.SqlBuilder.BuildWhereInClauseExpression(item.PropertyName, 
+                            entityInfo.SqlBuilder.BuildWhereInClause(item.PropertyName, 
                                 item.QueryOperator, item.PropertyValue, expression) :
-                            entityInfo.SqlBuilder.BuildWhereExpression(item.PropertyName, propertyInfo.PropertyType,
+                            entityInfo.SqlBuilder.BuildWhereClause(item.PropertyName, propertyInfo.PropertyType,
                                 item.QueryOperator, item.PropertyValue)));
 
                     }
                     else
                     {
                         builder.Append(item.QueryOperator == "InClause" ?
-                            entityInfo.SqlBuilder.BuildWhereInClauseExpression(item.PropertyName,
+                            entityInfo.SqlBuilder.BuildWhereInClause(item.PropertyName,
                                 item.QueryOperator, item.PropertyValue, expression) :
-                            entityInfo.SqlBuilder.BuildWhereExpression(item.PropertyName, propertyInfo.PropertyType,
+                            entityInfo.SqlBuilder.BuildWhereClause(item.PropertyName, propertyInfo.PropertyType,
                                     item.QueryOperator, item.PropertyValue));
 //                                entityInfo.SqlBuilder.BuildValueOperand(propertyInfo.PropertyType, item.PropertyValue)));
                         
@@ -222,14 +222,14 @@ namespace SimpleAccess.Core.Entity
                     {
                         //builder.Append(string.Format("{0} {1} {2} @{1} ", item.LinkingOperator, item.PropertyName,
                         builder.Append(string.Format("{0}  {1} ", item.LinkingOperator,
-                            entityInfo.SqlBuilder.BuildWhereExpression($"{subQueryAlias}].[{item.PropertyName}", propertyInfo.PropertyType,
+                            entityInfo.SqlBuilder.BuildWhereClause($"{subQueryAlias}].[{item.PropertyName}", propertyInfo.PropertyType,
                                 item.QueryOperator, item.PropertyValue)));
 
                     }
                     else
                     {
                         builder.Append(
-                            entityInfo.SqlBuilder.BuildWhereExpression($"{subQueryAlias}].[{item.PropertyName}", propertyInfo.PropertyType,
+                            entityInfo.SqlBuilder.BuildWhereClause($"{subQueryAlias}].[{item.PropertyName}", propertyInfo.PropertyType,
                                     item.QueryOperator, item.PropertyValue));
                         //                                entityInfo.SqlBuilder.BuildValueOperand(propertyInfo.PropertyType, item.PropertyValue)));
 
@@ -286,13 +286,13 @@ namespace SimpleAccess.Core.Entity
                     {
                         //builder.Append(string.Format("{0} {1} {2} @{1} ", item.LinkingOperator, item.PropertyName,
                         builder.Append(string.Format("{0}  {1} ", item.LinkingOperator,
-                            entityInfo.SqlBuilder.BuildWhereExpression($"{item.FunctionName}({item.PropertyName})", propertyInfo.PropertyType,
+                            entityInfo.SqlBuilder.BuildWhereClause($"{item.FunctionName}({item.PropertyName})", propertyInfo.PropertyType,
                                 item.QueryOperator, item.PropertyValue)));
 
                     }
                     else
                     {
-                        builder.Append(entityInfo.SqlBuilder.BuildWhereExpression($"{item.FunctionName}({item.PropertyName})", propertyInfo.PropertyType,
+                        builder.Append(entityInfo.SqlBuilder.BuildWhereClause($"{item.FunctionName}({item.PropertyName})", propertyInfo.PropertyType,
                                     item.QueryOperator, item.PropertyValue));
                         //                                entityInfo.SqlBuilder.BuildValueOperand(propertyInfo.PropertyType, item.PropertyValue)));
 
@@ -339,7 +339,7 @@ namespace SimpleAccess.Core.Entity
 
                 builder.Append(" HAVING ");
 
-                var entityType = typeof(TEntitiy).GetGenericArguments()[0];
+                var entityType = typeof(TEntitiy);
 
                 for (int i = 0; i < queryProperties.Count(); i++)
                 {
@@ -350,13 +350,13 @@ namespace SimpleAccess.Core.Entity
                     {
                         //builder.Append(string.Format("{0} {1} {2} @{1} ", item.LinkingOperator, item.PropertyName,
                         builder.Append(string.Format("{0}  {1} ", item.LinkingOperator,
-                            entityInfo.SqlBuilder.BuildWhereExpression($"{item.FunctionName}({item.PropertyName})", propertyInfo.PropertyType,
+                            entityInfo.SqlBuilder.BuildHavingClause($"{item.FunctionName}({item.PropertyName})", propertyInfo.PropertyType,
                                 item.QueryOperator, item.PropertyValue)));
 
                     }
                     else
                     {
-                        builder.Append(entityInfo.SqlBuilder.BuildWhereExpression($"{item.FunctionName}({item.PropertyName})", propertyInfo.PropertyType,
+                        builder.Append(entityInfo.SqlBuilder.BuildHavingClause($"{item.FunctionName}({item.PropertyName})", propertyInfo.PropertyType,
                                     item.QueryOperator, item.PropertyValue));
                         //                                entityInfo.SqlBuilder.BuildValueOperand(propertyInfo.PropertyType, item.PropertyValue)));
 
@@ -372,61 +372,38 @@ namespace SimpleAccess.Core.Entity
             /// <param name="tableName">Name of the table.</param>
             /// <param name="expression">The expression.</param>
             /// <returns>A result object with the generated sql and dynamic params.</returns>
-            public static string CreateAggregateColumnsFormAggregateExpression<TISqlBuilder, TDbParameter, TEntitiy>(Expression<Func<Aggregator, TEntitiy, object>> expression, EntityInfo<TISqlBuilder, TDbParameter> entityInfo)
+            public static IEnumerable<GroupByAggregateColumn> CreateAggregateColumnsFormAggregateExpression<TISqlBuilder, TDbParameter, TEntitiy>(Expression<Func<Aggregator, TEntitiy, object>> expression
+                , EntityInfo<TISqlBuilder, TDbParameter> entityInfo)
                 where TISqlBuilder : ISqlBuilder<TDbParameter>, new()
                 where TDbParameter : IDataParameter
             {
-                BinaryExpression binaryExpressionBody = null;
-                MethodCallExpression methodCallExpressionBody = null;
-                var queryProperties = new List<QueryHavingParameter>();
-                if (expression.Body is BinaryExpression)
+                //((NewExpression)expression.Body).Constructor.GetParameters()[0].Name
+                //newExpressionBody.Arguments[0].AsMethodCallExpression().Arguments[0].ToString().Split('.')[1]
+                //().Arguments[0].AsMethodCallExpression().Method.Name
+                var groupByAggregateColumns = new List<GroupByAggregateColumn>();
+
+                NewExpression newExpressionBody = (NewExpression)expression.Body;
+                var constructorParams = newExpressionBody.Constructor.GetParameters();
+                var arguments = newExpressionBody.Arguments;
+                GroupByAggregateColumn groupByAggregateColumn = null;
+                MethodCallExpression argumentMethodCallExp = null;
+
+
+                for (int i = 0; i < constructorParams.Length; i++)
                 {
-                    binaryExpressionBody = (BinaryExpression)expression.Body;
-                    // walk the tree and build up a list of query parameter objects
-                    // from the left and right branches of the expression tree
-                    WalkTreeHavingExpressoin(binaryExpressionBody, ExpressionType.Default, ref queryProperties);
-                }
-                else if (expression.Body is MethodCallExpression)
-                {
-                    methodCallExpressionBody = (MethodCallExpression)expression.Body;
-                    // walk the tree and build up a list of query parameter objects
-                    // from the left and right branches of the expression tree
-                    WalkTreeHavingExpressoin(methodCallExpressionBody, ExpressionType.Default, ref queryProperties);
+                    groupByAggregateColumn = new GroupByAggregateColumn();
 
-                }
+                    groupByAggregateColumn.Alias = constructorParams[i].Name;
+                    argumentMethodCallExp = arguments[i].AsMethodCallExpression();
+                    var func = argumentMethodCallExp.Method.Name;
+                    groupByAggregateColumn.Function = func == "Average" ? "AVG" : func;
+                    var values = argumentMethodCallExp.Arguments[0].ToString().Split('.');
+                    groupByAggregateColumn.Column = values.Length == 1 ? "*" : values[1];
 
-                IDictionary<string, Object> expando = new ExpandoObject();
-                var builder = new StringBuilder();
-
-                // convert the query parms into a SQL string and dynamic property object
-
-                builder.Append(" HAVING ");
-
-                var entityType = typeof(TEntitiy).GetGenericArguments()[0];
-
-                for (int i = 0; i < queryProperties.Count(); i++)
-                {
-                    QueryHavingParameter item = queryProperties[i];
-
-                    var propertyInfo = entityType.GetProperty(item.PropertyName);
-                    if (!string.IsNullOrEmpty(item.LinkingOperator) && i > 0)
-                    {
-                        //builder.Append(string.Format("{0} {1} {2} @{1} ", item.LinkingOperator, item.PropertyName,
-                        builder.Append(string.Format("{0}  {1} ", item.LinkingOperator,
-                            entityInfo.SqlBuilder.BuildWhereExpression($"{item.FunctionName}({item.PropertyName})", propertyInfo.PropertyType,
-                                item.QueryOperator, item.PropertyValue)));
-
-                    }
-                    else
-                    {
-                        builder.Append(entityInfo.SqlBuilder.BuildWhereExpression($"{item.FunctionName}({item.PropertyName})", propertyInfo.PropertyType,
-                                    item.QueryOperator, item.PropertyValue));
-                        //                                entityInfo.SqlBuilder.BuildValueOperand(propertyInfo.PropertyType, item.PropertyValue)));
-
-                    }
+                    groupByAggregateColumns.Add(groupByAggregateColumn);
                 }
 
-                return builder.ToString();
+                return groupByAggregateColumns;
             }
 
 
@@ -926,6 +903,12 @@ namespace SimpleAccess.Core.Entity
         }
     }
 
+    public class GroupByAggregateColumn
+    {
+        public string Column { get; set; }
+        public string Function { get; set; }
+        public string Alias { get; set; }
+    }
 }
 
 namespace SimpleAccess.Core.Entity.RepoWrapper

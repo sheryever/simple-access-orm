@@ -121,8 +121,11 @@ namespace SimpleAccess.Core
         /// </summary>
         List<PropertyInfo> OutParameterPropertyInfoCollection { get; set; }
 
-        string BuildWhereExpression(string propertyName, Type valueType, string @operator, object value);
-        string BuildWhereInClauseExpression<TEntity>(string propertyName, string @operator, object value, Expression<Func<TEntity, bool>> expression);
+        string BuildWhereClause(string propertyName, Type valueType, string @operator, object value);
+        string BuildWhereInClause<TEntity>(string propertyName, string @operator, object value, Expression<Func<TEntity, bool>> expression);
+
+        string BuildHavingClause(string propertyName, Type valueType, string @operator, object value);
+
 
         /// <summary>
         /// Clear all DbParameters of both insert and update EntityParameters
