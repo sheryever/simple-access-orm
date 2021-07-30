@@ -182,21 +182,21 @@ All methods are based on stored procedures with its related sotred procedure nam
 **SqlEntityRepository** is designed for the developers who don't use the Stored Producers
 
 #### Paged Extension methods
-| Methods            | Description                                                                        |
-|--------------------|------------------------------------------------------------------------------------|
+| Methods            | Description |
+|--------------------|-------------|
 | GetDynamicPagedList&lt;TEntity&gt; | Get the paged records of the entity as IEnumberable&lt;dynamic&gt; |
-| GetEntityPagedList&lt;TEntity&gt;  | Get the paged records of the entity as IEnumberable&lt;TEntity&gt; |
+| GetEntityPagedList&lt;TEntity&gt; | Get the paged records of the entity as IEnumberable&lt;TEntity&gt; |
 
 ***All these operations also support async functionality***
 
 #### Others Extension methods
 | Methods            | Description |
 |--------------------|-------------|
-| IsExist&lt;TEntity&gt;    | Executes the Exist query to check the record |
-| GetCount&lt;TEntity&gt;   | Get the count of the records |
-| GetSum&lt;TEntity&gt;     | Get the Sum of a column |
-| GetMin&lt;TEntity&gt;     | Get the minimum value of the column |
-| GetMax&lt;TEntity&gt;     | Get the maximum value of the column |
+| IsExist&lt;TEntity&gt; | Executes the Exist query to check the record |
+| GetCount&lt;TEntity&gt; | Get the count of the records |
+| GetSum&lt;TEntity&gt; | Get the Sum of a column |
+| GetMin&lt;TEntity&gt; | Get the minimum value of the column |
+| GetMax&lt;TEntity&gt; | Get the maximum value of the column |
 | GetAverage&lt;TEntity&gt; | Get the average value of the column |
 | GetAverage&lt;TEntity&gt; | Get the average value of the column |
 | GetAggrate&lt;TEntity&gt; | Get the aggreage functions values as a dyanmic object |
