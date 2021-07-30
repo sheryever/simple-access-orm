@@ -190,7 +190,6 @@ All methods are based on stored procedures with its related sotred procedure nam
 [Using SimpleAccess v1](UsingSimpleAccess.v1.md)
 
 ## Support
-- SimpleAccess is written in C#
 - Sql Server 2005 and later
 - Oracle 10g and later (in default SimpleAccess uses Oracle Managed Data Provider for .NET)
 - SQLite
