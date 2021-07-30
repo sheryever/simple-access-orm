@@ -718,55 +718,69 @@ namespace SimpleAccess.SqlServer.Test
         //    Assert.True(data != null);
 
         //}
+        [Fact]
+        public void GetAggregateTestWithWheres ()
+        {
+            var data = SqlRepository.GetAggregate <Employee>(
+                aggregator: (ag, e) => new
+                {
+                    SumOfBasicSalary = ag.Sum(e.BasicSalary),
+                    MaxOfBasicSalary = ag.Max(e.BasicSalary),
+                    MinOfBasicSalary = ag.Min(e.BasicSalary),
+                    AvgOfBasicSalary = ag.Average(e.BasicSalary)
+                },
+                where: w => w.Id > 2  
+             );  
+             
+            Assert.NotNull(data);
+        }
 
+        [Fact]
+        public void GetAggregateTestWithWhereAndGroupBy()
+        {
+            var data = SqlRepository.GetAggregateWithGroupBy<Employee>(
+                aggregator: (ag, e) => new
+                {
+                    SumOfBasicSalary = ag.Sum(e.BasicSalary),
+                    MaxOfBasicSalary = ag.Max(e.BasicSalary),
+                    MinOfBasicSalary = ag.Min(e.BasicSalary),
+                    AvgOfBasicSalary = ag.Average(e.BasicSalary)
+                },
+                where: w => w.Id > 2,
+                groupBy: g => new { g.Department }
+            );
 
-        //[Fact]
-        //public void GetAggregateTestWithWhereAndGroupBy()
-        //{
-        //    var data = SqlRepository.GetAggregateWithGroupBy<Employee>(
-        //        aggregator: (ag, e) => new
-        //        {
-        //            SumOfBasicSalary = ag.Sum(e.BasicSalary),
-        //            MaxOfBasicSalary = ag.Max(e.BasicSalary),
-        //            MinOfBasicSalary = ag.Min(e.BasicSalary),
-        //            AvgOfBasicSalary = ag.Average(e.BasicSalary)
-        //        },
-        //        where: w => w.Id > 2,
-        //        groupBy: g => new { g.Department }
-        //    );
+            Assert.True(data.Any());
+        }
 
-        //    Assert.True(data.Any());
-        //}
+        [Fact]
+        public void GetAggregateTestWithWhereGroupByHaving()
+        {
+            var data = SqlRepository.GetAggregateWithGroupBy<Employee>(
+                    aggregator: (ag, p) => new
+                    {
+                        Count = ag.Count(p),
+                        SumOfBasicSalary = ag.Sum(p.BasicSalary),
+                        SumOfInssurance = ag.Sum(p.Inssurance),
+                        SumOfTransport = ag.Sum(p.Transport)
+        ,
+                        MaxOfBasicSalary = ag.Max(p.BasicSalary),
+                        MaxOfInssurance = ag.Max(p.Inssurance),
+                        MaxOfTransport = ag.Max(p.Transport),
+                        MinOfBasicSalary = ag.Min(p.BasicSalary),
+                        MinOfInssurance = ag.Min(p.Inssurance),
+                        MinOfTransport = ag.Min(p.Transport)
+                    },
+                where: w => w.Id > 2,
+                groupBy: g => new { g.Department },
+                having: (hv, s) => hv.Min(s.BasicSalary) >= 2000
+                                  && hv.Max(s.BasicSalary) < 9000
+            );
 
-        //[Fact]
-        //public void GetAggregateTestWithWhereGroupByHaving()
-        //{
-        //    var data = SqlRepository.GetAggregateWithGroupBy<Employee>(
-        //            aggregator: (ag, p) => new
-        //            {
-        //                Count = ag.Count(p),
-        //                SumOfBasicSalary = ag.Sum(p.BasicSalary),
-        //                SumOfInssurance = ag.Sum(p.Inssurance),
-        //                SumOfTransport = ag.Sum(p.Transport)
-        //,
-        //                MaxOfBasicSalary = ag.Max(p.BasicSalary),
-        //                MaxOfInssurance = ag.Max(p.Inssurance),
-        //                MaxOfTransport = ag.Max(p.Transport)
-        //,
-        //                MinOfBasicSalary = ag.Min(p.BasicSalary),
-        //                MinOfInssurance = ag.Min(p.Inssurance),
-        //                MinOfTransport = ag.Min(p.Transport)
-        //            },
-        //        where: w => w.Id > 2,
-        //        groupBy: g => new { g.Department },
-        //        having: (hv, s) => hv.Min(s.BasicSalary) >= 2000
-        //                         && hv.Max(s.BasicSalary) < 9000
-        //    );
+            Assert.True(data.Any());
+            Assert.Single(data);
 
-        //    Assert.True(data.Any());
-        //    Assert.Equal(3, data.Count());
-
-        //}
+        }
         //// SimpleAccess.ExecuteAll(query, map: SimpleMapper => SimpleReader.Map<>);
         //// repo.ExecuteAllEntities<PurchaseOrder, ItemCategory, OrderDetail, ...>(query);
 
