@@ -30,7 +30,6 @@ PM > Install-Package SimpleAccess.SQLite
 ```
 
 ## Support
-- SimpleAccess is written in C# and support .net Managed Code languages
 - Sql Server 2005 and later
 - Oracle 10g and later (in default SimpleAccess uses Oracle Managed Data Provider for .NET)
 - SQLite
