@@ -13,12 +13,18 @@
 ### SqlEntityRepository Without SP implementation
 - [X] SqlEntityRepository implementation (90%)
 - [x] Add `DefaultView` property in EntityAttribute
-- [x] Add `KeyAttribute` for decorating primary key of an entity
-- [x] Add database sequence support using with `PrimaryKeyAttribute`
+- [x] Add `PrimaryKeyAttribute` for decorating primary key of an entity
+- [x] Add database sequence support with `PrimaryKeyAttribute`
 - [X] `DefaultView` property in EntityAttribute support for default select
+- [X] Add GetEntityPage and GetDynamicPage support
+- [X] Add DISTINCT keyword support in GetEntityPage and GetDynamicPage query
+- [X] Add RowNumber column support in GetEntityPage and GetDynamicPage query
+- [X] Add IsExist function support
+- [X] Add Aggregate(Count, Sum, Min, Max, Avg) functions support
+- [X] Add multiple Aggregates (Count, Sum, Min, Max, Avg) data as dynamic object support
 - [ ] Column selection with `Find`, `FindAll`, `Get`, `GetAll`
 - [ ] Add `GetAllFrom(string viewName)` select the data from given view name insead of EntityNmae (Table name) & EntityAttribute (EntityName / DefaultView)
-- [ ] Fixing comments, documention and adding examples
+- [ ] Fixing comments, documention and examples
 - [ ] SimpleAccess Factory, Allow SimpleAccess to create SimpleAccess object the base of configuration(xml/json)
 ```C#
 ISimpleAccess sqlSimpleAccess = SimpleAccessFactory.Create("SqlServer")
