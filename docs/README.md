@@ -189,7 +189,6 @@ All methods are based on stored procedures with its related sotred procedure nam
 
 ***All these operations also support async functionality***
 
-
 #### Others Extension methods
 | Methods            | Description |
 |--------------------|-------------|
@@ -200,6 +199,8 @@ All methods are based on stored procedures with its related sotred procedure nam
 | GetMax&lt;TEntity&gt;     | Get the maximum value of the column |
 | GetAverage&lt;TEntity&gt; | Get the average value of the column |
 | GetAverage&lt;TEntity&gt; | Get the average value of the column |
+| GetAggrate&lt;TEntity&gt; | Get the aggreage functions values as a dyanmic object |
+| GetAggrateWithGroupBy&lt;TEntity&gt; | Get the aggreage function values as a IEnumberable&lt;dynamic&gt; object |
 
 #### Using SimpleAccess Repository
 [Using SimpleAccess v3.1 SqlEntityRepository](UsingSimpleAccess.v31.SqlEntityRepository.md)
