@@ -182,6 +182,7 @@ All methods are based on stored procedures with its related sotred procedure nam
 **SqlEntityRepository** is designed for the developers who don't use the Stored Producers
 
 #### Paged Extension methods
+
 | Methods            | Description |
 |--------------------|-------------|
 | GetDynamicPagedList&lt;TEntity&gt; | Get the paged records of the entity as IEnumberable&lt;dynamic&gt; |
@@ -190,6 +191,7 @@ All methods are based on stored procedures with its related sotred procedure nam
 ***All these operations also support async functionality***
 
 #### Others Extension methods
+
 | Methods            | Description |
 |--------------------|-------------|
 | IsExist&lt;TEntity&gt; | Executes the Exist query to check the record |
