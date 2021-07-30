@@ -262,7 +262,7 @@ namespace SimpleAccess.MySql
         }
 
 
-        public string BuildWhereExpression(string propertyName, Type valueType, string @operator, object value)
+        public string BuildWhereClause(string propertyName, Type valueType, string @operator, object value)
         {
             var result = "";
             if (value == null && @operator == "=")
@@ -358,7 +358,12 @@ namespace SimpleAccess.MySql
             return inputSql.Replace("'", "''");
         }
 
-        public string BuildWhereInClauseExpression<TEntity>(string propertyName, string @operator, object value, Expression<Func<TEntity, bool>> expression)
+        public string BuildWhereInClause<TEntity>(string propertyName, string @operator, object value, Expression<Func<TEntity, bool>> expression)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string BuildHavingClause(string propertyName, Type valueType, string @operator, object value)
         {
             throw new NotImplementedException();
         }
