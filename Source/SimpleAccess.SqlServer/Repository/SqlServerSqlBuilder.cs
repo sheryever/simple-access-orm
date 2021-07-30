@@ -293,7 +293,7 @@ namespace SimpleAccess.SqlServer
             return EntityUpdateParameters;
         }
 
-        public string BuildWhereExpression(string propertyName, Type valueType, string @operator, object value)
+        public string BuildWhereClause(string propertyName, Type valueType, string @operator, object value)
         {
             var result = "";
 
@@ -347,7 +347,7 @@ namespace SimpleAccess.SqlServer
 
         //https://entityframework.net/knowledge-base/7731905/how-to-convert-an-expression-tree-to-a-partial-sql-query-
         //https://mehfuzh.github.io/LinqExtender/
-        public string BuildWhereInClauseExpression<TEntity>(string propertyName, string @operator, object value, Expression<Func<TEntity, bool>> expression)
+        public string BuildWhereInClause<TEntity>(string propertyName, string @operator, object value, Expression<Func<TEntity, bool>> expression)
         {
             var methodCallExp = (MethodCallExpression)expression.Body;
             var arg = methodCallExp.Arguments[1].ToString();
@@ -375,6 +375,60 @@ namespace SimpleAccess.SqlServer
             return string.Format("( [{0}] IN ({1}) )", propertyName, subQuery);
 
         }
+
+
+        public string BuildHavingClause(string propertyName, Type valueType, string @operator, object value)
+        {
+            var result = "";
+
+            if (value == null && @operator == "=")
+            {
+                return string.Format(" {0} IS NULL ", propertyName);
+            }
+            if (value == null && @operator == "!=")
+            {
+                return string.Format(" {0} IS NOT NULL ", propertyName);
+            }
+            if (@operator == "EndsWith")
+            {
+                return string.Format(" {0} LIKE '%{1}' ", propertyName, SafeSqlLiteral(value.ToString()));
+            }
+            if (@operator == "StartsWith")
+            {
+                return string.Format(" {0} LIKE '{1}%' ", propertyName, SafeSqlLiteral(value.ToString()));
+            }
+            if (@operator == "Contains")
+            {
+                return string.Format(" {0} LIKE '%{1}%'  ", propertyName, SafeSqlLiteral(value.ToString()));
+            }
+            if (@operator == "ContainsWithArray")
+            {
+                // We have already replace for ' with '' so there is no need re sun SafeSqlLiteral here
+                return string.Format(" {0} IN ({1}) ", propertyName, value.ToString());
+            }
+
+            if (valueType == typeof(bool))
+            {
+                result = string.Format(" {0} {1} {2} ", propertyName, @operator, (bool)value ? "1" : "0");
+            }
+            else if (valueType.In(typeof(string), typeof(TimeSpan), typeof(TimeSpan?), typeof(DateTime),
+                typeof(DateTime?)))
+            {
+                result = string.Format(" {0} {1} '{2}' ", propertyName, @operator, SafeSqlLiteral(value.ToString()));
+            }
+            else if (valueType.In(typeof(Int16), typeof(Int16?), typeof(int), typeof(int?), typeof(Int32), typeof(Int32?), typeof(Int64), typeof(Int64?), typeof(Single), typeof(Single?),
+                                typeof(float), typeof(float?), typeof(decimal), typeof(decimal?), typeof(double), typeof(double?)))
+            {
+                result = string.Format(" {0} {1} {2} ", propertyName, @operator, value.ToString());
+            }
+            else
+            {
+                throw new ArgumentException($"Invalid augument type {valueType.Name}");
+            }
+
+            return result;
+        }
+
 
         /// <summary>
         /// Clear all DbParameters

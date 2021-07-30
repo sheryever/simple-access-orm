@@ -279,8 +279,10 @@ namespace SimpleAccess.SqlServer
         //            return result;
 
         //        }
-        public static IEnumerable<dynamic> GetAggregate<TEntity>(this ISqlRepository sqlRepository
-            , Func<Aggregator, TEntity, object> aggregator
+
+
+        public static dynamic GetAggregate<TEntity>(this ISqlRepository sqlRepository
+            , Expression<Func<Aggregator, TEntity, object>> aggregator
             , Expression<Func<TEntity, bool>> where = null
             , Expression<Func<Aggregator, TEntity, bool>> having = null)
             where TEntity : class, new()
@@ -290,12 +292,13 @@ namespace SimpleAccess.SqlServer
 
 
         public static IEnumerable<dynamic> GetAggregateWithGroupBy<TEntity>(this ISqlRepository sqlRepository
-            , Func<Aggregator, TEntity, object> aggregator
+            , Expression<Func<Aggregator, TEntity, object>> aggregator
             , Expression<Func<TEntity, bool>> where = null
             , Func<TEntity, object> groupBy = null
             , Expression<Func<Aggregator, TEntity, bool>> having = null)
             where TEntity : class, new()
         {
+            //throw new NotImplementedException("Working on new aggregator patter");
 
             if (aggregator == null)
             {
@@ -320,7 +323,8 @@ namespace SimpleAccess.SqlServer
             }
             else
             {
-                commandText = commandText.Replace("{groupBy}", "");
+                commandText = commandText.Replace("{groupByColumns},", "");
+                commandText = commandText.Replace("{groupByClause}", "");
             }
 
 
@@ -342,18 +346,12 @@ namespace SimpleAccess.SqlServer
 
                 if (aggregator != null)
                 {
-                    var returnedType = aggregator.Invoke(new Aggregator(), new TEntity());
+                   
+                    var groupByAggregateColumn = DynamicQuery
+                        .CreateAggregateColumnsFormAggregateExpression(aggregator, entityInfo);
 
-                    if (returnedType is TEntity)
-                    {
-                        aggregateColums.Add("COUNT(*) AS CountOfAll");
-                    }
-                    else
-                    {
-                        //var groupByProperties = DynamicQuery.CreateAggregateColumnsFormAggregateExpression(aggregator, entityInfo);
-
-                        //aggregateColums.Add(string.Join(", ", groupByProperties.Select(c => $"COUNT({c.Value.Name}) as CountOf{c.Value.Name}")));
-                    }
+                    aggregateColums.Add(string.Join(", ", groupByAggregateColumn.Select(c => $"{c.Function}({c.Column}) as {c.Alias}")));
+                   
                 }
 
                 commandText = commandText.Replace("{columns}", string.Join(", ", aggregateColums));
