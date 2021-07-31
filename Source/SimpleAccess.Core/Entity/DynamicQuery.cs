@@ -611,11 +611,15 @@ namespace SimpleAccess.Core.Entity
                         }
                         if (value is string)
                         {
-                            valueStrings.Add($"'{(value as string).Replace("'", "'")}'");
+                            valueStrings.Add($"'{(value as string).Replace("'", "'")}'"); continue;
                         }
                         if (value is bool)
                         {
-                            valueStrings.Add((bool)value ? "1" : "0");
+                            valueStrings.Add((bool)value ? "1" : "0"); continue;
+                        }
+                        if (value.GetType().IsEnum || (value.GetType().IsGenericType && value.GetType().GetGenericArguments()[0].IsEnum))
+                        {
+                            valueStrings.Add(((int) value).ToString()); continue;
                         }
                         else
                         {
