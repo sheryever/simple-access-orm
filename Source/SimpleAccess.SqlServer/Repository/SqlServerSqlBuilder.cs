@@ -337,6 +337,10 @@ namespace SimpleAccess.SqlServer
             {
                 result = string.Format(" [{0}] {1} {2} ", propertyName, @operator, value.ToString());
             }
+            else if (valueType.IsEnum || (valueType.IsGenericType && valueType.GetGenericArguments()[0].IsEnum))
+            {
+                result = string.Format(" [{0}] {1} {2} ", propertyName, @operator, value);
+            }
             else
             {
                 throw new ArgumentException($"Invalid augument type {valueType.Name}");
