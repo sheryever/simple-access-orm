@@ -177,8 +177,32 @@ All methods are based on stored procedures with its related sotred procedure nam
 | DeleteAll&lt;TEntity&gt; | TEntity_Delete <br /> ie. People_Delete | Deletes all the TEntity records by the given Ids |
 | SoftDelete&lt;TEntity&gt; | TEntity_SoftDelete <br /> ie. People_SoftDelete | Marks TEntity deleted by the given Id   |
 
-***All these operations also support async functionality ***
+***All these operations also support async functionality***
 
+**SqlEntityRepository** is designed for the developers who don't use the Stored Producers
+
+#### Paged Extension methods
+
+| Methods            | Description |
+|--------------------|-------------|
+| GetDynamicPagedList&lt;TEntity&gt; | Get the paged records of the entity as IEnumberable&lt;dynamic&gt; |
+| GetEntityPagedList&lt;TEntity&gt; | Get the paged records of the entity as IEnumberable&lt;TEntity&gt; |
+
+***All these operations also support async functionality***
+
+#### Others Extension methods
+
+| Methods            | Description |
+|--------------------|-------------|
+| IsExist&lt;TEntity&gt; | Executes the Exist query to check the record |
+| GetCount&lt;TEntity&gt; | Get the count of the records |
+| GetSum&lt;TEntity&gt; | Get the Sum of a column |
+| GetMin&lt;TEntity&gt; | Get the minimum value of the column |
+| GetMax&lt;TEntity&gt; | Get the maximum value of the column |
+| GetAverage&lt;TEntity&gt; | Get the average value of the column |
+| GetAverage&lt;TEntity&gt; | Get the average value of the column |
+| GetAggrate&lt;TEntity&gt; | Get the aggreage functions values as a dyanmic object |
+| GetAggrateWithGroupBy&lt;TEntity&gt; | Get the aggreage function values as a IEnumberable&lt;dynamic&gt; object |
 
 #### Using SimpleAccess Repository
 [Using SimpleAccess v3.1 SqlEntityRepository](UsingSimpleAccess.v31.SqlEntityRepository.md)
@@ -190,7 +214,6 @@ All methods are based on stored procedures with its related sotred procedure nam
 [Using SimpleAccess v1](UsingSimpleAccess.v1.md)
 
 ## Support
-- SimpleAccess is written in C# and support .net Managed Code languages (C# and VB.net etc)
 - Sql Server 2005 and later
 - Oracle 10g and later (in default SimpleAccess uses Oracle Managed Data Provider for .NET)
 - SQLite

@@ -30,7 +30,6 @@ PM > Install-Package SimpleAccess.SQLite
 ```
 
 ## Support
-- SimpleAccess is written in C# and support .net Managed Code languages (C# and VB.net etc)
 - Sql Server 2005 and later
 - Oracle 10g and later (in default SimpleAccess uses Oracle Managed Data Provider for .NET)
 - SQLite
@@ -52,9 +51,15 @@ PM > Install-Package SimpleAccess.SQLite
 ### SqlEntityRepository Without SP implementation (version 3.1)
 - [X] SqlEntityRepository implementation (90%)
 - [x] Add `DefaultView` property in EntityAttribute
-- [x] Add `PrimaryAttribute` for decorating primary key of an entity
-- [x] Add database sequence support using with `PrimaryKeyAttribute`
+- [x] Add `PrimaryKeyAttribute` for decorating primary key of an entity
+- [x] Add database sequence support with `PrimaryKeyAttribute`
 - [X] `DefaultView` property in EntityAttribute support for default select
+- [X] Add GetEntityPage and GetDynamicPage support
+- [X] Add DISTINCT keyword support in GetEntityPage and GetDynamicPage query
+- [X] Add RowNumber column support in GetEntityPage and GetDynamicPage query
+- [X] Add IsExist function support
+- [X] Add Aggregate(Count, Sum, Min, Max, Avg) functions support
+- [X] Add multiple Aggregates (Count, Sum, Min, Max, Avg) data as dynamic object support
 - [ ] Replace ISimpleLogger with ILogger
 - [ ] Column selection with `Find`, `FindAll`, `Get`, `GetAll`
 - [ ] Fixing comments, documention and adding examples
