@@ -168,6 +168,36 @@ namespace SimpleAccess.SqlServer.Test
         }
 
         [Fact]
+        public void FindTestWithEnumFunction()
+        {
+            var person = SqlRepository.Find<Person>(c => c.Gender == Gender.Male);
+
+            Assert.NotNull(person);
+            Assert.Equal(1, person.Id);
+
+        }
+
+        [Fact]
+        public void FindTestWithNullableEnumFunction()
+        {
+            var person = SqlRepository.Find<Person>(c => c.Gender == (Gender?)Gender.Male);
+
+            Assert.NotNull(person);
+            Assert.Equal(1, person.Id);
+
+        }
+
+        [Fact]
+        public void FindTestWithEnumDonContainsAndNullValueFunction()
+        {
+            var person = SqlRepository.Find<Person>(c => c.Gender.In(Gender.Male, null));
+
+            Assert.NotNull(person);
+            Assert.Equal(1, person.Id);
+
+        }
+
+        [Fact]
         public void FindTestWithLikeClauseUsingContainFunction()
         {
             var category = SqlRepository.Find<Category>(c => c.Name.Contains("CATE"));
@@ -781,36 +811,5 @@ namespace SimpleAccess.SqlServer.Test
             Assert.Single(data);
 
         }
-        //// SimpleAccess.ExecuteAll(query, map: SimpleMapper => SimpleReader.Map<>);
-        //// repo.ExecuteAllEntities<PurchaseOrder, ItemCategory, OrderDetail, ...>(query);
-
-
-        //[Fact]
-        //public void GetAggregateWithAggregatorSelectorTest()
-        //{
-        //    var data = SqlRepository.GetAggregateWithGroupBy<Employee>(
-        //        aggregator: (ag, p) => new
-        //        {
-        //            SumOfBasicSalary = ag.Sum(p.BasicSalary),
-        //            SumOfInssurance = ag.Sum(p.Inssurance),
-        //            SumOfTransport = ag.Sum(p.Transport)
-        //            ,
-        //            MaxOfBasicSalary = ag.Max(p.BasicSalary),
-        //            MaxOfInssurance = ag.Max(p.Inssurance),
-        //            MaxOfTransport = ag.Max(p.Transport)
-        //            ,
-        //            MinOfBasicSalary = ag.Min(p.BasicSalary),
-        //            MinOfInssurance = ag.Min(p.Inssurance),
-        //            MinOfTransport = ag.Min(p.Transport)
-        //        },
-        //        where: w => w.Id > 2,
-        //        groupBy: g => new { g.Department },
-        //        having: (hv, s) => hv.Min(s.BasicSalary) >= 2000
-        //                        && hv.Max(s.BasicSalary) < 9000
-        //    );
-
-        //    Assert.True(data.Any());
-
-        //}
     }
 }

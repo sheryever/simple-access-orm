@@ -16,7 +16,7 @@ namespace SimpleAccess.SqlServer.TestNetCore2.Entities
         public int Id { get; set; }
         [NotMapped]
         public long RowNumber { get; set; }
-
+        public Gender? Gender { get; set; }
         public string FullName { get; set; }
 
         public string Phone { get; set; }
@@ -28,5 +28,11 @@ namespace SimpleAccess.SqlServer.TestNetCore2.Entities
 
         [NotMapped]
         public virtual string ExtraField {get;set;}
+    }
+
+    public enum Gender
+    {
+        Male = 1,
+        Female
     }
 }
