@@ -14,8 +14,6 @@ using SimpleAccess.Core.Extensions;
 // #if NET40
 namespace SimpleAccess.Core.Entity
 {
-
-
     namespace RepoWrapper
     {
         /// <summary>
@@ -131,6 +129,15 @@ namespace SimpleAccess.Core.Entity
                     // from the left and right branches of the expression tree
                     WalkTree(methodCallExpressionBody, ExpressionType.Default, ref queryProperties);
 
+                }
+                else if (expression.Body is MemberExpression)
+                {
+                    queryProperties.Add(new QueryParameter(
+                        linkingOperator: "",
+                        propertyName : ((MemberExpression)expression.Body).Member.Name,
+                        propertyValue: true,
+                        queryOperator: "="
+                    ));
                 }
 
                 IDictionary<string, Object> expando = new ExpandoObject();

@@ -136,14 +136,19 @@ namespace SimpleAccess.SqlServer
 
                 if (select != null)
                 {
-                    var selectProperties = LoadEntityProperties<TEntity>(
-                        select.Invoke(new TEntity())
-                       .GetType()
-                       .GetProperties()
-                       .Where(p => !p.GetCustomAttributes(true).Any(a => a is IgnoreSelectAttribute || a is NotMappedAttribute))
-                       .Select(p => p.Name.ToLower())
-                       .ToArray());   //.ToDictionary(p => p.Name.ToLower());
-                    commandText = commandText.Replace("{columns}", string.Join(", ", selectProperties.Keys));
+                    var selectProperties = LoadEntityProperties<TEntity>(GetSelectedProperties(select));
+
+                    commandText = commandText.Replace("{columns}", string.Join(", ", selectProperties.Values.Select(v => v.Name)));
+
+
+                    //var selectProperties = LoadEntityProperties<TEntity>(
+                    //    select.Invoke(new TEntity())
+                    //   .GetType()
+                    //   .GetProperties()
+                    //   .Where(p => !p.GetCustomAttributes(true).Any(a => a is IgnoreSelectAttribute || a is NotMappedAttribute))
+                    //   .Select(p => p.Name.ToLower())
+                    //   .ToArray());   //.ToDictionary(p => p.Name.ToLower());
+                    //commandText = commandText.Replace("{columns}", string.Join(", ", selectProperties.Keys));
 
                 }
                 else

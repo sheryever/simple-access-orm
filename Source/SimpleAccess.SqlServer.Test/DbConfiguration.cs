@@ -35,20 +35,20 @@ namespace SimpleAccess.SqlServer.Test
             Insert INTO People VALUES(2, 'Muhammad', 1, '000000', 'Makkah', 5000, null);
             Insert INTO People VALUES(3, 'Karim', 1, '00000', null, 3000, 700);
 
-            Insert INTO Employees VALUES(1, 'Ahmed', '00000', 'Madina', 4000, 300, 1000, 'Sales');
-            Insert INTO Employees VALUES(2, 'Muhammad', '000000', 'Makkah', 5000, null, 1000, 'Sales');
-            Insert INTO Employees VALUES(3, 'Karim', '00000', null, 3000, 700, null , 'Sales');
-            Insert INTO Employees VALUES(4, 'Kamal', '00000', 'Madina', 3900, 300, 300, 'Sales');
-            Insert INTO Employees VALUES(5, 'Raheem', '000000', 'Makkah', 6000, null, 100, 'Audit');
-            Insert INTO Employees VALUES(6, 'Saleem', '00000', null, 9000, 200, null , 'Audit');
-            Insert INTO Employees VALUES(7, 'Kamal', '00000', 'Madina', 18000, 200, 300, 'Purchase');
-            Insert INTO Employees VALUES(10, 'Raheem', '000000', 'Makkah', 3000, null, 100, 'Purchase');
-            Insert INTO Employees VALUES(11, 'Saleem', '00000', null, 7000, 200, 400 , 'Purchase');
-            Insert INTO Employees VALUES(12, 'Raheem2', '000000', 'Makkah', 6000, null, 100, 'Audit');
-            Insert INTO Employees VALUES(13, 'Saleem2', '00000', null, 9000, 200, null , 'Audit');
-            Insert INTO Employees VALUES(14, 'Kamal3', '00000', 'Madina', 18000, 200, 300, 'Purchase');
-            Insert INTO Employees VALUES(15, 'Raheem2', '000000', 'Makkah', 3000, null, 100, 'Purchase');
-            Insert INTO Employees VALUES(16, 'Saleem 4', '00000', null, 7000, 200, 400 , 'Purchase');
+            Insert INTO Employees VALUES(1, 'Ahmed', '00000', 'Madina', 4000, 300, 1000, 1, 'Sales');
+            Insert INTO Employees VALUES(2, 'Muhammad', '000000', 'Makkah', 5000, null, 1000, 1,'Sales');
+            Insert INTO Employees VALUES(3, 'Karim', '00000', null, 3000, 700, null , 1,'Sales');
+            Insert INTO Employees VALUES(4, 'Kamal', '00000', 'Madina', 3900, 300, 300, 0,'Sales');
+            Insert INTO Employees VALUES(5, 'Raheem', '000000', 'Makkah', 6000, null, 100, 0,'Audit');
+            Insert INTO Employees VALUES(6, 'Saleem', '00000', null, 9000, 200, null , 1,'Audit');
+            Insert INTO Employees VALUES(7, 'Kamal', '00000', 'Madina', 18000, 200, 300, 1,'Purchase');
+            Insert INTO Employees VALUES(10, 'Raheem', '000000', 'Makkah', 3000, null, 100, 1,'Purchase');
+            Insert INTO Employees VALUES(11, 'Saleem', '00000', null, 7000, 200, 400 , 0,'Purchase');
+            Insert INTO Employees VALUES(12, 'Raheem2', '000000', 'Makkah', 6000, null, 100, 1,'Audit');
+            Insert INTO Employees VALUES(13, 'Saleem2', '00000', null, 9000, 200, null , 1,'Audit');
+            Insert INTO Employees VALUES(14, 'Kamal3', '00000', 'Madina', 18000, 200, 300, 1,'Purchase');
+            Insert INTO Employees VALUES(15, 'Raheem2', '000000', 'Makkah', 3000, null, 100, 1,'Purchase');
+            Insert INTO Employees VALUES(16, 'Saleem 4', '00000', null, 7000, 200, 400 , 0,'Purchase');
 ";
 
         public static string DbInitialData => @"

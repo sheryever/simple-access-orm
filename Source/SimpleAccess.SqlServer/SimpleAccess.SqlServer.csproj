@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
     <TargetFrameworks>net40;net45;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>3.1.0-rc-12</Version>
+    <Version>3.1.0-rc-13</Version>
     <Product>SimpleAccess Sql Server ORM</Product>
     <Description>Simple Access ORM provides database access in Ado.net methods naming pattern.
 Documentation of using SimpleAccess is available at https://simpleaccessorm.com
@@ -52,9 +52,11 @@ Documentation of using SimpleAccess is available at https://simpleaccessorm.com
       - Error in executing in Where lambda expression
       - Enum is not working with Where lambda expression
       - RowNumber is not loading when using the s =&gt; new Entity { id } expression with GetEntityPagedList
-      - Issue #9: SqlRepository.FindAll is throwing NullReference exception if the lambda parameter is nullable property</PackageReleaseNotes>
-    <AssemblyVersion>3.1.0.34</AssemblyVersion>
-    <FileVersion>3.1.0.34</FileVersion>
+      - Issue #9: SqlRepository.FindAll is throwing NullReference exception if the lambda parameter is nullable property
+      - GetDynamicPagedList and GetDynamicPagedListAsync returning all properties name in lower case
+    </PackageReleaseNotes>
+    <AssemblyVersion>3.1.0.35</AssemblyVersion>
+    <FileVersion>3.1.0.35</FileVersion>
 
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>

@@ -717,6 +717,23 @@ namespace SimpleAccess.SqlServer.Test
         }
 
         [Fact]
+        public void WhereClauseWithDirectTrueBoolPropertyTest()
+        {
+            var data = SqlRepository.FindAll<Employee>(e => e.IsOnDuty);
+
+            Assert.Equal(10, data.Count());
+        }
+
+
+        [Fact]
+        public void WhereClauseWithDirectFalseBoolPropertyTest()
+        {
+            var data = SqlRepository.FindAll<Employee>(e => !e.IsOnDuty);
+
+            Assert.Equal(10, data.Count());
+        }
+
+        [Fact]
         public void InClauseExpressionTest()
         {
             var found = SqlRepository.FindAll<Person>(p => p.Id.In<Person, int>(pr => pr.Id));
