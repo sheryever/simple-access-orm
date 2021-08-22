@@ -325,25 +325,29 @@ namespace SimpleAccess.SqlServer
 
             if (valueType == typeof(bool))
             {
-                result = string.Format(" [{0}] {1} {2} ", propertyName, @operator, (bool)value ? "1" : "0");
+                return string.Format(" [{0}] {1} {2} ", propertyName, @operator, (bool)value ? "1" : "0");
             }
             else if (valueType.In(typeof(string), typeof(TimeSpan), typeof(TimeSpan?), typeof(DateTime),
                 typeof(DateTime?)))
             {
-                result = string.Format(" [{0}] {1} '{2}' ", propertyName, @operator, SafeSqlLiteral(value.ToString()));
+                return string.Format(" [{0}] {1} '{2}' ", propertyName, @operator, SafeSqlLiteral(value.ToString()));
             }
-            else if (valueType.In(typeof(Int16), typeof(Int16?), typeof(int), typeof(int?), typeof(Int32), typeof(Int32?), typeof(Int64), typeof(Int64?), typeof(Single), typeof(Single?),
-                                typeof(float), typeof(float?), typeof(decimal), typeof(decimal?), typeof(double), typeof(double?)))
+            else if (valueType.In(typeof(Int16), typeof(Int16?), typeof(int), typeof(int?), typeof(Int32), typeof(Int32?), typeof(Int64), typeof(Int64?)))
             {
-                result = string.Format(" [{0}] {1} {2} ", propertyName, @operator, value.ToString().Replace(",", "."));
+                return string.Format(" [{0}] {1} {2} ", propertyName, @operator, value.ToString());
+            }
+            else if (valueType.In(typeof(Single), typeof(Single?),
+                    typeof(float), typeof(float?), typeof(decimal), typeof(decimal?), typeof(double), typeof(double?)))
+            {
+                return string.Format(" [{0}] {1} {2} ", propertyName, @operator, value.ToString().Replace("٫", "."));
             }
             else if (valueType.IsEnum || (valueType.IsGenericType && valueType.GetGenericArguments()[0].IsEnum))
             {
-                result = string.Format(" [{0}] {1} {2} ", propertyName, @operator, value);
+                return string.Format(" [{0}] {1} {2} ", propertyName, @operator, value);
             }
             else
             {
-                throw new ArgumentException($"Invalid augument type {valueType.Name}");
+                throw new NotSupportedException($"The type '{valueType.Name}' of property '{propertyName}' is not supported");
             }
 
             return result;
