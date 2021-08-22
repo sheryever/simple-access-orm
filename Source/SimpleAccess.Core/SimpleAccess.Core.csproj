@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netstandard2.0;net40;net45</TargetFrameworks>
-    <Version>3.1.0-rc13</Version>
+    <Version>3.1.0-rc-3.1.0.14</Version>
     <Product>SimpleAccess ORM Core</Product>
     <Description>The core and common interfaces and implementation of SimpleAccess ORM</Description>
     <Authors>Abu Ali Muhammad Sharjeel</Authors>
@@ -24,9 +24,10 @@
       - SQL In Clause support added DynamicQuery for Where Expression
       - SQL Having Clause support added DynamicQuery for Aggregate function Expression
       - Support add to resolve Enum value in Where Expression
+      - nuget package versioning changed
     </PackageReleaseNotes>
-    <AssemblyVersion>3.1.0.13</AssemblyVersion>
-    <FileVersion>3.1.0.13</FileVersion>
+    <AssemblyVersion>3.1.0.14</AssemblyVersion>
+    <FileVersion>3.1.0.14</FileVersion>
     
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
