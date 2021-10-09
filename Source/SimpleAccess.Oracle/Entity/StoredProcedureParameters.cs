@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Data;
+ using System.Data;
 
 using System.Diagnostics;
 using System.Linq;
@@ -184,17 +183,6 @@ namespace SimpleAccess.Oracle
         }
 
 
-        /// <summary>
-        /// Validate the object and get the result if any.
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<ValidationResult> Validate()
-        {
-            IList<ValidationResult> result = new List<ValidationResult>();
-            Validator.TryValidateObject(this, new ValidationContext(this, null, null), result, true);
-
-            return result;
-        }
 
         private string SafeSqlLiteral(string inputSql)
         {

@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
@@ -828,5 +829,23 @@ namespace SimpleAccess.SqlServer.Test
             Assert.Single(data);
 
         }
+
+
+        [Fact]
+        public void CheckCultureValueOfDecimal()
+        {
+            var currentCulture = CultureInfo.CurrentCulture;
+
+            CultureInfo.CurrentCulture = new CultureInfo("ar-SA");
+            CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
+            decimal? value = 3.00M;
+            object objValue = (object)value;
+            var data = SqlRepository.Find<Employee>(e => e.Id == 1 &&  e.Transport > value);
+
+            Assert.NotNull(data);
+            CultureInfo.CurrentCulture = currentCulture;
+        }
+
+
     }
 }
