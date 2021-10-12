@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netstandard2.0;net40;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;netstandard2.0;net452</TargetFrameworks>
     <Version>3.1.0-rc-3.1.0.14</Version>
     <Product>SimpleAccess ORM Core</Product>
     <Description>The core and common interfaces and implementation of SimpleAccess ORM</Description>
@@ -70,21 +70,9 @@
     </PackageReference>-->
   </ItemGroup>
 
-  <!-- .NET 4.0 references, compilation flags and build options -->
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
-    <Reference Include="mscorlib" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Configuration" />
-  </ItemGroup>
+ 
   <!-- .NET 4.5 references, compilation flags and build options -->
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -96,22 +84,34 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
   </ItemGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net40'">
-    <DefineConstants>NET40;NETFULL</DefineConstants>
-  </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45'">
-    <DefineConstants>NET45;NETFULL</DefineConstants>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net452'">
+    <DefineConstants>NET452;NETFULL</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Attributes\DbColumnAttribute.cs" />
+    <Compile Remove="Attributes\DefaultValueAttribute.cs" />
+    <Compile Remove="Attributes\EntityAttribute.cs" />
+    <Compile Remove="Attributes\IdentityAttribute.cs" />
+    <Compile Remove="Attributes\IgnoreInsertAttribute.cs" />
+    <Compile Remove="Attributes\IgnoreSelectAttribute.cs" />
+    <Compile Remove="Attributes\IgnoreUpdateAttribute.cs" />
+    <Compile Remove="Attributes\NotMappedAttribute.cs" />
+    <Compile Remove="Attributes\ParameterDirectionAttribute.cs" />
+    <Compile Remove="Attributes\PrimaryKeyAttribute.cs" />
+    <Compile Remove="Attributes\StoredProcedureKeyWordAttribute.cs" />
     <Compile Remove="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Attributes\" />
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleAccess.Common\SimpleAccess.Common.csproj" />
   </ItemGroup>
 
 

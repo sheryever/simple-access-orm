@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.MySql", "Simpl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.SqlServer.Test", "SimpleAccess.SqlServer.Test\SimpleAccess.SqlServer.Test.csproj", "{5B0BD510-DCB9-4C52-B524-12DC2906E5AD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.Common", "SimpleAccess.Common\SimpleAccess.Common.csproj", "{4077AAD2-EC31-4D79-821D-74039C1F41D0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.Repository", "SimpleAccess.Repository\SimpleAccess.Repository.csproj", "{1AEC5D82-4081-4649-AD79-39B6B455771F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{5B0BD510-DCB9-4C52-B524-12DC2906E5AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B0BD510-DCB9-4C52-B524-12DC2906E5AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B0BD510-DCB9-4C52-B524-12DC2906E5AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4077AAD2-EC31-4D79-821D-74039C1F41D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4077AAD2-EC31-4D79-821D-74039C1F41D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4077AAD2-EC31-4D79-821D-74039C1F41D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4077AAD2-EC31-4D79-821D-74039C1F41D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AEC5D82-4081-4649-AD79-39B6B455771F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AEC5D82-4081-4649-AD79-39B6B455771F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AEC5D82-4081-4649-AD79-39B6B455771F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AEC5D82-4081-4649-AD79-39B6B455771F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

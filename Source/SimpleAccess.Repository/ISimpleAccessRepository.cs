@@ -1,29 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-#if !NETSTANDARD2_1
-using System.Data.SqlClient;
-#endif
-#if NETSTANDARD2_1
-using Microsoft.Data.SqlClient;
-#endif
+using System.Data;
+using System.Data.Common;
 using System.Linq.Expressions;
-using SimpleAccess.SqlServer;
-
-namespace SimpleAccess.SqlServer
+using SimpleAccess.Core;
+ 
+namespace SimpleAccess.Repository
 {
     /// <summary>
     /// Represent the interface of SimpleAccess Repository methods
     /// </summary>
-    public interface ISqlRepository 
-#if !NET40
-    : ISqlRepositoryAsync
-#endif
+    public interface ISimpleAccessRepository : ISimpleAccessRepositoryAsync
     {
 
         /// <summary>
-        /// Internal ISqlSimpleAccess instance
+        /// Get internal ISqlSimpleAccess instance
         /// </summary>
-        ISqlSimpleAccess SimpleAccess { get; set; }
+        ISimpleAccess<TDbConnection, TDbTransaction, TDbCommand, TDataParameter, TDbDataReader> GetSimpleAccess<TDbConnection, TDbTransaction, TDbCommand, TDataParameter, TDbDataReader>()
+            where TDbConnection : IDbConnection, new()
+            where TDbTransaction : IDbTransaction
+            where TDbCommand : IDbCommand, new()
+            where TDataParameter : IDataParameter, new()
+            where TDbDataReader : IDataReader;
+
 
         /// <summary> Get all TEntity object in a <see cref="IEnumerable{TEntity}"/>. </summary>
         /// 
@@ -43,40 +42,18 @@ namespace SimpleAccess.SqlServer
         /// 
         /// <returns> An enumerator that allows for each to be used to process get all TEntity in this
         /// collection. </returns>
-        IEnumerable<TEntity> GetAll<TEntity>(SqlTransaction transaction, string fieldToSkip = null)
+        IEnumerable<TEntity> GetAll<TEntity>(IDbTransaction transaction, string fieldToSkip = null)
             where TEntity : new();
 
-        //PagedData<TEntity> GetEntitiesPagedList<TEntity>(int startIndex, int pageSize, string sortExpression = null, object whereParameters= null)
-        //    where TEntity : class, new();
-
-        //PagedData<TEntity>  GetEntitiesPagedList<TEntity>(SqlTransaction transaction, int startIndex, int pageSize, string sortExpression = null, object whereParameters = null)
-        //    where TEntity : class, new();
-
-        //PagedData<dynamic> GetDynamicPagedList<TEntity>(params SqlParameter[] sqlParameters)
-        //    where TEntity : new();
-
-        //PagedData<dynamic> GetDynamicPagedList<TEntity>(int startIndex, int pageSize)
-        //    where TEntity : new();
-        //PagedData<dynamic> GetDynamicPagedList<TEntity>(int startIndex, int pageSize, string sortExpression)
-        //    where TEntity : new();
-
-        //PagedData<dynamic> GetDynamicPagedList<TEntity>(int startIndex, int pageSize, string sortExpression, object whereParameters)
-        //    where TEntity : new();
-
-        //PagedData<dynamic> GetDynamicPagedList<TEntity>(int startIndex, int pageSize, string sortExpression, params SqlParameter[] parameters)
-        //    where TEntity : new();
-
-        //PagedData<dynamic> GetDynamicPagedList<TEntity>(SqlTransaction transaction, int startIndex, int pageSize, string sortExpression = null, object whereParameters = null)
-        //    where TEntity : new();
-
+        
         /// <summary> Get TEntity by Id or any other parameter. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlParameter"> The SQL parameter. </param>
+        /// <param name="IDataParameter"> The SQL parameter. </param>
         /// <param name="fieldToSkip">  (optional) the field to skip. </param>
         /// 
         /// <returns> . </returns>
-        TEntity Get<TEntity>(SqlParameter sqlParameter, string fieldToSkip = null)
+        TEntity Get<TEntity>(IDataParameter parameter, string fieldToSkip = null)
             where TEntity : class, new();
 
 
@@ -84,11 +61,11 @@ namespace SimpleAccess.SqlServer
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="transaction">  (optional) the transaction. </param>
-        /// <param name="sqlParameter"> The SQL parameter. </param>
+        /// <param name="IDataParameter"> The SQL parameter. </param>
         /// <param name="fieldToSkip">  (optional) the field to skip. </param>
         /// 
         /// <returns> . </returns>
-        TEntity Get<TEntity>(SqlTransaction transaction, SqlParameter sqlParameter, string fieldToSkip = null)
+        TEntity Get<TEntity>(IDbTransaction transaction, IDataParameter parameter, string fieldToSkip = null)
             where TEntity : class, new();
 
 
@@ -110,7 +87,7 @@ namespace SimpleAccess.SqlServer
         /// <param name="fieldToSkip">  (optional) the field to skip. </param>
         /// 
         /// <returns> . </returns>
-        TEntity Get<TEntity>(SqlTransaction transaction, object paramObject, string fieldToSkip = null)
+        TEntity Get<TEntity>(IDbTransaction transaction, object paramObject, string fieldToSkip = null)
             where TEntity : class, new();
 
         /// <summary> Gets. </summary>
@@ -131,7 +108,7 @@ namespace SimpleAccess.SqlServer
         /// <param name="fieldToSkip"> (optional) the field to skip. </param>
         /// 
         /// <returns> . </returns>
-        TEntity Get<TEntity>(SqlTransaction transaction, long id, string fieldToSkip = null)
+        TEntity Get<TEntity>(IDbTransaction transaction, long id, string fieldToSkip = null)
             where TEntity : class,new();
 
         /// <summary> Searches for <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the first record of the result. </summary>
@@ -152,7 +129,7 @@ namespace SimpleAccess.SqlServer
         /// <param name="fieldToSkip"> (optional) the field to skip. </param>
         /// 
         /// <returns> . </returns>
-        TEntity Find<TEntity>(SqlTransaction transaction, Expression<Func<TEntity, bool>> expression, string fieldToSkip = null)
+        TEntity Find<TEntity>(IDbTransaction transaction, Expression<Func<TEntity, bool>> expression, string fieldToSkip = null)
             where TEntity : class, new();
 
         /// <summary> Searches for all <typeparamref name="TEntity"/> that matches the conditions defined by the specified predicate, and returns the result as <see cref="IEnumerable{TEntity}"/>. </summary>
@@ -173,18 +150,18 @@ namespace SimpleAccess.SqlServer
         /// <param name="fieldToSkip"> (optional) the field to skip. </param>
         /// 
         /// <returns> . </returns>
-        IEnumerable<TEntity> FindAll<TEntity>(SqlTransaction transaction, Expression<Func<TEntity, bool>> expression, string fieldToSkip = null)
+        IEnumerable<TEntity> FindAll<TEntity>(IDbTransaction transaction, Expression<Func<TEntity, bool>> expression, string fieldToSkip = null)
             where TEntity : class, new();
 
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlParameters">Options for controlling the SQL. </param>
+        /// <param name="IDataParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> . </returns>
-        int Insert<TEntity>(params SqlParameter[] sqlParameters);
+        int Insert<TEntity>(params IDataParameter[] IDataParameters);
 
-        /// <summary> Inserts the given dynamic object as SqlParameter names and values. </summary>
+        /// <summary> Inserts the given dynamic object as IDataParameter names and values. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="paramObject"> The dynamic object as parameters. </param>
@@ -204,11 +181,11 @@ namespace SimpleAccess.SqlServer
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="IDbTransaction">			 The SQL transaction. </param>
         /// <param name="entity"> Entity to insert </param>
         /// 
         /// <returns> . </returns>
-        int Insert<TEntity>(SqlTransaction sqlTransaction, TEntity entity)
+        int Insert<TEntity>(IDbTransaction IDbTransaction, TEntity entity)
             where TEntity : class;
 
         /// <summary> Inserts the given SQL parameters. </summary>
@@ -223,23 +200,23 @@ namespace SimpleAccess.SqlServer
         /// <summary> Inserts the given SQL parameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="IDbTransaction">			 The SQL transaction. </param>
         /// <param name="entities"> The <![CDATA[IEnumerable<TEntity>]]> to insert </param>
         ///
         /// <returns> The number of affected records</returns>
-        int InsertAll<TEntity>(SqlTransaction sqlTransaction, IEnumerable<TEntity> entities)
+        int InsertAll<TEntity>(IDbTransaction IDbTransaction, IEnumerable<TEntity> entities)
             where TEntity : class;
 
-        /// <summary> Updates the given sqlParameters. </summary>
+        /// <summary> Updates the given IDataParameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlParameters">Options for controlling the SQL. </param>
+        /// <param name="IDataParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int Update<TEntity>(params SqlParameter[] sqlParameters)
+        int Update<TEntity>(params IDataParameter[] IDataParameters)
             where TEntity : class;
 
-        /// <summary> Updates the given dynamic object as SqlParameter names and values. </summary>
+        /// <summary> Updates the given dynamic object as IDataParameter names and values. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="paramObject"> The dynamic object as parameters. </param>        
@@ -247,7 +224,7 @@ namespace SimpleAccess.SqlServer
         int Update<TEntity>(object paramObject)
             where TEntity : class;
 
-        /// <summary> Updates the given sqlParameters. </summary>
+        /// <summary> Updates the given IDataParameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="entity"> Entity to insert </param>
@@ -256,14 +233,14 @@ namespace SimpleAccess.SqlServer
         int Update<TEntity>(TEntity entity)
          where TEntity : class;
 
-        /// <summary> Updates the given sqlParameters. </summary>
+        /// <summary> Updates the given IDataParameters. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction">			 The SQL transaction. </param>
+        /// <param name="IDbTransaction">			 The SQL transaction. </param>
         /// <param name="entity"> Entity to insert </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int Update<TEntity>(SqlTransaction sqlTransaction, TEntity entity)
+        int Update<TEntity>(IDbTransaction IDbTransaction, TEntity entity)
             where TEntity : class;
 
         /// <summary> Updates all the given entities. </summary>
@@ -278,23 +255,23 @@ namespace SimpleAccess.SqlServer
         /// <summary> Updates all the given entities. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="IDbTransaction"> The SQL transaction. </param>
         /// <param name="entities"> The <![CDATA[IEnumerable<TEntity>]]> to update </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int UpdateAll<TEntity>(SqlTransaction sqlTransaction, IEnumerable<TEntity> entities)
+        int UpdateAll<TEntity>(IDbTransaction IDbTransaction, IEnumerable<TEntity> entities)
             where TEntity : class;
 
         /// <summary> Deletes the <typeparamref name="TEntity"/>  by given ID. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlParameters">Options for controlling the SQL. </param>
+        /// <param name="IDataParameters">Options for controlling the SQL. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int Delete<TEntity>(params SqlParameter[] sqlParameters)
+        int Delete<TEntity>(params IDataParameter[] IDataParameters)
             where TEntity : class;
 
-        /// <summary> Deletes the <typeparamref name="TEntity"/>  by given object as SqlParameter names and values. </summary>
+        /// <summary> Deletes the <typeparamref name="TEntity"/>  by given object as IDataParameter names and values. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="paramObject"> The dynamic object as parameters. </param>
@@ -316,21 +293,21 @@ namespace SimpleAccess.SqlServer
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="id"> The identifier. </param>
-        ///  <param name="sqlTransaction">			 The SQL transaction. </param>
+        ///  <param name="IDbTransaction">			 The SQL transaction. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int Delete<TEntity>(SqlTransaction sqlTransaction, long id)
+        int Delete<TEntity>(IDbTransaction IDbTransaction, long id)
             where TEntity : class;
 
 
-        /// <summary> Deletes the <typeparamref name="TEntity"/>  by given <see cref="SqlParameter"/> array. </summary>
+        /// <summary> Deletes the <typeparamref name="TEntity"/>  by given <see cref="IDataParameter"/> array. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
-        /// <param name="sqlParameters"> Options for controlling the SQL. </param>
+        /// <param name="IDbTransaction"> The SQL transaction. </param>
+        /// <param name="IDataParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int Delete<TEntity>(SqlTransaction sqlTransaction, params SqlParameter[] sqlParameters)
+        int Delete<TEntity>(IDbTransaction IDbTransaction, params IDataParameter[] IDataParameters)
             where TEntity : class;
 
 
@@ -345,13 +322,13 @@ namespace SimpleAccess.SqlServer
         /// <summary> Delete All the <typeparamref name="TEntity"/> records with a transaction. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="IDbTransaction"> The SQL transaction. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int DeleteAll<TEntity>(SqlTransaction sqlTransaction)
+        int DeleteAll<TEntity>(IDbTransaction IDbTransaction)
             where TEntity : class;
 
-        /// <summary> Deletes all the <typeparamref name="TEntity"/> records by  objects as SqlParameter names and values. </summary>
+        /// <summary> Deletes all the <typeparamref name="TEntity"/> records by  objects as IDataParameter names and values. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="expression">The expression.</param>
@@ -360,14 +337,14 @@ namespace SimpleAccess.SqlServer
         int DeleteAll<TEntity>(Expression<Func<TEntity, bool>> expression)
             where TEntity : class;
 
-        /// <summary> Deletes all the <typeparamref name="TEntity"/> records by  objects as SqlParameter names and values. </summary>
+        /// <summary> Deletes all the <typeparamref name="TEntity"/> records by  objects as IDataParameter names and values. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The transaction. </param>
+        /// <param name="IDbTransaction"> The transaction. </param>
         /// <param name="expression">The expression.</param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int DeleteAll<TEntity>(SqlTransaction sqlTransaction, Expression<Func<TEntity, bool>> expression)
+        int DeleteAll<TEntity>(IDbTransaction IDbTransaction, Expression<Func<TEntity, bool>> expression)
             where TEntity : class;
 
         /// <summary> Deletes all the <typeparamref name="TEntity"/> records by given IDs. </summary>
@@ -383,10 +360,10 @@ namespace SimpleAccess.SqlServer
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
         /// <param name="ids"> The identifiers of records. </param>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="IDbTransaction"> The SQL transaction. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int DeleteAll<TEntity>(SqlTransaction sqlTransaction, IEnumerable<long> ids)
+        int DeleteAll<TEntity>(IDbTransaction IDbTransaction, IEnumerable<long> ids)
             where TEntity : class;
 
         /// <summary> Soft delete the <typeparamref name="TEntity"/> record. </summary>
@@ -401,11 +378,11 @@ namespace SimpleAccess.SqlServer
         /// <summary> Soft delete the <typeparamref name="TEntity"/> record. </summary>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqlTransaction"> The SQL transaction. </param>
+        /// <param name="IDbTransaction"> The SQL transaction. </param>
         /// <param name="id"> The identifier. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        int SoftDelete<TEntity>(SqlTransaction sqlTransaction, long id)
+        int SoftDelete<TEntity>(IDbTransaction IDbTransaction, long id)
             where TEntity : class;
     }
 }

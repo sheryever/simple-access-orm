@@ -14,7 +14,7 @@ namespace SimpleAccess.SqlServer
     /// <summary>
     /// Represent the interface of SimpleAccess Repository methods
     /// </summary>
-    public interface ISqlRepository 
+    public interface ISqlRepository
 #if !NET40
     : ISqlRepositoryAsync
 #endif

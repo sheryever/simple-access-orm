@@ -39,8 +39,7 @@
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-  </ItemGroup>
+   </ItemGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net452'">
     <DefineConstants>NET452;NETFULL</DefineConstants>
   </PropertyGroup>
