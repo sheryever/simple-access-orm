@@ -15,10 +15,9 @@ using SimpleAccess.Core.Entity.RepoWrapper;
 
 namespace SimpleAccess.SqlServer
 {
-#if !NET40
 
     /// <summary> Implements SqlRepository base SqlSimpleAccess with command type stored procedures. </summary>
-    public partial class SqlEntityRepository
+    public partial class SqlEntityRepository : ISqlRepository
     {
 
         /// <summary> Enumerates get all in this collection. </summary>
@@ -843,6 +842,5 @@ namespace SimpleAccess.SqlServer
         }
 
     }
-#endif
 
 }

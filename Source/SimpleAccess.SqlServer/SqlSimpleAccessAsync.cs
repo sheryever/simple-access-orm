@@ -20,11 +20,10 @@ using SimpleAccess.Core.Logger;
 
 namespace SimpleAccess.SqlServer
 {
-#if !NET40
     /// <summary>
     /// Sql Server implementation for SimpleAccess.
     /// </summary>
-    public partial class SqlSimpleAccess
+    public partial class SqlSimpleAccess : ISqlSimpleAccess
     {
         /// <summary> Executes the non query operation. </summary>
         /// 
@@ -1603,5 +1602,4 @@ namespace SimpleAccess.SqlServer
         }
 
     }
-#endif 
 }

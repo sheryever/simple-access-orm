@@ -30,10 +30,8 @@ namespace SimpleAccess.SqlServer
     //        , IDisposable
     //    {
     public interface ISqlSimpleAccess :
-        ISimpleAccess<SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader>
-#if !NET40
-        , ISimpleAccessAsync<SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlTransactionAsyncContext>
-#endif
+        ISimpleAccess<SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlTransactionAsyncContext>
+        //, ISimpleAccessAsync<SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlTransactionAsyncContext>
         , IDisposable
     {
         /// <summary>

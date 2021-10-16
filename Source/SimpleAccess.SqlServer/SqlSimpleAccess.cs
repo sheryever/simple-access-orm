@@ -142,7 +142,7 @@ namespace SimpleAccess.SqlServer
         /// </summary>
         static SqlSimpleAccess()
         {
-#if NET40
+#if NET452
             var connectionStringName = ConfigurationManager.AppSettings[DefaultConnectionStringKey];
             var connectionStringSettings = ConfigurationManager.ConnectionStrings[connectionStringName];
             if (connectionStringSettings != null)

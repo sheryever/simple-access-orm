@@ -10,7 +10,6 @@ using System.Threading;
 
 namespace SimpleAccess.Core
 {
-#if !NET40
     /// <summary>
     /// Represent the interface of SimpleAccess methods and it's implemented by SimpleAccess 
     /// </summary>
@@ -962,5 +961,4 @@ namespace SimpleAccess.Core
 
         void EndTransaction(TDbTransactionAsyncContext transaction, bool transactionSucceed = true, bool closeConnection = true);
     }
-#endif
 }

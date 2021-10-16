@@ -21,17 +21,20 @@ namespace SimpleAccess.Core
 //        where TSqlBuilder : ISqlBuilder<TDataParameter>, new()
 //{
 
-    public interface ISimpleAccess<TDbConnection, TDbTransaction, TDbCommand, TDataParameter, TDbDataReader>
+    public interface ISimpleAccess<TDbConnection, TDbTransaction, TDbCommand, TDataParameter, TDbDataReader, TDbTransactionAsyncContext>
+        : ISimpleAccessAsync<TDbConnection, TDbTransaction, TDbCommand, TDataParameter, TDbDataReader, TDbTransactionAsyncContext>
+            , IDisposable
         where TDbConnection : IDbConnection, new()
         where TDbTransaction : IDbTransaction
         where TDbCommand : IDbCommand, new()
         where TDataParameter : IDataParameter, new()
         where TDbDataReader : IDataReader
+        where TDbTransactionAsyncContext: IDbTransactionAsyncContext<TDbConnection, TDbTransaction>
     {
-            /// <summary>
-            /// Represent the default settings SimpleAccess <see cref="SimpleAccessSettings" />
-            /// </summary>
-            SimpleAccessSettings DefaultSimpleAccessSettings { get; set; }
+        /// <summary>
+        /// Represent the default settings SimpleAccess <see cref="SimpleAccessSettings" />
+        /// </summary>
+        SimpleAccessSettings DefaultSimpleAccessSettings { get; set; }
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
@@ -963,6 +966,8 @@ namespace SimpleAccess.Core
         /// <param name="closeConnection">    (optional) the close connection. </param>
 
         void EndTransaction(TDbTransaction transaction, bool transactionSucceed = true, bool closeConnection = true);
+
+        TDataParameter[] BuildSqlParameters(object paramObject);
 
     }
 }

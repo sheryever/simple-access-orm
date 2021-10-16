@@ -19,7 +19,7 @@ Documentation of using SimpleAccess is available at https://simpleaccessorm.com
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
-    <ProjectGuid>{D97DEB44-C9BD-4813-AE06-3119CE26214A}</ProjectGuid>
+    <ProjectGuid>{2310647E-86E5-45E9-AAD0-54E3F6A5C23A}</ProjectGuid>
     <PackageReleaseNotes>
       Changes:
       - SqlEntityRepository Implemented
@@ -118,13 +118,17 @@ Documentation of using SimpleAccess is available at https://simpleaccessorm.com
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Properties\AssemblyInfo.cs" />
+    <Compile Remove="Repository\ISqlRepositoryAsync.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DbExtensions\" />
+    <Folder Include="Entity\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SimpleAccess.Core\SimpleAccess.Core.csproj" />
     <ProjectReference Include="..\SimpleAccess.Repository\SimpleAccess.Repository.csproj" />
+    <ProjectReference Include="..\SimpleAccess.SqlServer\SimpleAccess.SqlServer.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
   </ItemGroup>

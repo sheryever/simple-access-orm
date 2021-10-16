@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SimpleAccess.Core\SimpleAccess.Core.csproj" />
+    <ProjectReference Include="..\SimpleAccess.SqlServer.Repository\SimpleAccess.SqlServer.Repository.csproj" />
     <ProjectReference Include="..\SimpleAccess.SqlServer\SimpleAccess.SqlServer.csproj" />
   </ItemGroup>
 

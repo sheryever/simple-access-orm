@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netstandard2.0;net452</TargetFrameworks>
-    <Version>3.1.0-rc-3.1.0.14</Version>
+    <Version>5.0.0-beta-5.0.0.1</Version>
     <Product>SimpleAccess ORM Core</Product>
     <Description>The core and common interfaces and implementation of SimpleAccess ORM</Description>
     <Authors>Abu Ali Muhammad Sharjeel</Authors>
@@ -26,8 +26,8 @@
       - Support add to resolve Enum value in Where Expression
       - nuget package versioning changed
     </PackageReleaseNotes>
-    <AssemblyVersion>3.1.0.14</AssemblyVersion>
-    <FileVersion>3.1.0.14</FileVersion>
+    <AssemblyVersion>5.0.0.1</AssemblyVersion>
+    <FileVersion>5.0.0.1</FileVersion>
     
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>

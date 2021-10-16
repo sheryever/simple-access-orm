@@ -16,7 +16,6 @@ using SimpleAccess.Core;
 
 namespace SimpleAccess.SqlServer
 {
-#if !NET40
     /// <summary>
     /// Represent the SqlTransactionAsyncContext and the implementation of IDbTransactionAsyncContext
     /// </summary>
@@ -72,5 +71,4 @@ namespace SimpleAccess.SqlServer
             Transaction?.Dispose();
         }
     }
-#endif
 }

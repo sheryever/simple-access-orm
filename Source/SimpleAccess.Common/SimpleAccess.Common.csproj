@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netstandard2.0;net452</TargetFrameworks>
-    <Version>3.1.0-rc-3.1.0</Version>
+    <TargetFrameworks>net452;netstandard2.1;netstandard2.0;</TargetFrameworks>
+    <Version>5.0.0-beta-5.0.0.1</Version>
     <Product>SimpleAccess ORM Common</Product>
     <Description>The common classes, interfaces and attributes of SimpleAccess</Description>
     <Authors>Abu Ali Muhammad Sharjeel</Authors>
@@ -16,8 +16,8 @@
     <PackageReleaseNotes>
      
     </PackageReleaseNotes>
-    <AssemblyVersion>3.1.0.1</AssemblyVersion>
-    <FileVersion>3.1.0.1</FileVersion>
+    <AssemblyVersion>5.0.0.1</AssemblyVersion>
+    <FileVersion>5.0.0.1</FileVersion>
     
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>

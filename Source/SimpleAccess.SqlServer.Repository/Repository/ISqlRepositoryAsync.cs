@@ -12,7 +12,6 @@ using SimpleAccess.SqlServer;
 
 namespace SimpleAccess.SqlServer
 {
-#if !NET40
 
     /// <summary>
     /// Represent the interface of SimpleAccess Repository methods
@@ -378,5 +377,5 @@ namespace SimpleAccess.SqlServer
             where TEntity : class;
             */
     }
-#endif
+
 }

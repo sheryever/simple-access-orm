@@ -34,13 +34,9 @@ namespace SimpleAccess.SqlServer
                 var sqlParams = otherParametersObj.GetType().GetProperties().Select(
                    param =>
                    {
-#if NET40
-                       var emptyArray = new object[0];
-                        object value = param.GetValue(otherParameters, emptyArray);
-#else
+
                        object value = param.GetValue(otherParameters);
 
-#endif
                        if (value is IDataParameter)
                        { return value as T; }
                        if (param.Name.GetType().Name.ToLower() == "string" && value != null)

@@ -7,23 +7,22 @@ using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
 #endif
 using System.Linq.Expressions;
-using SimpleAccess.SqlServer;
+using SimpleAccess.Repository;
+using SimpleAccess.Core;
 
 namespace SimpleAccess.SqlServer
 {
     /// <summary>
     /// Represent the interface of SimpleAccess Repository methods
     /// </summary>
-    public interface ISqlRepository 
-#if !NET40
-    : ISqlRepositoryAsync
-#endif
+    public interface ISqlRepository : ISimpleAccessRepository <SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlTransactionAsyncContext>
+
     {
 
         /// <summary>
         /// Internal ISqlSimpleAccess instance
         /// </summary>
-        ISqlSimpleAccess SimpleAccess { get; set; }
+        ISimpleAccess<SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader, SqlTransactionAsyncContext> SimpleAccess { get; set; }
 
         /// <summary> Get all TEntity object in a <see cref="IEnumerable{TEntity}"/>. </summary>
         /// 
