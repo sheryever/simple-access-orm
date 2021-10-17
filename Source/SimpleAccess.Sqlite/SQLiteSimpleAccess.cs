@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -15,11 +16,12 @@ using SimpleAccess.Core.Logger;
 namespace SimpleAccess.SQLite
 {
     /// <summary>
-    /// Sqlite implementation for SimpleAccess.
+    /// Sql Server implementation for SimpleAccess.
     /// </summary>
-    public class SQLiteSimpleAccess : ISQLiteSimpleAccess
+    public partial class SQLiteSimpleAccess : ISQLiteSimpleAccess
+
     {
-        private const string DefaultConnectionStringKey = "simpleAccess:sqliteConnectionStringName";
+        private const string DefaultConnectionStringKey = "DefaultConnection";
 
         /// <summary>
         /// Default connection string.
@@ -37,55 +39,58 @@ namespace SimpleAccess.SQLite
         public SimpleAccessSettings DefaultSimpleAccessSettings { get; set; }
 
         /// <summary> The SQL connection. </summary>
-        private readonly SQLiteConnection _sqliteConnection;
-
-		/// <summary> The SQL transaction. </summary>
-
-        private SQLiteTransaction _sqliteTransaction;
-
+        private readonly SQLiteConnection _SQLiteConnection;
 
         #region Constructors
 
         /// <summary> Constructor. </summary>
         /// 
-        /// <param name="sqliteConnection"> The SQL connection. </param>
+        /// <param name="SQLiteConnection"> The SQL connection. </param>
 
-        public SQLiteSimpleAccess(SQLiteConnection sqliteConnection)
+        public SQLiteSimpleAccess(SQLiteConnection SQLiteConnection)
         {
             DefaultSimpleAccessSettings = new SimpleAccessSettings
             {
-                DefaultCommandType = CommandType.Text, DefaultLogger = new SimpleLogger()
+                DefaultCommandType = CommandType.Text,
+                DefaultLogger = new SimpleLogger()
             };
-            _sqliteConnection = sqliteConnection;
+            _SQLiteConnection = SQLiteConnection;
+            DefaultConnectionString = _SQLiteConnection.ConnectionString;
         }
 
         /// <summary> Constructor. </summary>
         /// 
-        /// <param name="sqliteConnection"> The SQL connection. </param>
+        /// <param name="SQLiteConnection"> The SQL connection. </param>
         /// <param name="defaultCommandType"> The default command type for all queries </param>
 
-        public SQLiteSimpleAccess(SQLiteConnection sqliteConnection, CommandType defaultCommandType)
+        public SQLiteSimpleAccess(SQLiteConnection SQLiteConnection, CommandType defaultCommandType)
         {
-            DefaultSimpleAccessSettings = new SimpleAccessSettings (defaultCommandType );
-            _sqliteConnection = sqliteConnection;
+            DefaultSimpleAccessSettings = new SimpleAccessSettings(defaultCommandType);
+            _SQLiteConnection = SQLiteConnection;
+            DefaultConnectionString = _SQLiteConnection.ConnectionString;
+
         }
 
         /// <summary> Constructor. </summary>
         /// 
-        /// <param name="sqliteConnection"> The SQL connection. </param>
+        /// <param name="SQLiteConnection"> The SQL connection. </param>
         /// <param name="defaultSimpleAccessSettings"> The default settings for simple access </param>
 
-        public SQLiteSimpleAccess(SQLiteConnection sqliteConnection, SimpleAccessSettings defaultSimpleAccessSettings)
+        public SQLiteSimpleAccess(SQLiteConnection SQLiteConnection, SimpleAccessSettings defaultSimpleAccessSettings)
         {
-            DefaultSimpleAccessSettings = defaultSimpleAccessSettings;
-            _sqliteConnection = sqliteConnection;
+            DefaultSimpleAccessSettings = new SimpleAccessSettings (defaultSimpleAccessSettings.DefaultCommandType, defaultSimpleAccessSettings.DefaultLogger);
+            DefaultSimpleAccessSettings.DbCommandTimeout = defaultSimpleAccessSettings.DbCommandTimeout;
+
+            _SQLiteConnection = SQLiteConnection;
+            DefaultConnectionString = _SQLiteConnection.ConnectionString;
+
         }
 
         /// <summary> Constructor. </summary>
         /// 
         /// <param name="connection"> The ConnectionString Name from the config file or a complete ConnectionString . </param>
         public SQLiteSimpleAccess(string connection)
-            : this(new SQLiteConnection(SimpleAccessSettings.GetProperConnectionString(connection)))
+            : this(new SQLiteConnection(connection))
         {
         }
 
@@ -94,7 +99,7 @@ namespace SimpleAccess.SQLite
         /// <param name="connection"> The ConnectionString Name from the config file or a complete ConnectionString . </param>
         /// <param name="defaultCommandType"> The default command type for all queries </param>
         public SQLiteSimpleAccess(string connection, CommandType defaultCommandType)
-            : this(new SQLiteConnection(SimpleAccessSettings.GetProperConnectionString(connection)), defaultCommandType)
+            : this(new SQLiteConnection(connection), defaultCommandType)
         {
         }
 
@@ -103,7 +108,7 @@ namespace SimpleAccess.SQLite
         /// <param name="connection"> The ConnectionString Name from the config file or a complete ConnectionString . </param>
         /// <param name="defaultSimpleAccessSettings"> The default settings for simple access </param>
         public SQLiteSimpleAccess(string connection, SimpleAccessSettings defaultSimpleAccessSettings)
-            : this(new SQLiteConnection(SimpleAccessSettings.GetProperConnectionString(connection)), defaultSimpleAccessSettings)
+            : this(new SQLiteConnection(connection), defaultSimpleAccessSettings)
         {
         }
 
@@ -132,8 +137,7 @@ namespace SimpleAccess.SQLite
         /// </summary>
         static SQLiteSimpleAccess()
         {
-#if NET40
-
+#if NET452
             var connectionStringName = ConfigurationManager.AppSettings[DefaultConnectionStringKey];
             var connectionStringSettings = ConfigurationManager.ConnectionStrings[connectionStringName];
             if (connectionStringSettings != null)
@@ -142,21 +146,19 @@ namespace SimpleAccess.SQLite
             }
 #endif
         }
-        #endregion
-
+#endregion
 
         /// <summary> Executes the non query operation. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-        /// <param name="sqliteParameters"> Options for controlling the SQL. </param>
+        /// <param name="SQLiteParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        public int ExecuteNonQuery(string commandText, params SQLiteParameter[] sqliteParameters)
+        public int ExecuteNonQuery(string commandText, params SQLiteParameter[] SQLiteParameters)
         {
-            return ExecuteNonQuery(commandText, DefaultSimpleAccessSettings.DefaultCommandType, sqliteParameters);
-
+            return ExecuteNonQuery(commandText, DefaultSimpleAccessSettings.DefaultCommandType, SQLiteParameters);
         }
 
         /// <summary> Executes the non query operation. </summary>
@@ -165,20 +167,21 @@ namespace SimpleAccess.SQLite
         /// 
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
-        /// <param name="sqliteParameters"> Options for controlling the SQL. </param>
+        /// <param name="SQLiteParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
         public int ExecuteNonQuery(string commandText, CommandType commandType,
-            params SQLiteParameter[] sqliteParameters)
+            params SQLiteParameter[] SQLiteParameters)
         {
             int result;
             SQLiteCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(commandText, commandType, sqliteParameters);
+                dbCommand = CreateCommand(commandText, commandType, SQLiteParameters);
                 dbCommand.Connection.OpenSafely();
                 result = dbCommand.ExecuteNonQuery();
                 dbCommand.Parameters.Clear();
+
             }
             catch (Exception ex)
             {
@@ -187,8 +190,8 @@ namespace SimpleAccess.SQLite
             }
             finally
             {
-                if (_sqliteTransaction == null && _sqliteConnection.State != ConnectionState.Closed)
-                    _sqliteConnection.CloseSafely();
+                if (_SQLiteConnection.State != ConnectionState.Closed)
+                    _SQLiteConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
             }
@@ -205,7 +208,7 @@ namespace SimpleAccess.SQLite
         /// <returns> Number of rows affected (integer) </returns>
         public int ExecuteNonQuery(string commandText, object paramObject = null)
         {
-            return ExecuteNonQuery(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSQLiteParameters(paramObject));
+            return ExecuteNonQuery(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the non query operation. </summary>
@@ -220,7 +223,7 @@ namespace SimpleAccess.SQLite
         public int ExecuteNonQuery(string commandText, CommandType commandType,
             object paramObject = null)
         {
-            return ExecuteNonQuery(commandText, commandType, BuildSQLiteParameters(paramObject));
+            return ExecuteNonQuery(commandText, commandType, BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. 
@@ -229,30 +232,30 @@ namespace SimpleAccess.SQLite
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-        /// <param name="sqliteParameters"> Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        public int ExecuteNonQuery(SQLiteTransaction transaction, string commandText, params SQLiteParameter[] sqliteParameters)
+        public int ExecuteNonQuery(SQLiteTransaction transaction, string commandText, params SQLiteParameter[] SQLiteParameters)
         {
-            return ExecuteNonQuery(transaction, commandText,  DefaultSimpleAccessSettings.DefaultCommandType, sqliteParameters);
+            return ExecuteNonQuery(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, SQLiteParameters);
         }
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="parameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Number of rows affected (integer) </returns>
-        public int ExecuteNonQuery(SQLiteTransaction sqliteTransaction, string commandText,
+        public int ExecuteNonQuery(SQLiteTransaction SQLiteTransaction, string commandText,
             CommandType commandType, params SQLiteParameter[] parameters)
         {
             SQLiteCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(sqliteTransaction, commandText, commandType, parameters);
+                dbCommand = CreateCommand(SQLiteTransaction, commandText, commandType, parameters);
                 dbCommand.Connection.OpenSafely();
                 return dbCommand.ExecuteNonQuery();
             }
@@ -264,33 +267,35 @@ namespace SimpleAccess.SQLite
             finally
             {
                 dbCommand.Parameters.Clear();
+
             }
+
         }
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>        
         /// <returns> Number of rows affected (integer) </returns>
-        public int ExecuteNonQuery(SQLiteTransaction sqliteTransaction, string commandText, object paramObject = null)
+        public int ExecuteNonQuery(SQLiteTransaction SQLiteTransaction, string commandText, object paramObject = null)
         {
-            return ExecuteNonQuery(sqliteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSQLiteParameters(paramObject));
+            return ExecuteNonQuery(SQLiteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>        
         /// <returns> Number of rows affected (integer) </returns>
-        public int ExecuteNonQuery(SQLiteTransaction sqliteTransaction, string commandText,
+        public int ExecuteNonQuery(SQLiteTransaction SQLiteTransaction, string commandText,
             CommandType commandType, object paramObject = null)
         {
-            return ExecuteNonQuery(sqliteTransaction, commandText, commandType, BuildSQLiteParameters(paramObject));
+            return ExecuteNonQuery(SQLiteTransaction, commandText, commandType, BuildDbParameters(paramObject));
 
         }
 
@@ -300,13 +305,13 @@ namespace SimpleAccess.SQLite
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-        /// <param name="sqliteParameters">  Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
-        public T ExecuteScalar<T>(string commandText, params SQLiteParameter[] sqliteParameters)
+        public T ExecuteScalar<T>(string commandText, params SQLiteParameter[] SQLiteParameters)
         {
             return ExecuteScalar<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType
-                , sqliteParameters);
+                , SQLiteParameters);
         }
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -316,19 +321,25 @@ namespace SimpleAccess.SQLite
         /// <typeparam name="T"> Generic type parameter. </typeparam>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
-        /// <param name="sqliteParameters">  Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {T} value </returns>
-        public T ExecuteScalar<T>(string commandText, CommandType commandType, params SQLiteParameter[] sqliteParameters)
+        public T ExecuteScalar<T>(string commandText, CommandType commandType, params SQLiteParameter[] SQLiteParameters)
         {
             SQLiteCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(commandText, commandType, sqliteParameters);
+                dbCommand = CreateCommand(commandText, commandType, SQLiteParameters);
                 dbCommand.Connection.Open();
                 var result = dbCommand.ExecuteScalar();
 
-                return (T)Convert.ChangeType(result, typeof(T));
+                if (result == DBNull.Value) return default(T);
+
+                return (T)result;
+                //if (typeof(T).Name.IndexOf("Nullable") > -1)
+                    
+
+                //return (T)Convert.ChangeType(result, typeof(T));
             }
             catch (Exception ex)
             {
@@ -337,8 +348,8 @@ namespace SimpleAccess.SQLite
             }
             finally
             {
-                if (_sqliteTransaction == null && _sqliteConnection.State != ConnectionState.Closed)
-                    _sqliteConnection.CloseSafely();
+                if (_SQLiteConnection.State != ConnectionState.Closed)
+                    _SQLiteConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
             }
@@ -356,7 +367,7 @@ namespace SimpleAccess.SQLite
         public T ExecuteScalar<T>(string commandText, object paramObject = null)
         {
             return ExecuteScalar<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType
-                , BuildSQLiteParameters(paramObject));
+                , BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -372,7 +383,7 @@ namespace SimpleAccess.SQLite
         public T ExecuteScalar<T>(string commandText, CommandType commandType, object paramObject = null)
         {
             return ExecuteScalar<T>(commandText, commandType
-                , BuildSQLiteParameters(paramObject));
+                , BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -380,15 +391,15 @@ namespace SimpleAccess.SQLite
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-        /// <param name="sqliteParameters">  Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {T} value </returns>
-        public T ExecuteScalar<T>(SQLiteTransaction sqliteTransaction, string commandText, params SQLiteParameter[] sqliteParameters)
+        public T ExecuteScalar<T>(SQLiteTransaction SQLiteTransaction, string commandText, params SQLiteParameter[] SQLiteParameters)
         {
-            return ExecuteScalar<T>(sqliteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
-                , sqliteParameters);
+            return ExecuteScalar<T>(SQLiteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
+                , SQLiteParameters);
         }
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -396,23 +407,25 @@ namespace SimpleAccess.SQLite
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
-        /// <param name="sqliteParameters">  Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
-        public T ExecuteScalar<T>(SQLiteTransaction sqliteTransaction, string commandText,
-            CommandType commandType, params SQLiteParameter[] sqliteParameters)
+        public T ExecuteScalar<T>(SQLiteTransaction SQLiteTransaction, string commandText,
+            CommandType commandType, params SQLiteParameter[] SQLiteParameters)
         {
             SQLiteCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(sqliteTransaction, commandText, commandType, sqliteParameters);
+                dbCommand = CreateCommand(SQLiteTransaction, commandText, commandType, SQLiteParameters);
                 dbCommand.Connection.OpenSafely();
                 var result = dbCommand.ExecuteScalar();
 
-                return (T) Convert.ChangeType(result, typeof (T));
+                return (T)result;
+
+                //return (T)Convert.ChangeType(result, typeof(T));
             }
             catch (Exception ex)
             {
@@ -426,15 +439,15 @@ namespace SimpleAccess.SQLite
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         ///  <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The {T} value </returns>
-        public T ExecuteScalar<T>(SQLiteTransaction sqliteTransaction, string commandText, object paramObject = null)
+        public T ExecuteScalar<T>(SQLiteTransaction SQLiteTransaction, string commandText, object paramObject = null)
         {
-            return ExecuteScalar<T>(sqliteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
-                , BuildSQLiteParameters(paramObject));
+            return ExecuteScalar<T>(SQLiteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
+                , BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -442,27 +455,27 @@ namespace SimpleAccess.SQLite
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         ///  <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The {T} value </returns>
-        public T ExecuteScalar<T>(SQLiteTransaction sqliteTransaction, string commandText,
+        public T ExecuteScalar<T>(SQLiteTransaction SQLiteTransaction, string commandText,
             CommandType commandType, object paramObject = null)
         {
-            return ExecuteScalar<T>(sqliteTransaction, commandText, commandType
-                , BuildSQLiteParameters(paramObject));
+            return ExecuteScalar<T>(SQLiteTransaction, commandText, commandType
+                , BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-        /// <param name="sqliteParameters"> Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters"> Parameters required to execute CommandText. </param>
         /// <returns> The TDbDataReader </returns>
-        public SQLiteDataReader ExecuteReader(string commandText, params SQLiteParameter[] sqliteParameters)
+        public SQLiteDataReader ExecuteReader(string commandText, params SQLiteParameter[] SQLiteParameters)
         {
-            return ExecuteReader(commandText, DefaultSimpleAccessSettings.DefaultCommandType, sqliteParameters);
+            return ExecuteReader(commandText, DefaultSimpleAccessSettings.DefaultCommandType, SQLiteParameters);
         }
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
@@ -471,13 +484,13 @@ namespace SimpleAccess.SQLite
         /// 
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
-        /// <param name="sqliteParameters"> Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The TDbDataReader </returns>
         public SQLiteDataReader ExecuteReader(string commandText, CommandType commandType,
-            params SQLiteParameter[] sqliteParameters)
+            params SQLiteParameter[] SQLiteParameters)
         {
-            return ExecuteReader(commandText, commandType, CommandBehavior.Default, sqliteParameters);
+            return ExecuteReader(commandText, commandType, CommandBehavior.CloseConnection, SQLiteParameters);
         }
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
@@ -486,13 +499,13 @@ namespace SimpleAccess.SQLite
         /// 
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
-        /// <param name="sqliteParameters"> Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The TDbDataReader </returns>
-        public SQLiteDataReader ExecuteReader(string commandText, CommandBehavior commandBehavior,
-            params SQLiteParameter[] sqliteParameters)
+        public SQLiteDataReader ExecuteReader(string commandText, CommandBehavior commandBehavior = CommandBehavior.CloseConnection,
+            params SQLiteParameter[] SQLiteParameters)
         {
-            return ExecuteReader(commandText, DefaultSimpleAccessSettings.DefaultCommandType, commandBehavior, sqliteParameters);
+            return ExecuteReader(commandText, DefaultSimpleAccessSettings.DefaultCommandType, commandBehavior, SQLiteParameters);
         }
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
@@ -502,15 +515,15 @@ namespace SimpleAccess.SQLite
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="commandBehavior"> The CommandBehavior of executing DbCommand</param>
-        /// <param name="sqliteParameters"> Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The TDbDataReader </returns>
-        public SQLiteDataReader ExecuteReader(string commandText, CommandType commandType, CommandBehavior commandBehavior,
-            params SQLiteParameter[] sqliteParameters)
+        public SQLiteDataReader ExecuteReader(string commandText, CommandType commandType, CommandBehavior commandBehavior = CommandBehavior.CloseConnection,
+            params SQLiteParameter[] SQLiteParameters)
         {
             try
             {
-                var dbCommand = CreateCommand(commandText, commandType, sqliteParameters);
+                var dbCommand = CreateCommand(commandText, commandType, SQLiteParameters);
                 dbCommand.Connection.OpenSafely();
                 var result = dbCommand.ExecuteReader(commandBehavior);
                 dbCommand.Parameters.Clear();
@@ -530,7 +543,7 @@ namespace SimpleAccess.SQLite
         /// <returns> The TDbDataReader </returns>
         public SQLiteDataReader ExecuteReader(string commandText, object paramObject = null)
         {
-            return ExecuteReader(commandText, BuildSQLiteParameters(paramObject));
+            return ExecuteReader(commandText, BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
@@ -544,7 +557,7 @@ namespace SimpleAccess.SQLite
         /// <returns> The TDbDataReader </returns>
         public SQLiteDataReader ExecuteReader(string commandText, CommandType commandType, object paramObject = null)
         {
-            return ExecuteReader(commandText, commandType, BuildSQLiteParameters(paramObject));
+            return ExecuteReader(commandText, commandType, BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
@@ -558,7 +571,7 @@ namespace SimpleAccess.SQLite
         /// <returns> The TDbDataReader </returns>
         public SQLiteDataReader ExecuteReader(string commandText, CommandBehavior commandBehavior, object paramObject = null)
         {
-            return ExecuteReader(commandText, commandBehavior, BuildSQLiteParameters(paramObject));
+            return ExecuteReader(commandText, commandBehavior, BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
@@ -573,9 +586,8 @@ namespace SimpleAccess.SQLite
         /// <returns> The TDbDataReader </returns>
         public SQLiteDataReader ExecuteReader(string commandText, CommandType commandType, CommandBehavior commandBehavior, object paramObject = null)
         {
-            return ExecuteReader(commandText, commandType, commandBehavior, BuildSQLiteParameters(paramObject));
+            return ExecuteReader(commandText, commandType, commandBehavior, BuildDbParameters(paramObject));
         }
-
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
         /// 
@@ -583,12 +595,12 @@ namespace SimpleAccess.SQLite
         /// 
         /// <typeparam name="T"> Type of the entity. </typeparam>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
-        /// <param name="sqliteParameters"> Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{T}" /> </returns>
-        public IEnumerable<T> ExecuteValues<T>(string commandText, params SQLiteParameter[] sqliteParameters)
+        public IEnumerable<T> ExecuteValues<T>(string commandText, params SQLiteParameter[] SQLiteParameters)
         {
-            return ExecuteValues<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSQLiteParameters(sqliteParameters));
+            return ExecuteValues<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, SQLiteParameters);
         }
 
 
@@ -603,7 +615,7 @@ namespace SimpleAccess.SQLite
         /// <returns> The <see cref="IEnumerable{T}" /> </returns>
         public IEnumerable<T> ExecuteValues<T>(string commandText, object paramObject = null)
         {
-            return ExecuteValues<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSQLiteParameters(paramObject));
+            return ExecuteValues<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType,  BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
@@ -618,7 +630,7 @@ namespace SimpleAccess.SQLite
         /// <returns> The <see cref="IEnumerable{T}" /> </returns>
         public IEnumerable<T> ExecuteValues<T>(string commandText, CommandType commandType, object paramObject = null)
         {
-            return ExecuteValues<T>(commandText, commandType, BuildSQLiteParameters(paramObject));
+            return ExecuteValues<T>(commandText, commandType, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
@@ -628,15 +640,15 @@ namespace SimpleAccess.SQLite
         /// <typeparam name="T"> Type of the entity. </typeparam>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
         /// <param name="commandType"> Type of the command. </param>
-        /// <param name="sqlParameters"> Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{T}" /> </returns>
-        public IEnumerable<T> ExecuteValues<T>(string commandText, CommandType commandType, params SQLiteParameter[] sqliteParameters)
+        public IEnumerable<T> ExecuteValues<T>(string commandText, CommandType commandType, params SQLiteParameter[] SQLiteParameters)
         {
             SQLiteCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(commandText, commandType, sqliteParameters);
+                dbCommand = CreateCommand(commandText, commandType, SQLiteParameters);
                 dbCommand.Connection.OpenSafely();
                 using (var reader = dbCommand.ExecuteReader())
                 {
@@ -650,8 +662,8 @@ namespace SimpleAccess.SQLite
             }
             finally
             {
-                if (_sqliteTransaction == null && _sqliteConnection.State != ConnectionState.Closed)
-                    _sqliteConnection.CloseSafely();
+                if (dbCommand != null && _SQLiteConnection.State != ConnectionState.Closed)
+                    _SQLiteConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
             }
@@ -662,14 +674,14 @@ namespace SimpleAccess.SQLite
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Type of the entity. </typeparam>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{T}" /> value </returns>
-        public IEnumerable<T> ExecuteValues<T>(SQLiteTransaction sqliteTransaction, string commandText, object paramObject = null)
+        public IEnumerable<T> ExecuteValues<T>(SQLiteTransaction transaction, string commandText, object paramObject = null)
         {
-            return ExecuteValues<T>(sqliteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSQLiteParameters(paramObject));
+            return ExecuteValues<T>(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
@@ -677,30 +689,30 @@ namespace SimpleAccess.SQLite
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Type of the entity. </typeparam>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{T}" /> value </returns>
-        public IEnumerable<T> ExecuteValues<T>(SQLiteTransaction sqliteTransaction, string commandText, CommandType commandType, object paramObject = null)
+        public IEnumerable<T> ExecuteValues<T>(SQLiteTransaction transaction, string commandText, CommandType commandType, object paramObject = null)
         {
-            return ExecuteValues<T>(sqliteTransaction, commandText, commandType, BuildSQLiteParameters(paramObject));
+            return ExecuteValues<T>(transaction, commandText, commandType, BuildDbParameters(paramObject));
         }
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
         /// 
         /// <exception cref="DbException"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="transaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
-        /// <param name="sqliteParameters">  Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{T}" /> </returns>
-        public IEnumerable<T> ExecuteValues<T>(SQLiteTransaction sqliteTransaction, string commandText,
-                                             params SQLiteParameter[] sqliteParameters)
+        public IEnumerable<T> ExecuteValues<T>(SQLiteTransaction transaction, string commandText,
+                                             params SQLiteParameter[] SQLiteParameters)
         {
-            return ExecuteValues<T>(sqliteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, sqliteParameters);
+            return ExecuteValues<T>(transaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, SQLiteParameters);
         }
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -708,24 +720,25 @@ namespace SimpleAccess.SQLite
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="T"> Generic type parameter. </typeparam>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
-        /// <param name="sqliteParameters">  Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{T}" /> </returns>
-        public IEnumerable<T> ExecuteValues<T>(SQLiteTransaction sqliteTransaction, string commandText, CommandType commandType,
-            params SQLiteParameter[] sqliteParameters)
+        public IEnumerable<T> ExecuteValues<T>(SQLiteTransaction SQLiteTransaction, string commandText, CommandType commandType,
+            params SQLiteParameter[] SQLiteParameters)
         {
             SQLiteCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(sqliteTransaction, commandText, commandType, sqliteParameters);
+                dbCommand = CreateCommand(SQLiteTransaction, commandText, commandType, SQLiteParameters);
                 dbCommand.Connection.OpenSafely();
                 using (var reader = dbCommand.ExecuteReader())
                 {
                     return GetValues<T>(reader);
                 }
+
             }
             catch (Exception ex)
             {
@@ -734,7 +747,13 @@ namespace SimpleAccess.SQLite
             }
             finally
             {
-                dbCommand.ClearDbCommand();
+                if (dbCommand != null)
+                {
+                    dbCommand.Parameters.Clear();
+
+                    dbCommand.ClearDbCommand();
+
+                }
             }
         }
 
@@ -746,15 +765,15 @@ namespace SimpleAccess.SQLite
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="sqliteParameters"> Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The TEntity value </returns>
         public IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, string fieldsToSkip = null,
-            Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SQLiteParameter[] sqliteParameters) 
+            Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SQLiteParameter[] SQLiteParameters)
             where TEntity : new()
         {
             return ExecuteEntities<TEntity>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip
-                , propertyInfoDictionary, sqliteParameters);
+                , propertyInfoDictionary, SQLiteParameters);
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
@@ -766,17 +785,17 @@ namespace SimpleAccess.SQLite
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="sqliteParameters"> Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
         public IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, CommandType commandType,
             string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null
-            , params SQLiteParameter[] sqliteParameters) where TEntity : new()
+            , params SQLiteParameter[] SQLiteParameters) where TEntity : new()
         {
             SQLiteCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(commandText, commandType, sqliteParameters);
+                dbCommand = CreateCommand(commandText, commandType, SQLiteParameters);
                 dbCommand.Connection.OpenSafely();
                 using (var reader = dbCommand.ExecuteReader())
                 {
@@ -792,8 +811,10 @@ namespace SimpleAccess.SQLite
             }
             finally
             {
-                if (_sqliteTransaction == null && _sqliteConnection.State != ConnectionState.Closed)
-                    _sqliteConnection.CloseSafely();
+                if (_SQLiteConnection.State != ConnectionState.Closed)
+                    _SQLiteConnection.CloseSafely();
+
+                dbCommand.Parameters.Clear();
 
                 dbCommand.ClearDbCommand();
             }
@@ -816,7 +837,7 @@ namespace SimpleAccess.SQLite
             where TEntity : new()
         {
             return ExecuteEntities<TEntity>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip
-                , propertyInfoDictionary, BuildSQLiteParameters(paramObject));
+                , propertyInfoDictionary, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
@@ -832,11 +853,11 @@ namespace SimpleAccess.SQLite
         /// 
         /// <returns> The {TEntity} value </returns>
         public IEnumerable<TEntity> ExecuteEntities<TEntity>(string commandText, CommandType commandType, object paramObject = null,
-            string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) 
+            string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : new()
         {
             return ExecuteEntities<TEntity>(commandText, commandType, fieldsToSkip
-                , propertyInfoDictionary, BuildSQLiteParameters(paramObject));
+                , propertyInfoDictionary, BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -844,19 +865,19 @@ namespace SimpleAccess.SQLite
         /// <exception cref="DbException"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Generic type parameter. </typeparam>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-        /// <param name="sqliteParameters">  Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
-        public IEnumerable<TEntity> ExecuteEntities<TEntity>(SQLiteTransaction sqliteTransaction, string commandText, string fieldsToSkip = null,
-            Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SQLiteParameter[] sqliteParameters)
+        public IEnumerable<TEntity> ExecuteEntities<TEntity>(SQLiteTransaction SQLiteTransaction, string commandText, string fieldsToSkip = null,
+            Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SQLiteParameter[] SQLiteParameters)
             where TEntity : new()
         {
-            return ExecuteEntities<TEntity>(sqliteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
-                , fieldsToSkip, propertyInfoDictionary, sqliteParameters);
+            return ExecuteEntities<TEntity>(SQLiteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
+                , fieldsToSkip, propertyInfoDictionary, SQLiteParameters);
         }
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -864,27 +885,28 @@ namespace SimpleAccess.SQLite
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Generic type parameter. </typeparam>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="sqliteParameters">  Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The {TEntity} value </returns>
-        public IEnumerable<TEntity> ExecuteEntities<TEntity>(SQLiteTransaction sqliteTransaction, string commandText,
+        public IEnumerable<TEntity> ExecuteEntities<TEntity>(SQLiteTransaction SQLiteTransaction, string commandText,
             CommandType commandType, string fieldsToSkip = null,
-            Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SQLiteParameter[] sqliteParameters) where TEntity : new()
+            Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SQLiteParameter[] SQLiteParameters) where TEntity : new()
         {
             SQLiteCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(sqliteTransaction, commandText, commandType, sqliteParameters);
+                dbCommand = CreateCommand(SQLiteTransaction, commandText, commandType, SQLiteParameters);
                 dbCommand.Connection.OpenSafely();
                 using (var reader = dbCommand.ExecuteReader())
                 {
                     return reader.DataReaderToObjectList<TEntity>(fieldsToSkip, propertyInfoDictionary);
                 }
+
                 //return dbCommand.ExecuteReader().DataReaderToObjectList<TEntity>(fieldsToSkip, piList);
             }
             catch (Exception ex)
@@ -894,6 +916,8 @@ namespace SimpleAccess.SQLite
             }
             finally
             {
+                dbCommand.Parameters.Clear();
+
                 dbCommand.ClearDbCommand();
 
             }
@@ -904,18 +928,18 @@ namespace SimpleAccess.SQLite
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{TEntity}" /> value </returns>
-        public IEnumerable<TEntity> ExecuteEntities<TEntity>(SQLiteTransaction sqliteTransaction, string commandText, object paramObject = null
+        public IEnumerable<TEntity> ExecuteEntities<TEntity>(SQLiteTransaction SQLiteTransaction, string commandText, object paramObject = null
             , string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : new()
         {
-            return ExecuteEntities<TEntity>(sqliteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
-                , fieldsToSkip, propertyInfoDictionary, BuildSQLiteParameters(paramObject));
+            return ExecuteEntities<TEntity>(SQLiteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType
+                , fieldsToSkip, propertyInfoDictionary, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
@@ -923,7 +947,7 @@ namespace SimpleAccess.SQLite
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
@@ -931,12 +955,12 @@ namespace SimpleAccess.SQLite
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The <see cref="IEnumerable{TEntity}" /> value </returns>
-        public IEnumerable<TEntity> ExecuteEntities<TEntity>(SQLiteTransaction sqliteTransaction, string commandText,
+        public IEnumerable<TEntity> ExecuteEntities<TEntity>(SQLiteTransaction SQLiteTransaction, string commandText,
             CommandType commandType, object paramObject = null, string fieldsToSkip = null,
             Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : new()
         {
-            return ExecuteEntities<TEntity>(sqliteTransaction, commandText, commandType
-                , fieldsToSkip, propertyInfoDictionary, BuildSQLiteParameters(paramObject));
+            return ExecuteEntities<TEntity>(SQLiteTransaction, commandText, commandType
+                , fieldsToSkip, propertyInfoDictionary, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
@@ -947,15 +971,15 @@ namespace SimpleAccess.SQLite
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="sqliteParameters"> Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The value of the entity. </returns>
         public TEntity ExecuteEntity<TEntity>(string commandText, string fieldsToSkip = null
             , Dictionary<string, PropertyInfo> propertyInfoDictionary = null,
-            params SQLiteParameter[] sqliteParameters) where TEntity : class, new()
+            params SQLiteParameter[] SQLiteParameters) where TEntity : class, new()
         {
             return ExecuteEntity<TEntity>(commandText, DefaultSimpleAccessSettings.DefaultCommandType,
-                fieldsToSkip, propertyInfoDictionary, sqliteParameters);
+                fieldsToSkip, propertyInfoDictionary, SQLiteParameters);
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
@@ -967,21 +991,22 @@ namespace SimpleAccess.SQLite
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="sqliteParameters"> Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The value of the entity. </returns>
         public TEntity ExecuteEntity<TEntity>(string commandText, CommandType commandType, string fieldsToSkip = null,
-            Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SQLiteParameter[] sqliteParameters) where TEntity : class, new()
+            Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SQLiteParameter[] SQLiteParameters) where TEntity : class, new()
         {
             SQLiteCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(commandText, commandType, sqliteParameters);
+                dbCommand = CreateCommand(commandText, commandType, SQLiteParameters);
                 dbCommand.Connection.OpenSafely();
-                using (var reader = dbCommand.ExecuteReader(CommandBehavior.SingleRow))
+                using (var reader = dbCommand.ExecuteReader(CommandBehavior.SingleResult | CommandBehavior.SingleRow ))
                 {
                     return reader.HasRows ? reader.DataReaderToObject<TEntity>(fieldsToSkip, propertyInfoDictionary) : null;
                 }
+
                 //return dbCommand.ExecuteReader().DataReaderToObject<TEntity>(fieldsToSkip, piList);
             }
             catch (Exception ex)
@@ -991,9 +1016,10 @@ namespace SimpleAccess.SQLite
             }
             finally
             {
-                if (_sqliteTransaction == null && _sqliteConnection.State != ConnectionState.Closed)
-                    _sqliteConnection.CloseSafely();
+                if (_SQLiteConnection.State != ConnectionState.Closed)
+                    _SQLiteConnection.CloseSafely();
 
+                dbCommand.Parameters.Clear();
                 dbCommand.ClearDbCommand();
 
             }
@@ -1015,7 +1041,7 @@ namespace SimpleAccess.SQLite
             where TEntity : class, new()
         {
             return ExecuteEntity<TEntity>(commandText, DefaultSimpleAccessSettings.DefaultCommandType,
-                fieldsToSkip, propertyInfoDictionary, BuildSQLiteParameters(paramObject));
+                fieldsToSkip, propertyInfoDictionary, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
@@ -1030,12 +1056,12 @@ namespace SimpleAccess.SQLite
         /// <param name="propertyInfoDictionary">		 (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        public TEntity ExecuteEntity<TEntity>(string commandText, CommandType commandType, object paramObject = null, 
-            string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) 
+        public TEntity ExecuteEntity<TEntity>(string commandText, CommandType commandType, object paramObject = null,
+            string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : class, new()
         {
             return ExecuteEntity<TEntity>(commandText, commandType,
-                fieldsToSkip, propertyInfoDictionary, BuildSQLiteParameters(paramObject));
+                fieldsToSkip, propertyInfoDictionary, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
@@ -1043,18 +1069,18 @@ namespace SimpleAccess.SQLite
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="sqliteParameters">  Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        public TEntity ExecuteEntity<TEntity>(SQLiteTransaction sqliteTransaction, string commandText, string fieldsToSkip = null,
-            Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SQLiteParameter[] sqliteParameters) where TEntity : class, new()
+        public TEntity ExecuteEntity<TEntity>(SQLiteTransaction SQLiteTransaction, string commandText, string fieldsToSkip = null,
+            Dictionary<string, PropertyInfo> propertyInfoDictionary = null, params SQLiteParameter[] SQLiteParameters) where TEntity : class, new()
         {
-            return ExecuteEntity<TEntity>(sqliteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
-                fieldsToSkip, propertyInfoDictionary, sqliteParameters);
+            return ExecuteEntity<TEntity>(SQLiteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
+                fieldsToSkip, propertyInfoDictionary, SQLiteParameters);
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
@@ -1062,27 +1088,28 @@ namespace SimpleAccess.SQLite
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
-        /// <param name="sqliteParameters">  Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        public TEntity ExecuteEntity<TEntity>(SQLiteTransaction sqliteTransaction, string commandText, CommandType commandType,
+        public TEntity ExecuteEntity<TEntity>(SQLiteTransaction SQLiteTransaction, string commandText, CommandType commandType,
             string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null
-            , params SQLiteParameter[] sqliteParameters) where TEntity : class, new()
+            , params SQLiteParameter[] SQLiteParameters) where TEntity : class, new()
         {
             SQLiteCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(sqliteTransaction, commandText, commandType, sqliteParameters);
+                dbCommand = CreateCommand(SQLiteTransaction, commandText, commandType, SQLiteParameters);
                 dbCommand.Connection.OpenSafely();
-                using (var reader = dbCommand.ExecuteReader())
+                using (var reader = dbCommand.ExecuteReader(CommandBehavior.SingleResult | CommandBehavior.SingleRow))
                 {
                     return reader.HasRows ? reader.DataReaderToObject<TEntity>(fieldsToSkip, propertyInfoDictionary) : null;
                 }
+
                 //return dbCommand.ExecuteReader().DataReaderToObject<TEntity>(fieldsToSkip, piList);
             }
             catch (Exception ex)
@@ -1092,6 +1119,7 @@ namespace SimpleAccess.SQLite
             }
             finally
             {
+
                 dbCommand.ClearDbCommand();
 
             }
@@ -1102,18 +1130,18 @@ namespace SimpleAccess.SQLite
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        public TEntity ExecuteEntity<TEntity>(SQLiteTransaction sqliteTransaction, string commandText, object paramObject = null, 
+        public TEntity ExecuteEntity<TEntity>(SQLiteTransaction SQLiteTransaction, string commandText, object paramObject = null,
             string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : class, new()
         {
-            return ExecuteEntity<TEntity>(sqliteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
-                fieldsToSkip, propertyInfoDictionary, BuildSQLiteParameters(paramObject));
+            return ExecuteEntity<TEntity>(SQLiteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
+                fieldsToSkip, propertyInfoDictionary, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
@@ -1121,7 +1149,7 @@ namespace SimpleAccess.SQLite
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
         /// <typeparam name="TEntity"> Type of the entity. </typeparam>
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
@@ -1129,12 +1157,12 @@ namespace SimpleAccess.SQLite
         /// <param name="propertyInfoDictionary">		  (optional) dictionary of property name and PropertyInfo object. </param>
         /// 
         /// <returns> The value of the entity. </returns>
-        public TEntity ExecuteEntity<TEntity>(SQLiteTransaction sqliteTransaction, string commandText, CommandType commandType, 
-            object paramObject = null, string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) 
+        public TEntity ExecuteEntity<TEntity>(SQLiteTransaction SQLiteTransaction, string commandText, CommandType commandType,
+            object paramObject = null, string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null)
             where TEntity : class, new()
         {
-            return ExecuteEntity<TEntity>(sqliteTransaction, commandText, commandType,
-                fieldsToSkip, propertyInfoDictionary, BuildSQLiteParameters(paramObject));
+            return ExecuteEntity<TEntity>(SQLiteTransaction, commandText, commandType,
+                fieldsToSkip, propertyInfoDictionary, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
@@ -1143,13 +1171,13 @@ namespace SimpleAccess.SQLite
         /// 
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-        /// <param name="sqliteParameters"> Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> A list of object. </returns>
-        public IEnumerable<dynamic> ExecuteDynamics(string commandText, string fieldsToSkip = null, params SQLiteParameter[] sqliteParameters)
+        public IEnumerable<dynamic> ExecuteDynamics(string commandText, string fieldsToSkip = null, params SQLiteParameter[] SQLiteParameters)
         {
             return ExecuteDynamics(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
-                sqliteParameters);
+                SQLiteParameters);
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
@@ -1159,18 +1187,22 @@ namespace SimpleAccess.SQLite
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-        /// <param name="sqliteParameters"> Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> A list of object. </returns>
         public IEnumerable<dynamic> ExecuteDynamics(string commandText, CommandType commandType, string fieldsToSkip = null,
-            params SQLiteParameter[] sqliteParameters)
+            params SQLiteParameter[] SQLiteParameters)
         {
             SQLiteCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(commandText, commandType, sqliteParameters);
+                dbCommand = CreateCommand(commandText, commandType, SQLiteParameters);
                 dbCommand.Connection.OpenSafely();
-                return GetDynamicSqlData(dbCommand.ExecuteReader());
+                using (var reader = dbCommand.ExecuteReader())
+                {
+                    return GetDynamicSqlData(reader);
+                }
+
             }
             catch (Exception ex)
             {
@@ -1179,8 +1211,8 @@ namespace SimpleAccess.SQLite
             }
             finally
             {
-                if (_sqliteTransaction == null && _sqliteConnection.State != ConnectionState.Closed)
-                    _sqliteConnection.CloseSafely();
+                if (_SQLiteConnection.State != ConnectionState.Closed)
+                    _SQLiteConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
 
@@ -1199,7 +1231,7 @@ namespace SimpleAccess.SQLite
         public IEnumerable<dynamic> ExecuteDynamics(string commandText, object paramObject = null, string fieldsToSkip = null)
         {
             return ExecuteDynamics(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
-                BuildSQLiteParameters(paramObject));
+                BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
@@ -1216,44 +1248,44 @@ namespace SimpleAccess.SQLite
             string fieldsToSkip = null)
         {
             return ExecuteDynamics(commandText, commandType, fieldsToSkip,
-                BuildSQLiteParameters(paramObject));
+                BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-        /// <param name="sqliteParameters">  Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> A list of object. </returns>
-        public IEnumerable<dynamic> ExecuteDynamics(SQLiteTransaction sqliteTransaction, string commandText, string fieldsToSkip = null,
-            params SQLiteParameter[] sqliteParameters)
+        public IEnumerable<dynamic> ExecuteDynamics(SQLiteTransaction SQLiteTransaction, string commandText, string fieldsToSkip = null,
+            params SQLiteParameter[] SQLiteParameters)
         {
-            return ExecuteDynamics(sqliteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
-                sqliteParameters);
+            return ExecuteDynamics(SQLiteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
+                SQLiteParameters);
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-        /// <param name="sqliteParameters">  Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> A list of object. </returns>
-        public IEnumerable<dynamic> ExecuteDynamics(SQLiteTransaction sqliteTransaction, string commandText, CommandType commandType,
-            string fieldsToSkip = null, params SQLiteParameter[] sqliteParameters)
+        public IEnumerable<dynamic> ExecuteDynamics(SQLiteTransaction SQLiteTransaction, string commandText, CommandType commandType,
+            string fieldsToSkip = null, params SQLiteParameter[] SQLiteParameters)
         {
             SQLiteCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(sqliteTransaction, commandText, commandType, sqliteParameters);
+                dbCommand = CreateCommand(SQLiteTransaction, commandText, commandType, SQLiteParameters);
                 dbCommand.Connection.OpenSafely();
                 return GetDynamicSqlData(dbCommand.ExecuteReader());
             }
@@ -1264,8 +1296,11 @@ namespace SimpleAccess.SQLite
             }
             finally
             {
-                dbCommand.ClearDbCommand();
-
+                if (dbCommand != null)
+                {
+                    dbCommand.Parameters.Clear();
+                    dbCommand.ClearDbCommand();
+                }
             }
         }
 
@@ -1273,35 +1308,35 @@ namespace SimpleAccess.SQLite
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// 
         /// <returns> A list of object. </returns>
-        public IEnumerable<dynamic> ExecuteDynamics(SQLiteTransaction sqliteTransaction, string commandText, object paramObject = null, 
+        public IEnumerable<dynamic> ExecuteDynamics(SQLiteTransaction SQLiteTransaction, string commandText, object paramObject = null,
             string fieldsToSkip = null)
         {
-            return ExecuteDynamics(sqliteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
-                BuildSQLiteParameters(paramObject));
+            return ExecuteDynamics(SQLiteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
+                BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// 
         /// <returns> A list of object. </returns>
-        public IEnumerable<dynamic> ExecuteDynamics(SQLiteTransaction sqliteTransaction, string commandText, CommandType commandType,
+        public IEnumerable<dynamic> ExecuteDynamics(SQLiteTransaction SQLiteTransaction, string commandText, CommandType commandType,
             object paramObject = null, string fieldsToSkip = null)
         {
-            return ExecuteDynamics(sqliteTransaction, commandText, commandType, fieldsToSkip,
-                BuildSQLiteParameters(paramObject));
+            return ExecuteDynamics(SQLiteTransaction, commandText, commandType, fieldsToSkip,
+                BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
@@ -1310,13 +1345,13 @@ namespace SimpleAccess.SQLite
         /// 
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-        /// <param name="sqliteParameters"> Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        public dynamic ExecuteDynamic(string commandText, string fieldsToSkip = null, params SQLiteParameter[] sqliteParameters)
+        public dynamic ExecuteDynamic(string commandText, string fieldsToSkip = null, params SQLiteParameter[] SQLiteParameters)
         {
             return ExecuteDynamic(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
-                sqliteParameters);
+                SQLiteParameters);
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
@@ -1326,18 +1361,18 @@ namespace SimpleAccess.SQLite
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-        /// <param name="sqliteParameters"> Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters"> Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
         public dynamic ExecuteDynamic(string commandText, CommandType commandType, string fieldsToSkip = null,
-            params SQLiteParameter[] sqliteParameters)
+            params SQLiteParameter[] SQLiteParameters)
         {
             SQLiteCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(commandText, commandType, sqliteParameters);
+                dbCommand = CreateCommand(commandText, commandType, SQLiteParameters);
                 dbCommand.Connection.OpenSafely();
-                var reader = dbCommand.ExecuteReader(CommandBehavior.SingleRow);
+                var reader = dbCommand.ExecuteReader(CommandBehavior.SingleResult | CommandBehavior.SingleRow);
                 if (reader.Read())
                 {
                     var result = SQLiteDataReaderToExpando(reader);
@@ -1354,8 +1389,8 @@ namespace SimpleAccess.SQLite
             }
             finally
             {
-                if (_sqliteTransaction == null && _sqliteConnection.State != ConnectionState.Closed)
-                    _sqliteConnection.CloseSafely();
+                if (_SQLiteConnection.State != ConnectionState.Closed)
+                    _SQLiteConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
 
@@ -1374,7 +1409,7 @@ namespace SimpleAccess.SQLite
         public dynamic ExecuteDynamic(string commandText, object paramObject = null, string fieldsToSkip = null)
         {
             return ExecuteDynamic(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
-                BuildSQLiteParameters(paramObject));
+                BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
@@ -1390,48 +1425,50 @@ namespace SimpleAccess.SQLite
         public dynamic ExecuteDynamic(string commandText, CommandType commandType, object paramObject = null, string fieldsToSkip = null)
         {
             return ExecuteDynamic(commandText, commandType, fieldsToSkip,
-                BuildSQLiteParameters(paramObject));
+                BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-        /// <param name="sqliteParameters">  Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        public dynamic ExecuteDynamic(SQLiteTransaction sqliteTransaction, string commandText, string fieldsToSkip = null,
-            params SQLiteParameter[] sqliteParameters)
+        public dynamic ExecuteDynamic(SQLiteTransaction SQLiteTransaction, string commandText, string fieldsToSkip = null,
+            params SQLiteParameter[] SQLiteParameters)
         {
-            return ExecuteDynamic(sqliteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
-                fieldsToSkip, sqliteParameters);
+            return ExecuteDynamic(SQLiteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
+                fieldsToSkip, SQLiteParameters);
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
-        /// <param name="sqliteParameters">  Parameters required to execute CommandText. </param>
+        /// <param name="SQLiteParameters">  Parameters required to execute CommandText. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        public dynamic ExecuteDynamic(SQLiteTransaction sqliteTransaction, string commandText, CommandType commandType,
-            string fieldsToSkip = null, params SQLiteParameter[] sqliteParameters)
+        public dynamic ExecuteDynamic(SQLiteTransaction SQLiteTransaction, string commandText, CommandType commandType,
+            string fieldsToSkip = null, params SQLiteParameter[] SQLiteParameters)
         {
             SQLiteCommand dbCommand = null;
             try
             {
-                dbCommand = CreateCommand(sqliteTransaction, commandText, commandType, sqliteParameters);
+                dbCommand = CreateCommand(SQLiteTransaction, commandText, commandType, SQLiteParameters);
                 dbCommand.Connection.OpenSafely();
-                var reader = dbCommand.ExecuteReader();
-                if (reader.Read())
-                    return SQLiteDataReaderToExpando(reader);
+                using (var reader = dbCommand.ExecuteReader(CommandBehavior.SingleResult | CommandBehavior.SingleRow))
+                {
+                    if (reader.Read())
+                        return SQLiteDataReaderToExpando(reader);
+                }
 
                 return null;
             }
@@ -1442,6 +1479,7 @@ namespace SimpleAccess.SQLite
             }
             finally
             {
+
                 dbCommand.ClearDbCommand();
 
             }
@@ -1451,34 +1489,34 @@ namespace SimpleAccess.SQLite
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// -<param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        public dynamic ExecuteDynamic(SQLiteTransaction sqliteTransaction, string commandText, object paramObject = null, string fieldsToSkip = null)
+        public dynamic ExecuteDynamic(SQLiteTransaction SQLiteTransaction, string commandText, object paramObject = null, string fieldsToSkip = null)
         {
-            return ExecuteDynamic(sqliteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
-                fieldsToSkip, BuildSQLiteParameters(paramObject));
+            return ExecuteDynamic(SQLiteTransaction, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
+                fieldsToSkip, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
         /// 
         /// <exception cref="Exception"> Thrown when an exception error condition occurs. </exception>
         /// 
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The SQL statement, table name or stored procedure to execute at the data source.</param>
         /// <param name="commandType"> Type of the command. </param>
         /// <param name="paramObject"> The anonymous object as parameters. </param>
         /// <param name="fieldsToSkip"> (optional) the fields to skip. </param>
         /// 
         /// <returns> Result in a anonymous object. </returns>
-        public dynamic ExecuteDynamic(SQLiteTransaction sqliteTransaction, string commandText, CommandType commandType,
+        public dynamic ExecuteDynamic(SQLiteTransaction SQLiteTransaction, string commandText, CommandType commandType,
                 object paramObject = null, string fieldsToSkip = null)
         {
-            return ExecuteDynamic(sqliteTransaction, commandText, commandType,
-                fieldsToSkip, BuildSQLiteParameters(paramObject));
+            return ExecuteDynamic(SQLiteTransaction, commandText, commandType,
+                fieldsToSkip, BuildDbParameters(paramObject));
         }
         /// <summary>
         /// Execute the CommandText against connection and add or refresh rows in <see cref="DataTable"/>
@@ -1506,8 +1544,8 @@ namespace SimpleAccess.SQLite
             }
             finally
             {
-                if (_sqliteTransaction == null && _sqliteConnection.State != ConnectionState.Closed)
-                    _sqliteConnection.CloseSafely();
+                if (_SQLiteConnection.State != ConnectionState.Closed)
+                    _SQLiteConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
             }
@@ -1540,8 +1578,8 @@ namespace SimpleAccess.SQLite
             }
             finally
             {
-                if (_sqliteTransaction == null && _sqliteConnection.State != ConnectionState.Closed)
-                    _sqliteConnection.CloseSafely();
+                if (_SQLiteConnection.State != ConnectionState.Closed)
+                    _SQLiteConnection.CloseSafely();
 
                 dbCommand.ClearDbCommand();
             }
@@ -1551,16 +1589,16 @@ namespace SimpleAccess.SQLite
         /// <returns> The new connection. </returns>
         public SQLiteConnection GetNewConnection()
         {
-            return new SQLiteConnection(_sqliteConnection.ConnectionString);
+            return new SQLiteConnection(DefaultConnectionString);
+            //return new SQLiteConnection(_SQLiteConnection.ConnectionString);
         }
 
         /// <summary> Close the current open connection. </summary>
         public void CloseDbConnection()
         {
-            if (_sqliteConnection != null)
-                _sqliteConnection.CloseSafely();
+            if (_SQLiteConnection != null)
+                _SQLiteConnection.CloseSafely();
         }
-
 
         /// <summary> Begins a transaction. </summary>
         /// <returns> . </returns>
@@ -1572,95 +1610,134 @@ namespace SimpleAccess.SQLite
         /// <returns> . </returns>
         public SQLiteTransaction BeginTransaction(IsolationLevel isolationLevel)
         {
-            if (_sqliteConnection.State != ConnectionState.Open)
-                _sqliteConnection.Open();
-
-            return _sqliteConnection.BeginTransaction(isolationLevel);
-
+            return BeginTransaction(isolationLevel);
 
         }
         /// <summary> Begins a transaction. </summary>
         /// <returns> . </returns>
         public SQLiteTransaction BeginTransaction(string transactionName)
         {
-            throw new NotImplementedException($"the parameter {nameof(transactionName)} is not supported by Sqlite Client");
+            throw new NotSupportedException("SQLiteTransaction with transaction name are not support");
+            //return BeginTransaction(IsolationLevel.ReadCommitted, transactionName);
         }
         /// <summary> Begins a transaction. </summary>
         /// <returns> . </returns>
         public SQLiteTransaction BeginTransaction(IsolationLevel isolationLevel, string transactionName)
         {
-            throw new NotImplementedException($"the parameter {nameof(transactionName)} is not supported by Sqlite Client");
+            throw new NotSupportedException("SQLiteTransaction with transaction name are not support");
 
+            //if (_SQLiteConnection.State != ConnectionState.Open)
+            //    _SQLiteConnection.Open();
+
+            //if (string.IsNullOrEmpty(transactionName))
+            //{
+            //    return _SQLiteConnection.BeginTransaction(isolationLevel);
+            //}
+
+            //return _SQLiteConnection.BeginTransaction(isolationLevel, transactionName);
+        }
+
+
+        /// <summary> Creates a command. </summary>
+        /// 
+        /// <param name="commandText"> The query string. </param>
+        /// <param name="commandType"> Type of the command. </param>
+        /// <param name="SQLiteParameters">Options for controlling the SQL. </param>
+        /// 
+        /// <returns> The new command. </returns>
+        public SQLiteCommand CreateCommand(string commandText, CommandType commandType, params SQLiteParameter[] SQLiteParameters)
+        {
+            var dbCommand = new SQLiteCommand(commandText, _SQLiteConnection);
+                //_SQLiteConnection.CreateCommand();
+            dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
+            dbCommand.CommandType = commandType;
+            //dbCommand.CommandText = commandText;
+            if (SQLiteParameters != null)
+                dbCommand.Parameters.AddRange(SQLiteParameters);
+
+            return dbCommand;
         }
 
         /// <summary> Ends a transaction. </summary>
         /// 
-        /// <param name = "sqliteTransaction" > The SQL transaction. </param>
+        /// <param name = "SQLiteTransaction" > The SQL transaction. </param>
         /// <param name = "transactionSucceed" > (optional)the transaction succeed. </param>
         /// <param name = "closeConnection" > (optional)the close connection. </param>
-        public void EndTransaction(SQLiteTransaction sqliteTransaction, bool transactionSucceed = true, bool closeConnection = true)
+        public void EndTransaction(SQLiteTransaction SQLiteTransaction, bool transactionSucceed = true, bool closeConnection = true)
         {
             if (transactionSucceed)
             {
-                sqliteTransaction.Commit();
+                SQLiteTransaction.Commit();
             }
             else
             {
-                sqliteTransaction.Rollback();
+                SQLiteTransaction.Rollback();
             }
 
             if (closeConnection)
             {
-                _sqliteConnection.CloseSafely();
+                _SQLiteConnection.CloseSafely();
             }
         }
 
 
+
         /// <summary> Creates a command. </summary>
         /// 
+        /// <param name="SQLiteTransaction"> The SQL transaction. </param>
         /// <param name="commandText"> The query string. </param>
         /// <param name="commandType"> Type of the command. </param>
-        /// <param name="sqliteParameters">Options for controlling the SQL. </param>
+        /// <param name="SQLiteParameters"> Options for controlling the SQL. </param>
         /// 
         /// <returns> The new command. </returns>
-        public SQLiteCommand CreateCommand(string commandText, CommandType commandType, params SQLiteParameter[] sqliteParameters)
+        public SQLiteCommand CreateCommand(SQLiteTransaction SQLiteTransaction, string commandText, CommandType commandType
+            , params SQLiteParameter[] SQLiteParameters)
         {
-            var dbCommand = _sqliteConnection.CreateCommand();
+            var dbCommand = _SQLiteConnection.CreateCommand();
+            dbCommand.Transaction = SQLiteTransaction;
             dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
             dbCommand.CommandType = commandType;
             dbCommand.CommandText = commandText;
-            if (sqliteParameters != null)
-                dbCommand.Parameters.AddRange(sqliteParameters);
-
-            if (_sqliteTransaction != null)
-                dbCommand.Transaction = _sqliteTransaction;
+            if (SQLiteParameters != null)
+                dbCommand.Parameters.AddRange(SQLiteParameters);
+           
 
             return dbCommand;
         }
 
-        /// <summary> Creates a command. </summary>
+        /// <summary> SQL data reader to <see cref="ExpandoObject"/>. </summary>
         /// 
-        /// <param name="sqliteTransaction"> The SQL transaction. </param>
-        /// <param name="commandText"> The query string. </param>
-        /// <param name="commandType"> Type of the command. </param>
-        /// <param name="sqliteParameters"> Options for controlling the SQL. </param>
+        /// <param name="reader"> The reader. </param>
         /// 
-        /// <returns> The new command. </returns>
-        public SQLiteCommand CreateCommand(SQLiteTransaction sqliteTransaction, string commandText, CommandType commandType
-            , params SQLiteParameter[] sqliteParameters)
+        /// <returns> . </returns>
+        public dynamic SQLiteDataReaderToExpando(SQLiteDataReader reader)
         {
-            var dbCommand = _sqliteConnection.CreateCommand();
-            dbCommand.CommandTimeout = DefaultSimpleAccessSettings.DbCommandTimeout;
+            var expandoObject = new ExpandoObject() as IDictionary<string, object>;
 
-            dbCommand.Transaction = sqliteTransaction;
-            dbCommand.CommandType = commandType;
-            dbCommand.CommandText = commandText;
-            if (sqliteParameters != null)
-                dbCommand.Parameters.AddRange(sqliteParameters);
-            if (_sqliteTransaction != null)
-                dbCommand.Transaction = _sqliteTransaction;
+            for (var i = 0; i < reader.FieldCount; i++)
+            {
+                var value = reader[i];
+                if (value != null)
+                    expandoObject.Add(reader.GetName(i), value);
+            }
 
-            return dbCommand;
+            return expandoObject;
+        }
+
+        /// <summary> Gets a object SQL data. </summary>
+        /// 
+        /// <param name="reader"> The reader. </param>
+        /// 
+        /// <returns> The object SQL data. </returns>
+        public IList<dynamic> GetDynamicSqlData(SQLiteDataReader reader)
+        {
+            var result = new List<dynamic>();
+            
+            while (reader.Read())
+            {
+                result.Add(SQLiteDataReaderToExpando(reader));
+            }
+            return result;
         }
 
         /// <summary> Gets a object SQL data. </summary>
@@ -1679,76 +1756,29 @@ namespace SimpleAccess.SQLite
             return result;
         }
 
-        /// <summary> SQL data reader to <see cref="ExpandoObject"/>. </summary>
-        /// 
-        /// <param name="reader"> The reader. </param>
-        /// 
-        /// <returns> . </returns>
-        public dynamic SQLiteDataReaderToExpando(SQLiteDataReader reader)
-        {
-            var expandoObject = new ExpandoObject() as IDictionary<string, object>;
-
-            for (var i = 0; i < reader.FieldCount; i++)
-            {
-                var value = reader[i];
-                expandoObject.Add(reader.GetName(i), value == DBNull.Value ? null : value);
-            }
-
-
-            return expandoObject;
-        }
-
-        /// <summary> Gets a object SQL data. </summary>
-        /// 
-        /// <param name="reader"> The reader. </param>
-        /// 
-        /// <returns> The object SQL data. </returns>
-        public IList<dynamic> GetDynamicSqlData(SQLiteDataReader reader)
-        {
-            var result = new List<dynamic>();
-
-            while (reader.Read())
-            {
-                result.Add(SQLiteDataReaderToExpando(reader));
-            }
-            return result;
-        }
-
         /// <summary> Build SQLiteParameter Array from anonymous object. </summary>
         ///  <param name="paramObject"> The anonymous object as parameters. </param>
         /// <returns> SQLiteParameter[] object and if paramObject is null then return null </returns>
-        public SQLiteParameter[] BuildSQLiteParameters(object paramObject)
+        public SQLiteParameter[] BuildDbParameters(object paramObject)
         {
             if (paramObject == null)
                 return null;
-            var sqliteParameters = new List<SQLiteParameter>();
-            sqliteParameters.CreateSQLiteParametersFromObject(paramObject);
+            var SQLiteParameters = new List<SQLiteParameter>();
+            SQLiteParameters.CreateSQLiteParametersFromObject(paramObject);
 
-            return sqliteParameters.ToArray();
+            return SQLiteParameters.ToArray();
         }
-
 
         /// <summary> Performs application-defined tasks associated with freeing, releasing, or resetting
         /// unmanaged resources. </summary>
         public void Dispose()
         {
-            if (_sqliteTransaction != null)
-                _sqliteTransaction.Dispose();
 
-            if (_sqliteConnection.State != ConnectionState.Closed)
-                _sqliteConnection.Close();
+            if (_SQLiteConnection.State != ConnectionState.Closed)
+                _SQLiteConnection.Close();
 
             DefaultSimpleAccessSettings = null;
         }
 
-        public SQLiteParameter[] GetInsertParameters<TEntity>(object entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public SQLiteParameter[] GetUpdateParameters<TEntity>(object entity)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -2,18 +2,13 @@
 using System.Collections.Generic;
 //using System.ComponentModel.DataAnnotations;
 using System.Data;
-#if !NETSTANDARD2_1
-using System.Data.SqlClient;
-#endif
-#if NETSTANDARD2_1
-using Microsoft.Data.SqlClient;
-#endif
+using System.Data.SQLite;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using SimpleAccess.Core;
 
-namespace SimpleAccess.SqlServer
+namespace SimpleAccess.SQLite
 {
     /// <summary>
     /// Base class of all TEntity Classes
@@ -21,19 +16,19 @@ namespace SimpleAccess.SqlServer
     public class StoredProcedureParameters
     {
         private List<PropertyInfo> _outParameterPropertyInfoCollection;
-        private List<SqlParameter> _spOutParameters;
-        private List<SqlParameter> _sqlParameters;
+        private List<SQLiteParameter> _spOutParameters;
+        private List<SQLiteParameter> _SQLiteParameters;
 
         private ParametersType? _storedParametersType = null;
-        private SqlParameter IdentityKeySqlParameter { get; set; }
+        private SQLiteParameter IdentityKeySQLiteParameter { get; set; }
 
         /// <summary>
         /// Add more parameters in underline DbParameters
         /// </summary>
         /// <param name="paramsObject"></param>
-        public void AddSqlParameters(object paramsObject)
+        public void AddSQLiteParameters(object paramsObject)
         {
-            _sqlParameters.CreateSqlParametersFromObject(paramsObject);
+            _SQLiteParameters.CreateSQLiteParametersFromObject(paramsObject);
         }
 
         /// <summary>
@@ -41,28 +36,28 @@ namespace SimpleAccess.SqlServer
         /// </summary>
         /// <param name="parametersType"></param>
         /// <returns></returns>
-        public SqlParameter[] CreateSqlParametersFromProperties(ParametersType parametersType)
+        public SQLiteParameter[] CreateSQLiteParametersFromProperties(ParametersType parametersType)
         {
 
             _outParameterPropertyInfoCollection = new List<PropertyInfo>();
-            _spOutParameters = new List<SqlParameter>();
+            _spOutParameters = new List<SQLiteParameter>();
 
             var procedureType = this.GetType();
             var propertiesForSqlParams = procedureType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Default);
 
-            _sqlParameters =
-                propertiesForSqlParams.Select(propertyInfo => CreateSqlParameter(propertyInfo, parametersType, propertiesForSqlParams))
-                    .Where<SqlParameter>(p => p != null).ToList();
+            _SQLiteParameters =
+                propertiesForSqlParams.Select(propertyInfo => CreateSQLiteParameter(propertyInfo, parametersType, propertiesForSqlParams))
+                    .Where<SQLiteParameter>(p => p != null).ToList();
 
             _storedParametersType = parametersType;
-            return _sqlParameters.ToArray();
+            return _SQLiteParameters.ToArray();
         }
 
-        private SqlParameter CreateSqlParameter(PropertyInfo propertyInfo, ParametersType parametesType, IEnumerable<PropertyInfo> propertyInfos)
+        private SQLiteParameter CreateSQLiteParameter(PropertyInfo propertyInfo, ParametersType parametesType, IEnumerable<PropertyInfo> propertyInfos)
         {
             object value = propertyInfo.GetValue(this, new object[] { });
 
-            var sqlParam = new SqlParameter(string.Format("@{0}", propertyInfo.Name), value);
+            var sqlParam = new SQLiteParameter(string.Format("@{0}", propertyInfo.Name), value);
 
             if (propertyInfo.PropertyType.Name == "String" && value != null)
             {
@@ -167,7 +162,7 @@ namespace SimpleAccess.SqlServer
         public void ClearSpParameters()
         {
             _spOutParameters.Clear();
-            _sqlParameters.Clear();
+            _SQLiteParameters.Clear();
             _outParameterPropertyInfoCollection.Clear();
         }
 
@@ -176,15 +171,15 @@ namespace SimpleAccess.SqlServer
         /// </summary>
         /// <param name="parametersType"></param>
         /// <returns></returns>
-        public SqlParameter[] GetSpParameters(ParametersType parametersType)
+        public SQLiteParameter[] GetSpParameters(ParametersType parametersType)
         {
             if (_storedParametersType != parametersType)
-                return CreateSqlParametersFromProperties(parametersType);
+                return CreateSQLiteParametersFromProperties(parametersType);
 
-            if (_sqlParameters == null || _sqlParameters.Count < 1)
-                return CreateSqlParametersFromProperties(parametersType);
+            if (_SQLiteParameters == null || _SQLiteParameters.Count < 1)
+                return CreateSQLiteParametersFromProperties(parametersType);
             else
-                return _sqlParameters.ToArray();
+                return _SQLiteParameters.ToArray();
         }
 
 

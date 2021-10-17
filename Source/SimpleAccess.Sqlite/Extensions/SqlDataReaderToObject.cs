@@ -25,12 +25,12 @@ namespace SimpleAccess.Core
     /// <summary>
     /// Extension to load objects from DataReaders
     /// </summary>
-    public static class SqlDataReaderToObject
+    public static class SQLiteDataReaderToObject
     {
         public static Dictionary<string, Dictionary<string, PropertyInfo>> EntityProperties { get; set; }
         public static Dictionary<string, Dictionary<string, PropertyInfo>> EntityDbColumnProperties { get; set; }
 
-        static SqlDataReaderToObject()
+        static SQLiteDataReaderToObject()
         {
             EntityProperties = new Dictionary<string, Dictionary<string, PropertyInfo>>();
             EntityDbColumnProperties = new Dictionary<string, Dictionary<string, PropertyInfo>>();

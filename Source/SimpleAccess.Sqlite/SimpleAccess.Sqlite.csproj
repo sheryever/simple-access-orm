@@ -1,33 +1,96 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>3.1.0-rc-3.1.0</Version>
-    <Product>SimpleAccess SQLite ORM</Product>
-    <Description>
-      Simple Access ORM provides database access in Ado.net methods naming pattern.
-      Documentation of using SimpleAccess is available at https://github.com/sheryever/simple-access-orm
-    </Description>
+    <Version>5.0.0-beta-5.0.0.1</Version>
+    <Product>SimpleAccess Sql Server ORM</Product>
+    <Description>Simple Access ORM provides database access in Ado.net methods naming pattern.
+Documentation of using SimpleAccess is available at https://simpleaccessorm.com
+</Description>
     <Authors>Abu Ali Muhammad Sharjeel</Authors>
     <Company>Wayzsoft</Company>
-    <Copyright>Copyright 2019</Copyright>
-    <PackageProjectUrl>https://github.com/sheryever/simple-access-orm</PackageProjectUrl>
+    <Copyright>Copyright 2021</Copyright>
+    <PackageProjectUrl>https://simpleaccessorm.com</PackageProjectUrl>
     <RepositoryUrl>https://github.com/sheryever/simple-access-orm</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <PackageTags>SimpleAccess, SQLite, ObjectMapper, ORM, Database Access</PackageTags>
+    <PackageTags>SimpleAccess, Sql Server, ObjectMapper, ORM, Database Access</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
-    <ProjectGuid>{80B19FC2-FFFB-471B-8F26-C38F0FB80E0E}</ProjectGuid>
+    <ProjectGuid>{A6E013A9-45EF-47E1-8F73-0ACFA0A466AC}</ProjectGuid>
+    <PackageReleaseNotes>
+      Changes:
+      - SqlEntityRepository Implemented
+      - PrimaryKey attribute added to support Sequence object
+      - .Net Standard 2.0 and .Net Standard 2.1 with Microsoft.Data.SqlClient support added
+      - Aysnc support for Dotnet full framework 4.5 and .Net Standard 2.0 and later
+      - Repository Performance improvement
+      - GetPagedList extensions methods added
+      - Async GetPagedList extensions methods added
+      - RowNumber column added in Paging extensions using addRowNumber bool parameter
+      - Distinct and select support added to GetPagedList extensions
+      - SqlRepository is renamed to SqlSpRepository and SqlRepository is marked as Obsolete
+      - Data mapping performance improved
+      - IgnoreSelect, IgnoreInsert, IgnoreUpdate and NotMapped property attributes support implemente for Repositories
+      - Aggregate functions (Count, Sum, Min, Max and Avg) extensions added to SqlRepository extension methods
+      - GetAggregate and GetAggregateWithGroupBy functions extensions added to SqlRepository extension methods
+      - IsExist function extension added
+      - 20 more overloads added for GetCount extensions method
+      - IN Clause support added using Contains SqlSyntax extentions
+      - In Clause (Sub Query) support added to Where Expression SQLEntityRepository
+      - Transaction support added to IsExist extensions methods
+      - nuget package versioning changed
+
+      Bug fixes
+      - SqlEntityRepository Get, Find, FindAll methods fixed
+      - Insert is not working with Indentity column
+      - Sql Server Keywords cannot be used as table column
+      - ExecuteScalar do not support nullable types
+      - Where expression throw null exception when using != operator
+      - ConnectionString lost user credential bug fixed
+      - Error in executing in Where lambda expression
+      - Enum is not working with Where lambda expression
+      - RowNumber is not loading when using the s =&gt; new Entity { id } expression with GetEntityPagedList
+      - Issue #9: SqlRepository.FindAll is throwing NullReference exception if the lambda parameter is nullable property
+      - GetDynamicPagedList and GetDynamicPagedListAsync returning all properties name in lower case
+      - BuildWhereClause is returning coma in value of decimal instead of dot with different culture
+    </PackageReleaseNotes>
+    <AssemblyVersion>5.0.0.1</AssemblyVersion>
+    <FileVersion>5.0.0.1</FileVersion>
+
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
   </PropertyGroup>
+  
+  <PropertyGroup>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
     <DefineConstants>NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
+      <PackageReference Include="System.Data.SQLite.Core" Version="1.0.115" />
   </ItemGroup>
-  <!-- .NET 4.0 references, compilation flags and build options -->
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.1'">
+    <DefineConstants>NETCORE;NETSTANDARD;NETSTANDARD2_1</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1'">
+        <PackageReference Include="System.Data.SQLite.Core" Version="1.0.115" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.115" />
+  </ItemGroup>
+
+
+  <!-- .NET 4.5 references, compilation flags and build options -->
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="mscorlib" />
     <Reference Include="System" />
@@ -39,7 +102,7 @@
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
-   </ItemGroup>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net452'">
     <DefineConstants>NET452;NETFULL</DefineConstants>
   </PropertyGroup>
@@ -47,39 +110,35 @@
     <DocumentationFile>
     </DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|AnyCPU'">
+    <DocumentationFile>D:\Documents\GitHub\simple-access-orm\Source\SimpleAccess.SQLite\SimpleAccess.SQLite.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Extensions\SqlDataReaderToObject.cs" />
     <Compile Remove="Properties\AssemblyInfo.cs" />
-    <Compile Remove="SqliteSqlBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Extensions\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.115" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\SimpleAccess.Core\SimpleAccess.Core.csproj" />
+    <ProjectReference Include="..\SimpleAccess.Repository\SimpleAccess.Repository.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-
-  </ItemGroup>
-
-    <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.1'">
-      <DefineConstants>NETCORE;NETSTANDARD;NETSTANDARD2_1</DefineConstants>
-    </PropertyGroup>
-    <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1'">
-
-    </ItemGroup>
+  </ItemGroup> 
 </Project>
-
-
 <!--<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{80B19FC2-FFFB-471B-8F26-C38F0FB80E0E}</ProjectGuid>
+    <ProjectGuid>{D97DEB44-C9BD-4813-AE06-3119CE29214A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SimpleAccess.SQLite</RootNamespace>
@@ -91,8 +150,6 @@
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
     <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -102,7 +159,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\Builds\nightly-build\dev\SimpleAccess.SQLite.xml</DocumentationFile>
+    <DocumentationFile>..\..\Builds\nightly-build\dev\SimpleAccess.SQLite.XML</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -112,7 +169,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\Builds\nightly-build\deploy\SimpleAccess.SQLite.xml</DocumentationFile>
+    <DocumentationFile>..\..\Builds\nightly-build\deploy\SimpleAccess.SQLite.XML</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
@@ -122,18 +179,30 @@
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SQLite, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Core.1.0.111.0\lib\net40\System.Data.SQLite.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbExtensions\SQLiteParametersExtensions.cs" />
+    <Compile Include="Entity\StoredProcedureParameters.cs" />
     <Compile Include="NamespaceDoc.cs" />
+    <Compile Include="SimpleAccessSqlSettings.cs" />
     <Compile Include="SQLiteSqlBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ISQLiteSimpleAccess.cs" />
-    <Compile Include="SQLiteSimpleAccess.cs" />
+    <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\RepositorySetting.cs" />
+    <Compile Include="Repository\ISqlRepository.cs" />
+    <Compile Include="Repository\SqlRepository.cs" />
+    <Compile Include="ISqlSimpleAccess.cs" />
+    <Compile Include="SqlSimpleAccess.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Attributes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="nuget-resources\app.config.install.xdt" />
+    <None Include="SimpleAccess.SQLite.nuspec" />
+    <None Include="nuget-resources\web.config.install.xdt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SimpleAccess.Core\SimpleAccess.Core.csproj">
@@ -141,28 +210,13 @@
       <Name>SimpleAccess.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Attributes\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="nuget-resources\app.config.install.xdt" />
-    <None Include="nuget-resources\web.config.install.xdt" />
-    <None Include="packages.config" />
-    <None Include="SimpleAccess.SQLite.nuspec" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\System.Data.SQLite.Core.1.0.111.0\build\net40\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.111.0\build\net40\System.Data.SQLite.Core.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.111.0\build\net40\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.111.0\build\net40\System.Data.SQLite.Core.targets'))" />
-  </Target>
-  --><!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  -->
+<!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">
   </Target>
-  --><!--
-</Project>-->
+  -->
+<!--</Project>-->
