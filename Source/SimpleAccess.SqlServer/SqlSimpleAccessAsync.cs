@@ -49,7 +49,7 @@ namespace SimpleAccess.SqlServer
         /// <returns> Number of rows affected (integer) </returns>
         public Task<int> ExecuteNonQueryAsync(string commandText, object paramObject = null)
         {
-            return ExecuteNonQueryAsync(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSqlParameters(paramObject));
+            return ExecuteNonQueryAsync(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the non query operation. </summary>
@@ -64,7 +64,7 @@ namespace SimpleAccess.SqlServer
         public Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType,
             object paramObject = null)
         {
-            return ExecuteNonQueryAsync(commandText, commandType, BuildSqlParameters(paramObject));
+            return ExecuteNonQueryAsync(commandText, commandType, BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the non query operation. </summary>
@@ -132,7 +132,7 @@ namespace SimpleAccess.SqlServer
         /// <returns> Number of rows affected (integer) </returns>
         public Task<int> ExecuteNonQueryAsync(SqlTransactionAsyncContext transactionContext, string commandText, object paramObject = null)
         {
-            return ExecuteNonQueryAsync(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSqlParameters(paramObject));
+            return ExecuteNonQueryAsync(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
@@ -146,7 +146,7 @@ namespace SimpleAccess.SqlServer
         public Task<int> ExecuteNonQueryAsync(SqlTransactionAsyncContext transactionContext, string commandText,
             CommandType commandType, object paramObject = null)
         {
-            return ExecuteNonQueryAsync(transactionContext, commandText, commandType, BuildSqlParameters(paramObject));
+            return ExecuteNonQueryAsync(transactionContext, commandText, commandType, BuildDbParameters(paramObject));
 
         }
 
@@ -209,7 +209,7 @@ namespace SimpleAccess.SqlServer
         public Task<T> ExecuteScalarAsync<T>(string commandText, object paramObject = null)
         {
             return ExecuteScalarAsync<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType
-                , BuildSqlParameters(paramObject));
+                , BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -225,7 +225,7 @@ namespace SimpleAccess.SqlServer
         public Task<T> ExecuteScalarAsync<T>(string commandText, CommandType commandType, object paramObject = null)
         {
             return ExecuteScalarAsync<T>(commandText, commandType
-                , BuildSqlParameters(paramObject));
+                , BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -299,7 +299,7 @@ namespace SimpleAccess.SqlServer
         public Task<T> ExecuteScalarAsync<T>(SqlTransactionAsyncContext transactionContext, string commandText, object paramObject = null)
         {
             return ExecuteScalarAsync<T>(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType
-                , BuildSqlParameters(paramObject));
+                , BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -317,7 +317,7 @@ namespace SimpleAccess.SqlServer
                     CommandType commandType, object paramObject = null)
         {
             return ExecuteScalarAsync<T>(transactionContext, commandText, commandType
-                , BuildSqlParameters(paramObject));
+                , BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -398,7 +398,7 @@ namespace SimpleAccess.SqlServer
         /// <returns> The TDbDataReader </returns>
         public Task<SqlDataReader> ExecuteReaderAsync(string commandText, object paramObject = null)
         {
-            return ExecuteReaderAsync(commandText, BuildSqlParameters(paramObject));
+            return ExecuteReaderAsync(commandText, BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
@@ -412,7 +412,7 @@ namespace SimpleAccess.SqlServer
         /// <returns> The TDbDataReader </returns>
         public Task<SqlDataReader> ExecuteReaderAsync(string commandText, CommandType commandType, object paramObject = null)
         {
-            return ExecuteReaderAsync(commandText, commandType, BuildSqlParameters(paramObject));
+            return ExecuteReaderAsync(commandText, commandType, BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
@@ -426,7 +426,7 @@ namespace SimpleAccess.SqlServer
         /// <returns> The TDbDataReader </returns>
         public Task<SqlDataReader> ExecuteReaderAsync(string commandText, CommandBehavior commandBehavior = CommandBehavior.CloseConnection, object paramObject = null)
         {
-            return ExecuteReaderAsync(commandText, commandBehavior, BuildSqlParameters(paramObject));
+            return ExecuteReaderAsync(commandText, commandBehavior, BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the commandText and return TDbDataReader. </summary>
@@ -441,7 +441,7 @@ namespace SimpleAccess.SqlServer
         /// <returns> The TDbDataReader </returns>
         public Task<SqlDataReader> ExecuteReaderAsync(string commandText, CommandType commandType, CommandBehavior commandBehavior = CommandBehavior.CloseConnection, object paramObject = null)
         {
-            return ExecuteReaderAsync(commandText, commandType, commandBehavior, BuildSqlParameters(paramObject));
+            return ExecuteReaderAsync(commandText, commandType, commandBehavior, BuildDbParameters(paramObject));
         }
 
 
@@ -507,7 +507,7 @@ namespace SimpleAccess.SqlServer
         /// <returns> The <see cref="IEnumerable{T}" /> </returns>
         public Task<IEnumerable<T>> ExecuteValuesAsync<T>(string commandText, object paramObject = null)
         {
-            return ExecuteValuesAsync<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSqlParameters(paramObject));
+            return ExecuteValuesAsync<T>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
@@ -522,7 +522,7 @@ namespace SimpleAccess.SqlServer
         /// <returns> The <see cref="IEnumerable{T}" /> </returns>
         public Task<IEnumerable<T>> ExecuteValuesAsync<T>(string commandText, CommandType commandType, object paramObject = null)
         {
-            return ExecuteValuesAsync<T>(commandText, commandType, BuildSqlParameters(paramObject));
+            return ExecuteValuesAsync<T>(commandText, commandType, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
@@ -578,7 +578,7 @@ namespace SimpleAccess.SqlServer
         /// <returns> The <see cref="IEnumerable{T}" /> value </returns>
         public Task<IEnumerable<T>> ExecuteValuesAsync<T>(SqlTransactionAsyncContext transactionContext, string commandText, object paramObject = null)
         {
-            return ExecuteValuesAsync<T>(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildSqlParameters(paramObject));
+            return ExecuteValuesAsync<T>(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{T}" /> from DataReader. </summary>
@@ -594,7 +594,7 @@ namespace SimpleAccess.SqlServer
         /// <returns> The <see cref="IEnumerable{T}" /> value </returns>
         public Task<IEnumerable<T>> ExecuteValuesAsync<T>(SqlTransactionAsyncContext transactionContext, string commandText, CommandType commandType, object paramObject = null)
         {
-            return ExecuteValuesAsync<T>(transactionContext, commandText, commandType, BuildSqlParameters(paramObject));
+            return ExecuteValuesAsync<T>(transactionContext, commandText, commandType, BuildDbParameters(paramObject));
         }
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
         /// 
@@ -692,7 +692,7 @@ namespace SimpleAccess.SqlServer
             where TEntity : new()
         {
             return ExecuteEntitiesAsync<TEntity>(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip
-                , propertyInfoDictionary, BuildSqlParameters(paramObject));
+                , propertyInfoDictionary, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
@@ -712,7 +712,7 @@ namespace SimpleAccess.SqlServer
             where TEntity : new()
         {
             return ExecuteEntitiesAsync<TEntity>(commandText, commandType, fieldsToSkip
-                , propertyInfoDictionary, BuildSqlParameters(paramObject));
+                , propertyInfoDictionary, BuildDbParameters(paramObject));
         }
 
 
@@ -744,7 +744,7 @@ namespace SimpleAccess.SqlServer
                 await dbCommand.Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
                 using (var reader = await dbCommand.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    return reader.DataReaderToObjectList<TEntity>(fieldsToSkip, propertyInfoDictionary);
+                    return await reader.DataReaderToObjectListAsync<TEntity>(fieldsToSkip, propertyInfoDictionary);
                 }
 
             }
@@ -804,7 +804,7 @@ namespace SimpleAccess.SqlServer
             , string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : new()
         {
             return ExecuteEntitiesAsync<TEntity>(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType
-                , fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
+                , fieldsToSkip, propertyInfoDictionary, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a <see cref="IEnumerable{TEntity}" /> from DataReader. </summary>
@@ -825,7 +825,7 @@ namespace SimpleAccess.SqlServer
             Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : new()
         {
             return ExecuteEntitiesAsync<TEntity>(transactionContext, commandText, commandType
-                , fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
+                , fieldsToSkip, propertyInfoDictionary, BuildDbParameters(paramObject));
         }
 
         /// <summary> Executes the command text, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored. </summary>
@@ -853,7 +853,7 @@ namespace SimpleAccess.SqlServer
                 using (var reader = await dbCommand
                     .ExecuteReaderAsync(transactionContext.CancellationToken).ConfigureAwait(false))
                 {
-                    return reader.DataReaderToObjectList<TEntity>(fieldsToSkip, propertyInfoDictionary);
+                    return await reader.DataReaderToObjectListAsync<TEntity>(fieldsToSkip, propertyInfoDictionary);
                 }
 
             }
@@ -908,7 +908,7 @@ namespace SimpleAccess.SqlServer
             where TEntity : class, new()
         {
             return ExecuteEntityAsync<TEntity>(commandText, DefaultSimpleAccessSettings.DefaultCommandType,
-                fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
+                fieldsToSkip, propertyInfoDictionary, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
@@ -928,7 +928,7 @@ namespace SimpleAccess.SqlServer
             where TEntity : class, new()
         {
             return ExecuteEntityAsync<TEntity>(commandText, commandType,
-                fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
+                fieldsToSkip, propertyInfoDictionary, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
@@ -1016,7 +1016,7 @@ namespace SimpleAccess.SqlServer
             string fieldsToSkip = null, Dictionary<string, PropertyInfo> propertyInfoDictionary = null) where TEntity : class, new()
         {
             return ExecuteEntityAsync<TEntity>(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
-                fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
+                fieldsToSkip, propertyInfoDictionary, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
@@ -1037,7 +1037,7 @@ namespace SimpleAccess.SqlServer
             where TEntity : class, new()
         {
             return ExecuteEntityAsync<TEntity>(transactionContext, commandText, commandType,
-                fieldsToSkip, propertyInfoDictionary, BuildSqlParameters(paramObject));
+                fieldsToSkip, propertyInfoDictionary, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a TEntity from DataReader. </summary>
@@ -1111,7 +1111,7 @@ namespace SimpleAccess.SqlServer
         public Task<IEnumerable<dynamic>> ExecuteDynamicsAsync(string commandText, object paramObject = null, string fieldsToSkip = null)
         {
             return ExecuteDynamicsAsync(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
-                BuildSqlParameters(paramObject));
+                BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
@@ -1128,7 +1128,7 @@ namespace SimpleAccess.SqlServer
             string fieldsToSkip = null)
         {
             return ExecuteDynamicsAsync(commandText, commandType, fieldsToSkip,
-                BuildSqlParameters(paramObject));
+                BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
@@ -1153,7 +1153,7 @@ namespace SimpleAccess.SqlServer
                 var cancellationToken = cancellationTokenSource.Token;
 
                 await dbCommand.Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
-                return GetDynamicSqlData(await dbCommand.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false));
+                return await GetDynamicSqlDataAsync(await dbCommand.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false));
 
             }
             catch (Exception ex)
@@ -1202,7 +1202,7 @@ namespace SimpleAccess.SqlServer
             string fieldsToSkip = null)
         {
             return ExecuteDynamicsAsync(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
-                BuildSqlParameters(paramObject));
+                BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a IEnumerable{object} from DataReader. </summary>
@@ -1220,7 +1220,7 @@ namespace SimpleAccess.SqlServer
             object paramObject = null, string fieldsToSkip = null)
         {
             return ExecuteDynamicsAsync(transactionContext, commandText, commandType, fieldsToSkip,
-                BuildSqlParameters(paramObject));
+                BuildDbParameters(paramObject));
         }
 
 
@@ -1244,7 +1244,7 @@ namespace SimpleAccess.SqlServer
             {
                 dbCommand = CreateCommand(transactionContext, commandText, commandType, sqlParameters);
 
-                return GetDynamicSqlData(await dbCommand
+                return await GetDynamicSqlDataAsync(await dbCommand
                     .ExecuteReaderAsync(transactionContext.CancellationToken).ConfigureAwait(false));
             }
             catch (Exception ex)
@@ -1286,7 +1286,7 @@ namespace SimpleAccess.SqlServer
         public Task<dynamic> ExecuteDynamicAsync(string commandText, object paramObject = null, string fieldsToSkip = null)
         {
             return ExecuteDynamicAsync(commandText, DefaultSimpleAccessSettings.DefaultCommandType, fieldsToSkip,
-                BuildSqlParameters(paramObject));
+                BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
@@ -1302,7 +1302,7 @@ namespace SimpleAccess.SqlServer
         public Task<dynamic> ExecuteDynamicAsync(string commandText, CommandType commandType, object paramObject = null, string fieldsToSkip = null)
         {
             return ExecuteDynamicAsync(commandText, commandType, fieldsToSkip,
-                BuildSqlParameters(paramObject));
+                BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
@@ -1381,7 +1381,7 @@ namespace SimpleAccess.SqlServer
         public Task<dynamic> ExecuteDynamicAsync(SqlTransactionAsyncContext transactionContext, string commandText, object paramObject = null, string fieldsToSkip = null)
         {
             return ExecuteDynamicAsync(transactionContext, commandText, DefaultSimpleAccessSettings.DefaultCommandType,
-                fieldsToSkip, BuildSqlParameters(paramObject));
+                fieldsToSkip, BuildDbParameters(paramObject));
         }
 
         /// <summary> Sends the CommandText to the Connection and builds a anonymous object from DataReader. </summary>
@@ -1399,7 +1399,7 @@ namespace SimpleAccess.SqlServer
                 object paramObject = null, string fieldsToSkip = null)
         {
             return ExecuteDynamicAsync(transactionContext, commandText, commandType,
-                fieldsToSkip, BuildSqlParameters(paramObject));
+                fieldsToSkip, BuildDbParameters(paramObject));
         }
 
 
@@ -1599,6 +1599,22 @@ namespace SimpleAccess.SqlServer
                 transaction.Connection.CloseSafely();
                 transaction.SetConnectionDisposable();
             }
+        }
+
+        /// <summary> Gets a object SQL data. </summary>
+        /// 
+        /// <param name="reader"> The reader. </param>
+        /// 
+        /// <returns> The object SQL data. </returns>
+        public async Task<IList<dynamic>> GetDynamicSqlDataAsync(SqlDataReader reader)
+        {
+            var result = new List<dynamic>();
+
+            while (await reader.ReadAsync())
+            {
+                result.Add(SqlDataReaderToExpando(reader));
+            }
+            return result;
         }
 
     }

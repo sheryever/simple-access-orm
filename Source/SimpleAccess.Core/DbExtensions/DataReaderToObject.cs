@@ -15,6 +15,8 @@ using System.Linq;
 #pragma warning restore CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
 #pragma warning disable CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
 using System.Reflection;
+using System.Threading.Tasks;
+using System.Data.Common;
 #pragma warning restore CS0246 // The type or namespace name 'System' could not be found (are you missing a using directive or an assembly reference?)
 
 namespace SimpleAccess.Core
@@ -82,6 +84,36 @@ namespace SimpleAccess.Core
 
             return items;
         }
+        public static async Task<List<TType>> DataReaderToObjectListAsync<TType>(this DbDataReader reader, string fieldsToSkip = null
+            , Dictionary<string, PropertyInfo> piList = null, Dictionary<string, PropertyInfo> piListBasedOnDbColumn = null)
+            where TType : new()
+        {
+            if (reader == null)
+                return null;
+
+            var items = new List<TType>();
+            var entityFullName = typeof(TType).FullName;
+            // Create lookup list of property info objects            
+            if (piList == null)
+            {
+                piList = GetEntityPropertiesInfoList<TType>(entityFullName);
+            }
+
+            if (piListBasedOnDbColumn == null)
+            {
+                piListBasedOnDbColumn = GetEntityDbColumnPropertiesInfoList(entityFullName, piList);
+            }
+
+            while (await reader.ReadAsync())
+            {
+                var inst = new TType();
+                DataReaderToObject<TType>(reader, inst, fieldsToSkip, piList, piListBasedOnDbColumn);
+                items.Add(inst);
+            }
+
+            return items;
+        }
+
 
         private static Dictionary<string, PropertyInfo> GetEntityDbColumnPropertiesInfoList(string entityFullName, Dictionary<string, PropertyInfo> piList)
         {

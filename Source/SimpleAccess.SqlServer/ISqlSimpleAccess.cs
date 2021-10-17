@@ -74,9 +74,16 @@ namespace SimpleAccess.SqlServer
         /// <returns> The dynamic SQL data. </returns>
         IList<dynamic> GetDynamicSqlData(SqlDataReader reader);
 
+        /// <summary> Gets a dynamic SQL data. </summary>
+        /// 
+        /// <param name="reader"> The reader. </param>
+        /// 
+        /// <returns> The dynamic SQL data. </returns>
+        Task<IList<dynamic>> GetDynamicSqlDataAsync(SqlDataReader reader);
+
         /// <summary> Build SqlParameter Array from dynamic object. </summary>
         ///  <param name="paramObject"> The dynamic object as parameters. </param>
         /// <returns> SqlParameter[] object and if paramObject is null then return null </returns>
-        SqlParameter[] BuildSqlParameters(object paramObject);
+        SqlParameter[] BuildDbParameters(object paramObject);
     }
 }

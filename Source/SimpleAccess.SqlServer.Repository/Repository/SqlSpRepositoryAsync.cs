@@ -292,7 +292,7 @@ namespace SimpleAccess.SqlServer
             //var commandText = string.Format("{0}_Insert", entityInfo.DbObjectName);
             var commandText = entityInfo.SqlBuilder.GetInsertStatement();
 
-            return SimpleAccess.ExecuteNonQueryAsync(commandText, CommandType.StoredProcedure, SimpleAccess.BuildSqlParameters(paramObject));
+            return SimpleAccess.ExecuteNonQueryAsync(commandText, CommandType.StoredProcedure, SimpleAccess.BuildDbParameters(paramObject));
         }
 
         /// <summary> Inserts the given SQL parameters. </summary>
@@ -445,7 +445,7 @@ namespace SimpleAccess.SqlServer
             //var commandText = string.Format("{0}_Update", entityInfo.DbObjectName);
             var commandText = entityInfo.SqlBuilder.GetUpdateStatement();
 
-            return SimpleAccess.ExecuteNonQueryAsync(commandText, CommandType.StoredProcedure, SimpleAccess.BuildSqlParameters(paramObject));
+            return SimpleAccess.ExecuteNonQueryAsync(commandText, CommandType.StoredProcedure, SimpleAccess.BuildDbParameters(paramObject));
         }
 
         /// <summary> Updates the given TEntity. </summary>
@@ -640,7 +640,7 @@ namespace SimpleAccess.SqlServer
             //var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
             var commandText = entityInfo.SqlBuilder.GetDeleteStatement();
 
-            return SimpleAccess.ExecuteNonQueryAsync(commandText, CommandType.StoredProcedure, SimpleAccess.BuildSqlParameters(paramObject));
+            return SimpleAccess.ExecuteNonQueryAsync(commandText, CommandType.StoredProcedure, SimpleAccess.BuildDbParameters(paramObject));
         }
 
         /// <summary> Deletes the given ID. </summary>
@@ -716,7 +716,7 @@ namespace SimpleAccess.SqlServer
                     foreach (var paramObject in paramObjects)
                     {
 
-                        result += await SimpleAccess.ExecuteNonQueryAsync(transactionContext, commandText, CommandType.StoredProcedure, SimpleAccess.BuildSqlParameters(paramObject));
+                        result += await SimpleAccess.ExecuteNonQueryAsync(transactionContext, commandText, CommandType.StoredProcedure, SimpleAccess.BuildDbParameters(paramObject));
 
                     }
                     SimpleAccess.EndTransaction(transactionContext);

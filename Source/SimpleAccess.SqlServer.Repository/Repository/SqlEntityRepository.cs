@@ -374,7 +374,7 @@ namespace SimpleAccess.SqlServer
             //string commandText = string.Format("{0}_Insert", entityInfo.DbObjectName);
             string commandText = entityInfo.SqlBuilder.GetInsertStatement();
 
-            return SimpleAccess.ExecuteNonQuery(commandText, CommandType.Text, SimpleAccess.BuildSqlParameters(paramObject));
+            return SimpleAccess.ExecuteNonQuery(commandText, CommandType.Text, SimpleAccess.BuildDbParameters(paramObject));
         }
 
         /// <summary> Inserts the given SQL parameters. </summary>
@@ -531,7 +531,7 @@ namespace SimpleAccess.SqlServer
             //var commandText = string.Format("{0}_Update", entityInfo.DbObjectName);
             var commandText = entityInfo.SqlBuilder.GetUpdateStatement();
 
-            return SimpleAccess.ExecuteNonQuery(commandText, CommandType.Text, SimpleAccess.BuildSqlParameters(paramObject));
+            return SimpleAccess.ExecuteNonQuery(commandText, CommandType.Text, SimpleAccess.BuildDbParameters(paramObject));
         }
 
         /// <summary> Updates the given TEntity. </summary>
@@ -733,7 +733,7 @@ namespace SimpleAccess.SqlServer
             //var commandText = string.Format("{0}_Delete", entityInfo.DbObjectName);
             var commandText = entityInfo.SqlBuilder.GetDeleteStatement();
 
-            return SimpleAccess.ExecuteNonQuery(commandText, CommandType.Text, SimpleAccess.BuildSqlParameters(paramObject));
+            return SimpleAccess.ExecuteNonQuery(commandText, CommandType.Text, SimpleAccess.BuildDbParameters(paramObject));
         }
 
         /// <summary> Deletes the given ID. </summary>

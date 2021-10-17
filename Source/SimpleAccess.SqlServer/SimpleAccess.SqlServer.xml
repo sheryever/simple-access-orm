@@ -168,7 +168,7 @@
             
             <returns> The dynamic SQL data. </returns>
         </member>
-        <member name="M:SimpleAccess.SqlServer.ISqlSimpleAccess.BuildSqlParameters(System.Object)">
+        <member name="M:SimpleAccess.SqlServer.ISqlSimpleAccess.BuildDbParameters(System.Object)">
             <summary> Build SqlParameter Array from dynamic object. </summary>
              <param name="paramObject"> The dynamic object as parameters. </param>
             <returns> SqlParameter[] object and if paramObject is null then return null </returns>
@@ -2239,7 +2239,7 @@
             
             <returns> The object SQL data. </returns>
         </member>
-        <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.BuildSqlParameters(System.Object)">
+        <member name="M:SimpleAccess.SqlServer.SqlSimpleAccess.BuildDbParameters(System.Object)">
             <summary> Build SqlParameter Array from anonymous object. </summary>
              <param name="paramObject"> The anonymous object as parameters. </param>
             <returns> SqlParameter[] object and if paramObject is null then return null </returns>
