@@ -11,6 +11,7 @@ using Microsoft.Data.SqlClient;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
+using SimpleAccess.Repository;
 
 namespace SimpleAccess.SqlServer
 {

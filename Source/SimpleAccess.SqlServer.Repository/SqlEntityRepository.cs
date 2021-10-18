@@ -12,6 +12,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using SimpleAccess.Core.Entity.RepoWrapper;
 using SimpleAccess.Core;
+using SimpleAccess.Repository;
 
 namespace SimpleAccess.SqlServer
 {
