@@ -118,7 +118,6 @@ Documentation of using SimpleAccess is available at https://simpleaccessorm.com
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Properties\AssemblyInfo.cs" />
-    <Compile Remove="Repository\ISqlRepositoryAsync.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DbExtensions\" />
