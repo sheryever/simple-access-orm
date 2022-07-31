@@ -144,6 +144,20 @@ namespace SimpleAccess.SqlServer.Test
         }
 
         [Fact]
+        public void MultipleGetAllWithTransactionTest()
+        {
+            using (var trasaction = SqlRepository.SimpleAccess.BeginTransaction())
+            {
+
+                var categories = SqlRepository.GetAll<Category>(trasaction);
+                var people = SqlRepository.GetAll<Person>(trasaction);
+                Assert.Equal(3, categories.Count());
+                Assert.True (people.Any());
+
+            }
+
+        }
+        [Fact]
         public void GetDynamicPagedListTest()
         {
             var people = SqlRepository.GetDynamicPagedList<Person>(0, 2, "Id", false);

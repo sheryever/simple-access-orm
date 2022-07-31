@@ -103,7 +103,33 @@ namespace SimpleAccess.SqlServer.Test
             Assert.Equal(3, categories.Count());
         }
 
+        [Fact]
+        public void GetAllWithTransactionTest()
+        {
+            using (var trasaction = SqlRepository.SimpleAccess.BeginTransaction())
+            {
 
+                var categories = SqlRepository.GetAll<Category>(trasaction);
+                Assert.Equal(3, categories.Count());
+
+            }
+
+        }
+
+        [Fact]
+        public void MultipleGetAllWithTransactionTest()
+        {
+            using (var trasaction = SqlRepository.SimpleAccess.BeginTransaction())
+            {
+
+                var categories = SqlRepository.GetAll<Category>(trasaction);
+                var people = SqlRepository.GetAll<Person>(trasaction);
+                Assert.Equal(3, categories.Count());
+                Assert.True(people.Any());
+
+            }
+
+        }
 
         [Fact]
         public void GetTest()
@@ -146,6 +172,26 @@ namespace SimpleAccess.SqlServer.Test
 
             Assert.NotNull(category);
             Assert.Equal(2, category.Id);
+
+        }
+
+        [Fact]
+        public void FindTestNullableBoolTrue()
+        {
+            var person = SqlRepository.Find<Person>(c => c.Alive == true);
+
+            Assert.NotNull(person);
+            Assert.Equal(1, person.Id);
+
+        }
+
+        [Fact]
+        public void FindTestNullableBoolNull()
+        {
+            var person = SqlRepository.Find<Person>(c => c.Alive == null);
+
+            Assert.NotNull(person);
+            Assert.Equal(3, person.Id);
 
         }
 

@@ -17,7 +17,7 @@ namespace SimpleAccess.SqlServer.Test
 
          public SqlEntityRepositoryAsyncTest()
         {
-            SimpleAccess = new SqlSimpleAccess("Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=sa;Password=Test123;");
+            SimpleAccess = new SqlSimpleAccess("Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;MultipleActiveResultSets=True;Persist Security Info=True;User ID=sa;Password=Test123;");
             SqlRepository = new SqlEntityRepository(SimpleAccess);
             SimpleAccess.ExecuteNonQuery(DbConfiguration.DbInitialScript);
         }
@@ -79,6 +79,35 @@ namespace SimpleAccess.SqlServer.Test
             var categories = SqlRepository.GetAllAsync<Category>().Result;
 
             Assert.Equal(3, categories.Count());
+        }
+
+        [Fact]
+        public async void GetAllAsyncWithTransactionTest()
+        {
+            using (var trasaction = await SqlRepository.SimpleAccess.BeginTransactionAsync())
+            {
+
+                var categories = SqlRepository.GetAllAsync<Category>(trasaction);
+                Assert.Equal(3, categories.Result.Count());
+
+            }
+
+        }
+
+        [Fact]
+        public async void MultipleGetAllAsyncWithTransactionTest()
+        {
+            using (var trasaction = await SqlRepository.SimpleAccess.BeginTransactionAsync())
+            {
+
+                var categories = SqlRepository.GetAllAsync<Category>(trasaction);
+                var people = SqlRepository.GetAllAsync<Person>(trasaction);
+                await Task.WhenAll(categories, people);
+                Assert.Equal(3, categories.Result.Count());
+                Assert.True(people.Result.Any());
+
+            }
+
         }
 
         [Fact]
