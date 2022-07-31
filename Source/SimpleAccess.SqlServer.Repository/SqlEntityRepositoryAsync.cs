@@ -57,7 +57,7 @@ namespace SimpleAccess.SqlServer
             //            string commandText = string.Format("{0}_GetAll", entityInfo.DbObjectName);
             var commandText = entityInfo.SqlBuilder.GetGetAllStatement();
 
-            return SimpleAccess.ExecuteEntitiesAsync<TEntity>(transactionContext, commandText, CommandType.StoredProcedure, fieldToSkip);
+            return SimpleAccess.ExecuteEntitiesAsync<TEntity>(transactionContext, commandText, CommandType.Text, fieldToSkip);
         }
 
         /// <summary> Gets. </summary>

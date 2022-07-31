@@ -323,7 +323,7 @@ namespace SimpleAccess.SqlServer
                 return string.Format(" [{0}] IN ({1}) ", propertyName, value.ToString());
             }
 
-            if (valueType == typeof(bool))
+            if (valueType == typeof(bool) || valueType == typeof(bool?))
             {
                 return string.Format(" [{0}] {1} {2} ", propertyName, @operator, (bool)value ? "1" : "0");
             }

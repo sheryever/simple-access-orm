@@ -82,7 +82,7 @@ namespace SimpleAccess.SqlServer
             //var name = typeof(TEntity).Name;
             var entityInfo = SqlEntityRepositorySetting.GetEntityInfo(typeof(TEntity));
             string commandText = entityInfo.SqlBuilder.GetGetAllStatement();
-            return SimpleAccess.ExecuteEntities<TEntity>(transaction, commandText, CommandType.StoredProcedure, fieldToSkip);
+            return SimpleAccess.ExecuteEntities<TEntity>(transaction, commandText, CommandType.Text, fieldToSkip);
         }
 
 
