@@ -524,6 +524,18 @@ namespace SimpleAccess.SqlServer.Test
         }
 
         [Fact]
+        public void GetCountTestWithWhereAndClassProperty()
+        {
+            var person = new Person() { Id = 1 };
+
+            var rowCount = SqlRepository.GetCount<Person>(p => p.Id == person.Id);
+
+            Assert.Equal(1, rowCount);
+
+        }
+
+
+        [Fact]
         public void GetCountTestWithSingleColumn()
         {
             var rowCount = SqlRepository.GetCount<Person, string>(select => select.Address);
