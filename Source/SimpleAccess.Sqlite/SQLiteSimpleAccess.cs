@@ -335,7 +335,7 @@ namespace SimpleAccess.SQLite
 
                 if (result == DBNull.Value) return default(T);
 
-                return (T)result;
+                return (T)Convert.ChangeType(result, typeof(T));
                 //if (typeof(T).Name.IndexOf("Nullable") > -1)
                     
 
@@ -1610,8 +1610,10 @@ namespace SimpleAccess.SQLite
         /// <returns> . </returns>
         public SQLiteTransaction BeginTransaction(IsolationLevel isolationLevel)
         {
-            return BeginTransaction(isolationLevel);
+            if (_SQLiteConnection.State != ConnectionState.Open)
+                _SQLiteConnection.Open();
 
+            return _SQLiteConnection.BeginTransaction(isolationLevel);
         }
         /// <summary> Begins a transaction. </summary>
         /// <returns> . </returns>

@@ -7,17 +7,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.SqlServer", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.Core", "SimpleAccess.Core\SimpleAccess.Core.csproj", "{CA67607F-1D89-47FD-B8BF-8DEAC4D0AC60}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.Sqlite", "SimpleAccess.Sqlite\SimpleAccess.Sqlite.csproj", "{80B19FC2-FFFB-471B-8F26-C38F0FB80E0E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.Oracle", "SimpleAccess.Oracle\SimpleAccess.Oracle.csproj", "{8B9E00FC-72AC-4151-8326-090D0BF9F153}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.MySql", "SimpleAccess.MySql\SimpleAccess.MySql.csproj", "{2A7EDC08-9746-4796-8086-B39798042EAF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.SqlServer.Test", "SimpleAccess.SqlServer.Test\SimpleAccess.SqlServer.Test.csproj", "{5B0BD510-DCB9-4C52-B524-12DC2906E5AD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.Common", "SimpleAccess.Common\SimpleAccess.Common.csproj", "{4077AAD2-EC31-4D79-821D-74039C1F41D0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.Repository", "SimpleAccess.Repository\SimpleAccess.Repository.csproj", "{1AEC5D82-4081-4649-AD79-39B6B455771F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.SqlServer.Repository", "SimpleAccess.SqlServer.Repository\SimpleAccess.SqlServer.Repository.csproj", "{2310647E-86E5-45E9-AAD0-54E3F6A5C23A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.SQLite", "SimpleAccess.Sqlite\SimpleAccess.SQLite.csproj", "{A6E013A9-45EF-47E1-8F73-0ACFA0A466AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTest", "UnitTest", "{70862121-76B2-4E17-9320-34E62343191A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.SQLite.Test", "SimpleAccess.SQLite.Test\SimpleAccess.SQLite.Test.csproj", "{AAAC4F5F-A8D2-4C16-9E99-3D28E3D624F6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.SQLite.Repository", "SimpleAccess.SQLite.Repository\SimpleAccess.SQLite.Repository.csproj", "{BF4A6898-F4EB-4817-8DFE-AE2B05FA51D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,18 +37,6 @@ Global
 		{CA67607F-1D89-47FD-B8BF-8DEAC4D0AC60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA67607F-1D89-47FD-B8BF-8DEAC4D0AC60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA67607F-1D89-47FD-B8BF-8DEAC4D0AC60}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80B19FC2-FFFB-471B-8F26-C38F0FB80E0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80B19FC2-FFFB-471B-8F26-C38F0FB80E0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80B19FC2-FFFB-471B-8F26-C38F0FB80E0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80B19FC2-FFFB-471B-8F26-C38F0FB80E0E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8B9E00FC-72AC-4151-8326-090D0BF9F153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8B9E00FC-72AC-4151-8326-090D0BF9F153}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8B9E00FC-72AC-4151-8326-090D0BF9F153}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8B9E00FC-72AC-4151-8326-090D0BF9F153}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2A7EDC08-9746-4796-8086-B39798042EAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2A7EDC08-9746-4796-8086-B39798042EAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2A7EDC08-9746-4796-8086-B39798042EAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2A7EDC08-9746-4796-8086-B39798042EAF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5B0BD510-DCB9-4C52-B524-12DC2906E5AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5B0BD510-DCB9-4C52-B524-12DC2906E5AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B0BD510-DCB9-4C52-B524-12DC2906E5AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,9 +49,29 @@ Global
 		{1AEC5D82-4081-4649-AD79-39B6B455771F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AEC5D82-4081-4649-AD79-39B6B455771F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AEC5D82-4081-4649-AD79-39B6B455771F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2310647E-86E5-45E9-AAD0-54E3F6A5C23A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2310647E-86E5-45E9-AAD0-54E3F6A5C23A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2310647E-86E5-45E9-AAD0-54E3F6A5C23A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2310647E-86E5-45E9-AAD0-54E3F6A5C23A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6E013A9-45EF-47E1-8F73-0ACFA0A466AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6E013A9-45EF-47E1-8F73-0ACFA0A466AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6E013A9-45EF-47E1-8F73-0ACFA0A466AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6E013A9-45EF-47E1-8F73-0ACFA0A466AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAAC4F5F-A8D2-4C16-9E99-3D28E3D624F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAAC4F5F-A8D2-4C16-9E99-3D28E3D624F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAAC4F5F-A8D2-4C16-9E99-3D28E3D624F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAAC4F5F-A8D2-4C16-9E99-3D28E3D624F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF4A6898-F4EB-4817-8DFE-AE2B05FA51D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF4A6898-F4EB-4817-8DFE-AE2B05FA51D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF4A6898-F4EB-4817-8DFE-AE2B05FA51D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF4A6898-F4EB-4817-8DFE-AE2B05FA51D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5B0BD510-DCB9-4C52-B524-12DC2906E5AD} = {70862121-76B2-4E17-9320-34E62343191A}
+		{AAAC4F5F-A8D2-4C16-9E99-3D28E3D624F6} = {70862121-76B2-4E17-9320-34E62343191A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D8268582-8B24-4A01-A93B-20C0766E67A9}
