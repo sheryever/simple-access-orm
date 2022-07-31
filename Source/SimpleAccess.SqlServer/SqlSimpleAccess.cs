@@ -70,7 +70,10 @@ namespace SimpleAccess.SqlServer
 
         public SqlSimpleAccess(SqlConnection sqlConnection, CommandType defaultCommandType)
         {
-            DefaultSimpleAccessSettings = new SimpleAccessSettings(defaultCommandType);
+            DefaultSimpleAccessSettings = new SimpleAccessSettings(defaultCommandType)
+            {
+                DefaultLogger = new SimpleLogger()
+            };
             _sqlConnection = sqlConnection;
             DefaultConnectionString = _sqlConnection.ConnectionString;
 
