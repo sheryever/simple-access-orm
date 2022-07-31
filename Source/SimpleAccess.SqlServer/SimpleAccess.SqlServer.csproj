@@ -124,7 +124,6 @@ Documentation of using SimpleAccess is available at https://simpleaccessorm.com
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SimpleAccess.Core\SimpleAccess.Core.csproj" />
-    <ProjectReference Include="..\SimpleAccess.Repository\SimpleAccess.Repository.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
   </ItemGroup>

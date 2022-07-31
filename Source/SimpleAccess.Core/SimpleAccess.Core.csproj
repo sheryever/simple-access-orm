@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netstandard2.0;net452</TargetFrameworks>
+    <TargetFrameworks>net452;netstandard2.0;netstandard2.1</TargetFrameworks>
     <Version>5.0.0-beta-5.0.0.1</Version>
     <Product>SimpleAccess ORM Core</Product>
     <Description>The core and common interfaces and implementation of SimpleAccess ORM</Description>

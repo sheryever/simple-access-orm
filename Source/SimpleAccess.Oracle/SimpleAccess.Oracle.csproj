@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>3.1.0-rc-3.1.0</Version>
+    <Version>5.0.0-beta-5.0.0.1</Version>
     <Product>SimpleAccess Oracle ORM</Product>
     <Description>
       Simple Access ORM provides database access in Ado.net methods naming pattern.
@@ -15,6 +15,10 @@
     <RepositoryType>Git</RepositoryType>
     <PackageTags>SimpleAccess, Oracle, ObjectMapper, ORM, Database Access</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReleaseNotes>
+    </PackageReleaseNotes>
+    <AssemblyVersion>5.0.0.1</AssemblyVersion>
+    <FileVersion>5.0.0.1</FileVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
