@@ -10,7 +10,10 @@ using System.Data.Common;
 #if !NETSTANDARD2_1
 using System.Data.SqlClient;
 #endif
-#if NETSTANDARD2_1
+#if NETSTANDARD2_1 
+using Microsoft.Data.SqlClient;
+#endif
+#if NET6_0_OR_GREATER 
 using Microsoft.Data.SqlClient;
 #endif
 using System.Dynamic;

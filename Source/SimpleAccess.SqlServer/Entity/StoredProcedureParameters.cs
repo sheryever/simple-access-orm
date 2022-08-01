@@ -8,6 +8,9 @@ using System.Data.SqlClient;
 #if NETSTANDARD2_1
 using Microsoft.Data.SqlClient;
 #endif
+#if NET6_0_OR_GREATER 
+using Microsoft.Data.SqlClient;
+#endif
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;

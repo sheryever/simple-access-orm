@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net452;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>5.0.0-beta-5.0.0.1</Version>
+    <TargetFrameworks>net452;netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
+    <Version>6.0.0-beta-6.0.0.1</Version>
     <Product>SimpleAccess ORM Core</Product>
     <Description>The core and common interfaces and implementation of SimpleAccess ORM</Description>
     <Authors>Abu Ali Muhammad Sharjeel</Authors>
@@ -26,8 +26,8 @@
       - Support add to resolve Enum value in Where Expression
       - nuget package versioning changed
     </PackageReleaseNotes>
-    <AssemblyVersion>5.0.0.1</AssemblyVersion>
-    <FileVersion>5.0.0.1</FileVersion>
+    <AssemblyVersion>6.0.0.1</AssemblyVersion>
+    <FileVersion>6.0.0.1</FileVersion>
     
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -43,6 +43,17 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
+
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net6.0'">
+    <DefineConstants>NET60;NET6_0_OR_GREATER</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <PackageReference Include="Microsoft.CSharp">
+      <Version>4.7.0</Version>
+    </PackageReference>
+  </ItemGroup>  
   
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.1'">
     <DefineConstants>NETSTANDARD2_1</DefineConstants>

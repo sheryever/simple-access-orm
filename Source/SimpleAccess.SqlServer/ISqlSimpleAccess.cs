@@ -12,10 +12,14 @@ using System.Data.SqlClient;
 #if NETSTANDARD2_1
 using Microsoft.Data.SqlClient;
 #endif
+#if NET6_0_OR_GREATER 
+using Microsoft.Data.SqlClient;
+#endif
 using System.Dynamic;
 using System.Reflection;
 using SimpleAccess.Core;
 using SimpleAccess.Core.Logger;
+
 
 namespace SimpleAccess.SqlServer
 {
