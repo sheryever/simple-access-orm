@@ -14,7 +14,7 @@ namespace SimpleAccess.SqlServer.Test
  
         public SimpleAccessTest()
         {
-            SimpleAccess = new SqlSimpleAccess("Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=sa;Password=Test123;");
+            SimpleAccess = new SqlSimpleAccess("Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=sa;Password=Test123;TrustServerCertificate=True;TrustServerCertificate=True;");
             SimpleAccess.ExecuteNonQuery(DbConfiguration.DbInitialScript);
         }
 

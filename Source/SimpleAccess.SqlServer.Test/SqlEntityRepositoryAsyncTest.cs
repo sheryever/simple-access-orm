@@ -2,7 +2,11 @@ using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+#if NETFULL
+using System.Data.SqlClient;
+#else
 using Microsoft.Data.SqlClient;
+#endif
 using SimpleAccess.Core;
 using SimpleAccess.SqlServer;
 using SimpleAccess.SqlServer.TestNetCore2.Entities;
@@ -17,7 +21,7 @@ namespace SimpleAccess.SqlServer.Test
 
          public SqlEntityRepositoryAsyncTest()
         {
-            SimpleAccess = new SqlSimpleAccess("Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;MultipleActiveResultSets=True;Persist Security Info=True;User ID=sa;Password=Test123;");
+            SimpleAccess = new SqlSimpleAccess("Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;MultipleActiveResultSets=True;Persist Security Info=True;User ID=sa;Password=Test123;TrustServerCertificate=True;");
             SqlRepository = new SqlEntityRepository(SimpleAccess);
             SimpleAccess.ExecuteNonQuery(DbConfiguration.DbInitialScript);
         }

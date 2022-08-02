@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.156
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32519.111
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.SqlServer", "SimpleAccess.SqlServer\SimpleAccess.SqlServer.csproj", "{D97DEB44-C9BD-4813-AE06-3119CE26214A}"
 EndProject
@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.Repository", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.SqlServer.Repository", "SimpleAccess.SqlServer.Repository\SimpleAccess.SqlServer.Repository.csproj", "{2310647E-86E5-45E9-AAD0-54E3F6A5C23A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.SQLite", "SimpleAccess.Sqlite\SimpleAccess.SQLite.csproj", "{A6E013A9-45EF-47E1-8F73-0ACFA0A466AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleAccess.SQLite", "SimpleAccess.Sqlite\SimpleAccess.SQLite.csproj", "{A6E013A9-45EF-47E1-8F73-0ACFA0A465AC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTest", "UnitTest", "{70862121-76B2-4E17-9320-34E62343191A}"
 EndProject
@@ -53,10 +53,10 @@ Global
 		{2310647E-86E5-45E9-AAD0-54E3F6A5C23A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2310647E-86E5-45E9-AAD0-54E3F6A5C23A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2310647E-86E5-45E9-AAD0-54E3F6A5C23A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A6E013A9-45EF-47E1-8F73-0ACFA0A466AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A6E013A9-45EF-47E1-8F73-0ACFA0A466AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A6E013A9-45EF-47E1-8F73-0ACFA0A466AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A6E013A9-45EF-47E1-8F73-0ACFA0A466AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6E013A9-45EF-47E1-8F73-0ACFA0A465AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6E013A9-45EF-47E1-8F73-0ACFA0A465AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6E013A9-45EF-47E1-8F73-0ACFA0A465AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6E013A9-45EF-47E1-8F73-0ACFA0A465AC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AAAC4F5F-A8D2-4C16-9E99-3D28E3D624F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AAAC4F5F-A8D2-4C16-9E99-3D28E3D624F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAAC4F5F-A8D2-4C16-9E99-3D28E3D624F6}.Release|Any CPU.ActiveCfg = Release|Any CPU

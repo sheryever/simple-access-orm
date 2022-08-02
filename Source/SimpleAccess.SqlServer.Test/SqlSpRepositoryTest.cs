@@ -3,8 +3,12 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+#if NETFULL
+using System.Data.SqlClient;
+#else
 using Microsoft.Data.SqlClient;
- using SimpleAccess.Core;
+#endif
+using SimpleAccess.Core;
 using SimpleAccess.SqlServer;
 using SimpleAccess.SqlServer.TestNetCore2.Entities;
 using Xunit;
@@ -18,7 +22,7 @@ namespace SimpleAccess.SqlServer.Test
 
          public SqlSpRepositoryTest( )
         {
-            SimpleAccess = new SqlSimpleAccess("Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=sa;Password=Test123;");
+            SimpleAccess = new SqlSimpleAccess("Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=sa;Password=Test123;TrustServerCertificate=True;");
             SqlRepository = new SqlSpRepository(SimpleAccess);
             SimpleAccess.ExecuteNonQuery(DbConfiguration.DbInitialScript);
         }
@@ -63,7 +67,12 @@ namespace SimpleAccess.SqlServer.Test
             {
                 Id = 0,
                 FullName = "Muhammad Abdul Rehman Khan",
-                Phone = "1112182123"
+                Phone = "1112182123",
+                Gender = 1,
+                Address = "Madina",
+                BasicSalary = 233449,
+                Transport = 21,
+                Alive = true
             };
             var rowAffected = SqlRepository.Insert<Person>(person);
 
@@ -77,7 +86,13 @@ namespace SimpleAccess.SqlServer.Test
             {
                 new SqlParameter("Id", (object)0){ Direction = ParameterDirection.InputOutput},
                 new SqlParameter( "FullName", "Muhammad Abdul Rehman Khan"),
-                new SqlParameter( "Phone" , "1112182123")
+                new SqlParameter( "Gender", 1),
+                new SqlParameter( "Phone" , "1112182123"),
+                new SqlParameter( "Address", "Madina"),
+                new SqlParameter( "BasicSalary", 145345),
+                new SqlParameter( "Transport", 43),
+                new SqlParameter( "Alive", true),
+
             };
 
             var rowAffected = SqlRepository.Insert<Person>(person);

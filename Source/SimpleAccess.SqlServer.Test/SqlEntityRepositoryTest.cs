@@ -3,7 +3,11 @@ using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+#if NETFULL
+using System.Data.SqlClient;
+#else
 using Microsoft.Data.SqlClient;
+#endif
 using SimpleAccess.Core;
 using SimpleAccess.Core.Extensions;
 using SimpleAccess.Core.SqlSyntaxExtensions;
@@ -20,7 +24,7 @@ namespace SimpleAccess.SqlServer.Test
 
         public SqlEntityRepositoryTest()
         {
-            SimpleAccess = new SqlSimpleAccess("Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=sa;Password=Test123;");
+            SimpleAccess = new SqlSimpleAccess("Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=sa;Password=Test123;TrustServerCertificate=True;");
             SqlRepository = new SqlEntityRepository(SimpleAccess);
             SimpleAccess.ExecuteNonQuery(DbConfiguration.DbInitialScript);
         }
@@ -786,9 +790,9 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void WhereClauseWithDirectFalseBoolPropertyTest()
         {
-            var data = SqlRepository.FindAll<Employee>(e => !e.IsOnDuty);
+            var data = SqlRepository.FindAll<Employee>(e => e.IsOnDuty == false);
 
-            Assert.Equal(10, data.Count());
+            Assert.Equal(4, data.Count());
         }
 
         [Fact]
@@ -807,6 +811,7 @@ namespace SimpleAccess.SqlServer.Test
             Assert.True(found.Any());
 
         }
+
         [Fact]
         public void TestGetDynamicPage()
         {
@@ -887,6 +892,7 @@ namespace SimpleAccess.SqlServer.Test
 
         }
 
+#if !NETFULL
 
         [Fact]
         public void CheckCultureValueOfDecimal()
@@ -902,7 +908,7 @@ namespace SimpleAccess.SqlServer.Test
             Assert.NotNull(data);
             CultureInfo.CurrentCulture = currentCulture;
         }
-
+#endif
 
     }
 }

@@ -2,7 +2,11 @@ using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+#if NETFULL
+using System.Data.SqlClient;
+#else
 using Microsoft.Data.SqlClient;
+#endif
 using SimpleAccess.Core;
 using SimpleAccess.SqlServer;
 using SimpleAccess.SqlServer.TestNetCore2.Entities;
@@ -17,7 +21,7 @@ namespace SimpleAccess.SqlServer.Test
 
         public SqlSpRepositoryAsyncTest()
         {
-            SimpleAccess = new SqlSimpleAccess("Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=sa;Password=Test123;");
+            SimpleAccess = new SqlSimpleAccess("Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=sa;Password=Test123;TrustServerCertificate=True;");
             SqlRepository = new SqlSpRepository(SimpleAccess);
             SimpleAccess.ExecuteNonQuery(DbConfiguration.DbInitialScript);
         }
@@ -180,6 +184,8 @@ namespace SimpleAccess.SqlServer.Test
 
                 var attachments = SqlRepository.FindAllAsync<Attachment>(transContext, c => c.IncidentId == 3).Result;
                 Assert.Equal(1, attachments.Count());
+
+                
 
                 SqlRepository.SimpleAccess.EndTransaction(transContext);
 
