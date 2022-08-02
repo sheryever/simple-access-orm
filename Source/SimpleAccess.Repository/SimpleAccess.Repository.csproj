@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
-    <TargetFrameworks>net452;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>5.0.0-beta-5.0.0.1</Version>
+    <TargetFrameworks>net452;netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
+    <Version>6.0.0-beta-6.0.0.1</Version>
     <Product>SimpleAccess ORM Repository</Product>
     <Description>Simple Access ORM provides database access in Ado.net methods naming pattern.
 Documentation of using SimpleAccess is available at https://simpleaccessorm.com
@@ -21,8 +21,8 @@ Documentation of using SimpleAccess is available at https://simpleaccessorm.com
     <OldToolsVersion>2.0</OldToolsVersion>
     <PackageReleaseNotes>
     </PackageReleaseNotes>
-    <AssemblyVersion>5.0.0.1</AssemblyVersion>
-    <FileVersion>5.0.0.1</FileVersion>
+    <AssemblyVersion>6.0.0.1</AssemblyVersion>
+    <FileVersion>6.0.0.1</FileVersion>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
 
@@ -44,7 +44,13 @@ Documentation of using SimpleAccess is available at https://simpleaccessorm.com
   </PropertyGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1'">
    </ItemGroup>
-  
+
+	<PropertyGroup Condition=" '$(TargetFramework)' == 'net6.0'">
+		<DefineConstants>NET6_0_OR_GREATER</DefineConstants>
+	</PropertyGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net6.0'">
+	</ItemGroup>
+	
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>

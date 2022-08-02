@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
-    <TargetFrameworks>net452;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>5.0.0-beta-5.0.0.1</Version>
+    <TargetFrameworks>net452;netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
+    <Version>6.0.0-beta-6.0.0.1</Version>
     <Product>SimpleAccess Sql Server ORM</Product>
     <Description>Simple Access ORM provides database access in Ado.net methods naming pattern.
 Documentation of using SimpleAccess is available at https://simpleaccessorm.com
@@ -57,8 +57,8 @@ Documentation of using SimpleAccess is available at https://simpleaccessorm.com
       - GetDynamicPagedList and GetDynamicPagedListAsync returning all properties name in lower case
       - BuildWhereClause is returning coma in value of decimal instead of dot with different culture
     </PackageReleaseNotes>
-    <AssemblyVersion>5.0.0.1</AssemblyVersion>
-    <FileVersion>5.0.0.1</FileVersion>
+    <AssemblyVersion>6.0.0.1</AssemblyVersion>
+    <FileVersion>6.0.0.1</FileVersion>
 
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -81,8 +81,15 @@ Documentation of using SimpleAccess is available at https://simpleaccessorm.com
     <DefineConstants>NETCORE;NETSTANDARD;NETSTANDARD2_1</DefineConstants>
   </PropertyGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1'">
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="3.1.0" />
   </ItemGroup>
+
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'net6.0'">
+	    <DefineConstants>NET6_0_OR_GREATER</DefineConstants>
+    </PropertyGroup>
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0'">
+	    <PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0" />
+    </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
