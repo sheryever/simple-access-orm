@@ -4,9 +4,10 @@ using System.Data;
 #if !NETSTANDARD2_1
 using System.Data.SqlClient;
 #endif
-#if NETSTANDARD2_1
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER
 using Microsoft.Data.SqlClient;
 #endif
+
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
