@@ -54,11 +54,8 @@ namespace SimpleAccess.SqlServer
 
         public SqlSimpleAccess(SqlConnection sqlConnection)
         {
-            DefaultSimpleAccessSettings = new SimpleAccessSettings
-            {
-                DefaultCommandType = CommandType.Text,
-                DefaultLogger = new SimpleLogger()
-            };
+            DefaultSimpleAccessSettings = new SimpleAccessSettings(CommandType.Text, new SimpleLogger());
+            
             _sqlConnection = sqlConnection;
             DefaultConnectionString = _sqlConnection.ConnectionString;
         }
@@ -70,10 +67,8 @@ namespace SimpleAccess.SqlServer
 
         public SqlSimpleAccess(SqlConnection sqlConnection, CommandType defaultCommandType)
         {
-            DefaultSimpleAccessSettings = new SimpleAccessSettings(defaultCommandType)
-            {
-                DefaultLogger = new SimpleLogger()
-            };
+            DefaultSimpleAccessSettings = new SimpleAccessSettings(defaultCommandType, new SimpleLogger());
+            
             _sqlConnection = sqlConnection;
             DefaultConnectionString = _sqlConnection.ConnectionString;
 

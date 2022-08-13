@@ -49,11 +49,8 @@ namespace SimpleAccess.SQLite
 
         public SQLiteSimpleAccess(SQLiteConnection SQLiteConnection)
         {
-            DefaultSimpleAccessSettings = new SimpleAccessSettings
-            {
-                DefaultCommandType = CommandType.Text,
-                DefaultLogger = new SimpleLogger()
-            };
+            DefaultSimpleAccessSettings = new SimpleAccessSettings(CommandType.Text, new SimpleLogger());
+            
             _SQLiteConnection = SQLiteConnection;
             DefaultConnectionString = _SQLiteConnection.ConnectionString;
         }
