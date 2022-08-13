@@ -199,7 +199,7 @@ namespace SimpleAccess.Core
             {
                 piListBasedOnDbColumn = GetEntityDbColumnPropertiesInfoList(entityFullName, piList);
             }
-
+            
             if (reader.Read())
             {
                 DataReaderToObject<TType>(reader, item, fieldsToSkip, piList, piListBasedOnDbColumn);
@@ -262,7 +262,7 @@ namespace SimpleAccess.Core
             for (int index = 0; index < reader.FieldCount; index++)
             {
                 string name = reader.GetName(index).ToLower();
-
+                
                 if (fieldsToSkip.Contains("," + name + ","))
                     continue;
 

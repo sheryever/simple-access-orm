@@ -131,7 +131,7 @@ namespace SimpleAccess.SqlServer
             {
                 var keyAttribute = attrbutes.FirstOrDefault(a => a is PrimaryKeyAttribute) as PrimaryKeyAttribute;
 
-                if ((keyAttribute != null) && (keyAttribute.IsIdentity || keyAttribute.DbSequence != null))
+                if ((keyAttribute != null) && (keyAttribute.IsIdentity || keyAttribute.DbSequence != null || keyAttribute.UniqueIdGeneration != UniqueIdGeneration.None))
                 {
                     sqlParam.Direction = ParameterDirection.InputOutput;
                     outParamsDictionary.Add(propertyInfo, sqlParam);

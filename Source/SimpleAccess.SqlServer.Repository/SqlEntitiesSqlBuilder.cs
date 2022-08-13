@@ -131,13 +131,28 @@ namespace SimpleAccess.SqlServer
                 parameters.Add(sqlParameter.ParameterName.Substring(1));
             }
 
-            if ((primaryKeyAttribute == null) || (!primaryKeyAttribute.IsIdentity && primaryKeyAttribute.DbSequence == null))
+            if ((primaryKeyAttribute == null) || (!primaryKeyAttribute.IsIdentity 
+                && primaryKeyAttribute.DbSequence == null 
+                && primaryKeyAttribute.UniqueIdGeneration == UniqueIdGeneration.None))
             {
                  query = $"INSERT INTO [{EntityInfo.DbObjectName}] \n\t({String.Join("\n\t, ", columns)})\n\t VALUES \n\t(@{String.Join("\n\t, @", parameters)});";
             }
             else if (primaryKeyAttribute.IsIdentity)
             {
                 query = $"INSERT INTO [{EntityInfo.DbObjectName}] \n\t({String.Join("\n\t, ", columns)})\n\t VALUES \n\t(@{String.Join("\n\t, @", parameters)}); SELECT {keyProperty} = SCOPE_IDENTITY();";
+            }
+            else if (primaryKeyAttribute.UniqueIdGeneration == UniqueIdGeneration.Client)
+            {
+                var keySqlParameter = EntityInsertParameters.DataParametersDictionary.Values.First(p => p.ParameterName == keyProperty);
+                keySqlParameter.Value = Guid.NewGuid().ToString();
+                query = $"INSERT INTO [{EntityInfo.DbObjectName}] \n\t({String.Join("\n\t, ", columns)})\n\t VALUES \n\t(@{String.Join("\n\t, @", parameters)});";
+            }
+            else if (primaryKeyAttribute.UniqueIdGeneration == UniqueIdGeneration.Database)
+            {
+                var keySqlParameter = EntityInsertParameters.DataParametersDictionary.Values.First(p => p.ParameterName == keyProperty);
+                keySqlParameter.Size = 40;
+
+                query = $"SELECT {keyProperty} = NewId();\n INSERT INTO [{EntityInfo.DbObjectName}] \n\t({String.Join("\n\t, ", columns)})\n\t VALUES \n\t(@{String.Join("\n\t, @", parameters)});";
             }
             else if (primaryKeyAttribute.DbSequence != null)
             {
