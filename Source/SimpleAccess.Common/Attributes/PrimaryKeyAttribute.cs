@@ -10,6 +10,8 @@ namespace SimpleAccess
     {
         public string DbSequence { get; }
         public bool IsIdentity { get; set; }
+        public UniqueIdGeneration UniqueIdGeneration { get; set; }
+
 
         public PrimaryKeyAttribute() { }
 
@@ -17,5 +19,14 @@ namespace SimpleAccess
         {
             DbSequence = dbSequence;
         }
+
+        public PrimaryKeyAttribute(UniqueIdGeneration uniqueIdGeneration)
+        {
+            UniqueIdGeneration = uniqueIdGeneration;
+        }
+    }
+    public enum UniqueIdGeneration
+    { 
+        None, Client, Database
     }
 }
