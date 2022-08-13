@@ -8,7 +8,8 @@ using Xunit;
 
 namespace SimpleAccess.SqlServer.Test
 {
-     public class SimpleAccessTest
+    [Collection("Sequential")]
+    public class SimpleAccessTest
     {
         private ISqlSimpleAccess SimpleAccess { get; set; }
  

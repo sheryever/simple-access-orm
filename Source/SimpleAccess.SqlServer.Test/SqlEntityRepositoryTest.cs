@@ -14,6 +14,7 @@ using SimpleAccess.Core.SqlSyntaxExtensions;
 using SimpleAccess.SqlServer;
 using SimpleAccess.SqlServer.TestNetCore2.Entities;
 using Xunit;
+using System;
 
 namespace SimpleAccess.SqlServer.Test
 {
@@ -36,7 +37,8 @@ namespace SimpleAccess.SqlServer.Test
             var person = new Person
             {
                 FullName = "Muhammad Abdul Rehman Khan",
-                Phone = "1112182123"
+                Phone = "1112182123",
+                DOB = DateTime.Now.AddYears(-20)
             };
             var rowAffected = SqlRepository.Insert<Person>(person);
             //var rowAffected = SqlRepository.Insert<Person>(person);
@@ -62,6 +64,45 @@ namespace SimpleAccess.SqlServer.Test
 
             Assert.Equal(1, rowAffected);
         }
+
+        [Fact]
+        public void InsertWithDatabaseUniqueIdentifierTest()
+        {
+            var product = new ProductDatabaseUniqueIdentifier
+            {
+                Name = "Product ProductDatabaseUniqueIdentifier",
+            };
+            var rowAffected = SqlRepository.Insert<ProductDatabaseUniqueIdentifier>(product);
+
+            Assert.Equal(1, rowAffected);
+        }
+
+        [Fact]
+        public void InsertWithClientUniqueIdentifierTest()
+        {
+            var product = new ProductCleintGuid
+            {
+                Name = "Product ProductCleintGuid",
+            };
+            var rowAffected = SqlRepository.Insert<ProductCleintGuid>(product);
+
+            Assert.Equal(1, rowAffected);
+        }
+
+
+        [Fact]
+        public void InsertWithUserDefineIdentifierTest()
+        {
+            var product = new ProductUserDefine
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = "Product ProductUserDefine",
+            };
+            var rowAffected = SqlRepository.Insert<ProductUserDefine>(product);
+
+            Assert.Equal(1, rowAffected);
+        }
+
         [Fact]
         public void InsertAllAWithTransactionContextTest()
         {
@@ -71,22 +112,26 @@ namespace SimpleAccess.SqlServer.Test
                     new Person
                     {
                         FullName = "Muhammad Abdul Rehman Khan",
-                        Phone = "1112182123"
+                        Phone = "1112182123",
+                        DOB = DateTime.Now.AddYears(-20)
                     },
                     new Person
                     {
                         FullName = "Muhammad Sharjeel",
-                        Phone = "0599065644"
+                        Phone = "0599065644",
+                        DOB = DateTime.Now.AddYears(-20)
                     },
                     new Person
                     {
                         FullName = "Muhammad Affan",
-                        Phone = "1112182123"
+                        Phone = "1112182123",
+                        DOB = DateTime.Now.AddYears(-20)
                     },
                     new Person
                     {
                         FullName = "Muhammad Usman",
-                        Phone = "1112182123"
+                        Phone = "1112182123",
+                        DOB = DateTime.Now.AddYears(-20)
                     },
                 };
                 var rowAffected = SqlRepository.InsertAll<Person>(trasaction, people);
@@ -698,6 +743,15 @@ namespace SimpleAccess.SqlServer.Test
         }
 
         [Fact]
+        public void GetMaxWithDateTimeTest()
+        {
+            var lastDob = SqlRepository.GetMax<Person>(p => new { p.DOB });
+
+            Assert.NotNull(lastDob.MaxOfDOB);
+
+        }
+
+        [Fact]
         public void GetMaxTestWithMultiColumn()
         {
             var Max = SqlRepository.GetMax<Person>(p => new { p.BasicSalary, p.Transport });
@@ -807,11 +861,12 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void InClauseWithSubWhereExpressionTest()
         {
-            var found = SqlRepository.FindAll<Person>(p => p.Id.In<Category, int>(pr => pr.Id, pw => pw.Id < 10));
+            var found = SqlRepository.FindAll<Person>(p => p.Id.In<Category, int>(
+                                    selct => selct.Id, categoryWhere => categoryWhere.Id < 10));
             Assert.True(found.Any());
 
         }
-
+    
         [Fact]
         public void TestGetDynamicPage()
         {

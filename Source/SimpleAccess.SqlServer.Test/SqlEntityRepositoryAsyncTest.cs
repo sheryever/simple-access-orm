@@ -11,18 +11,21 @@ using SimpleAccess.Core;
 using SimpleAccess.SqlServer;
 using SimpleAccess.SqlServer.TestNetCore2.Entities;
 using Xunit;
+using System;
 
 namespace SimpleAccess.SqlServer.Test
 {
-     public class SqlEntityRepositoryAsyncTest
+    [Collection("Sequential")]
+    public class SqlEntityRepositoryAsyncTest
     {
         private ISqlSimpleAccess SimpleAccess { get; set; }
         private ISqlRepository SqlRepository{ get; set; }
 
          public SqlEntityRepositoryAsyncTest()
         {
-            SimpleAccess = new SqlSimpleAccess("Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;MultipleActiveResultSets=True;Persist Security Info=True;User ID=sa;Password=Test123;TrustServerCertificate=True;");
-            SqlRepository = new SqlEntityRepository(SimpleAccess);
+            var connectionString = "Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;MultipleActiveResultSets=True;Persist Security Info=True;User ID=sa;Password=Test123;TrustServerCertificate=True;";
+            SimpleAccess = new SqlSimpleAccess(connectionString);
+            SqlRepository = new SqlEntityRepository(connectionString);
             SimpleAccess.ExecuteNonQuery(DbConfiguration.DbInitialScript);
         }
 
@@ -32,7 +35,8 @@ namespace SimpleAccess.SqlServer.Test
             var person = new Person
             {
                 FullName = "Muhammad Abdul Rehman Khan",
-                Phone = "1112182123"
+                Phone = "1112182123",
+                DOB = DateTime.Now
             };
             var rowAffected = SqlRepository.InsertAsync<Person>(person).Result;
             //var rowAffected = SqlRepository.Insert<Person>(person);
@@ -49,22 +53,27 @@ namespace SimpleAccess.SqlServer.Test
                     new Person
                     {
                         FullName = "Muhammad Abdul Rehman Khan",
-                        Phone = "1112182123"
+                        Phone = "1112182123",
+                        DOB = DateTime.Now
+
                     },
                     new Person
                     {
                         FullName = "Muhammad Sharjeel",
-                        Phone = "0599065644"
+                        Phone = "0599065644",
+                        DOB = DateTime.Now
                     },
                     new Person
                     {
                         FullName = "Muhammad Affan",
-                        Phone = "1112182123"
+                        Phone = "1112182123",
+                        DOB = DateTime.Now
                     },
                     new Person
                     {
                         FullName = "Muhammad Usman",
-                        Phone = "1112182123"
+                        Phone = "1112182123",
+                        DOB = DateTime.Now
                     },
                 };
                 var rowAffected = SqlRepository.InsertAllAsync<Person>(transContext, people).Result;
@@ -158,6 +167,18 @@ namespace SimpleAccess.SqlServer.Test
         }
 
         [Fact]
+        public void FindWIthVariableValueAsyncTest()
+        {
+            var categoryId = 2;
+
+            var category = SqlRepository.FindAsync<Category>(c => c.Id == categoryId).Result;
+
+            Assert.NotNull(category);
+            Assert.Equal(2, category.Id);
+
+        }
+
+        [Fact]
 
         public void FindAsyncWithTransactionContextTest()
         {
@@ -174,6 +195,30 @@ namespace SimpleAccess.SqlServer.Test
                 var attachment = SqlRepository.FindAsync<Attachment>(transContext, c => c.Id == 2).Result;
 
                 Assert.NotNull(attachment);
+
+                SqlRepository.SimpleAccess.EndTransaction(transContext);
+
+            }
+        }
+
+        [Fact]
+
+        public void FindAsyncWithVariableValueAndTransactionContextTest()
+        {
+            var employeeId = 2;
+            var jobId = 3;
+
+            using (var transContext = SqlRepository.SimpleAccess.BeginTransactionAsync().Result)
+            {
+                var empJob = SqlRepository.FindAsync<EmployeeJob>(transContext, c => c.EmployeeId == employeeId).Result;
+
+                Assert.NotNull(empJob);
+
+
+                empJob = SqlRepository.FindAsync<EmployeeJob>(transContext, c => c.EmployeeId == employeeId 
+                            && c.JobId == jobId).Result;
+
+                Assert.NotNull(empJob);
 
                 SqlRepository.SimpleAccess.EndTransaction(transContext);
 

@@ -8,6 +8,7 @@ using static Xunit.Assert;
 
 namespace SimpleAccess.SqlServer.Test
 {
+    [Collection("Sequential")]
     public class SimpleAccessAsyncTest
     {
         private static ISqlSimpleAccess SimpleAccess { get; set; }

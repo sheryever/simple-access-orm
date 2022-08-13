@@ -1,9 +1,13 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Text;
+using Xunit;
 
 namespace SimpleAccess.SqlServer.Test
 {
+
+
     public static class DbConfiguration
     {
         public static string DbInitialScript => @"
@@ -13,10 +17,14 @@ namespace SimpleAccess.SqlServer.Test
 		    ALTER SEQUENCE [dbo].[Seq_Attachments] RESTART WITH 6 ;  
 		    ALTER SEQUENCE [dbo].[Seq_People] RESTART WITH 6 ;  
             ALTER SEQUENCE [dbo].[Seq_Employees] RESTART WITH 17 ;  
+            ALTER SEQUENCE [dbo].[Seq_Jobs] RESTART WITH 1 ;  
+
             DELETE Categories;
             DELETE Branches;
             DELETE Attachments;
             DELETE People;
+            DELETE Jobs;
+            DELETE EmployeeJobs;
             DELETE Employees;
 
             Insert INTO Categories VALUES(1, 'CATE 1', 'SOME Cate');
@@ -27,13 +35,18 @@ namespace SimpleAccess.SqlServer.Test
             Insert INTO Attachments VALUES(2, 2, 'SOME Attachments');
             Insert INTO Attachments VALUES(3, 3, 'SOME Attachments');
 
+
             Insert INTO Branches VALUES(1, 1, 'Madina', null,null, null);
             Insert INTO Branches VALUES(2, 1, 'Makkah', null,null, null);
             Insert INTO Branches VALUES(3, 2, 'Karachi', null,null, null);
 
-            Insert INTO People VALUES(1, 'Ahmed', 1, '00000', 'Madina', 4000, 300, 1);
-            Insert INTO People VALUES(2, 'Muhammad', 1, '000000', 'Makkah', 5000, null, 0);
-            Insert INTO People VALUES(3, 'Karim', 1, '00000', null, 3000, 700, null);
+            Insert INTO People VALUES(1, 'Ahmed', 1, '1980-08-08 00:00', '00000', 'Madina', 4000, 300, 1);
+            Insert INTO People VALUES(2, 'Muhammad', 1, '1986-04-08 00:00', '000000', 'Makkah', 5000, null, 0);
+            Insert INTO People VALUES(3, 'Karim', 1, '1990-01-08 00:00', '00000', null, 3000, 700, null);
+
+            Insert INTO Jobs VALUES(1, 'Admin');
+            Insert INTO Jobs VALUES(2, 'Manager');
+            Insert INTO Jobs VALUES(3, 'Supervisor');
 
             Insert INTO Employees VALUES(1, 'Ahmed', '00000', 'Madina', 4000, 300, 1000, 1, 'Sales');
             Insert INTO Employees VALUES(2, 'Muhammad', '000000', 'Makkah', 5000, null, 1000, 1,'Sales');
@@ -49,7 +62,16 @@ namespace SimpleAccess.SqlServer.Test
             Insert INTO Employees VALUES(14, 'Kamal3', '00000', 'Madina', 18000, 200, 300, 1,'Purchase');
             Insert INTO Employees VALUES(15, 'Raheem2', '000000', 'Makkah', 3000, null, 100, 1,'Purchase');
             Insert INTO Employees VALUES(16, 'Saleem 4', '00000', null, 7000, 200, 400 , 0,'Purchase');
-";
+
+            INSERT INTO EmployeeJobs VALUES(1, 1);
+            INSERT INTO EmployeeJobs VALUES(10, 1);
+            INSERT INTO EmployeeJobs VALUES(2, 3);
+            INSERT INTO EmployeeJobs VALUES(4, 3);
+            INSERT INTO EmployeeJobs VALUES(5, 2);
+            INSERT INTO EmployeeJobs VALUES(3, 2);
+            INSERT INTO EmployeeJobs VALUES(6, 2);
+            INSERT INTO EmployeeJobs VALUES(7, 1);
+            ";
 
         public static string DbInitialData => @"
 

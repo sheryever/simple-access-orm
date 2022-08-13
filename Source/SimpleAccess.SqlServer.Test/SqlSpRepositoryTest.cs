@@ -15,7 +15,8 @@ using Xunit;
 
 namespace SimpleAccess.SqlServer.Test
 {
-     public class SqlSpRepositoryTest
+    [Collection("Sequential")]
+    public class SqlSpRepositoryTest
     {
         private ISqlSimpleAccess SimpleAccess { get; set; }
         private ISqlRepository SqlRepository { get; set; }

@@ -18,7 +18,7 @@ namespace SimpleAccess.SqlServer.TestNetCore2.Entities
         public long RowNumber { get; set; }
         public Gender? Gender { get; set; }
         public string FullName { get; set; }
-
+        public DateTime DOB { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
         public decimal BasicSalary { get; set; }
