@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
-    <Version>6.0.0-beta-6.0.0.1</Version>
+    <Version>6.0.0-beta-6.0.0.2</Version>
     <Product>SimpleAccess Sql Server ORM</Product>
     <Description>Simple Access ORM provides database access in Ado.net methods naming pattern.
 Documentation of using SimpleAccess is available at https://simpleaccessorm.com
