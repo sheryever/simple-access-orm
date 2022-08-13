@@ -76,7 +76,7 @@ namespace SimpleAccess.Core
         /// <summary>
         /// Default <see cref="ISimpleLogger"/>.
         /// </summary>
-        public ISimpleLogger DefaultLogger { get; set; }
+        public ISimpleLogger DefaultLogger { get; private set; }
 
         /// <summary>
         /// Sets the wait time before terminating the attempt to execute a command and generating an error. Default timeout is 30 
