@@ -727,6 +727,7 @@ namespace SimpleAccess.Core.Entity
 
                 propertyName = body.Arguments[0].ToString().Split(new char[] { '.' })[1];
                 propertyName = propertyName.Split(',')[0];
+                propertyName = propertyName.Split(')')[0];
 
                 return propertyName;
             }
