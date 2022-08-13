@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
-    <Version>6.0.0-beta-6.0.0.1</Version>
+    <Version>6.0.0-beta-6.0.0.2</Version>
     <Product>SimpleAccess ORM Core</Product>
     <Description>The core and common interfaces and implementation of SimpleAccess ORM</Description>
     <Authors>Abu Ali Muhammad Sharjeel</Authors>
@@ -15,19 +15,11 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReleaseNotes>
       Changes:
-      - .Net Standard 2.1 support added
-      - Database Sequence support added with KeyAttribute implementation
-      - EntityInfo performance improved
-      - Data mapping performance improved
-      - IgnoreSelect, IgnoreInsert, IgnoreUpdate and NotMapped property attributes added for EntityRepositories
-      - Support for generating having clause added
-      - SQL In Clause support added DynamicQuery for Where Expression
-      - SQL Having Clause support added DynamicQuery for Aggregate function Expression
-      - Support add to resolve Enum value in Where Expression
-      - nuget package versioning changed
+      - Support for net60 added
+      - Support for Unique Identifier added
     </PackageReleaseNotes>
-    <AssemblyVersion>6.0.0.1</AssemblyVersion>
-    <FileVersion>6.0.0.1</FileVersion>
+    <AssemblyVersion>6.0.0.2</AssemblyVersion>
+    <FileVersion>6.0.0.2</FileVersion>
     
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>

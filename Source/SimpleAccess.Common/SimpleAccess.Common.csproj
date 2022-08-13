@@ -14,7 +14,9 @@
     <PackageTags>SimpleAccess, Database, ORM</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReleaseNotes>
-     
+      Changes:
+      - Support for net60 added
+      - Support for Unique Identifier added
     </PackageReleaseNotes>
     <AssemblyVersion>6.0.0.2</AssemblyVersion>
     <FileVersion>6.0.0.2</FileVersion>
