@@ -11,6 +11,7 @@ using SimpleAccess.Core;
 using SimpleAccess.SqlServer;
 using SimpleAccess.SqlServer.TestNetCore2.Entities;
 using Xunit;
+using System;
 
 namespace SimpleAccess.SqlServer.Test
 {
@@ -33,7 +34,8 @@ namespace SimpleAccess.SqlServer.Test
             var person = new Person
             {
                 FullName = "Muhammad Abdul Rehman Khan",
-                Phone = "1112182123"
+                Phone = "1112182123",
+                DOB = DateTime.Now.AddYears(-20)
             };
             var rowAffected = SqlRepository.InsertAsync<Person>(person).Result;
             //var rowAffected = SqlRepository.Insert<Person>(person);
@@ -50,22 +52,26 @@ namespace SimpleAccess.SqlServer.Test
                     new Person
                     {
                         FullName = "Muhammad Abdul Rehman Khan",
-                        Phone = "1112182123"
+                        Phone = "1112182123",
+                DOB = DateTime.Now.AddYears(-20)
                     },
                     new Person
                     {
                         FullName = "Muhammad Sharjeel",
-                        Phone = "0599065644"
+                        Phone = "0599065644",
+                DOB = DateTime.Now.AddYears(-20)
                     },
                     new Person
                     {
                         FullName = "Muhammad Affan",
-                        Phone = "1112182123"
+                        Phone = "1112182123",
+                DOB = DateTime.Now.AddYears(-20)
                     },
                     new Person
                     {
                         FullName = "Muhammad Usman",
-                        Phone = "1112182123"
+                        Phone = "1112182123",
+                DOB = DateTime.Now.AddYears(-20)
                     },
                 };
                 var rowAffected = SqlRepository.InsertAllAsync<Person>(transContext, people).Result;

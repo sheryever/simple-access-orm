@@ -12,6 +12,7 @@ using SimpleAccess.Core;
 using SimpleAccess.SqlServer;
 using SimpleAccess.SqlServer.TestNetCore2.Entities;
 using Xunit;
+using System;
 
 namespace SimpleAccess.SqlServer.Test
 {
@@ -21,7 +22,7 @@ namespace SimpleAccess.SqlServer.Test
         private ISqlSimpleAccess SimpleAccess { get; set; }
         private ISqlRepository SqlRepository { get; set; }
 
-         public SqlSpRepositoryTest( )
+        public SqlSpRepositoryTest()
         {
             SimpleAccess = new SqlSimpleAccess("Data Source=.\\SQLEXPRESS2017;Initial Catalog=SimpleAccessTest;Persist Security Info=True;User ID=sa;Password=Test123;TrustServerCertificate=True;");
             SqlRepository = new SqlSpRepository(SimpleAccess);
@@ -34,7 +35,8 @@ namespace SimpleAccess.SqlServer.Test
             var person = new Person
             {
                 FullName = "Muhammad Abdul Rehman Khan",
-                Phone = "1112182123"
+                Phone = "1112182123",
+                DOB = DateTime.Now.AddYears(-20)
             };
             var rowAffected = SqlRepository.Insert<Person>(person);
 
@@ -47,7 +49,9 @@ namespace SimpleAccess.SqlServer.Test
             var person = new Person
             {
                 FullName = "Muhammad Abdul Rehman Khan",
-                Phone = "1112182123"
+                Phone = "1112182123",
+                DOB = DateTime.Now.AddYears(-20)
+
             };
 
             var rowAffected = 0;
@@ -73,7 +77,9 @@ namespace SimpleAccess.SqlServer.Test
                 Address = "Madina",
                 BasicSalary = 233449,
                 Transport = 21,
-                Alive = true
+                Alive = true,
+                DOB = DateTime.Now.AddYears(-20)
+
             };
             var rowAffected = SqlRepository.Insert<Person>(person);
 
@@ -93,6 +99,8 @@ namespace SimpleAccess.SqlServer.Test
                 new SqlParameter( "BasicSalary", 145345),
                 new SqlParameter( "Transport", 43),
                 new SqlParameter( "Alive", true),
+                new SqlParameter( "DOB", DateTime.Now.AddYears(-20)),
+
 
             };
 
@@ -110,22 +118,26 @@ namespace SimpleAccess.SqlServer.Test
                     new Person
                     {
                         FullName = "Muhammad Abdul Rehman Khan",
-                        Phone = "1112182123"
+                        Phone = "1112182123",
+                DOB = DateTime.Now.AddYears(-20)
                     },
                     new Person
                     {
                         FullName = "Muhammad Sharjeel",
-                        Phone = "0599065644"
+                        Phone = "0599065644",
+                DOB = DateTime.Now.AddYears(-20)
                     },
                     new Person
                     {
                         FullName = "Muhammad Affan",
-                        Phone = "1112182123"
+                        Phone = "1112182123",
+                DOB = DateTime.Now.AddYears(-20)
                     },
                     new Person
                     {
                         FullName = "Muhammad Usman",
-                        Phone = "1112182123"
+                        Phone = "1112182123",
+                DOB = DateTime.Now.AddYears(-20)
                     },
                 };
                 var rowAffected = SqlRepository.InsertAll<Person>(trasaction, people);
@@ -168,7 +180,7 @@ namespace SimpleAccess.SqlServer.Test
                 var categories = SqlRepository.GetAll<Category>(trasaction);
                 var people = SqlRepository.GetAll<Person>(trasaction);
                 Assert.Equal(3, categories.Count());
-                Assert.True (people.Any());
+                Assert.True(people.Any());
 
             }
 
@@ -185,7 +197,7 @@ namespace SimpleAccess.SqlServer.Test
         [Fact]
         public void GetDynamicPagedListWithSelectTest()
         {
-            var people = SqlRepository.GetEntitiesPagedList<Person>(p => new {p.Id, p.FullName}, null , 0, 2, "Id", false);
+            var people = SqlRepository.GetEntitiesPagedList<Person>(p => new { p.Id, p.FullName }, null, 0, 2, "Id", false);
 
             Assert.Equal(2, people.Data.Count());
             Assert.Equal(3, people.TotalRows);

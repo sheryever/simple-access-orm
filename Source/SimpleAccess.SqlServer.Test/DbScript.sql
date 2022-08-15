@@ -1196,33 +1196,63 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+
+ 
+ 
+ 
 -------------------------
---- Start of People_Delete
+--- Start of People_GetAll
 -------------------------
-CREATE PROCEDURE [dbo].[People_Delete]
+CREATE PROCEDURE People_GetAll
+AS
+BEGIN
+    SELECT [Id]
+         , [FullName]
+         , [Gender]
+         , [DOB]
+         , [Phone]
+         , [Address]
+         , [BasicSalary]
+         , [Transport]
+         , [Alive]
+           
+		FROM dbo.[People]  
+END
+-------------------------
+--END of People_GetAll
+-------------------------
+
+ Go
+
+-------------------------
+--- Start of People_GetById
+-------------------------
+CREATE PROCEDURE People_GetById
 	@id INT
 AS
 BEGIN
-
-    DELETE FROM dbo.[People]
-    WHERE
-		[Id] = @Id
+    SELECT  [Id]
+         , [FullName]
+         , [Gender]
+         , [DOB]
+         , [Phone]
+         , [Address]
+         , [BasicSalary]
+         , [Transport]
+         , [Alive]
+         FROM dbo.People  
+		 WHERE [Id] = @Id
 END
 -------------------------
---END of People_Delete
+--END of People_GetById
 -------------------------
 
-GO
-/****** Object:  StoredProcedure [dbo].[People_Find]    Script Date: 8/13/2022 8:49:19 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+ GO
  
 -------------------------
 --- Start of People_Find
 -------------------------
- CREATE PROCEDURE  [dbo].[People_Find]
+ CREATE PROCEDURE  People_Find
 	@whereClause NVARCHAR(4000)
     WITH EXEC AS CALLER
 AS
@@ -1231,7 +1261,13 @@ BEGIN
     SET @sql = 
 		'SELECT ' + ' [Id] ' +
          ' , [FullName] ' +
+         ' , [Gender] ' +
+         ' , [DOB] ' +
          ' , [Phone] ' +
+         ' , [Address] ' +
+         ' , [BasicSalary] ' +
+         ' , [Transport] ' +
+         ' , [Alive] ' +
          'FROM dbo.People ' +
 	ISNULL(@whereClause, '');
 
@@ -1256,67 +1292,12 @@ END
 --END of People_Find
 -------------------------
 
-GO
-/****** Object:  StoredProcedure [dbo].[People_GetAll]    Script Date: 8/13/2022 8:49:19 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
- 
- 
- 
--------------------------
---- Start of People_GetAll
--------------------------
-CREATE PROCEDURE [dbo].[People_GetAll]
-AS
-BEGIN
-    SELECT [Id]
-         , [FullName]
-         , [Phone]
-           
-		FROM dbo.[People]  
-END
--------------------------
---END of People_GetAll
--------------------------
-
-GO
-/****** Object:  StoredProcedure [dbo].[People_GetById]    Script Date: 8/13/2022 8:49:19 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
--------------------------
---- Start of People_GetById
--------------------------
-CREATE PROCEDURE [dbo].[People_GetById]
-	@id INT
-AS
-BEGIN
-    SELECT  [Id]
-         , [FullName]
-         , [Phone]
-         FROM dbo.People  
-		 WHERE [Id] = @Id
-END
--------------------------
---END of People_GetById
--------------------------
-
-GO
-/****** Object:  StoredProcedure [dbo].[People_GetPagedList]    Script Date: 8/13/2022 8:49:19 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+ Go
 
 -------------------------
 --- Start of People_GetPagedList
 -------------------------
-CREATE PROCEDURE [dbo].[People_GetPagedList]
+CREATE PROCEDURE People_GetPagedList
 	@startIndex INT
     , @pageSize INT
     , @sortExpression VARCHAR(255)
@@ -1336,7 +1317,13 @@ BEGIN
 SET @sql = 
 'SELECT ' + ' [Id] ' +
          ' , [FullName] ' +
+         ' , [Gender] ' +
+         ' , [DOB] ' +
          ' , [Phone] ' +
+         ' , [Address] ' +
+         ' , [BasicSalary] ' +
+         ' , [Transport] ' +
+         ' , [Alive] ' +
              ' FROM ( ' +
     ' SELECT * ' +
        ' , ROW_NUMBER() OVER ( ORDER BY ' + @sortExpression + ' ) AS [RowNumber] ' +
@@ -1370,24 +1357,39 @@ END
 --END of People_GetPagedList
 -------------------------
 
-GO
-/****** Object:  StoredProcedure [dbo].[People_Insert]    Script Date: 8/13/2022 8:49:19 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+ Go
 
+-------------------------
+--- Start of People_Delete
+-------------------------
+CREATE PROCEDURE People_Delete
+	@id INT
+AS
+BEGIN
+
+    DELETE FROM dbo.[People]
+    WHERE
+		[Id] = @Id
+END
+-------------------------
+--END of People_Delete
+-------------------------
+
+
+GO
 -------------------------
 --- Start of People_Insert
 -------------------------
-CREATE PROCEDURE [dbo].[People_Insert]
-	 @fullName NVARCHAR(200)
-	 , @gender smallint
+CREATE PROCEDURE People_Insert
+	     
+	  @fullName NVARCHAR(200)
+	 , @gender SMALLINT
+	 , @dOB SMALLDATETIME
 	 , @phone NVARCHAR(40)
-	 , @address nvarchar(600)
-	 , @basicSalary decimal(10, 2)
-	 , @transport int
-	 , @alive	bit
+	 , @address NVARCHAR(600)
+	 , @basicSalary DECIMAL
+	 , @transport INT
+	 , @alive BIT
 	,@Id INT OUTPUT    
     
 AS
@@ -1401,17 +1403,19 @@ BEGIN
     (
         [Id]
 		 , [FullName]
-		 , Gender
+		 , [Gender]
+		 , [DOB]
 		 , [Phone]
-		 , Address
-		 , BasicSalary
-		 , Transport
-		 , Alive
+		 , [Address]
+		 , [BasicSalary]
+		 , [Transport]
+		 , [Alive]
 
     ) VALUES (
         @id
 		 , @fullName
 		 , @gender
+		 , @dOB
 		 , @phone
 		 , @address
 		 , @basicSalary
@@ -1426,26 +1430,22 @@ END
 --END of People_Insert
 -------------------------
 
-GO
-/****** Object:  StoredProcedure [dbo].[People_Update]    Script Date: 8/13/2022 8:49:19 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+ Go
 
 -------------------------
 --- Start of People_Update
 -------------------------
 
-CREATE PROCEDURE [dbo].[People_Update]
+CREATE PROCEDURE People_Update
 	    @id INT
 	 , @fullName NVARCHAR(200)
-	 , @gender smallint
+	 , @gender SMALLINT
+	 , @dOB SMALLDATETIME
 	 , @phone NVARCHAR(40)
-	 , @address nvarchar(600)
-	 , @basicSalary decimal(10, 2)
-	 , @transport int
-	 , @alive	bit
+	 , @address NVARCHAR(600)
+	 , @basicSalary DECIMAL
+	 , @transport INT
+	 , @alive BIT
 	
         AS 
 		BEGIN
@@ -1454,13 +1454,13 @@ CREATE PROCEDURE [dbo].[People_Update]
 		
         UPDATE dbo.[People] SET
             [FullName] = @fullName
-		  , Gender = @gender
+          , [Gender] = @gender
+          , [DOB] = @dOB
           , [Phone] = @phone
-		  , Address = @address
-		  , BasicSalary = @basicSalary
-		  , Transport = @transport
-		  , Alive = @alive
-
+          , [Address] = @address
+          , [BasicSalary] = @basicSalary
+          , [Transport] = @transport
+          , [Alive] = @alive
       WHERE [Id] = @id 
 
 
@@ -1468,6 +1468,12 @@ END
 -------------------------
 --END of People_Update
 -------------------------
+
+GO
+
+
+
+
 
 ALTER DATABASE [SimpleAccessTest] SET  READ_WRITE 
 GO
