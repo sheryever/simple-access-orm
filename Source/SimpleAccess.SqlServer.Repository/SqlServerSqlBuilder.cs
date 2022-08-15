@@ -334,7 +334,7 @@ namespace SimpleAccess.SqlServer
             }
             else if (valueType.In(typeof(Int16), typeof(Int16?), typeof(int), typeof(int?), typeof(Int32), typeof(Int32?), typeof(Int64), typeof(Int64?)))
             {
-                return string.Format(" [{0}] {1} {2} ", propertyName, @operator, value.ToString());
+                return string.Format(" [{0}] {1} {2} ", propertyName, @operator, value.ToString().Replace("٫", "."));
             }
             else if (valueType.In(typeof(Single), typeof(Single?),
                     typeof(float), typeof(float?), typeof(decimal), typeof(decimal?), typeof(double), typeof(double?)))
