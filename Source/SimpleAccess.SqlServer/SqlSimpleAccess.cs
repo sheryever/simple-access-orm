@@ -41,7 +41,7 @@ namespace SimpleAccess.SqlServer
         /// <summary>
         /// Default settings for simple access
         /// </summary>
-        public SimpleAccessSettings DefaultSimpleAccessSettings { get; set; }
+        public SimpleAccessSettings DefaultSimpleAccessSettings { get; private set; }
 
         /// <summary> The SQL connection. </summary>
         private readonly SqlConnection _sqlConnection;

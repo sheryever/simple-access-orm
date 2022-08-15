@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
-    <Version>6.0.0-beta-6.0.0.2</Version>
+    <Version>6.0.0-beta-6.0.0.3</Version>
     <Product>SimpleAccess ORM Core</Product>
     <Description>The core and common interfaces and implementation of SimpleAccess ORM</Description>
     <Authors>Abu Ali Muhammad Sharjeel</Authors>
@@ -18,8 +18,8 @@
       - Support for net60 added
       - Support for Unique Identifier added
     </PackageReleaseNotes>
-    <AssemblyVersion>6.0.0.2</AssemblyVersion>
-    <FileVersion>6.0.0.2</FileVersion>
+    <AssemblyVersion>6.0.0.3</AssemblyVersion>
+    <FileVersion>6.0.0.3</FileVersion>
     
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>

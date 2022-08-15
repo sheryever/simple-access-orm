@@ -34,7 +34,7 @@ namespace SimpleAccess.Core
         /// <summary>
         /// Represent the default settings SimpleAccess <see cref="SimpleAccessSettings" />
         /// </summary>
-        SimpleAccessSettings DefaultSimpleAccessSettings { get; set; }
+        SimpleAccessSettings DefaultSimpleAccessSettings { get; }
 
         /// <summary> Executes a command text against the connection and returns the number of rows affected. </summary>
         /// 
