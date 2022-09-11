@@ -298,6 +298,12 @@ namespace SimpleAccess.Core
                         }
                     }
 
+                    if (val.GetType().Name == "Guid") 
+                    {
+                        prop.SetValue(instance, val.ToString(), null);
+                        continue;
+                    }
+
                     prop.SetValue(instance, val, null);
                 }
                 catch (Exception ex)

@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
 #endif
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -334,12 +335,12 @@ namespace SimpleAccess.SqlServer
             }
             else if (valueType.In(typeof(Int16), typeof(Int16?), typeof(int), typeof(int?), typeof(Int32), typeof(Int32?), typeof(Int64), typeof(Int64?)))
             {
-                return string.Format(" [{0}] {1} {2} ", propertyName, @operator, value.ToString().Replace("٫", "."));
+                return string.Format(" [{0}] {1} {2} ", propertyName, @operator, string.Format(CultureInfo.InvariantCulture, "{0}", value));
             }
             else if (valueType.In(typeof(Single), typeof(Single?),
                     typeof(float), typeof(float?), typeof(decimal), typeof(decimal?), typeof(double), typeof(double?)))
             {
-                return string.Format(" [{0}] {1} {2} ", propertyName, @operator, value.ToString().Replace("٫", "."));
+                return string.Format(" [{0}] {1} {2} ", propertyName, @operator, string.Format(CultureInfo.InvariantCulture, "{0}", value));
             }
             else if (valueType.IsEnum || (valueType.IsGenericType && valueType.GetGenericArguments()[0].IsEnum))
             {

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
-    <Version>6.0.0-beta-6.0.0.3</Version>
+    <Version>6.0.0-beta-6.0.0.4</Version>
     <Product>SimpleAccess Sql Server ORM</Product>
     <Description>Simple Access ORM provides database access in Ado.net methods naming pattern.
 Documentation of using SimpleAccess is available at https://simpleaccessorm.com
@@ -26,8 +26,8 @@ Documentation of using SimpleAccess is available at https://simpleaccessorm.com
       - Support for Unique Identifier added
 
   </PackageReleaseNotes>
-    <AssemblyVersion>6.0.0.3</AssemblyVersion>
-    <FileVersion>6.0.0.3</FileVersion>
+    <AssemblyVersion>6.0.0.4</AssemblyVersion>
+    <FileVersion>6.0.0.4</FileVersion>
 
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>

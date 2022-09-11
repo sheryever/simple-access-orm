@@ -78,6 +78,23 @@ namespace SimpleAccess.SqlServer.Test
         }
 
         [Fact]
+        public void GetAllProductDatabaseUniqueIdentifierTest()
+        {
+            var products = SqlRepository.GetAll<ProductDatabaseUniqueIdentifier>();
+
+            Assert.NotEmpty(products);
+        }
+
+
+        [Fact]
+        public void FIndAllProductDatabaseUniqueIdentifierTest()
+        {
+            var products = SqlRepository.FindAll<ProductDatabaseUniqueIdentifier>(f => f.Name != null);
+
+            Assert.NotEmpty(products);
+        }
+
+        [Fact]
         public void InsertWithClientUniqueIdentifierTest()
         {
             var product = new ProductCleintGuid
