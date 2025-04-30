@@ -18,7 +18,17 @@ namespace SimpleAccess.SqlServer
 
             foreach (var propertyInfo in source.GetType().GetProperties())
             {
-                sets.Add($"{propertyInfo.Name.Replace("@", "")} = @{propertyInfo.Name}");
+                var val = propertyInfo.GetValue(source);
+
+                if (val == null)
+                {
+                    sets.Add($"[{propertyInfo.Name.Replace("@", "")}] IS NULL");
+                }
+                else
+                {
+                    sets.Add($"[{propertyInfo.Name.Replace("@", "")}] = @{propertyInfo.Name}");
+                }
+                    
             }
 
             return whereClause + string.Join(" AND ", sets.ToArray());
